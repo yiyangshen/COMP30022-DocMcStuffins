@@ -1,3 +1,5 @@
+# User Stories
+
 | As a <Role> | I want to <Do something>           | So that <Achieve some goals>                         | Priority |
 | :---------- | :--------------------------------- | :--------------------------------------------------- | :------- |
 | user        | register for an account            | I can start using the app                            | HIGH     |
