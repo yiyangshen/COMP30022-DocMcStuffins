@@ -27,7 +27,7 @@ I want to classify my contacts into user-created groups. A group does not need t
 I want to see all the contact groups that I have. On tapping a group, I want to see a list of said group's members along with their representative information. Tapping a contact in this list should also display the contact's personal details.
 
 ### Dashboard
-I want to see an overview of my knowledge base, notably the number of contacts and groups that I have. From here, I should be able to navigate to the contacts or groups page as necessary. **The contacts and groups overview should also, upon tapping, expand to a shortlist of recently-viewed contacts and groups.**
+I want to see an overview of my knowledge base, notably the number of contacts and groups that I have. From here, I should be able to navigate to the contacts or groups page as necessary. **The contacts and groups overview should also, upon tapping, expand to a shortlist of recently-viewed contacts and groups.** It would be great if I can search my contacts from this page, but it is not required.
 
 ### Event memos
 In the dashboard, I also want to see memos pertaining to some event/task. These memos should be store the following details: name, event contact, date, and additional information. Note that these are memos and not to-dos, so there is no need for them to be tick-off-able. **These memos can be displayed in a list with their representative information, namely their name, event contact, and date.** It would be nice if you can display these memos within a calendar instead, but it is not required. **Tapping any of the memos should display its details.**
