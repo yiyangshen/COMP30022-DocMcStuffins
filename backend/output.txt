@@ -1,0 +1,30 @@
+{
+    "data": "OK",
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+        "content-length": "2",
+        "content-type": "text/html; charset=utf-8"
+    },
+    "config": {
+        "url": "http://localhost:48080/api/customer/login",
+        "method": "post",
+        "data": "{\"email\":\"nputro@student.unimelb.edu.au\",\"password\":\"123456\"}",
+        "headers": {
+            "Accept": "application/json, text/plain, */*",
+            "Content-Type": "application/json;charset=utf-8"
+        },
+        "transformRequest": [
+            null
+        ],
+        "transformResponse": [
+            null
+        ],
+        "timeout": 0,
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN",
+        "maxContentLength": -1,
+        "maxBodyLength": -1
+    },
+    "request": {}
+}

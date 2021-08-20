@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 14",
+ 
+  "compilerOptions": {
+    "lib": ["es2020"],
+    "module": "commonjs",
+    "target": "es2020",
+ 
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "noEmitHelpers": true,
+    "noImplicitAny": true,
+    "pretty": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    
+    "baseUrl": "src/",
+    "outDir": "dist/"
+  },
+   "include": [ 
+      "src/**/*"
+   ],
+   "exclude": [ 
+       "dist",
+       "node_modules"
+   ],
+   "typeRoots": [
+        "./@types"
+   ]
+}

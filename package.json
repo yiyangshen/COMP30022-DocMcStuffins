@@ -1,0 +1,61 @@
+{
+  "name": "comp30022",
+  "version": "0.0.0",
+  "author": {
+    "name": "Nathanael Putro",
+    "email": "nputro@student.unimelb.edu.au"
+  },
+  "contributors": [
+    {
+      "name": "Dyno Nanditya Hadi Wibowo",
+      "email": "dnwibowo@student.unimelb.edu.au"
+    },
+    {
+      "name": "Joshua Situwali",
+      "email": "jsituwali@student.unimelb.edu.au"
+    },
+    {
+      "name": "Livya Natasha Riany",
+      "email": "lriany@student.unimelb.edu.au"
+    },
+    {
+      "name": "Stanley Wirian",
+      "email": "swirian@student.unimelb.edu.au"
+    }
+  ],
+  "private": true,
+  "dependencies": {
+    "npm-run-all": "*"
+  },
+  "engines": {
+    "npm": "*"
+  },
+  "scripts": {
+    "prebuild-frontend": "cd frontend/ && npm install --production=false --legacy-peer-deps",
+    "build-frontend": "cd frontend/ && npm run build",
+    "postbuild-frontend": "cd frontend/ && npm prune --production",
+
+    "prebuild-backend": "cd backend/ && npm install --production=false",
+    "build-backend": "cd backend/ && npm run compile",
+    "postbuild-backend": "cd backend/ && npm prune --production",
+    
+    "pretest-backend": "npm run prebuild-backend",
+    "test-backend": "cd backend/ && npm run test",
+    
+    "frontend-dev": "cd frontend/ && npm start",
+    
+    "backend": "cd backend/ && npm start",
+    "backend-dev": "cd backend/ && npm run start-dev",
+    
+    "prestart-dev": "npm-run-all --parallel prebuild-frontend prebuild-backend",
+    "start-dev": "npm-run-all --parallel frontend-dev backend-dev",
+    
+    "prestart-prod": "NODE_ENV=production npm run heroku-postbuild",
+    "start-prod": "NODE_ENV=production npm start",
+    
+    "start": "npm run backend",
+    "test": "npm-run-all --sequential test-backend",
+    
+    "heroku-postbuild": "npm-run-all --parallel build-frontend build-backend"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "comp30022-backend",
+  "version": "0.0.0",
+  "author": {
+    "name": "Nathanael Putro",
+    "email": "nputro@student.unimelb.edu.au"
+  },
+  "contributors": [
+    {
+      "name": "Dyno Nanditya Hadi Wibowo",
+      "email": "dnwibowo@student.unimelb.edu.au"
+    },
+    {
+      "name": "Stanley Wirian",
+      "email": "swirian@student.unimelb.edu.au"
+    }
+  ],
+  "private": true,
+  "dependencies": {
+    "bcrypt": "*",
+    "cors": "*",
+    "express": "*",
+    "mongoose": "*",
+    "tslib": "*"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "*",
+    "@types/cors": "*",
+    "@types/express": "*",
+    "@types/jest": "*",
+    "@types/mongoose": "*",
+    "@types/node": "*",
+    "@types/supertest": "*",
+    "jest": "*",
+    "nodemon": "*",
+    "supertest": "*",
+    "ts-jest": "*",
+    "typescript": "*"
+  },
+  "engines": {
+    "node": "*",
+    "npm": "*"
+  },
+  "scripts": {
+    "compile": "tsc --project ./",
+    "clean": "rm --force --recursive dist/",
+    "start": "node dist/server.js",
+    "start-dev": "nodemon",
+    "test": "jest --config jestconfig.json --forceExit"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src/**/*"
+    ],
+    "exec": "npm run compile && npm run start",
+    "ext": "ts"
+  }
+}
