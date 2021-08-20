@@ -16,7 +16,11 @@ db.once("open", () => {
 });
 
 /* Re-export primary interfaces, schemas, and models */
-
+export { default as User } from "./userModel";
+export { default as Contact } from "./contactModel";
+export { default as Group } from "./groupModel";
+export { default as Memo } from "./memoModel";
 /* Re-export helper interfaces, schemas, and models */
 
 /* Re-export helper enums */
+export { Gender, Pronoun } from "./contactModel";
