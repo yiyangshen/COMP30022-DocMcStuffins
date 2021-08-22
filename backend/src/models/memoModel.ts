@@ -8,8 +8,8 @@ export interface IMemo {
     userID: ObjectId;
     contactID: ObjectId;
     title: string;
-    date: Date;
-    additionalNotes: string;
+    dateEdited: Date;
+    notes: string;
 
 }
 
@@ -20,20 +20,15 @@ const memoSchema: Schema = new Schema({
         ref: "User",
         required: true
     },
-    contactID: {
-        type: Schema.Types.ObjectId,
-        ref: "Contact",
-        required: true
-    },
     title: {
         type: String,
         required: true
     },
-    date: {
+    dateEdited: {
         type: Date,
         default: undefined
     },
-    additionalNotes: {
+    notes: {
         type: String,
         default: undefined
     }

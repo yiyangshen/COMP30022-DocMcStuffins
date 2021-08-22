@@ -8,12 +8,6 @@ enum Gender {
     Other = "Other"
 }
 
-enum Pronoun {
-    Masculine = "he/him",
-    Feminine = "she/her",
-    Neutral = "they/them"
-}
-
 /* Define the contact interface */
 export interface IContact {
     userID: ObjectId;
@@ -22,16 +16,13 @@ export interface IContact {
     middleName: string;
     lastName: string;
     gender: string;
-    pronoun: string;
     dateOfBirth: Date;
     lastMet: Date;
-    phoneNumbers: Array<string>;
-    emails: Array<string>;
-    companyRole: string;
+    phoneNumber: string;
+    email: string;
     photo: string;
     relationship: string;
     additionalNotes: string;
-
 }
 
 /* Define the contact schema */
@@ -62,10 +53,6 @@ const contactSchema: Schema = new Schema({
         type: String,
         default: Gender.Other
     },
-    pronoun: {
-        type: String,
-        default: Pronoun.Neutral
-    },
     dateOfBirth: {
         type: Date,
         default: undefined
@@ -75,14 +62,10 @@ const contactSchema: Schema = new Schema({
         default: undefined
     },
     phoneNumbers: {
-        type: [String],
-        default: []
+        type: String,
+        default: undefined
     },
-    emails: {
-        type: [String],
-        default: []
-    },
-    companyRole: {
+    email: {
         type: String,
         default: undefined
     },
@@ -101,7 +84,7 @@ const contactSchema: Schema = new Schema({
 });
 
 /* Export the contact schema and model */
-export { contactSchema, Gender, Pronoun }
+export { contactSchema, Gender }
 //const Contact: Model<IContact> = model("Contact", contactSchema);
 const Contact = model("Contact", contactSchema);
 export default Contact;
