@@ -12,11 +12,15 @@
 | user        | upload a contact photo             | I can associate my contacts with a face              | MEDIUM   |
 | user        | search a contact by name           | I can quickly retrieve a specific contact's details  | HIGH     |
 | user        | search a contact by other fields   | I can match some details to a contact                | LOW      |
-| user        | assign a contact to a group        | I can categorise my existing contacts                | HIGH     |
-| user        | create new groups                  | I can categorise my contacts                         | HIGH     |
+| user        | assign contacts to a group         | I can categorise my contacts                         | HIGH     |
+| user        | create new groups                  | I can create new categories for my contacts          | HIGH     |
+| user        | add multiple contacts to a group   | I can categorise multiple contacts at once           | HIGH     |
 | user        | list down my groups                | I can see the contact categories that I have         | HIGH     |
 | user        | list down a group's members        | I can easily access group members' details           | HIGH     |
 | user        | edit an existing group's details   | I can keep my groups' information up-to-date         | HIGH     |
 | user        | see a dashboard                    | I can get an overview of my contacts                 | HIGH     |
-| user        | have a memo in the dashboard       | I can store notes on events with some contacts       | HIGH     |
+| user        | create new memos                   | I can store notes on events with some contacts       | HIGH     |
+| user        | list down my memos                 | I can see some details about my memos at a glance    | HIGH     |
+| user        | view a memo's details              | I can view the details associated with a memo        | HIGH     |
+| user        | edit an existing memo's details    | I can keep my memos updated                          | HIGH     |
 | client      | use the color blue within the UI   | looking at the UI for a long time is bearable        | HIGH     |
