@@ -23,4 +23,4 @@ export { default as Memo } from "./memoModel";
 /* Re-export helper interfaces, schemas, and models */
 
 /* Re-export helper enums */
-export { Gender, Pronoun } from "./contactModel";
+export { Gender } from "./contactModel";
