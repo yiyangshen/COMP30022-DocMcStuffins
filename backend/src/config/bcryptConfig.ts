@@ -1,0 +1,3 @@
+const PASSWORD_HASH_ROUNDS = 10;
+
+export { PASSWORD_HASH_ROUNDS }

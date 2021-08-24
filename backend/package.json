@@ -39,6 +39,7 @@
     "@types/passport-local": "*",
     "@types/supertest": "*",
     "@types/timestring": "*",
+    "dotenv": "*",
     "jest": "*",
     "nodemon": "*",
     "supertest": "*",

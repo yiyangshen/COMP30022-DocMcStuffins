@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as LocalStrategy, VerifyFunction } from "passport-local";
-import { User } from "./models";
+import { User } from "../models";
 
 /* Declare the custom fields for authentication lookup */
 const customFields = {
