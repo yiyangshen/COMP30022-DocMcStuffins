@@ -40,3 +40,27 @@ passport.deserializeUser(async (id, done) => {
         done(err);
     }
 });
+
+passport.use('local-signup', new LocalStrategy(
+    {
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true
+    },
+    async function (req, email, password, done) {
+        const existingUser = await User.findOne({ email: email });
+        if (existingUser) {
+            return done(null, false);
+        } else {
+            const newUser = new User({
+                email: email,
+                password: password,
+                firstName: req.body.firstName,
+                middleName: req.body.middleName,
+                lastName: req.body.lastName,
+            });
+            await newUser.save();
+            return done(null, newUser);
+        }
+    }
+))
