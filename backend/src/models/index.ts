@@ -1,26 +1,12 @@
-/* Import the required libraries and types */
-import { connect, connection } from "mongoose";
-
-/* Import the required constants */
-import { MONGODB_CONNECTION_STRING } from "../secrets";
-import { MONGODB_CONNECTION_OPTIONS } from "../config";
-
-/* Connect to the database */
-connect(MONGODB_CONNECTION_STRING, MONGODB_CONNECTION_OPTIONS);
-const db = connection;
-
-/* Handle server connection events */
-db.on("error", console.error.bind(console, "Connection error: "));
-db.once("open", () => {
-    console.log("Successfully connected to MongoDB database.");
-});
-
 /* Re-export primary interfaces, schemas, and models */
-export { default as User } from "./userModel";
 export { default as Contact } from "./contactModel";
 export { default as Group } from "./groupModel";
 export { default as Memo } from "./memoModel";
+export { default as User } from "./userModel";
+
 /* Re-export helper interfaces, schemas, and models */
+export { default as Name } from "./nameModel";
+export { default as Timestamps } from "./timestampsModel";
 
 /* Re-export helper enums */
 export { Gender } from "./contactModel";
