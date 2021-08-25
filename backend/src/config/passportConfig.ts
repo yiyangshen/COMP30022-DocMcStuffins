@@ -1,6 +1,9 @@
 import passport from "passport";
 import { Strategy as LocalStrategy, VerifyFunction } from "passport-local";
 import { User } from "../models";
+import { compareSync } from "bcrypt";
+
+// TODO : Decide on a password policy and email policy
 
 /* Declare the custom fields for authentication lookup */
 const customFields = {
@@ -11,13 +14,16 @@ const customFields = {
 /* Define the callback function to verify the authentication */
 const verifyCallback: VerifyFunction = async (email, password, done) => {
     try {
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email: email.toLowerCase() });
         if (!user) {
             // User not found
             return done(null, false);
         }
-        // Check whether the password matches (TODO: Apply bcrypt comparison here)
-        return user.password === password ? done(null, user) : done(null, false);
+        // Check whether the password matches
+        if (compareSync(password, user.password)) {
+            return done(null, user);
+        }
+        return done(null, false);
     } catch (err) {
         return done(err);
     }
@@ -41,26 +47,32 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
+/* Local strategy for user registration */
 passport.use('local-signup', new LocalStrategy(
     {
         usernameField: 'email',
         passwordField: 'password',
         passReqToCallback: true
     },
-    async function (req, email, password, done) {
-        const existingUser = await User.findOne({ email: email });
-        if (existingUser) {
-            return done(null, false);
-        } else {
-            const newUser = new User({
-                email: email,
-                password: password,
-                firstName: req.body.firstName,
-                middleName: req.body.middleName,
-                lastName: req.body.lastName,
-            });
-            await newUser.save();
-            return done(null, newUser);
+    async (req, email, password, done) => {
+        try {
+            const existingUser = await User.findOne({ email: email });
+            if (existingUser) {
+                return done(null, false);
+            } else {
+                const newUser = new User({
+                    email: email.toLowerCase(),
+                    password: password,
+                    firstName: req.body.firstName,
+                    middleName: req.body.middleName,
+                    lastName: req.body.lastName,
+                });
+                await newUser.save();
+                return done(null, newUser);
+            }
+        } catch (err) {
+            return done(err);
         }
+
     }
 ))
