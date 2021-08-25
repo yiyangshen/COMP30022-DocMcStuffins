@@ -1,7 +1,7 @@
 /* Import the required libraries and types */
 import { hashSync } from "bcrypt";
 import { model, Model, Schema } from "mongoose";
-//import { PASSWORD_HASH_ROUNDS } from "../config";
+import { PASSWORD_HASH_ROUNDS } from "../config";
 
 /* Define the user interface */
 export interface IUser {
@@ -36,7 +36,7 @@ const userSchema: Schema = new Schema({
         type: String,
         required: true,
         minlength: 6,
-        //set: (plaintext: string) => hashSync(plaintext, PASSWORD_HASH_ROUNDS)
+        set: (plaintext: string) => hashSync(plaintext, PASSWORD_HASH_ROUNDS)
     }
 });
 

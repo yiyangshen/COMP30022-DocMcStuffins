@@ -7,6 +7,8 @@ import { User } from "../models";
 const passportTestRouter = Router();
 passportTestRouter.use(json());
 
+// TODO : Replace all res to send the response class we wanted
+
 /* Handle passport test routes at /api/passportTest/... */
 passportTestRouter.post("/login", passport.authenticate("local"), (req, res) => {
     res.send("Logged in!");
@@ -17,31 +19,9 @@ passportTestRouter.get("/logout", (req, res) => {
     res.send("Logged Out!");
 });
 
-passportTestRouter.post("/register", async (req, res) => {
-    const { email, firstName, middleName, lastName, password } = req.body;
-
-    try {
-        // Check if the username has existed
-        const existingUser = await User.findOne({ email: email });
-        if (existingUser) {
-            res.status(403).send("Forbidden");
-            return;
-        }
-
-        const newUser = new User({
-            email: email,
-            firstName: firstName,
-            middleName: middleName,
-            lastName: lastName,
-            password: password
-        });
-        await newUser.save();
-
-        res.send(`New User Created! Welcome ${email}!`);
-    } catch (err) {
-        res.send("Internal Server Error");
-    }
-});
+passportTestRouter.post("/register", passport.authenticate('local-signup'), (req, res) => {
+    res.send('Registered');
+})
 
 passportTestRouter.get("/auth", (req, res) => {
     if (req.isAuthenticated()) {
