@@ -1,6 +1,6 @@
 import { model, Model, Schema, ObjectId } from "mongoose";
-import { IUser } from "./userModel";
-import { IGroup } from "./groupModel";
+import { IName, nameSchema } from "./nameModel";
+import { ITimestamps, timestampsSchema } from "./timestampsModel";
 
 enum Gender {
     Male = "Male",
@@ -12,9 +12,7 @@ enum Gender {
 export interface IContact {
     userID: ObjectId;
     groupID: ObjectId;
-    firstName: string;
-    middleName: string;
-    lastName: string;
+    name: IName;
     gender: string;
     dateOfBirth: Date;
     lastMet: Date;
@@ -23,6 +21,7 @@ export interface IContact {
     photo: string;
     relationship: string;
     additionalNotes: string;
+    timestamps: ITimestamps;
 }
 
 /* Define the contact schema */
@@ -37,16 +36,8 @@ const contactSchema: Schema = new Schema({
         ref: "Group",
         default: undefined
     },
-    firstName: {
-        type: String,
-        required: true
-    },
-    middleName: {
-        type: String,
-        default: undefined
-    },
-    lastName: {
-        type: String,
+    name: {
+        type: nameSchema,
         required: true
     },
     gender: {
@@ -80,6 +71,10 @@ const contactSchema: Schema = new Schema({
     additionalNotes: {
         type: String,
         default: undefined
+    },
+    timestamps: {
+        type: timestampsSchema,
+        default: {}
     }
 });
 

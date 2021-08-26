@@ -8,10 +8,9 @@ import passport from "passport";
 import routes from "./routes";
 import timestring from "timestring";
 
-/* Import the required constants */
-
-/* Load environment variables */
-require("dotenv").config();
+/* Load environment variables in development */
+if (process.env.NODE_ENV !== "production")
+    require("dotenv").config();
 
 /* Connect to the database */
 import "./config/databaseConfig";

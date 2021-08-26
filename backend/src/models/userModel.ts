@@ -2,13 +2,12 @@
 import { hashSync } from "bcrypt";
 import { model, Model, Schema } from "mongoose";
 import { PASSWORD_HASH_ROUNDS } from "../config";
+import { IName, nameSchema } from "./nameModel";
 
 /* Define the user interface */
 export interface IUser {
     email: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
+    name: IName;
     password: string;
 }
 
@@ -20,16 +19,8 @@ const userSchema: Schema = new Schema({
         unique: true,
         set: (email: string) => email.toLowerCase()
     },
-    firstName: {
-        type: String,
-        required: true
-    },
-    middleName: {
-        type: String,
-        default: undefined
-    },
-    lastName: {
-        type: String,
+    name: {
+        type: nameSchema,
         required: true
     },
     password: {

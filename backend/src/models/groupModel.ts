@@ -1,5 +1,4 @@
 import { model, Model, Schema, ObjectId } from "mongoose";
-import { IUser } from "./userModel";
 import { IContact, contactSchema } from "./contactModel";
 
 /* Define the group interface */
