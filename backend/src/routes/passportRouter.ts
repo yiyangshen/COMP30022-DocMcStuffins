@@ -4,26 +4,26 @@ import passport from "passport";
 import { User } from "../models";
 
 /* Set up the router */
-const passportTestRouter = Router();
-passportTestRouter.use(json());
+const passportRouter = Router();
+passportRouter.use(json());
 
 // TODO : Replace all res to send the response class we wanted
 
 /* Handle passport test routes at /api/passportTest/... */
-passportTestRouter.post("/login", passport.authenticate("local"), (req, res) => {
+passportRouter.post("/login", passport.authenticate("local"), (req, res) => {
     res.send("Logged in!");
 });
 
-passportTestRouter.get("/logout", (req, res) => {
+passportRouter.get("/logout", (req, res) => {
     req.logout();
     res.send("Logged Out!");
 });
 
-passportTestRouter.post("/register", passport.authenticate('local-signup'), (req, res) => {
+passportRouter.post("/register", passport.authenticate('local-signup'), (req, res) => {
     res.send('Registered');
 })
 
-passportTestRouter.get("/auth", (req, res) => {
+passportRouter.get("/auth", (req, res) => {
     if (req.isAuthenticated()) {
         res.send("You're authenticated! =)");
     } else {
@@ -31,12 +31,12 @@ passportTestRouter.get("/auth", (req, res) => {
     }
 })
 
-passportTestRouter.get("/session", (req, res) => {
+passportRouter.get("/session", (req, res) => {
     res.send(req.session);
 });
 
-passportTestRouter.get("/user", (req, res) => {
+passportRouter.get("/user", (req, res) => {
     res.send(req.user);
 });
 
-export default passportTestRouter;
+export default passportRouter;

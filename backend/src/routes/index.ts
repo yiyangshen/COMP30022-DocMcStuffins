@@ -2,13 +2,13 @@
 import { Request, Response, Router } from "express";
 
 /* Import existing routes */
-import passportTestRouter from "./passportTestRouter";
+import passportRouter from "./passportRouter";
 
 /* Set up the unifying router */
 const routes: Router = Router();
 
 /* Register the existing routes */
-routes.use("/passportTest", passportTestRouter);
+routes.use("/passportTest", passportRouter);
 
 /* Define a catch-all route */
 routes.all("/*", (req: Request, res: Response) => {
