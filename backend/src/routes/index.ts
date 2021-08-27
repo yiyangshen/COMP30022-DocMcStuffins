@@ -8,7 +8,7 @@ import passportRouter from "./passportRouter";
 const routes: Router = Router();
 
 /* Register the existing routes */
-routes.use("/passportTest", passportRouter);
+routes.use("/passport", passportRouter);
 
 /* Define a catch-all route */
 routes.all("/*", (req: Request, res: Response) => {

@@ -11,16 +11,16 @@ passportRouter.use(json());
 
 /* Handle passport test routes at /api/passportTest/... */
 passportRouter.post("/login", passport.authenticate("local"), (req, res) => {
-    res.send("Logged in!");
+    res.send("SUCCESS");
 });
 
 passportRouter.get("/logout", (req, res) => {
     req.logout();
-    res.send("Logged Out!");
+    res.send("SUCCESS");
 });
 
 passportRouter.post("/register", passport.authenticate('local-signup'), (req, res) => {
-    res.send('Registered');
+    res.send('SUCCESS');
 })
 
 passportRouter.get("/auth", (req, res) => {
