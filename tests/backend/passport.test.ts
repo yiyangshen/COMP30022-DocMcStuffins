@@ -1,10 +1,11 @@
 /* Import the required types and libraries */
 import { agent } from "supertest";
-import app from "../src/server";
+import app from "../../backend/src/server";
 import { compareSync } from "bcrypt";
 
-/* Import the User model */
-import { User } from "../src/models/index";
+/* Import the User and Name model */
+import { User, Name } from "../../backend/src/models/index";
+
 
 const TEST_USER_FIRST_NAME = "Tony";
 const TEST_USER_MID_NAME = "M";
@@ -14,11 +15,15 @@ const TEST_USER_EMAIL = "tony_pizza@gaming.com";
 
 describe(`Create account, login, logout, and delete`, () => {
 
+    const newNameField = {
+        first: TEST_USER_FIRST_NAME,
+        middle: TEST_USER_MID_NAME,
+        last: TEST_USER_LAST_NAME
+    }
+
     const newUserField = {
         email: TEST_USER_EMAIL,
-        firstName: TEST_USER_FIRST_NAME,
-        middleName: TEST_USER_MID_NAME,
-        lastName: TEST_USER_LAST_NAME,
+        name: newNameField,
         password: TEST_USER_PASSWORD
     };
 
