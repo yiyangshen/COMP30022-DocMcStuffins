@@ -1,10 +1,27 @@
 name: Backend REST API CI
 
 on:
+  
   push:
     branches: [ main ]
+    paths:
+      - 'backend/**'
+  
   pull_request:
     branches: [ main ]
+    paths:
+      - 'backend/**'
+
+defaults:
+  
+  run:
+    working-directory: backend
+
+env:
+  MONGODB_USERNAME: ${{secrets.MONGODB_USERNAME}}
+  MONGODB_PASSWORD: ${{secrets.MONGODB_PASSWORD}}
+  NODE_ENV: testing
+  SESSION_SECRET: ${{secrets.SESSION_SECRET}}
 
 jobs:
   build:
@@ -28,11 +45,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        env:
-          MONGODB_USERNAME: ${{secrets.MONGODB_USERNAME}}
-          MONGODB_PASSWORD: ${{secrets.MONGODB_PASSWORD}}
-          NODE_ENV: testing
-          SESSION_SECRET: ${{secrets.SESSION_SECRET}}
       
       - name: Build application
         run: npm run build --if-present
