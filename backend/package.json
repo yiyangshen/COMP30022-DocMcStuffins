@@ -51,7 +51,7 @@
     "npm": "*"
   },
   "scripts": {
-    "compile": "tsc --project ./",
+    "build": "tsc --project ./",
     "clean": "rm --force --recursive dist/",
     "start": "node dist/server.js",
     "start-dev": "nodemon",
@@ -61,7 +61,7 @@
     "watch": [
       "src/**/*"
     ],
-    "exec": "npm run compile && npm run start",
+    "exec": "npm run build && npm run start",
     "ext": "ts"
   }
 }

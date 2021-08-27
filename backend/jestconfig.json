@@ -1,6 +1,10 @@
 {
     "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
     "preset": "ts-jest",
+    "roots": [
+        "<rootDir>/src",
+        "<rootDir>/../tests/backend"
+    ],
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
         "<rootDir>/dist/",
