@@ -39,9 +39,6 @@ jobs:
         with:
           node-version: '16.x'
           cache: 'npm'
-      
-      - name: Change into backend directory
-        run: cd backend/
 
       - name: Install dependencies
         run: npm ci
