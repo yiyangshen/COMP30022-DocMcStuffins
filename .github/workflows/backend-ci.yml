@@ -1,0 +1,53 @@
+name: Backend REST API CI
+
+on:
+  
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+  
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+
+defaults:
+  
+  run:
+    working-directory: backend
+
+env:
+  MONGODB_USERNAME: ${{secrets.MONGODB_USERNAME}}
+  MONGODB_PASSWORD: ${{secrets.MONGODB_PASSWORD}}
+  NODE_ENV: testing
+  SESSION_SECRET: ${{secrets.SESSION_SECRET}}
+
+jobs:
+  build:
+    
+    name: Build code and run tests
+
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checking out commit ${{env.GITHUB_SHA}}
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          cache: 'npm'
+      
+      - name: Change into backend directory
+        run: cd backend/
+
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build --if-present
+
+      - name: Run tests
+        run: npm run test
