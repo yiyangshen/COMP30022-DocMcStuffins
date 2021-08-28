@@ -1,16 +1,13 @@
 import { model, Model, Schema, ObjectId } from "mongoose";
-import { IUser } from "./userModel";
-import { IContact } from "./contactModel";
-
+import { ITimestamps, timestampsSchema } from "./timestampsModel";
 
 /* Define the memo interface */
 export interface IMemo {
     userID: ObjectId;
     contactID: ObjectId;
     title: string;
-    dateEdited: Date;
     notes: string;
-
+    timestamps: ITimestamps;
 }
 
 /* Define the memo schema */
@@ -24,13 +21,13 @@ const memoSchema: Schema = new Schema({
         type: String,
         required: true
     },
-    dateEdited: {
-        type: Date,
-        default: undefined
-    },
     notes: {
         type: String,
         default: undefined
+    },
+    timestamps: {
+        type: timestampsSchema,
+        default: {}
     }
 });
 

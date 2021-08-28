@@ -1,6 +1,3 @@
-/* Load environment variables */
-require("dotenv").config();
-
 /* Load the configuration scripts */
 import "./databaseConfig";
 import "./passportConfig";
