@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checking out commit ${{env.GITHUB_SHA}}
+      - name: Checking out commit ${env.GITHUB_SHA}
         uses: actions/checkout@v2
 
       - name: Use Node.js
