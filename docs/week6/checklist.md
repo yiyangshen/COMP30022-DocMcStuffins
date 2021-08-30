@@ -1,4 +1,4 @@
-# COMP30022 Project Inception Checklist
+# COMP30022 Project Week 6 Checklist
 
 |            |                |
 | :--------- | :------------- |
@@ -18,7 +18,7 @@ We are using GitHub as our primary knowledge base [here](https://github.com/tech
 
 > *Are there minutes of meetings? If so, give a link to where they are stored.*
 
-Technically, yes. The only formal meeting we have had so far is the inception meeting with the client, and the contents of that meeting is detailed [here](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/inception/requirements_elicitation.md).
+Yes, we have all our minutes of meetings [here](https://github.com/techn0mancr/COMP30022-DocMcStuffins/tree/main/docs/minutes).
 
 > *Have you set up a repository? If so, which one?*
 
@@ -36,13 +36,13 @@ Yes, all team members are contributing.
 ## Artifacts
 
 > *What requirements artefacts have been developed? Give a link to them.*
-- [motivational model](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/inception/diagrams/motivational_model.png)
-- [product backlog](https://trello.com/b/lIbOWM1v/sprints)
-- [requirements elicitation document](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/inception/requirements_elicitation.md)
-- [user stories](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/inception/user_stories.md)
+- [motivational model](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week6/diagrams/motivational_model.png)
+- [personas](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week6/persona.pdf)
+- [product backlog](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week6/product_backlog.md)
+- [requirements elicitation document](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week6/requirements_elicitation.md)
 
 > *What design artefacts have been developed? Give a link to them.*
 - [entity relationship diagram](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/inception/diagrams/entity_relationships.pdf)
 - [high-level architectural diagram](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/inception/diagrams/high_level_architectural_diagram.pdf)
 - [UI wireframe](https://github.com/techn0mancr/COMP30022-DocMcStuffins/raw/main/prototypes/ui_wireframe.pdf)
-- [user flow diagram](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/prototypes/user_flow_2.0.pdf)
+- [user flow diagram](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/prototypes/user_flow.pdf)
