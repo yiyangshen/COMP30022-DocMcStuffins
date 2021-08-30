@@ -1,27 +1,24 @@
-name: Backend REST API CI
+name: Frontend React CI
 
 on:
   
   push:
     branches: [ main ]
     paths:
-      - 'backend/**'
+      - 'frontend/**'
   
   pull_request:
     branches: [ main ]
     paths:
-      - 'backend/**'
+      - 'frontend/**'
 
 defaults:
   
   run:
-    working-directory: backend
+    working-directory: frontend
 
 env:
-  MONGODB_USERNAME: ${{secrets.MONGODB_USERNAME}}
-  MONGODB_PASSWORD: ${{secrets.MONGODB_PASSWORD}}
   NODE_ENV: testing
-  SESSION_SECRET: ${{secrets.SESSION_SECRET}}
 
 jobs:
   build:
