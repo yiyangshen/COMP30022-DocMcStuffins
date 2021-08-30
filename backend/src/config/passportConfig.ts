@@ -63,9 +63,11 @@ passport.use('local-signup', new LocalStrategy(
                 const newUser = new User({
                     email: email.toLowerCase(),
                     password: password,
-                    firstName: req.body.firstName,
-                    middleName: req.body.middleName,
-                    lastName: req.body.lastName,
+                    name: {
+                        first: req.body.firstName,
+                        middle: req.body.middleName,
+                        last: req.body.lastName,
+                    },
                 });
                 await newUser.save();
                 return done(null, newUser);
