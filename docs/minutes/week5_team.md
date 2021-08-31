@@ -25,6 +25,7 @@ Frontend team has confirmed UI design with client. Backend team is doing prepara
 #### Frontend
 - create user flow
 - confirm user interface and flow with client
+- initialise Create React App Typescript application template
 
 ### Livya
 
