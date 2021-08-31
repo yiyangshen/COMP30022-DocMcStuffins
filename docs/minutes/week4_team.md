@@ -11,28 +11,37 @@
 
 ## Status
 
-
+Frontend team is making good progress with their UI mockup. Project management resources are now fully established.
 
 ## Work Assignment
 
 ### Dyno
 
+#### Backend
+- learned to use Passport.js
 
 ### Josh
-#### Create 6/15 pages UI mock up 
 
+#### Frontend
+- draft 6 out of 15 pages for UI mockup
 
 ### Livya
-#### Create high level architecture design
-#### Create 9/15 pages UI mock up
 
+#### Frontend
+- draft 9 out of 15 pages for UI mockup
+- draft high-level architectural diagram
 
 ### Nathan
-#### Clarify requirements with client
-#### Integrate requirements clarification with existing documentation
-#### Push API Skeleton to GitHub
 
+#### Project Management
+- clarify requirements with client
+- integrate client clarifications with existing documentation
+- set up Trello boards and workflow
+
+#### Backend
+- push backend API skeleton to GitHub
 
 ### Stanley
-#### Integrate Passport.js authentication system
 
+#### Backend
+- write Passport.js configuration code

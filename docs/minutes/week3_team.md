@@ -11,30 +11,39 @@
 
 ## Status
 
-
+Successfully booked inception meeting with client on Friday. Preparations for development are going well.
 
 ## Work Assignment
 
 ### Dyno
-#### Initial requirement	elicitation
 
+#### Project Management
+- assist with initial requirement elicitation
 
 ### Josh
-#### Research colour scheme
-#### Finalise UI wireframe
 
+#### Project Management
+- assist with initial requirement elicitation
+
+#### Frontend
+- draft UI wireframe
 
 ### Livya
-#### Research colour scheme and fonts 
-#### Finalise UI wireframe
 
+#### Project Management
+- assist with initial requirement elicitation
+- take notes in inception meeting
+
+#### Frontend
+- draft UI wireframe
+- look into prospective colour schemes and typefaces
 
 ### Nathan
-#### Initial requirement	elicitation
-#### Set up MongoDB Atlas cluster
-#### Create new helper entities in database model
 
+#### Project Management
+- host initial requirement elicitation meeting
 
 ### Stanley
-#### Initial requirement	elicitation
 
+#### Project Management
+- assist with initial requirement elicitation

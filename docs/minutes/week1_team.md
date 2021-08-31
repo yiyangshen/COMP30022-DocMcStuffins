@@ -10,24 +10,14 @@
 |      ^^      | Stanley Wirian            |
 
 ## Status
-Formed the team and discuss who will be the project manager. 
 
+Team formation went smoothly.
 
 ## Work Assignment
 
-### Dyno
-
-
-### Josh
-
-
-### Livya
-#### Take notes during client's meeting
-
-
 ### Nathan
-#### Communicate with client to set a date to have the first meeting
 
-
-### Stanley
-
+#### Project Management
+- set up GitHub repository
+- set up Slack channel
+- set up Trello workspace

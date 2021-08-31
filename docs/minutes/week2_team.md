@@ -17,21 +17,28 @@
 
 ### Dyno
 
+#### Backend
+- learn to use MERN stack
 
 ### Josh
-#### Initialise UI wireframe in sketch
 
+#### Frontend
+- learn UI design process
 
 ### Livya
-#### Initialise UI wireframe in sketch
-#### Research UI on similar fields 
 
+#### Frontend
+- learn UI design process
 
 ### Nathan
-#### Set up git repository 
-#### Set up Slack channel
-#### Initialise CRA Typescript template application
 
+#### Project Management
+- arrange inception meeting with client
+
+#### Backend
+- walk backend team through past MERN-based project
 
 ### Stanley
 
+#### Backend
+- learn to use the MERN stack
