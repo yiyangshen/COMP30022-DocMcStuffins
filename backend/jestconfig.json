@@ -3,7 +3,7 @@
     "preset": "ts-jest",
     "roots": [
         "<rootDir>/src",
-        "<rootDir>/../tests/backend"
+        "<rootDir>/tests"
     ],
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
