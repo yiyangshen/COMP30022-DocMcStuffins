@@ -17,9 +17,8 @@
   ],
   "private": true,
   "dependencies": {
-    "@types/supertest": "*",
     "@types/express": "*",
-    "supertest": "*",
+    "@types/supertest": "*",
     "bcrypt": "*",
     "connect-mongodb-session": "*",
     "cors": "*",
@@ -28,6 +27,7 @@
     "mongoose": "*",
     "passport": "*",
     "passport-local": "*",
+    "supertest": "*",
     "timestring": "*",
     "tslib": "*"
   },

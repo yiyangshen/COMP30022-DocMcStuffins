@@ -3,33 +3,22 @@ import { json, Router } from "express";
 import passport from "passport";
 import { User } from "../models";
 
+// import controller
+import * as controller from "../controllers/passportController"
+
 /* Set up the router */
 const passportRouter = Router();
 passportRouter.use(json());
 
 // TODO : Replace all res to send the response class we wanted
-
 /* Handle passport test routes at /api/passportTest/... */
-passportRouter.post("/login", passport.authenticate("local"), (req, res) => {
-    res.send("SUCCESS");
-});
+passportRouter.post("/login", controller.handleLogin);
 
-passportRouter.get("/logout", (req, res) => {
-    req.logout();
-    res.send("SUCCESS");
-});
+passportRouter.get("/logout", controller.handleLogout);
 
-passportRouter.post("/register", passport.authenticate('local-signup'), (req, res) => {
-    res.send('SUCCESS');
-})
+passportRouter.post("/register", controller.handleRegister);
 
-passportRouter.get("/auth", (req, res) => {
-    if (req.isAuthenticated()) {
-        res.send("You're authenticated! =)");
-    } else {
-        res.send("You're not authenticated! =(");
-    }
-})
+passportRouter.get("/auth", controller.isAuthenticated);
 
 passportRouter.get("/session", (req, res) => {
     res.send(req.session);

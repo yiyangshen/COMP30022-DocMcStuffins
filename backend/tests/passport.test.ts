@@ -8,11 +8,11 @@ import { Response } from "express";
 import { User, Name } from "../../backend/src/models/index";
 
 
-const TEST_USER_FIRST_NAME = "Tony";
-const TEST_USER_MID_NAME = "M";
-const TEST_USER_LAST_NAME = "Chungus";
-const TEST_USER_PASSWORD = "peppEr0n1-";
-const TEST_USER_EMAIL = "tony_pizza@gaming.com";
+const TEST_USER_FIRST_NAME = "Philip";
+const TEST_USER_MID_NAME = "Oliver";
+const TEST_USER_LAST_NAME = "Holes";
+const TEST_USER_PASSWORD = "phillycheese";
+const TEST_USER_EMAIL = "phil@gaming.com";
 
 describe(`Create account, login, logout, and delete`, () => {
 
