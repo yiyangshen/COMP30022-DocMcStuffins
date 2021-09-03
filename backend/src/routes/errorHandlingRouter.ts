@@ -9,14 +9,6 @@ errorHandlingRouter.use(json());
 
 errorHandlingRouter.post("/error", (req, res, next) => {
     const { status, statusText, message } = req.body;
-
-    // Check if any of the error fields are empty
-    if (!status || !statusText || !message) {
-        const err = new HTTPError(400, "Bad Request", "Expected fields: status (int), statusText (string), message (string)");
-        next(err);
-        return;
-    }
-
     const err = new HTTPError(status, statusText, message);
     next(err);
 });
