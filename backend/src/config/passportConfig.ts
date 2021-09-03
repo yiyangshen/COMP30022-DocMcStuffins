@@ -56,6 +56,9 @@ passport.use('local-signup', new LocalStrategy(
     },
     async (req, email, password, done) => {
         try {
+            if (password.length < 6) {
+                return done(null, false, { message: 'PASSWORD_LEN' });
+            }
             const existingUser = await User.findOne({ email: email });
             if (existingUser) {
                 return done(null, false, { message: 'EXIST' });
