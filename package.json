@@ -25,7 +25,13 @@
   ],
   "private": true,
   "dependencies": {
-    "npm-run-all": "*"
+    "@types/bcrypt": "^5.0.0",
+    "@types/supertest": "^2.0.11",
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.1",
+    "npm-run-all": "*",
+    "supertest": "^6.1.6",
+    "tslib": "^2.3.1"
   },
   "engines": {
     "npm": "*"
@@ -34,29 +40,25 @@
     "prebuild-backend": "cd backend/ && npm install --production=false",
     "build-backend": "cd backend/ && npm run build",
     "postbuild-backend": "cd backend/ && npm prune --production",
-    
     "prebuild-frontend": "cd frontend/ && npm install --production=false --legacy-peer-deps",
     "build-frontend": "cd frontend/ && npm run build",
     "postbuild-frontend": "cd frontend/ && npm prune --production",
-
     "pretest-backend": "npm run prebuild-backend",
     "test-backend": "cd backend/ && npm run test",
-    
     "frontend-dev": "cd frontend/ && npm start",
-    
     "backend": "cd backend/ && npm start",
     "backend-dev": "cd backend/ && npm run start-dev",
-    
     "prestart-dev": "npm-run-all --parallel prebuild-frontend prebuild-backend",
     "start-dev": "npm-run-all --parallel frontend-dev backend-dev",
-    
     "prestart-prod": "NODE_ENV=production npm run heroku-postbuild",
     "start-prod": "NODE_ENV=production npm start",
-    
     "build": "npm-run-all --parallel build-backend build-frontend",
     "start": "npm run backend",
     "test": "npm-run-all --sequential test-backend",
-    
     "heroku-postbuild": "npm run build"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.7.6"
   }
 }

@@ -17,13 +17,13 @@ const verifyCallback: VerifyFunction = async (email, password, done) => {
         const user = await User.findOne({ email: email.toLowerCase() });
         if (!user) {
             // User not found
-            return done(null, false);
+            return done(null, false, { message: 'NOT_FOUND' });
         }
         // Check whether the password matches
         if (compareSync(password, user.password)) {
-            return done(null, user);
+            return done(null, user, { message: 'SUCCESS' });
         }
-        return done(null, false);
+        return done(null, false, { message: 'INCORRECT' });
     } catch (err) {
         return done(err);
     }
@@ -56,19 +56,24 @@ passport.use('local-signup', new LocalStrategy(
     },
     async (req, email, password, done) => {
         try {
+            if (password.length < 6) {
+                return done(null, false, { message: 'PASSWORD_LEN' });
+            }
             const existingUser = await User.findOne({ email: email });
             if (existingUser) {
-                return done(null, false);
+                return done(null, false, { message: 'EXIST' });
             } else {
                 const newUser = new User({
                     email: email.toLowerCase(),
                     password: password,
-                    firstName: req.body.firstName,
-                    middleName: req.body.middleName,
-                    lastName: req.body.lastName,
+                    name: {
+                        first: req.body.firstName,
+                        middle: req.body.middleName,
+                        last: req.body.lastName,
+                    },
                 });
                 await newUser.save();
-                return done(null, newUser);
+                return done(null, newUser, { message: 'SUCCESS' });
             }
         } catch (err) {
             return done(err);
