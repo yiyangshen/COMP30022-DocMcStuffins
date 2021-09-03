@@ -1,4 +1,5 @@
 /* Import the required libraries and types */
+import { JSONResponse } from "../classes/JSONResponse";
 import { json, Router } from "express";
 import { HTTPError } from "../classes/HTTPError";
 import { HTTPErrorHandler } from "../middlewares/HTTPErrorHandler";
@@ -14,15 +15,8 @@ errorHandlingRouter.post("/error", (req, res, next) => {
 });
 
 errorHandlingRouter.post("/json", (req, res, next) => {
-
-    // Check if the body is empty
-    if (Object.keys(req.body).length === 0) {
-        const err = new HTTPError(400, "Bad Request", "Empty body");
-        next(err);
-        return;
-    }
-    
-    res.json(req.body);
+    const jsonRes = new JSONResponse(req.body);
+    res.status(jsonRes.status).json(jsonRes);
 });
 
 errorHandlingRouter.use(HTTPErrorHandler);
