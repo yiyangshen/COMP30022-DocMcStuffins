@@ -4,30 +4,29 @@ import { User } from "../models"
 
 import { JSONResponse } from "../classes/JSONResponse";
 import { HTTPError } from "../classes/HTTPError";
-import { ErrorResponse } from "../classes/ErrorResponse";
 
 // Handle Logins
 const handleLogin = async (req: Request, res: Response, next: NextFunction) => {
     // ensure required fields were entered
     if (!req.body.email || !req.body.password) {
-        return res.json(new ErrorResponse(new HTTPError(400, 'Bad Request', 'Please enter required fields')));
+        const err = new HTTPError(400, 'Bad Request', 'Please enter required fields');
+        return next(err);
     }
     passport.authenticate('local', (error: any, user: any, info: any) => {
         if (error) {
-            // return next(error);
-            return res.send(error);
+            return next(error);
         }
         if (!user && info.message == 'NOT_FOUND') {
-            // return next(error);
-            return res.json(new ErrorResponse(new HTTPError(404, 'Not Found', 'No user matches email')));
+            const err = new HTTPError(404, 'Not Found', 'No user matches email');
+            return next(err);
 
         }
         if (!user && info.message == 'INCORRECT') {
-            // return next(error);
-            return res.json(new ErrorResponse(new HTTPError(401, 'Unauthorized', 'Incorrect password')));
+            const err = new HTTPError(401, 'Unauthorized', 'Incorrect password');
+            return next(err);
         }
         if (user) {
-            return res.json(new JSONResponse({ message: "Login Successful" }));
+            return res.status(200).json(new JSONResponse({ message: "Login Successful" }));
         }
     })(req, res, next);
 }
@@ -44,19 +43,20 @@ const handleRegister = async (req: Request & {
 }, res: Response, next: NextFunction) => {
     // ensure required fields were entered
     if (!req.body.email || !req.body.password || !req.body.firstName || !req.body.lastName) {
-        return res.json(new ErrorResponse(new HTTPError(400, 'Bad Request', 'Please enter required fields')));
+        const err = new HTTPError(400, 'Bad Request', 'Please enter required fields');
+        return next(err);
     }
     passport.authenticate('local-signup', (error: any, user: any, info: any) => {
         if (error) {
             return next(error);
-            //return res.send(error);
         }
         if (!user && info.message == 'PASSWORD_LEN') {
-            return res.json(new ErrorResponse(new HTTPError(400, 'Bad Request', 'Password should be at least 6 characters')));
+            const err = new HTTPError(400, 'Bad Request', 'Password should be at least 6 characters');
+            return next(err);
         }
         if (!user && info.message == 'EXIST') {
-            // return next(error);
-            return res.json(new ErrorResponse(new HTTPError(404, 'Not Found', 'User already exists')));
+            const err = new HTTPError(404, 'Not Found', 'User already exists');
+            return next(err);
 
         }
         if (user) {

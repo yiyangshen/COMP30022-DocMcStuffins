@@ -6,6 +6,9 @@ import { User } from "../models";
 // import controller
 import * as controller from "../controllers/passportController"
 
+// import ErrorHandler
+import { HTTPErrorHandler } from "../middlewares/HTTPErrorHandler";
+
 /* Set up the router */
 const passportRouter = Router();
 passportRouter.use(json());
@@ -28,4 +31,5 @@ passportRouter.get("/user", (req, res) => {
     res.send(req.user);
 });
 
+passportRouter.use(HTTPErrorHandler);
 export default passportRouter;
