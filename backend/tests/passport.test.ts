@@ -128,9 +128,11 @@ describe('Login tests', () => {
         await userAgent
             .post(`${BASE_URL}/register`)
             .send(req)
+            /*
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
             })
+            */
     })
 
     test('1. Login with empty data', async () => {
