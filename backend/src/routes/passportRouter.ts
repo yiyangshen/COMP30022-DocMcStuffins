@@ -1,5 +1,5 @@
 /* Import the required libraries and types */
-import { JSONResponse } from "classes/JSONResponse";
+import { JSONResponse } from "../classes/JSONResponse";
 import { json, Router } from "express";
 
 // import controller
