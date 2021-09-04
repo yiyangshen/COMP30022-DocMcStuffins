@@ -2,15 +2,17 @@
 import { Request, Response, Router } from "express";
 
 /* Import existing routes */
-import passportTestRouter from "./passportTestRouter";
+import passportRouter from "./passportRouter";
 import errorHandlingRouter from "./errorHandlingRouter";
+import { HTTPErrorHandler } from "../middlewares/HTTPErrorHandler";
 
 /* Set up the unifying router */
 const routes: Router = Router();
 
 /* Register the existing routes */
-routes.use("/passportTest", passportTestRouter);
+routes.use("/passport", passportRouter);
 routes.use("/errorHandling", errorHandlingRouter);
+routes.use(HTTPErrorHandler);
 
 /* Define a catch-all route */
 routes.all("/*", (req: Request, res: Response) => {

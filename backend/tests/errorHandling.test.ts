@@ -1,6 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { agent } from "supertest";
-import app from "../src/server";
+import app from "../src/config/serverConfig";
 import { HTTPError } from "../src/classes/HTTPError";
 
 const BASE_URL = "/api/errorHandling";
@@ -27,10 +27,13 @@ describe("Error handling tests", () => {
     const URL = BASE_URL + "/error";
     
     test(`Trigger a well formed ${TEST_ERROR_STATUS} error`, async () => {
-        const req = new HTTPError(TEST_ERROR_STATUS, TEST_ERROR_STATUSTEXT, TEST_ERROR_MESSAGE);
         await errorAgent
             .post(URL)
-            .send(req)
+            .send({
+                "status": TEST_ERROR_STATUS,
+                "statusText": TEST_ERROR_STATUSTEXT,
+                "message": TEST_ERROR_MESSAGE
+            })
             .then((res: any) => {
                 expect(res.statusCode).toBe(TEST_ERROR_STATUS);
                 expect(res.body.mimetype).toBe(ERROR_MIMETYPE);
