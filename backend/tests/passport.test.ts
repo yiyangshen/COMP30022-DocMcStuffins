@@ -1,10 +1,10 @@
 /* Import the required types and libraries */
+import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
 import { agent } from "supertest";
-import app from "../../backend/src/server";
-import { Response, Request } from "express";
+import app from "../src/server";
 
 /* Import the User and Name model */
-import { User } from "../../backend/src/models/index";
+import { User } from "../src/models/index";
 
 const TEST_USER_EMAIL = "phil@gaming.com";
 const TEST_USER_FIRST_NAME = "Philip";
@@ -14,8 +14,10 @@ const TEST_USER_PASSWORD = "phillycheese";
 
 /* Emails used for different registration tests */
 const TEST_USER_EMAIL_TR0 = TEST_USER_EMAIL + '.au';
-const TEST_USER_EMAIL_TR1 = TEST_USER_EMAIL + '.id'
-const TEST_USER_EMAIL_TR2 = TEST_USER_EMAIL + '.edu'
+const TEST_USER_EMAIL_TR1 = TEST_USER_EMAIL + '.id';
+const TEST_USER_EMAIL_TR2 = TEST_USER_EMAIL + '.edu';
+
+const BASE_URL = "/api/passport";
 
 describe('Registration tests', () => {
     const userAgent = agent(app);
@@ -23,7 +25,7 @@ describe('Registration tests', () => {
     test('1. Register with empty data', async () => {
         const req: any = { };
         await userAgent
-            .post('/api/passport/register')
+            .post(`${BASE_URL}/register`)
             .send(req)
             .then((res: any) => {
                 expect(res.body.status).toEqual(400);
@@ -38,7 +40,7 @@ describe('Registration tests', () => {
             password: TEST_USER_PASSWORD
         };
         await userAgent
-            .post('/api/passport/register')
+            .post(`${BASE_URL}/register`)
             .send(req)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
@@ -54,7 +56,7 @@ describe('Registration tests', () => {
             middle: TEST_USER_MID_NAME
         };
         await userAgent
-            .post('/api/passport/register')
+            .post(`${BASE_URL}/register`)
             .send(req)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
@@ -70,7 +72,7 @@ describe('Registration tests', () => {
             middle: TEST_USER_MID_NAME
         };
         await userAgent
-            .post('/api/passport/register')
+            .post(`${BASE_URL}/register`)
             .send(req)
             .then((res: any) => {
                 expect(res.body.status).toEqual(400);
@@ -86,13 +88,13 @@ describe('Registration tests', () => {
             middle: TEST_USER_MID_NAME
         };
         await userAgent
-            .post('/api/passport/register')
+            .post(`${BASE_URL}/register`)
             .send(req)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
             })
         await userAgent
-            .post('/api/passport/register')
+            .post(`${BASE_URL}/register`)
             .send(req)
             .then((res: any) => {
                 expect(res.body.status).toEqual(404);
@@ -124,7 +126,7 @@ describe('Login tests', () => {
             middle: TEST_USER_MID_NAME
         };
         await userAgent
-            .post('/api/passport/register')
+            .post(`${BASE_URL}/register`)
             .send(req)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
@@ -134,7 +136,7 @@ describe('Login tests', () => {
     test('1. Login with empty data', async () => {
         const req: any = { };
         await userAgent
-            .post('/api/passport/login')
+            .post(`${BASE_URL}/login`)
             .send(req)
             .then((res: any) => {
                 expect(res.body.status).toEqual(400);
@@ -147,7 +149,7 @@ describe('Login tests', () => {
             password: TEST_USER_PASSWORD
         }
         await userAgent
-            .post('/api/passport/login')
+            .post(`${BASE_URL}/login`)
             .send(req)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
@@ -160,7 +162,7 @@ describe('Login tests', () => {
             password: TEST_USER_PASSWORD
         }
         await userAgent
-            .post('/api/passport/login')
+            .post(`${BASE_URL}/login`)
             .send(req)
             .then((res: any) => {
                 expect(res.body.status).toEqual(404);
@@ -173,7 +175,7 @@ describe('Login tests', () => {
             password: '012'
         }
         await userAgent
-            .post('/api/passport/login')
+            .post(`${BASE_URL}/login`)
             .send(req)
             .then((res: any) => {
                 expect(res.body.status).toEqual(401);
