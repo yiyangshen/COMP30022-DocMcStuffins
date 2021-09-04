@@ -1,7 +1,8 @@
 /* Import the required types and libraries */
 import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
-import { agent } from "supertest";
-import app from "../src/server";
+// import { agent } from "supertest";
+// import app from "../src/server";
+import agent from "./agentConfig";
 
 /* Import the User and Name model */
 import { User } from "../src/models/index";
@@ -20,7 +21,7 @@ const TEST_USER_EMAIL_TR2 = TEST_USER_EMAIL + '.edu';
 const BASE_URL = "/api/passport";
 
 describe('Registration tests', () => {
-    const userAgent = agent(app);
+    const userAgent = agent;
 
     test('1. Register with empty data', async () => {
         const req: any = { };
@@ -114,7 +115,7 @@ describe('Registration tests', () => {
 });
 
 describe('Login tests', () => {
-    const userAgent = agent(app);
+    const userAgent = agent;
 
     beforeAll(async () => {
         // register an account to be used for login testing

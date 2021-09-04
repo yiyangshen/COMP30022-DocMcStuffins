@@ -1,6 +1,7 @@
 import { describe, test, expect } from "@jest/globals";
-import { agent } from "supertest";
-import app from "../src/server";
+// import { agent } from "supertest";
+// import app from "../src/server";
+import agent from "./agentConfig";
 import { HTTPError } from "../src/classes/HTTPError";
 
 const BASE_URL = "/api/errorHandling";
@@ -23,7 +24,7 @@ const TEST_JSON_FIELD_2 = "Punchline";
 const TEST_JSON_VALUE_2 = "Megane wa kakkoi desu!";
 
 describe("Error handling tests", () => {
-    const errorAgent = agent(app);
+    const errorAgent = agent;
     const URL = BASE_URL + "/error";
     
     test(`Trigger a well formed ${TEST_ERROR_STATUS} error`, async () => {
@@ -93,7 +94,7 @@ describe("Error handling tests", () => {
 })
 
 describe ("JSON response test", () => {
-    const jsonAgent = agent(app);
+    const jsonAgent = agent;
     const URL = BASE_URL + "/json";
 
     test(`Receive a well formed JSON response successfully`, async () => {
