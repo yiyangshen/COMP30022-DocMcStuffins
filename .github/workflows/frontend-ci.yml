@@ -11,6 +11,8 @@ on:
     branches: [ main ]
     paths:
       - 'frontend/**'
+  
+  workflow_dispatch:
 
 defaults:
   
@@ -28,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checking out commit ${env.GITHUB_SHA}
+      - name: Checking out commit ${{github.sha}}
         uses: actions/checkout@v2
 
       - name: Use Node.js
