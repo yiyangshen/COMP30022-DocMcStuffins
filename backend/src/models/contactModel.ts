@@ -10,28 +10,28 @@ enum Gender {
 
 /* Define the contact interface */
 export interface IContact {
-    userID: ObjectId;
-    groupID: ObjectId;
+    userId: ObjectId;
+    groupId?: ObjectId;
     name: IName;
     gender: string;
-    dateOfBirth: Date;
-    lastMet: Date;
-    phoneNumber: string;
-    email: string;
-    photo: string;
-    relationship: string;
-    additionalNotes: string;
+    dateOfBirth?: Date;
+    lastMet?: Date;
+    phoneNumber?: string;
+    email?: string;
+    photo?: string;
+    relationship?: string;
+    additionalNotes?: string;
     timestamps: ITimestamps;
 }
 
 /* Define the contact schema */
 const contactSchema: Schema = new Schema({
-    userID: {
+    userId: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
-    groupID: {
+    groupId: {
         type: Schema.Types.ObjectId,
         ref: "Group",
         default: undefined
@@ -80,6 +80,5 @@ const contactSchema: Schema = new Schema({
 
 /* Export the contact schema and model */
 export { contactSchema, Gender }
-//const Contact: Model<IContact> = model("Contact", contactSchema);
 const Contact = model("Contact", contactSchema);
 export default Contact;

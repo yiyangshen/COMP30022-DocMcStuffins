@@ -5,7 +5,7 @@ import { model, Model, Schema } from "mongoose";
 export interface ITimestamps {
     created: Date;
     viewed: Date;
-    modified: Date;
+    modified?: Date;
 }
 
 /* Define the timestamps schema */

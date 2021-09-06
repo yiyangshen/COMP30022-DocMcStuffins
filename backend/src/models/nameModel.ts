@@ -4,7 +4,7 @@ import { model, Model, Schema } from "mongoose";
 /* Define the name interface */
 export interface IName {
     first: string;
-    middle: string;
+    middle?: string;
     last: string;
 }
 
