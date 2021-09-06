@@ -11,7 +11,7 @@ import * as controller from "../controllers/contactController";
 contactRouter.get("/", controller.getContacts);
 contactRouter.get("/count", controller.getContactCount);
 contactRouter.delete("/delete", controller.deleteContact);
-contactRouter.get("/details/:id", getContactDetails);
+contactRouter.get("/details/:id", controller.getContactDetails);
 contactRouter.patch("/details/amend", controller.amendContactDetails);
 contactRouter.post("/new", controller.createContact);
 contactRouter.get("/search/name/:name", controller.searchContactName);

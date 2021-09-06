@@ -7,18 +7,18 @@ import { Contact } from "../models";
 /* Amends the given contact's details;
  * requires, in the request body:
  *   - id: ObjectId
- *   - firstName: string
- *   - middleName: string
- *   - lastName: string
- *   - groupId: ObjectId
- *   - gender: string
- *   - dateOfBirth: Date
- *   - lastMet: Date
- *   - phoneNumber: string
- *   - email: string
- *   - photo: string
- *   - relationship: string
- *   - additionalNotes: string
+ *   - firstName?: string
+ *   - middleName?: string
+ *   - lastName?: string
+ *   - groupId?: ObjectId
+ *   - gender?: string
+ *   - dateOfBirth?: Date
+ *   - lastMet?: Date
+ *   - phoneNumber?: string
+ *   - email?: string
+ *   - photo?: string
+ *   - relationship?: string
+ *   - additionalNotes?: string
  * responds with a:
  *   - 200 OK if amendment is successful
  *   - 400 Bad Request if the request body is malformed
@@ -35,17 +35,17 @@ async function amendContactDetails(req: Request, res: Response, next: NextFuncti
 /* Creates a new contact with the given details;
  * requires, in the request body:
  *   - firstName: string
- *   - middleName: string
+ *   - middleName?: string
  *   - lastName: string
- *   - groupId: ObjectId
- *   - gender: string
- *   - dateOfBirth: Date
- *   - lastMet: Date
- *   - phoneNumber: string
- *   - email: string
- *   - photo: string
- *   - relationship: string
- *   - additionalNotes: string
+ *   - groupId?: ObjectId
+ *   - gender?: string
+ *   - dateOfBirth?: Date
+ *   - lastMet?: Date
+ *   - phoneNumber?: string
+ *   - email?: string
+ *   - photo?: string
+ *   - relationship?: string
+ *   - additionalNotes?: string
  * responds with a:
  *   - 201 Created if creation is successful
  *   - 400 Bad Request if the request body is malformed
@@ -94,7 +94,7 @@ async function getContactCount(req: Request, res: Response, next: NextFunction) 
  *   - 404 Not Found if the given contact ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
-async function getGroupDetails(req: Request, res: Response, next: NextFunction) {
+async function getContactDetails(req: Request, res: Response, next: NextFunction) {
 
 }
 
@@ -104,7 +104,7 @@ async function getGroupDetails(req: Request, res: Response, next: NextFunction) 
  *   - 403 Forbidden if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
-async function getGroups(req: Request, res: Response, next: NextFunction) {
+async function getContacts(req: Request, res: Response, next: NextFunction) {
 
 }
 

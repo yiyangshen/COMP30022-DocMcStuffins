@@ -7,8 +7,8 @@ import { Group } from "../models";
 /* Amends the given group's details;
  * requires, in the request body:
  *   - id: ObjectId
- *   - name: string
- *   - members: [ObjectId]
+ *   - name?: string
+ *   - members?: [ObjectId]
  * responds with a:
  *   - 200 OK if amendment is successful
  *   - 400 Bad Request if the request body is malformed
@@ -25,7 +25,7 @@ async function amendGroupDetails(req: Request, res: Response, next: NextFunction
 /* Creates a new group with the given details;
  * requires, in the request body:
  *   - name: string
- *   - members: [ObjectId]
+ *   - members?: [ObjectId]
  * responds with a:
  *   - 201 Created if creation is successful
  *   - 400 Bad Request if the request body is malformed
@@ -63,7 +63,7 @@ async function getGroupCount(req: Request, res: Response, next: NextFunction) {
 }
 
 /* Returns the given group's details;
- * requires, in the request body:
+ * requires, in the request params:
  *   - id: ObjectId
  * responds with a:
  *   - 200 OK if query is successful
@@ -81,7 +81,6 @@ async function getGroupDetails(req: Request, res: Response, next: NextFunction) 
 /* Returns the currently-authenticated user's groups, along with their representative details;
  * responds with a:
  *   - 200 OK if query is successful
- *   - 400 Bad Request if the request body is malformed
  *   - 403 Forbidden if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */

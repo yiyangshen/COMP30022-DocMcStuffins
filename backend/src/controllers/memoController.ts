@@ -7,8 +7,8 @@ import { Group } from "../models";
 /* Amends the given memo's details;
  * requires, in the request body:
  *   - id: ObjectId
- *   - title: string
- *   - notes: string
+ *   - title?: string
+ *   - notes?: string
  * responds with a:
  *   - 200 OK if amendment is successful
  *   - 400 Bad Request if the request body is malformed
@@ -25,7 +25,7 @@ async function amendMemoDetails(req: Request, res: Response, next: NextFunction)
 /* Creates a new memo with the given details;
  * requires, in the request body:
  *   - title: string
- *   - notes: string
+ *   - notes?: string
  * responds with a:
  *   - 201 Created if creation is successful
  *   - 400 Bad Request if the request body is malformed

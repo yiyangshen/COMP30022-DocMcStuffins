@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from "express";
 
 /* Import required models */
-import { User, IUser } from "../models";
+import { User } from "../models";
 
 /* Retrieves the currently-authenticated user's profile details;
  * responds with a:
@@ -21,7 +21,7 @@ async function getUserProfile(req: Request, res: Response, next: NextFunction) {
  * responds with a:
  *   - 200 OK if authentication is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if the provided information is invalid
+ *   - 403 Forbidden if the provided information does not match any user in the database
  *   - 500 Internal Server Error otherwise
  */
 async function loginUser(req: Request, res: Response, next: NextFunction) {
@@ -40,10 +40,13 @@ async function logoutUser(req: Request, res: Response, next: NextFunction) {
 
 /* Registers and subsequently authenticates a new user;
  * requires, in the request body:
+ *   - firstName: string
+ *   - middleName?: string
+ *   - lastName: string
  *   - email: string
  *   - password: string
  * responds with a:
- *   - 200 OK if the registration is successful
+ *   - 201 Created if the registration is successful
  *   - 400 Bad Request if the request body is malformed
  *   - 403 Forbidden if the requester:
  *     - is already authenticated
