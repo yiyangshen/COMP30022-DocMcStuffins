@@ -15,9 +15,6 @@ import userRouter from "./userRouter";
 /* Set up the unifying router */
 const routes: Router = Router();
 
-/* Bind the existing middlewares */
-routes.use(HTTPErrorHandler);
-
 /* Register the existing routes */
 routes.use("/contacts", contactRouter);
 routes.use("/errorHandling", errorHandlingRouter);
@@ -25,6 +22,9 @@ routes.use("/groups", groupRouter);
 routes.use("/memos", memoRouter);
 routes.use("/passport", passportRouter);
 routes.use("/user", userRouter);
+
+/* Bind the existing middlewares */
+routes.use(HTTPErrorHandler);
 
 /* Define a catch-all route */
 routes.all("/*", (req: Request, res: Response) => {
