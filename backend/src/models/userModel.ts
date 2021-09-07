@@ -33,6 +33,5 @@ const userSchema: Schema = new Schema({
 
 /* Export the user schema and model */
 export { userSchema }
-//const User: Model<IUser> = model("User", userSchema);
 const User = model("User", userSchema);
 export default User;

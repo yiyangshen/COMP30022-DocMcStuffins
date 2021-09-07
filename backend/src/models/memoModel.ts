@@ -3,16 +3,15 @@ import { ITimestamps, timestampsSchema } from "./timestampsModel";
 
 /* Define the memo interface */
 export interface IMemo {
-    userID: ObjectId;
-    contactID: ObjectId;
+    userId: ObjectId;
     title: string;
-    notes: string;
+    notes?: string;
     timestamps: ITimestamps;
 }
 
 /* Define the memo schema */
 const memoSchema: Schema = new Schema({
-    userID: {
+    userId: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
@@ -33,6 +32,5 @@ const memoSchema: Schema = new Schema({
 
 /* Export the memo schema and model */
 export { memoSchema }
-//const Memo: Model<IContact> = model("Memo", memoSchema);
 const Memo = model("Memo", memoSchema);
 export default Memo;
