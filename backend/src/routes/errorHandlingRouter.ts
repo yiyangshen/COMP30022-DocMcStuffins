@@ -1,20 +1,23 @@
 /* Import the required libraries and types */
-import { JSONResponse } from "../classes/JSONResponse";
+import {
+    OKSuccess,
+    JSONResponse,
+    HTTPError
+} from "../classes";
 import { json, Router } from "express";
-import { HTTPError } from "../classes/HTTPError";
 
 /* Set up the router */
 const errorHandlingRouter = Router();
 errorHandlingRouter.use(json());
 
 errorHandlingRouter.post("/error", (req, res, next) => {
-    const { status, statusText, message } = req.body;
-    const err = new HTTPError(status, statusText, message);
+    const { status, statusText, body } = req.body;
+    const err = new HTTPError(status, statusText, body);
     next(err);
 });
 
 errorHandlingRouter.post("/json", (req, res, next) => {
-    const jsonRes = new JSONResponse(req.body);
+    const jsonRes = new JSONResponse(new OKSuccess(req.body)); // this is a bandaid fix, and shouldn't be kept like this
     res.status(jsonRes.status).json(jsonRes);
 });
 

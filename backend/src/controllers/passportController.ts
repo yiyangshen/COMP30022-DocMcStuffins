@@ -1,15 +1,17 @@
 import passport from "passport";
 import { Request, Response, NextFunction } from "express"
 import { User } from "../models"
-
-import { JSONResponse } from "../classes/JSONResponse";
-import { HTTPError } from "../classes/HTTPError";
+import {
+    JSONResponse,
+    BadRequestError, NotFoundError, UnauthorizedError,
+    OKSuccess
+} from "../classes";
 
 // Handle Logins
 const handleLogin = async (req: Request, res: Response, next: NextFunction) => {
     // ensure required fields were entered
     if (!req.body.email || !req.body.password) {
-        const err = new HTTPError(400, 'Bad Request', 'Please enter required fields');
+        const err = new BadRequestError('Please enter required fields');
         return next(err);
     }
     passport.authenticate('local', (error: any, user: any, info: any) => {
@@ -17,16 +19,16 @@ const handleLogin = async (req: Request, res: Response, next: NextFunction) => {
             return next(error);
         }
         if (!user && info.message == 'NOT_FOUND') {
-            const err = new HTTPError(404, 'Not Found', 'No user matches email');
+            const err = new NotFoundError('No user matches email');
             return next(err);
 
         }
         if (!user && info.message == 'INCORRECT') {
-            const err = new HTTPError(401, 'Unauthorized', 'Incorrect password');
+            const err = new UnauthorizedError('Incorrect password');
             return next(err);
         }
         if (user) {
-            return res.status(200).json(new JSONResponse({ message: "Login Successful" }));
+            return res.status(200).json(new JSONResponse(new OKSuccess("Login Successful")));
         }
     })(req, res, next);
 }
@@ -34,7 +36,7 @@ const handleLogin = async (req: Request, res: Response, next: NextFunction) => {
 // Handle Logout
 const handleLogout = async (req: Request, res: Response) => {
     req.logout();
-    return res.json(new JSONResponse({ message: "Logout Successful" }));
+    return res.json(new JSONResponse(new OKSuccess("Logout Successful")));
 }
 
 // Handle register
@@ -43,7 +45,7 @@ const handleRegister = async (req: Request & {
 }, res: Response, next: NextFunction) => {
     // ensure required fields were entered
     if (!req.body.email || !req.body.password || !req.body.firstName || !req.body.lastName) {
-        const err = new HTTPError(400, 'Bad Request', 'Please enter required fields');
+        const err = new BadRequestError('Please enter required fields');
         return next(err);
     }
     passport.authenticate('local-signup', (error: any, user: any, info: any) => {
@@ -51,16 +53,16 @@ const handleRegister = async (req: Request & {
             return next(error);
         }
         if (!user && info.message == 'PASSWORD_LEN') {
-            const err = new HTTPError(400, 'Bad Request', 'Password should be at least 6 characters');
+            const err = new BadRequestError('Password should be at least 6 characters');
             return next(err);
         }
         if (!user && info.message == 'EXIST') {
-            const err = new HTTPError(404, 'Not Found', 'User already exists');
+            const err = new NotFoundError('User already exists');
             return next(err);
 
         }
         if (user) {
-            return res.json(new JSONResponse({ message: "Sign-up Successful" }));
+            return res.json(new JSONResponse(new OKSuccess("Sign-up Successful")));
         }
     })(req, res, next);
 }
@@ -68,9 +70,9 @@ const handleRegister = async (req: Request & {
 const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
     try {
         if (req.isAuthenticated()) {
-            return res.json(new JSONResponse({ message: "You are authenticated" }));
+            return res.json(new JSONResponse(new OKSuccess("You are authenticated")));
         } else {
-            return res.json(new JSONResponse({ message: "You are not authenticated" }));
+            return res.json(new JSONResponse(new OKSuccess("You are not authenticated")));
         }
     } catch (error) {
         return res.send(error);
