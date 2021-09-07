@@ -1,5 +1,8 @@
 /* Import the required libraries and types */
-import { JSONResponse } from "../classes/JSONResponse";
+import {
+    JSONResponse,
+    OKSuccess
+} from "../classes";
 import { json, Router } from "express";
 
 // import controller
@@ -19,11 +22,11 @@ passportRouter.post("/register", controller.handleRegister);
 passportRouter.get("/auth", controller.isAuthenticated);
 
 passportRouter.get("/session", (req, res) => {
-    res.json(new JSONResponse(req.session));
+    res.json(new JSONResponse(new OKSuccess(JSON.stringify(req.session)))); // this has to be updated
 });
 
 passportRouter.get("/user", (req: any, res) => {
-    res.json(new JSONResponse(req.user));
+    res.json(new JSONResponse(new OKSuccess(req.user)));  // so does this
 });
 
 export default passportRouter;
