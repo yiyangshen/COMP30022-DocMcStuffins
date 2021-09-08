@@ -27,6 +27,6 @@ export class ErrorResponse extends APIResponse {
 export class JSONResponse extends APIResponse {
     constructor(res: HTTPSuccess) {
         // Ensure that the data stored has the type of JSON string (not object)
-        super(res.status, res.statusText, "application/json", typeof res.body === "object" ? JSON.stringify(res.body) : res.body);
+        super(res.status, res.statusText, "application/json", res.body);
     }
 }

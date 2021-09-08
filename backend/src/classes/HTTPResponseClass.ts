@@ -4,9 +4,9 @@ export class HTTPResponse {
     readonly statusText: string;
     readonly body: string|null;
 
-    constructor(status: number, statusText: string, body: string|null) {
+    constructor(status: number, statusText: string, body: object|string|null) {
         this.status = status;
         this.statusText = statusText;
-        this.body = body;
+        this.body = typeof body === "object" ? JSON.stringify(body) : body;
     }
 }
