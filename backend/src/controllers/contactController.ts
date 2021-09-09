@@ -4,6 +4,14 @@ import { Request, Response, NextFunction } from "express";
 /* Import required models */
 import { Contact } from "../models";
 
+/* Import error and response classes */
+import {
+    JSONResponse,
+    BadRequestError, NotFoundError, UnauthorizedError, InternalServerError,
+    ForbiddenError,
+    OKSuccess
+} from "../classes";
+
 /* Amends the given contact's details;
  * requires, in the request body:
  *   - id: ObjectId
@@ -78,8 +86,16 @@ async function deleteContact(req: Request, res: Response, next: NextFunction) {
  *   - 403 Forbidden if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
-async function getContactCount(req: Request, res: Response, next: NextFunction) {
-
+async function getContactCount(req: any, res: Response, next: NextFunction) {
+    try {
+        if (!req.user) {
+            return next(new ForbiddenError("Requester is not authenticated"));
+        }
+        const count = Contact.count({ userId: req.user.id });
+        return res.json(new OKSuccess(count));
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Returns the given contact's details;
