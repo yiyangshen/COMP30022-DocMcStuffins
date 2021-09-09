@@ -27,6 +27,11 @@ const handleLogin = async (req: Request, res: Response, next: NextFunction) => {
             return next(err);
         }
         if (user) {
+            req.login(user, (err) => {
+                if (err) {
+                    next(err);
+                }
+            })
             return res.json(new OKSuccess("Login Successful"));
         }
     })(req, res, next);
@@ -60,7 +65,13 @@ const handleRegister = async (req: Request & {
             return next(err);
 
         }
+        // Login the new user after successfully registering
         if (user) {
+            req.login(user, (err) => {
+                if (err) {
+                    next(err);
+                }
+            })
             return res.json(new OKSuccess("Sign-up Successful"));
         }
     })(req, res, next);
@@ -74,7 +85,7 @@ const isAuthenticated = async (req: Request, res: Response, next: NextFunction) 
             return res.json(new OKSuccess("You are not authenticated"));
         }
     } catch (error) {
-        return res.send(error);
+        return next(error);
     }
 }
 
