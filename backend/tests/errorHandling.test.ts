@@ -9,8 +9,8 @@ const TEST_ERROR_STATUS = 418;
 const TEST_ERROR_STATUSTEXT = "I'm a teapot";
 const TEST_ERROR_MESSAGE = "Would you like to have tea?";
 
-const FAILED_ERROR_STATUS = 400;
-const FAILED_ERROR_STATUSTEXT = "Bad Request";
+const FAILED_ERROR_STATUS = 500;
+const FAILED_ERROR_STATUSTEXT = "InternalServerError";
 const FAILED_ERROR_MESSAGE = "Incomplete error fields";
 
 const JSON_MIMETYPE = "application/json";
