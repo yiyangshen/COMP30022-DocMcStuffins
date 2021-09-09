@@ -1,7 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { agent } from "supertest";
 import app from "../src/config/serverConfig";
-import { HTTPError } from "../src/classes/HTTPError";
 
 const BASE_URL = "/api/errorHandling";
 
@@ -32,7 +31,7 @@ describe("Error handling tests", () => {
             .send({
                 "status": TEST_ERROR_STATUS,
                 "statusText": TEST_ERROR_STATUSTEXT,
-                "message": TEST_ERROR_MESSAGE
+                "body": TEST_ERROR_MESSAGE
             })
             .then((res: any) => {
                 expect(res.statusCode).toBe(TEST_ERROR_STATUS);
@@ -48,7 +47,7 @@ describe("Error handling tests", () => {
             .post(URL)
             .send({
                 "statusText": TEST_ERROR_STATUSTEXT,
-                "message": TEST_ERROR_MESSAGE
+                "body": TEST_ERROR_MESSAGE
             })
             .then((res: any) => {
                 expect(res.statusCode).toBe(FAILED_ERROR_STATUS);
@@ -64,7 +63,7 @@ describe("Error handling tests", () => {
             .post(URL)
             .send({
                 "status": TEST_ERROR_STATUS,
-                "message": TEST_ERROR_MESSAGE
+                "body": TEST_ERROR_MESSAGE
             })
             .then((res: any) => {
                 expect(res.statusCode).toBe(FAILED_ERROR_STATUS);
@@ -75,7 +74,7 @@ describe("Error handling tests", () => {
             });
     });
 
-    test(`Trigger a ${TEST_ERROR_STATUS} error with missing message field`, async () => {
+    test(`Trigger a ${TEST_ERROR_STATUS} error with missing body field`, async () => {
         await errorAgent
             .post(URL)
             .send({
