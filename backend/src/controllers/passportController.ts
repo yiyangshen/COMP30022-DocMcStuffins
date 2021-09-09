@@ -2,7 +2,6 @@ import passport from "passport";
 import { Request, Response, NextFunction } from "express"
 import { User } from "../models"
 import {
-    JSONResponse,
     BadRequestError, NotFoundError, UnauthorizedError,
     OKSuccess
 } from "../classes";
@@ -28,7 +27,12 @@ const handleLogin = async (req: Request, res: Response, next: NextFunction) => {
             return next(err);
         }
         if (user) {
-            return res.status(200).json(new JSONResponse(new OKSuccess("Login Successful")));
+            req.login(user, (err) => {
+                if (err) {
+                    next(err);
+                }
+            })
+            return res.json(new OKSuccess("Login Successful"));
         }
     })(req, res, next);
 }
@@ -36,7 +40,7 @@ const handleLogin = async (req: Request, res: Response, next: NextFunction) => {
 // Handle Logout
 const handleLogout = async (req: Request, res: Response) => {
     req.logout();
-    return res.json(new JSONResponse(new OKSuccess("Logout Successful")));
+    return res.json(new OKSuccess("Logout Successful"));
 }
 
 // Handle register
@@ -61,8 +65,14 @@ const handleRegister = async (req: Request & {
             return next(err);
 
         }
+        // Login the new user after successfully registering
         if (user) {
-            return res.json(new JSONResponse(new OKSuccess("Sign-up Successful")));
+            req.login(user, (err) => {
+                if (err) {
+                    next(err);
+                }
+            })
+            return res.json(new OKSuccess("Sign-up Successful"));
         }
     })(req, res, next);
 }
@@ -70,12 +80,12 @@ const handleRegister = async (req: Request & {
 const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
     try {
         if (req.isAuthenticated()) {
-            return res.json(new JSONResponse(new OKSuccess("You are authenticated")));
+            return res.json(new OKSuccess("You are authenticated"));
         } else {
-            return res.json(new JSONResponse(new OKSuccess("You are not authenticated")));
+            return res.json(new OKSuccess("You are not authenticated"));
         }
     } catch (error) {
-        return res.send(error);
+        return next(error);
     }
 }
 

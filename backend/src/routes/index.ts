@@ -3,6 +3,7 @@ import { Request, Response, Router } from "express";
 
 /* Import existing middlewares */
 import { HTTPErrorHandler } from "../middlewares/HTTPErrorHandler";
+import { resJsonInterceptor } from "../middlewares/resJsonInterceptor";
 
 /* Import existing routes */
 import contactRouter from "./contactRouter";
@@ -14,6 +15,8 @@ import userRouter from "./userRouter";
 
 /* Set up the unifying router */
 const routes: Router = Router();
+
+routes.use(resJsonInterceptor);
 
 /* Register the existing routes */
 routes.use("/contacts", contactRouter);

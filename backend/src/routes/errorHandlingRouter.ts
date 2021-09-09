@@ -12,13 +12,11 @@ errorHandlingRouter.use(json());
 
 errorHandlingRouter.post("/error", (req, res, next) => {
     const { status, statusText, body } = req.body;
-    const err = new HTTPError(status, statusText, body);
-    next(err);
+    next(new HTTPError(status, statusText, body));
 });
 
 errorHandlingRouter.post("/json", (req, res, next) => {
-    const jsonRes = new JSONResponse(new OKSuccess(req.body)); // this is a bandaid fix, and shouldn't be kept like this
-    res.status(jsonRes.status).json(jsonRes);
+    res.json(new OKSuccess(req.body));
 });
 
 export default errorHandlingRouter;
