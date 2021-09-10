@@ -1,5 +1,5 @@
 /* Import the required types and libraries */
-import { describe, test, expect, afterAll } from "@jest/globals";
+import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
 import { agent } from "supertest";
 import app from "../src/config/serverConfig";
 
@@ -153,4 +153,175 @@ describe("Registration Tests", () => {
         await User.deleteOne( { email: TEST_USER_EMAIL_4 });
         await User.deleteOne( { email: TEST_USER_EMAIL_5 });
     });
-})
+});
+
+describe ("Login Tests", () => {
+    const userAgent = agent(app);
+
+    beforeAll(async () => {
+        const newUser = new User({
+            email: TEST_USER_EMAIL,
+            password: TEST_USER_PASSWORD,
+            name: {
+                first: TEST_USER_FIRST_NAME,
+                last: TEST_USER_LAST_NAME
+            }
+        });
+        await newUser.save();
+    });
+
+    test("Login successfully", async () => {
+        const req = {
+            email: TEST_USER_EMAIL,
+            password: TEST_USER_PASSWORD
+        };
+        await userAgent
+            .patch(`${BASE_URL}/login`)
+            .send(req)
+            .then((res: any) => {
+                expect(res.body.status).toBe(200);
+            });
+        await userAgent
+            .patch(`${BASE_URL}/logout`)
+            .then((res: any) => {
+                expect(res.body.status).toBe(200);
+            });
+    });
+
+    test("Missing a field", async () => {
+        const req = {
+            email: TEST_USER_EMAIL
+        };
+        await userAgent
+            .patch(`${BASE_URL}/login`)
+            .send(req)
+            .then((res: any) => {
+                expect(res.body.status).toBe(400);
+            });
+    });
+
+    test("Wrong email", async () => {
+        const req = {
+            email: `nisemono_${TEST_USER_EMAIL}`,
+            password: TEST_USER_PASSWORD
+        };
+        await userAgent
+            .patch(`${BASE_URL}/login`)
+            .send(req)
+            .then((res: any) => {
+                expect(res.body.status).toBe(403);
+            });
+    });
+
+    test("Wrong password", async () => {
+        const req = {
+            email: TEST_USER_EMAIL,
+            password: `${TEST_USER_PASSWORD}?`
+        };
+        await userAgent
+            .patch(`${BASE_URL}/login`)
+            .send(req)
+            .then((res: any) => {
+                expect(res.body.status).toBe(403);
+            });
+    });
+
+    afterAll(async () => {
+        await User.deleteOne({ email: TEST_USER_EMAIL });
+    });
+});
+
+describe("Logout Tests", () => {
+    const userAgent = agent(app);
+
+    test("Logout when authenticated", async () => {
+        const newUser = new User({
+            email: TEST_USER_EMAIL,
+            password: TEST_USER_PASSWORD,
+            name: {
+                first: TEST_USER_FIRST_NAME,
+                last: TEST_USER_LAST_NAME
+            }
+        });
+        await newUser.save();
+
+        const req = {
+            email: TEST_USER_EMAIL,
+            password: TEST_USER_PASSWORD
+        };
+        await userAgent
+            .patch(`${BASE_URL}/login`)
+            .send(req)
+            .then((res: any) => {
+                expect(res.body.status).toBe(200);
+            });
+        await userAgent
+            .patch(`${BASE_URL}/logout`)
+            .then((res: any) => {
+                expect(res.body.status).toBe(200);
+            });
+
+        await User.deleteOne({ email: TEST_USER_EMAIL });
+    });
+
+    test("Logout when unauthenticated", async () => {
+        await userAgent
+            .patch(`${BASE_URL}/logout`)
+            .then((res: any) => {
+                expect(res.body.status).toBe(401);
+            });
+    });
+});
+
+describe("Get User Profile Tests", () => {
+    const userAgent = agent(app);
+
+    beforeAll(async () => {
+        const newUser = new User({
+            email: TEST_USER_EMAIL,
+            password: TEST_USER_PASSWORD,
+            name: {
+                first: TEST_USER_FIRST_NAME,
+                last: TEST_USER_LAST_NAME
+            }
+        });
+        await newUser.save();
+    });
+
+    test("Get profile when authenticated", async () => {
+        const req = {
+            email: TEST_USER_EMAIL,
+            password: TEST_USER_PASSWORD
+        };
+        await userAgent
+            .patch(`${BASE_URL}/login`)
+            .send(req)
+            .then((res: any) => {
+                expect(res.body.status).toBe(200);
+            });
+        await userAgent
+            .get(`${BASE_URL}/profile`)
+            .then((res: any) => {
+                expect(res.body.status).toBe(200);
+                const user = JSON.parse(res.body.data);
+                expect(user.email).toBe(TEST_USER_EMAIL);
+            });
+        await userAgent
+            .patch(`${BASE_URL}/logout`)
+            .then((res: any) => {
+                expect(res.body.status).toBe(200);
+            });
+    });
+
+    test("Get profile when unauthenticated", async () => {
+        await userAgent
+            .get(`${BASE_URL}/profile`)
+            .then((res: any) => {
+                expect(res.body.status).toBe(401);
+            });
+    });
+
+    afterAll(async () => {
+        await User.deleteOne({ email: TEST_USER_EMAIL });
+    });
+});
