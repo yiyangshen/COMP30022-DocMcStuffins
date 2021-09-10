@@ -4,6 +4,14 @@ import { Request, Response, NextFunction } from "express";
 /* Import required models */
 import { Group } from "../models";
 
+/* Import error and response classes */
+import {
+    JSONResponse,
+    BadRequestError, NotFoundError, UnauthorizedError, InternalServerError,
+    ForbiddenError,
+    OKSuccess
+} from "../classes";
+
 /* Amends the given group's details;
  * requires, in the request body:
  *   - id: ObjectId
@@ -59,7 +67,15 @@ async function deleteGroup(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getGroupCount(req: Request, res: Response, next: NextFunction) {
-
+    try {
+        if (!req.user) {
+            return next(new ForbiddenError("Requester is not authenticated"));
+        }
+        const count = await Group.count({ userId: (req as any).user._id });
+        return res.json(new OKSuccess(count));
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Returns the given group's details;

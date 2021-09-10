@@ -4,6 +4,14 @@ import { Request, Response, NextFunction } from "express";
 /* Import required models */
 import { Group } from "../models";
 
+/* Import error and response classes */
+import {
+    JSONResponse, NoContentSuccess,
+    BadRequestError, NotFoundError, UnauthorizedError, InternalServerError,
+    ForbiddenError,
+    OKSuccess
+} from "../classes";
+
 /* Amends the given memo's details;
  * requires, in the request body:
  *   - id: ObjectId
@@ -90,7 +98,21 @@ async function getMemos(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getRecentMemos(req: Request, res: Response, next: NextFunction) {
-
+    try {
+        if (!req.user) {
+            return next(new ForbiddenError("Requester is not authenticated"));
+        }
+        if (req.body.n <= 0) {
+            return next(new BadRequestError("number of requester parameter is invalid"));
+        }
+        const memos = await Group.find({ userId: (req as any).user._id }).sort({ timestamps: { created: 0 } }).limit(req.body.n);
+        if (!memos) {
+            return res.json(new NoContentSuccess());
+        }
+        return res.json(new OKSuccess(memos));
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Export controller functions */
