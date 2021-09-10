@@ -11,7 +11,6 @@ const TEST_ERROR_MESSAGE = "Would you like to have tea?";
 
 const FAILED_ERROR_STATUS = 500;
 const FAILED_ERROR_STATUSTEXT = "InternalServerError";
-const FAILED_ERROR_MESSAGE = "Incomplete error fields";
 
 const JSON_MIMETYPE = "application/json";
 const SUCCESS_JSON_STATUS = 200;
@@ -54,7 +53,6 @@ describe("Error handling tests", () => {
                 expect(res.body.mimetype).toBe(ERROR_MIMETYPE);
                 expect(res.body.status).toBe(FAILED_ERROR_STATUS);
                 expect(res.body.statusText).toBe(FAILED_ERROR_STATUSTEXT);
-                expect(res.body.data).toBe(FAILED_ERROR_MESSAGE);
             });
     });
 
@@ -70,7 +68,6 @@ describe("Error handling tests", () => {
                 expect(res.body.mimetype).toBe(ERROR_MIMETYPE);
                 expect(res.body.status).toBe(FAILED_ERROR_STATUS);
                 expect(res.body.statusText).toBe(FAILED_ERROR_STATUSTEXT);
-                expect(res.body.data).toBe(FAILED_ERROR_MESSAGE);
             });
     });
 
@@ -86,7 +83,6 @@ describe("Error handling tests", () => {
                 expect(res.body.mimetype).toBe(ERROR_MIMETYPE);
                 expect(res.body.status).toBe(FAILED_ERROR_STATUS);
                 expect(res.body.statusText).toBe(FAILED_ERROR_STATUSTEXT);
-                expect(res.body.data).toBe(FAILED_ERROR_MESSAGE);
             });
     });
 })
