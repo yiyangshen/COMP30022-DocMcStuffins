@@ -10,10 +10,6 @@ import {
 import { Request, Response, NextFunction } from "express";
 import passport from "passport";
 
-
-/* Import required models */
-import { User } from "../models";
-
 /* Retrieves the currently-authenticated user's profile details;
  * responds with a:
  *   - 200 OK if the details was successfully retrieved
