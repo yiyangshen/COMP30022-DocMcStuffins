@@ -7,6 +7,9 @@ import timestring from "timestring";
 /* Import required constants */
 import { MONGODB_CONNECTION_STRING, MONGODB_DATABASE_NAME } from "./databaseConfig";
 
+if (process.env.NODE_ENV !== "production")
+    require("dotenv").config();
+
 /* Configure the session store */
 const SESSION_STORE_COLLECTION_NAME = "sessions";
 const SESSION_STORE_OPTIONS = {
