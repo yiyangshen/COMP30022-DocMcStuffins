@@ -88,10 +88,10 @@ async function deleteContact(req: Request, res: Response, next: NextFunction) {
  */
 async function getContactCount(req: Request, res: Response, next: NextFunction) {
     try {
-        if (!req.user) {
+        if (!req.isAuthenticated()) {
             return next(new ForbiddenError("Requester is not authenticated"));
         }
-        const count = await Contact.count({ userId: (req as any).user._id });
+        const count = await Contact.countDocuments({ userId: (req as any).user._id });
         return res.json(new OKSuccess(count));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));

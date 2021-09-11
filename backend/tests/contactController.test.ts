@@ -44,7 +44,7 @@ describe('Contact count', () => {
             .get(`${BASE_URL}/count`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
-                expect(res.body.data).toBe("0");
+                expect(res.body.data).toEqual(0);
             })
         await User.deleteOne({ email: TEST_USER_EMAIL });
     });

@@ -68,7 +68,7 @@ async function deleteGroup(req: Request, res: Response, next: NextFunction) {
  */
 async function getGroupCount(req: Request, res: Response, next: NextFunction) {
     try {
-        if (!req.user) {
+        if (!req.isAuthenticated()) {
             return next(new ForbiddenError("Requester is not authenticated"));
         }
         const count = await Group.count({ userId: (req as any).user._id });
