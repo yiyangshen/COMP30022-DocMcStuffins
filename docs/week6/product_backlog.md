@@ -1,6 +1,6 @@
 # Product Backlog
 
-> *Note*: The IDs are encoded as \<Theme ID\>.\<Epic ID\>.\<Story ID\>.
+> *Note*: The IDs are encoded as \<Theme ID\>.\<Epic ID\>.\<Story ID\>.\<Acceptance criterion ID\>.
 
 ## Themes
 
@@ -48,7 +48,7 @@
 | 2.2.1 | user        | list down my contacts               | I can see all my contacts' representative details       | HIGH     |
 | 2.2.2 | user        | view a contact's details            | I can view all the details associated with a contact    | HIGH     |
 | 2.3.1 | user        | edit an existing contact's details  | I can keep my contacts' information up-to-date          | HIGH     |
-| 2.3.2 | user        | assign existing contacts to a group | I can categorise my exixting contacts                   | HIGH     |
+| 2.3.2 | user        | assign existing contacts to a group | I can categorise my existing contacts                   | HIGH     |
 | 2.3.3 | user        | upload a contact photo              | I can associate my contacts with a photo                | MEDIUM   |
 | 2.3.4 | user        | delete an existing contact          | I can remove contacts that are no longer needed         | HIGH     |
 | 2.4.1 | user        | search a contact by name            | I can quickly retrieve a specific contact's details     | HIGH     |
@@ -65,3 +65,57 @@
 | 4.2.2 | user        | view a memo's details               | I can view the details associated with a memo           | HIGH     |
 | 4.3.1 | user        | edit an existing memo's details     | I can keep my memos updated                             | HIGH     |
 | 4.3.2 | user        | delete an existing memo             | I can remove memos that are no longer needed            | HIGH     |
+
+## Acceptance Criteria
+
+|   ID    |               Given that the ...                |                        When the ...                        |                                                    Then the ...                                                       |
+| :-----: | :---------------------------------------------- | :--------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- |
+| 1.1.1.1 | user does not have an account                   | user tries to log in                                       | user is presented with an option to register                                                                          |
+| 1.1.2.1 | user has a registered account                   | user logs in using the correct credentials                 | user is authenticated and led to the dashboard                                                                        |
+| 1.1.2.2 | user has a registered account                   | user logs in using the wrong credentials                   | user is notified that their credentials are invalid and asked to try again                                            |
+| 1.1.3.1 | user is logged in                               | user tries to log out                                      | user is deauthenticated, notified of their successful logout, and led back to the login page                          |
+| 1.2.1.1 | user is logged in                               | user accesses their dashboard                              | user is shown information about their contact and group count, and recentmost memos with their representative details |
+| 1.2.2.1 | user is on the dashboard page                   | user clicks on their contact count                         | user is taken to the contacts page |
+| 1.2.3.1 | user is on the dashboard page                   | user clicks on their group count                           | user is taken to the groups page   |
+| 1.2.4.1 | user has no existing memos                      | user is on the dashboard page                              | user is prompted to create a new memo |
+| 1.2.4.2 | user has some existing memos                    | user is on the dashboard page                              | user is shown his recentmost memos along with their representative details                                            |
+| 1.2.4.3 | user is on the dashboard page                   | user clicks on a recent memo                               | user is shown the complete details of the memo                                                                        |
+| 1.2.5.1 | frontend design has been finalised              | client uses the application                                | client sees the color blue being used in a majority of the UI elements                                                |
+| 1.2.5.2 | frontend design has been finalised              | client uses the application for an extended period of time | client is not fatigued by the UI                                                                                      |
+| 1.2.6.1 | user is on the dashboard page                   | user enters a query in the search bar                      | user is shown contacts whose name fuzzy-matches the query                                                             |
+| 2.1.1.1 | user is on the contacts page                    | user clicks on the 'Add Contact' button                    | user is taken to the contact creation form                                                                            |
+| 2.1.1.2 | user is on the contact creation form            | user clicks on the 'Save Contact' button                   | user is taken back to the contacts page and notified of their successful creation                                     |
+| 2.1.2.1 | user is on the contact creation form            | user selects an existing group                             | new contact is set to be assigned to said group on creation finalisation                                              |
+| 2.2.1.1 | user has no existing contacts                   | user is on the contacts page                               | user is prompted to add a new contact                                                                                 |
+| 2.2.1.2 | user has some existing contacts                 | user is on the contacts page                               | user's contacts are listed down along with their representative details                                               |
+| 2.2.2.1 | user is on the contacts page                    | user clicks on a contact                                   | user is shown the complete details of said contact                                                                    |
+| 2.3.1.1 | user is on a contact's details page             | user clicks on the 'Edit' button                           | user is taken to a populated contact amendment form                                                                   |
+| 2.3.1.2 | user is currently amending a contact's details  | user changes the value of some contact detail field        | amended contact details is set to be saved on contact amendment finalisation                                          |
+| 2.3.1.3 | user is currently amending a contact's details  | user clicks on the 'Save' button                           | user is taken back to the contacts page and notified of their successful amendment                                    |
+| 2.3.2.1 | user is currently amending a contact's details  | user assigns an existing group to the contact              | contact is set to be assigned to said group on contact amendment finalisation                                         |
+| 2.3.3.1 | user is currently amending a contact's details  | user uploads a contact photo                               | photo is set to be assigned to said contact on contact amendment finalisation                                         |
+| 2.3.4.1 | user is currently amending a contact's details  | user clicks the 'Delete Contact' button                    | user is asked for confirmation, taken back to the contacts page, and notified of their successful deletion            |
+| 2.4.1.1 | user is on the contacts page                    | user enters a query string in the search bar               | user is shown contacts whose name fuzzy-matches the query                                                             |
+| 2.4.2.1 | user is on the contacts page                    | user selects search key in the search bar                  | user's next query string is going to be searched within said key                                                      |
+| 3.1.1.1 | user is on the groups page                      | user clicks on the 'Create Group' button                   | user is taken to the group creation form                                                                              |
+| 3.1.1.2 | user is on the group creation form              | user clicks on the 'Save Group' button                     | user is taken back to the groups page and notified of their successful creation                                       | 
+| 3.1.2.1 | user is on the group creation form              | user selects existing ungrouped contacts                   | selected contacts is set to be assigned to the new group on creation finalisation                                     |
+| 3.2.1.1 | user has no existing groups                     | user is on the groups page                                 | user is prompted to create a new group                                                                                |
+| 3.2.1.2 | user has some existing groups                   | user is on the groups page                                 | user's groups are listed down along with their representative details                                                 |
+| 3.2.2.1 | user is on the groups page                      | user clicks on a group                                     | user is shown the complete details of said group                                                                      |
+| 3.3.1.1 | user is on a group's details page               | user clicks on the 'Edit' button                           | user is taken to a populated group amendment form                                                                     |
+| 3.3.1.2 | user is currently amending a group's details    | user changes the value of some group detail field          | amended group details is set to be saved on group amendment finalisation                                              |
+| 3.3.1.3 | user is currently amending a group's details    | user clicks on the 'Save' button                           | user is taken back to the groups page and notified of their successful amendment                                      |
+| 3.3.2.1 | user is currently amending a group's details    | user clicks on the 'Add Members' button                    | user is taken to the unassigned contact selection page                                                                |
+| 3.3.2.2 | user is currently selecting unassigned contacts | user clicks on the 'Add Selected' button                   | selected users are shown on the group amendment form                                                                  |
+| 3.3.2.3 | user is currently amending a group's details    | user clicks on the 'Remove' button beside each contact     | removed contact is set to be removed from said group on group amendment finalisation                                  |
+| 3.3.2.4 | user is currently amending a group's details    | user clicks on the 'Save Group' button                     | selected users are assigned to said group                                                                             |
+| 3.3.3.1 | user is currently amending a group's details    | user clicks on the 'Delete Group' button                   | user is asked for confirmation, taken back to the groups page, and notified of their successful deletion              |
+| 4.1.1.1 | user is on the memos page                       | user clicks on the 'Create Memo' button                    | user is taken to the memo creation form                                                                               |
+| 4.1.1.2 | user is on the memo creation form               | user clicks on the 'Save Memo' button                      | user is taken back to the memos page and notified of their successful creation                                        |
+| 4.2.1.1 | user has no existing memos                      | user is on the memos page                                  | user is prompted to create a new memo                                                                                 |
+| 4.2.1.2 | user has some existing memos                    | user is on the memos page                                  | user's memos are listed down along with their representative details                                                  |
+| 4.3.1.1 | user is on a memo's details page                | user clicks the 'Edit Memo' button                         | user is taken to a populated memo amendment form                                                                      |
+| 4.3.1.2 | user is currently editing a memo's details      | user changes the value of some memo detail field           | amended memo details is set to be saved on  memo amendment finalisation                                               |
+| 4.3.1.3 | user is currently editing a memo's detials      | user clicks the 'Save Memo' button                         | user is taken back to the memos page and ontified of their successful amendment                                       |
+| 4.3.2.1 | user is currently editing a memo's detials      | user clicks the 'Delete Memo' button                       | user is asked for confirmation, taken back to the memo page, and notified of their successful deletion                |
