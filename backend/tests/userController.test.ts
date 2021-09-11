@@ -303,7 +303,7 @@ describe("Get User Profile Tests", () => {
             .get(`${BASE_URL}/profile`)
             .then((res: any) => {
                 expect(res.body.status).toBe(200);
-                const user = JSON.parse(res.body.data);
+                const user = res.body.data;
                 expect(user.email).toBe(TEST_USER_EMAIL);
             });
         await userAgent
