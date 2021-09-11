@@ -1,5 +1,5 @@
 /* Re-export API response classes */
-export { APIResponse, ErrorResponse, JSONResponse } from "./apiResponseClass";
+export { APIResponse, ErrorResponse, JSONResponse, BooleanResponse, NumberResponse, StringResponse, ListResponse } from "./apiResponseClass";
 
 /* Re-export HTTP response classes */
 export { HTTPResponse } from "./HTTPResponseClass";
