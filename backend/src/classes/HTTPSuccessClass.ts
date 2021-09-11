@@ -3,21 +3,21 @@ import { HTTPResponse } from "./index";
 
 /* HTTP Success response format for returning data */
 export class HTTPSuccess extends HTTPResponse {
-    constructor(status: number, statusText: string, body: object|string|null) {
+    constructor(status: number, statusText: string, body: any) {
         super(status, statusText, body);
     }
 }
 
 /* HTTP Success response format for 200 OK responses */
 export class OKSuccess extends HTTPSuccess {
-    constructor(body: object|string) {
+    constructor(body: any) {
         super(200, "OK", body);
     }
 }
 
 /* HTTP Success response format for 201 Created responses */
 export class CreatedSuccess extends HTTPSuccess {
-    constructor(body: object|string) {
+    constructor(body: any) {
         super(201, "Created", body);
     }
 }
