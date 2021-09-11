@@ -16,9 +16,7 @@ const FAILED_ERROR_MESSAGE = "Incomplete error fields";
 const JSON_MIMETYPE = "application/json";
 const SUCCESS_JSON_STATUS = 200;
 const SUCCESS_JSON_STATUSTEXT = "OK";
-const TEST_JSON_FIELD_1 = "Nickname";
 const TEST_JSON_VALUE_1 = "Steven";
-const TEST_JSON_FIELD_2 = "Punchline";
 const TEST_JSON_VALUE_2 = "Megane wa kakkoi desu!";
 
 describe("Error handling tests", () => {
@@ -97,8 +95,8 @@ describe ("JSON response test", () => {
 
     test(`Receive a well formed JSON response successfully`, async () => {
         const jsonObject = {
-            TEST_JSON_FIELD_1: TEST_JSON_VALUE_1,
-            TEST_JSON_FIELD_2: TEST_JSON_VALUE_2
+            "nickname": TEST_JSON_VALUE_1,
+            "punchline": TEST_JSON_VALUE_2
         };
 
         await jsonAgent
@@ -109,7 +107,7 @@ describe ("JSON response test", () => {
                 expect(res.body.mimetype).toBe(JSON_MIMETYPE);
                 expect(res.body.status).toBe(SUCCESS_JSON_STATUS);
                 expect(res.body.statusText).toBe(SUCCESS_JSON_STATUSTEXT);
-                expect(res.body.data).toBe(JSON.stringify(jsonObject));
+                expect(res.body.data).toStrictEqual(jsonObject);
             })
     })
 })
