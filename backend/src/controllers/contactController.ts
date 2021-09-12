@@ -8,8 +8,8 @@ import { Contact, Gender, Name } from "../models";
 
 /* Import error and response classes */
 import {
-    BadRequestError, NotFoundError, UnauthorizedError, InternalServerError, ForbiddenError,
-    CreatedSuccess, OKSuccess
+    BadRequestError, ForbiddenError, InternalServerError, NotFoundError, UnauthorizedError,  
+    CreatedSuccess, NoContentSuccess, OKSuccess
 } from "../classes";
 
 /* Amends the given contact's details;
@@ -102,7 +102,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
             return next(new BadRequestError("Request body malformed"));
         }
         
-        /* Create the contact object */
+        /* Create the new contact document */
         const newContact = new Contact({
             userId: (req as any).user._id,
             name: new Name({
@@ -114,8 +114,18 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
         /* Assign the optional values appropriately */
         if (req.body.middleName)
             newContact.name.middle = req.body.middleName;
-        if (req.body.groupId)
-            newContact.groupId = Types.ObjectId(req.body.groupId) as ObjectId;
+        if (req.body.groupId) {
+            /* Check if the group is in the database */
+            const currentGroup = Group.findById(req.body.groupId);
+
+            if (currentGroup) {
+                /* Assign the contact to the group */
+                newContact.groupId = Types.ObjectId(req.body.groupId) as ObjectId;
+
+                /* Add the contact to the group */
+                currentGroup.members.push(newContact._id);
+            }
+        }
         if (req.body.gender)
             newContact.gender = req.body.gender;
         if (req.body.dateOfBirth)
