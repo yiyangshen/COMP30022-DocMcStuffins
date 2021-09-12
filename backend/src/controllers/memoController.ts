@@ -107,8 +107,6 @@ async function getRecentMemos(req: Request, res: Response, next: NextFunction) {
             return next(new BadRequestError("Requester parameter is invalid"));
         }
         const memos = await Memo.find({ userId: (req as any).user._id }).sort({ "timestamps.created": -1  }).limit(n);
-        console.log(memos);
-        
         if (memos.length === 0) {
             return res.status(204).json(new NoContentSuccess());
         }
