@@ -1,0 +1,83 @@
+.RecentGroups {
+  box-shadow: 0 4px 8px 0 #000000;
+  transition: 0.3s;
+  width: 1000px;
+  height: 440px;
+}
+.dot {
+  height: 150px;
+  width: 150px;
+  background-color: #6BAFFD;
+  border-radius: 50%;
+  display: inline-block;
+}
+.RecentGroupText{
+  margin-top: 50px;
+}
+
+
+.Group {
+  background-color: #6BAFFD;
+  box-shadow: 0 4px 8px 0 #000000;
+  transition: 0.3s;
+  width: 400px;
+  height: 200px;
+}
+.GroupPng{ 
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 43px;
+  margin-bottom: auto;
+}
+.Group:hover {
+  box-shadow: 0 8px 16px 0 #000000;
+}
+.container {
+  margin-top: -30px;
+}
+
+.Contacts {
+  background-color: #6BAFFD;
+  box-shadow: 0 4px 8px 0 #000000;
+  transition: 0.3s;
+  width: 400px;
+  height: 200px;
+}
+.ContactsPng{ 
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: auto;
+}
+.Contacts:hover {
+  box-shadow: 0 8px 16px 0 #000000;
+}
+.Contactscontainer {
+  margin-top: -30px;
+}
+
+
+.Memos{
+  background-color: #F8FBFF;
+  box-shadow: 0 4px 8px 0 #000000;
+  transition: 0.3s;
+  width: 1500px;
+  height: 300px;
+}
+
+.MemoPng{
+  width: 250px;
+  height: 250px;
+}
+
+.MemoText{
+  position: relative;
+  bottom: 200px;
+  left: 30px;
+}
