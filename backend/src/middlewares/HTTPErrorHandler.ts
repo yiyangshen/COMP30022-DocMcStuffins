@@ -7,7 +7,8 @@ export const HTTPErrorHandler = (err: HTTPError, req: Request, res: Response, ne
 
     // Check whether all the error fields are filled
     if (err.status === undefined || err.statusText === undefined || err.body === undefined) {
-        error = new InternalServerError("Incomplete error fields");
+        console.log(err);
+        error = new InternalServerError("Unknown error");
     }
 
     res.json(error);
