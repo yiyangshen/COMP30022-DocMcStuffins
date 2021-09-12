@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from "express";
 
 /* Import required models */
-import { Group } from "../models";
+import { Group, Memo } from "../models";
 
 /* Import error and response classes */
 import {
@@ -99,17 +99,17 @@ async function getMemos(req: Request, res: Response, next: NextFunction) {
  */
 async function getRecentMemos(req: Request, res: Response, next: NextFunction) {
     try {
-        if (!req.user) {
+        if (req.isUnauthenticated()) {
             return next(new ForbiddenError("Requester is not authenticated"));
         }
-        if (req.body.n <= 0) {
+        if (!req.params.n || parseInt(req.params.n) || parseInt(req.params.n) <= 0) {
             return next(new BadRequestError("number of requester parameter is invalid"));
         }
-        const memos = await Group.find({ userId: (req as any).user._id }).sort({ timestamps: { created: 0 } }).limit(req.body.n);
-        if (!memos) {
-            return res.json(new NoContentSuccess());
+        const memos = await Memo.find({ userId: (req as any).user._id });
+        if (memos.length === 0) {
+            return res.status(204).json(new NoContentSuccess());
         }
-        return res.json(new OKSuccess(memos));
+        return res.json(new OKSuccess(memos.sort({ timestamps: { created: 0 } }).limit(parseInt(req.params.n))));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
     }
