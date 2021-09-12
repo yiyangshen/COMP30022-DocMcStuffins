@@ -1,12 +1,12 @@
 /* Import the required libraries and types */
 import React from 'react';
 import { Router, Route, Switch } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import './App.css';
 
 /* Import components */
 import history from "./history";
-// import Nav from "./components/nav";
+import Nav from "./components/nav";
 
 /* Component to create routes */
 function App() {
@@ -18,8 +18,9 @@ function App() {
           <Route exact path="/signup" />
 
           <div>
-            {/* <Nav /> */}
+            <Nav />
             <Route exact path="/dashboard" />
+            <Route exact path="/profile" />
 
             <Route exact path="/contacts" />
             <Route exact path="/contacts/add" />
@@ -27,8 +28,8 @@ function App() {
             <Route exact path="/groups" />
             <Route exact path="/groups/add" />
 
-            <Route exact path="/memo" />
-            <Route exact path="/memo/add" />
+            <Route exact path="/memos" />
+            <Route exact path="/memos/add" />
           </div>
           
         </Switch>
