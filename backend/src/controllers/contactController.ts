@@ -1,15 +1,15 @@
 /* Import required libraries and types */
 import { Request, Response, NextFunction } from "express";
+import { body, param, validationResult } from "express-validator";
+import { ObjectId, Types } from "mongoose";
 
 /* Import required models */
-import { Contact } from "../models";
+import { Contact, Gender, Name } from "../models";
 
 /* Import error and response classes */
 import {
-    JSONResponse,
-    BadRequestError, NotFoundError, UnauthorizedError, InternalServerError,
-    ForbiddenError,
-    OKSuccess
+    BadRequestError, NotFoundError, UnauthorizedError, InternalServerError, ForbiddenError,
+    CreatedSuccess, OKSuccess
 } from "../classes";
 
 /* Amends the given contact's details;
@@ -61,7 +61,85 @@ async function amendContactDetails(req: Request, res: Response, next: NextFuncti
  *   - 500 Internal Server Error otherwise
  */
 async function createContact(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new ForbiddenError("User is not authenticated"));
+        }
+        
+        /* Validate and sanitise the required inputs */
+        await body("firstName").isAlpha().trim().run(req);
+        await body("lastName").isAlpha().trim().run(req);
+        
+        /* Validate and sanitise the optional inputs */
+        if (req.body.middleName)
+            await body("middleName").isAlpha().trim().run(req);
+        if (req.body.groupId)
+            await body("groupId").isMongoId().run(req);
+        if (req.body.gender)
+            await body("gender").isIn([
+            Gender.Male,
+            Gender.Female,
+            Gender.Other
+        ]).run(req);
+        if (req.body.dateOfBirth)
+            await body("dateOfBirth").isDate().run(req);
+        if (req.body.lastMet)
+            await body("lastMet").isDate().run(req);
+        if (req.body.phoneNumber)
+            await body("phoneNumber").isNumeric().trim().run(req);
+        if (req.body.email)
+            await body("email").isEmail().trim().escape().run(req);
+        if (req.body.photo)
+            await body("photo").isBase64().run(req);
+        if (req.body.relationship)
+            await body("relationship").isAlpha().trim().run(req);
+        if (req.body.additionalNotes)
+            await body("additionalNotes").isAscii().trim().run(req);
 
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
+        }
+        
+        /* Create the contact object */
+        const newContact = new Contact({
+            userId: (req as any).user._id,
+            name: new Name({
+                first: req.body.firstName,
+                last: req.body.lastName
+            })
+        });
+        
+        /* Assign the optional values appropriately */
+        if (req.body.middleName)
+            newContact.name.middle = req.body.middleName;
+        if (req.body.groupId)
+            newContact.groupId = Types.ObjectId(req.body.groupId) as ObjectId;
+        if (req.body.gender)
+            newContact.gender = req.body.gender;
+        if (req.body.dateOfBirth)
+            newContact.dateOfBirth = new Date(req.body.dateOfBirth);
+        if (req.body.lastMet)
+            newContact.dateOfBirth = new Date(req.body.lastMet);
+        if (req.body.phoneNumber)
+            newContact.phoneNumber = req.body.phoneNumber;
+        if (req.body.email)
+            newContact.email = req.body.email.toLowerCase();
+        if (req.body.photo)
+            newContact.photo = req.body.photo;
+        if (req.body.relationship)
+            newContact.relationship = req.body.relationship;
+        if (req.body.additionalNotes)
+            newContact.additionalNotes = req.body.additionalNotes;
+        
+        /* Save the new contact to the database */
+        await newContact.save();
+        res.json(new CreatedSuccess("Contact successfully created"));
+    }
+    catch(err) {
+        return next(new InternalServerError("Something's gone wrong"));
+    }
 }
 
 /* Deletes the given contact and deassociates it from its group, if present;
