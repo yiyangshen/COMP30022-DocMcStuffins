@@ -1,24 +1,38 @@
+/* Import the required libraries and types */
 import React from 'react';
-import logo from './logo.svg';
+import { Router, Route, Switch } from "react-router-dom";
+import axios from "axios";
 import './App.css';
 
+/* Import components */
+import history from "./history";
+// import Nav from "./components/nav";
+
+/* Component to create routes */
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router history = {history}>
+        <Switch>
+          <Route exact path="/login" />
+          <Route exact path="/signup" />
+
+          <div>
+            {/* <Nav /> */}
+            <Route exact path="/dashboard" />
+
+            <Route exact path="/contacts" />
+            <Route exact path="/contacts/add" />
+
+            <Route exact path="/groups" />
+            <Route exact path="/groups/add" />
+
+            <Route exact path="/memo" />
+            <Route exact path="/memo/add" />
+          </div>
+          
+        </Switch>
+      </Router>
     </div>
   );
 }
