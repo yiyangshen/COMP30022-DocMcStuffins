@@ -102,8 +102,9 @@ async function getRecentMemos(req: Request, res: Response, next: NextFunction) {
         if (req.isUnauthenticated()) {
             return next(new ForbiddenError("Requester is not authenticated"));
         }
-        if (!req.params.n || parseInt(req.params.n) || parseInt(req.params.n) <= 0) {
-            return next(new BadRequestError("number of requester parameter is invalid"));
+        const n = parseInt(req.params.n);     
+        if (Object.is(NaN, n) || parseInt(req.params.n) <= 0) {
+            return next(new BadRequestError("Requester parameter is invalid"));
         }
         const memos = await Memo.find({ userId: (req as any).user._id });
         if (memos.length === 0) {

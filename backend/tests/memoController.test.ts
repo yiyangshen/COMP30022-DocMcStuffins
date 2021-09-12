@@ -53,7 +53,7 @@ describe('Recent memos', () => {
             })
 
         await memoAgent
-            .get(`${BASE_URL}/recent`)
+            .get(`${BASE_URL}/recent/something`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(400);
             })
@@ -73,7 +73,7 @@ describe('Recent memos', () => {
             })
 
         await memoAgent
-            .get(`${BASE_URL}/recent/:1`)
+            .get(`${BASE_URL}/recent/1`)
             .then((res: any) => {
                 expect(res.status).toEqual(204);
             })
