@@ -27,5 +27,5 @@ const groupSchema: Schema = new Schema({
 
 /* Export the group schema and model */
 export { groupSchema }
-const Group = model("Group", groupSchema);
+const Group = model<IGroup>("Group", groupSchema);
 export default Group;

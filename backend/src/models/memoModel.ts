@@ -32,5 +32,5 @@ const memoSchema: Schema = new Schema({
 
 /* Export the memo schema and model */
 export { memoSchema }
-const Memo = model("Memo", memoSchema);
+const Memo = model<IMemo>("Memo", memoSchema);
 export default Memo;
