@@ -5,7 +5,7 @@ import { IContact, contactSchema } from "./contactModel";
 export interface IGroup {
     userId: ObjectId;
     name: string;
-    members: Array<IContact>
+    members: Array<ObjectId>;
 }
 
 /* Define the group schema */
@@ -20,7 +20,7 @@ const groupSchema: Schema = new Schema({
         required: true
     },
     members: {
-        type: [contactSchema],
+        type: [Schema.Types.ObjectId],
         default: []
     }
 });
