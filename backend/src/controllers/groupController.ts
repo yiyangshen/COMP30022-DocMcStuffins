@@ -67,11 +67,11 @@ async function deleteGroup(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getGroupCount(req: Request, res: Response, next: NextFunction) {
+    if (req.isUnauthenticated()) {
+        return next(new ForbiddenError("Requester is not authenticated"));
+    }
     try {
-        if (!req.isAuthenticated()) {
-            return next(new ForbiddenError("Requester is not authenticated"));
-        }
-        const count = await Group.count({ userId: (req as any).user._id });
+        const count = await Group.countDocuments({ userId: (req as any).user._id });
         return res.json(new OKSuccess(count));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));

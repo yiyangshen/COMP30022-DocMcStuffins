@@ -1,8 +1,9 @@
 /* Import the required libraries and types */
-import { Router } from "express";
+import { Router, json } from "express";
 
 /* Set up the router */
 const groupRouter: Router = Router();
+groupRouter.use(json());
 
 /* Import the group controller */
 import * as controller from "../controllers/groupController";

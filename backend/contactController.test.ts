@@ -6,7 +6,7 @@ import app from "../src/config/serverConfig";
 /* Import models */
 import { User, Contact } from "../src/models/index";
 
-const TEST_USER_EMAIL = "phil@gaming.comt";
+const TEST_USER_EMAIL = "phil@gaming.com";
 const TEST_USER_FIRST_NAME = "Philip";
 const TEST_USER_LAST_NAME = "Holes";
 const TEST_USER_PASSWORD = "phillycheese";
@@ -15,22 +15,10 @@ const BASE_URL = "/api/contacts";
 
 describe('Contact count', () => {
     const userAgent = agent(app);
-
-    beforeAll(async () => {
-        const newUser = new User({
-            email: TEST_USER_EMAIL,
-            password: TEST_USER_PASSWORD,
-            name: {
-                first: TEST_USER_FIRST_NAME,
-                last: TEST_USER_LAST_NAME
-            }
-        });
-        await newUser.save();
-    });
+    const contactAgent = agent(app);
 
     test('1. Get a contact count without being authorised', async () => {
-        await userAgent.get(`/api/user/logout`);
-        await userAgent
+        await contactAgent
             .get(`${BASE_URL}/count`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(403);
@@ -38,28 +26,26 @@ describe('Contact count', () => {
     });
 
     test('2. Get contact count of an authenticated user', async () => {
+        // register the account first
         const req: any = {
             email: TEST_USER_EMAIL,
+            firstName: TEST_USER_FIRST_NAME,
+            lastName: TEST_USER_LAST_NAME,
             password: TEST_USER_PASSWORD
         };
-
         await userAgent
-            .patch(`/api/user/login`)
+            .post(`/api/user/register`)
             .send(req)
             .then((res: any) => {
-                expect(res.body.status).toEqual(200);
+                expect(res.body.status).toEqual(201);
             })
 
-        await userAgent
+        await contactAgent
             .get(`${BASE_URL}/count`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
                 expect(res.body.data).toEqual(0);
             })
-        await userAgent.get(`/api/user/logout`);
-    });
-
-    afterAll(async () => {
         await User.deleteOne({ email: TEST_USER_EMAIL });
-    })
+    });
 });

@@ -87,10 +87,10 @@ async function deleteContact(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getContactCount(req: Request, res: Response, next: NextFunction) {
+    if (req.isUnauthenticated()) {
+        return next(new ForbiddenError("Requester is not authenticated"));
+    }
     try {
-        if (!req.isAuthenticated()) {
-            return next(new ForbiddenError("Requester is not authenticated"));
-        }
         const count = await Contact.countDocuments({ userId: (req as any).user._id });
         return res.json(new OKSuccess(count));
     } catch (error) {
