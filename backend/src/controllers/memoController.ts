@@ -2,7 +2,15 @@
 import { Request, Response, NextFunction } from "express";
 
 /* Import required models */
-import { Group } from "../models";
+import { Group, Memo } from "../models";
+
+/* Import error and response classes */
+import {
+    JSONResponse, NoContentSuccess,
+    BadRequestError, NotFoundError, UnauthorizedError, InternalServerError,
+    ForbiddenError,
+    OKSuccess
+} from "../classes";
 
 /* Amends the given memo's details;
  * requires, in the request body:
@@ -90,7 +98,23 @@ async function getMemos(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getRecentMemos(req: Request, res: Response, next: NextFunction) {
-
+    if (req.isUnauthenticated()) {
+        return next(new ForbiddenError("Requester is not authenticated"));
+    }
+    try {
+        const n = parseInt(req.params.n);     
+        if (Object.is(NaN, n) || parseInt(req.params.n) <= 0) {
+            return next(new BadRequestError("Requester parameter is invalid"));
+        }
+        const memos = await Memo.find({ userId: (req as any).user._id }).sort({ "timestamps.created": -1  }).limit(n);
+        if (memos.length === 0) {
+            return res.status(204).json(new NoContentSuccess());
+        }
+        //return res.json(new OKSuccess("success"));
+        return res.json(new OKSuccess(memos));
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Export controller functions */

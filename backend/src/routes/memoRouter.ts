@@ -1,8 +1,9 @@
 /* Import the required libraries and types */
-import { Router } from "express";
+import { Router, json } from "express";
 
 /* Set up the router */
 const memoRouter: Router = Router();
+memoRouter.use(json());
 
 /* Import the memo controller */
 import * as controller from "../controllers/memoController";
