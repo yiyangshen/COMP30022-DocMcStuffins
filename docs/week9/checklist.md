@@ -30,7 +30,7 @@ Sure, the our repository is linked [here](https://github.com/techn0mancr/COMP300
 
 > Have design artefacts been modified?
 
-[insert answer here]
+Yes, we have added a functional UI prototype [here](https://www.figma.com/proto/fKGpzYdLk4bRARublYhPbr/IT-Project?page-id=0%3A1&node-id=136%3A528&viewport=241%2C48%2C0.3&scaling=scale-down&starting-point-node-id=136%3A528).
 
 > What tasks were completed in the sprint?
 
