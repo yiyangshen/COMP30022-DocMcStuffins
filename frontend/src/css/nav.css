@@ -11,6 +11,19 @@
     padding-top: 20px;
 }
 
+.header {
+    background-color: #b5d7ff;
+}
+
+input[type="text"] {
+    border-radius: 50px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: #fcfcfc;
+    padding: 3px 10px;
+}
+
 h2 {
     font-family: inter;
     font-size: 24px;
