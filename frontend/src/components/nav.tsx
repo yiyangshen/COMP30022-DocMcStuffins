@@ -51,7 +51,7 @@ export default function Navi() {
                     </h2>
                 </NavLink>
 
-                <NavLink className="contents logout" exact to="/login">
+                <NavLink className="contents logout" exact to="/signin">
                     <h2>
                         <ReactSVG class="icon" src={Logout} />
                         Logout

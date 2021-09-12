@@ -8,6 +8,8 @@ import "./App.css";
 /* Import components */
 import history from "./history";
 import Nav from "./components/nav";
+import SignIn from "./components/signin";
+import SignUp from "./components/signup";
 
 /* Component to create routes */
 function App() {
@@ -15,8 +17,8 @@ function App() {
         <div>
             <Router history={history}>
                 <Switch>
-                    <Route exact path="/login" />
-                    <Route exact path="/signup" />
+                    <Route exact path="/signin" component={SignIn} />
+                    <Route exact path="/signup" component={SignUp} />
 
                     <div>
                         <Nav />
