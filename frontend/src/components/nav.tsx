@@ -6,12 +6,15 @@ import { Nav, Navbar, Form } from "react-bootstrap";
 
 /* Import components */
 import "../css/nav.css";
+import history from "../history";
 import Logo from "../img/logo.svg";
 import Dashboard from "../img/dashboard.svg";
 import Contacts from "../img/contacts.svg";
 import Groups from "../img/groups.svg";
 import Memos from "../img/memos.svg";
 import Logout from "../img/logout.svg";
+import BackArrow from "../img/back-arrow.svg";
+import FrontArrow from "../img/front-arrow.svg";
 
 /* Navigation bar at the bottom of all customer page */
 export default function Navi() {
@@ -69,6 +72,20 @@ export default function Navi() {
                         <input type="text" placeholder="Search" className="" />
                     </h2>
                 </Form>
+                <input
+                    type="image"
+                    alt="front"
+                    className="front"
+                    src={FrontArrow}
+                    onClick={() => history.goForward()}
+                />
+                <input
+                    type="image"
+                    alt="back"
+                    className="back"
+                    src={BackArrow}
+                    onClick={() => history.goBack()}
+                />
             </Navbar>
         </div>
     );
