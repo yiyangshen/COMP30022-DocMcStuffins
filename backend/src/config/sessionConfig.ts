@@ -17,6 +17,8 @@ const SESSION_STORE_OPTIONS = {
     databaseName: MONGODB_DATABASE_NAME,
     collection: SESSION_STORE_COLLECTION_NAME
 };
+if (process.env.NODE_ENV !== "production")
+    require('dotenv').config();
 
 /* Connect to the session store */
 const MongoDBStore = new (connectMongoDBSession(session))(SESSION_STORE_OPTIONS);
