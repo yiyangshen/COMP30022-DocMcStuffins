@@ -10,7 +10,7 @@ const TEST_ERROR_STATUSTEXT = "I'm a teapot";
 const TEST_ERROR_MESSAGE = "Would you like to have tea?";
 
 const FAILED_ERROR_STATUS = 500;
-const FAILED_ERROR_STATUSTEXT = "InternalServerError";
+const FAILED_ERROR_STATUSTEXT = "Internal Server Error";
 
 const JSON_MIMETYPE = "application/json";
 const SUCCESS_JSON_STATUS = 200;
