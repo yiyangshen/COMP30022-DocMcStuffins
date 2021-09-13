@@ -4,7 +4,7 @@ import { body, param, validationResult } from "express-validator";
 import { ObjectId, Types } from "mongoose";
 
 /* Import required models */
-import { Contact, Gender, Name } from "../models";
+import { Contact, Gender, Group, Name } from "../models";
 
 /* Import error and response classes */
 import {
@@ -116,7 +116,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
             newContact.name.middle = req.body.middleName;
         if (req.body.groupId) {
             /* Check if the group is in the database */
-            const currentGroup = Group.findById(req.body.groupId);
+            const currentGroup = await Group.findById(req.body.groupId);
 
             if (currentGroup) {
                 /* Assign the contact to the group */
