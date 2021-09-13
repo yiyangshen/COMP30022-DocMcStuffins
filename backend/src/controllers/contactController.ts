@@ -83,9 +83,9 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
             Gender.Other
         ]).run(req);
         if (req.body.dateOfBirth)
-            await body("dateOfBirth").isDate().run(req);
+            await body("dateOfBirth").isRFC3339().run(req);
         if (req.body.lastMet)
-            await body("lastMet").isDate().run(req);
+            await body("lastMet").isRFC3339().run(req);
         if (req.body.phoneNumber)
             await body("phoneNumber").isNumeric().trim().run(req);
         if (req.body.email)
@@ -93,7 +93,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
         if (req.body.photo)
             await body("photo").isBase64().run(req);
         if (req.body.relationship)
-            await body("relationship").isAlpha().trim().run(req);
+            await body("relationship").isAscii().trim().run(req);
         if (req.body.additionalNotes)
             await body("additionalNotes").isAscii().trim().run(req);
 
