@@ -1,0 +1,13 @@
+.base-button {
+    background-color: #3182e0;
+    color: #f8fbff;
+    border-radius: 15px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+.base-button:hover {
+    background-color: #6baffd;
+}

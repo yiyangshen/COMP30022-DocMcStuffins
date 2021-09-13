@@ -1,0 +1,91 @@
+/* The sidebar menu */
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 180px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #fcfcfc; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+}
+
+.header {
+    background-color: #b5d7ff;
+}
+
+input[type="text"],
+input[type="password"] {
+    border-radius: 50px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    background-color: #fcfcfc;
+    padding: 10px 1px 10px 10px;
+}
+
+h1 {
+    font-family: inter;
+    font-size: 32px;
+}
+
+h2 {
+    font-family: inter;
+    font-size: 24px;
+}
+
+p {
+    font-family: inter;
+    font-size: 18px;
+}
+
+.logo {
+    display: block;
+    width: 75px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.logout {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.icon {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    margin: 1px 9px 1px 9px;
+    padding: 2px 2px 2px 2px;
+    text-decoration: none;
+    display: block;
+    color: #434343;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    background: #6baffd;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+.sidenav a:hover path {
+    fill: #ffffff;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+}
