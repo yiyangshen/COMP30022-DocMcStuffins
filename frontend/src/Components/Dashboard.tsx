@@ -13,7 +13,7 @@ export default function DashB() {
     
             <div className = "Memos">
                 <h1>Memos</h1>
-                <div className = "page">
+                <div className = "MemoPage">
                     <img className = "MemoPng" src={Memo} alt="logo" onClick={() => history.push(`/memos/id`)}/>
                     <h2 className ="MemoText">Groceries</h2>
                 </div>

@@ -17,6 +17,7 @@
   text-align: center;
   height: 150px;
   width: 150px;
+  margin-left: 1vw;
   background-color: #6BAFFD;
   border-radius: 50%;
   display: inline-block;
@@ -83,11 +84,12 @@
   height: 25%;
 }
 .MemoPng{
+  margin-left: 1vw;
   width: 250px;
   height: 250px;
 }
 .MemoText{
   position: relative;
-  bottom: 200px;
-  left: 30px;
+  bottom: 175px;
+  left: 60px;
 }
