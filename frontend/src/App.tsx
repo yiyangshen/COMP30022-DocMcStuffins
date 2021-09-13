@@ -10,6 +10,7 @@ import history from "./history";
 import Nav from "./components/nav";
 import SignIn from "./components/signin";
 import SignUp from "./components/signup";
+import DashB from "./components/Dashboard";
 
 /* Component to create routes */
 function App() {
@@ -22,7 +23,7 @@ function App() {
 
                     <div>
                         <Nav />
-                        <Route exact path="/dashboard" />
+                        <Route exact path="/dashboard" component={DashB}/>
                         <Route exact path="/profile" />
 
                         <Route exact path="/contacts" />

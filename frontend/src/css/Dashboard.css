@@ -1,14 +1,20 @@
+.everything{
+  margin-left: 8vw;
+}
+
+
 .RecentGroups {
   background-color: #F8FBFF;
   box-shadow: 0 4px 8px 0 #000000;
   transition: 0.3s;
   position: absolute;
-  left: 20%;
+  left: 25vw;
   top: 37%;
   width:80%;
   height: 440px;
 }
 .dot {
+  text-align: center;
   height: 150px;
   width: 150px;
   background-color: #6BAFFD;
@@ -40,6 +46,7 @@
   box-shadow: 0 8px 16px 0 #000000;
 }
 .container {
+  text-align: center;
   margin-top: -30px;
 }
 
@@ -62,7 +69,8 @@
 .Contacts:hover {
   box-shadow: 0 8px 16px 0 #000000;
 }
-.Contactscontainer {
+.Contactscontainer{
+  text-align: center;
   margin-top: -30px;
 }
 
