@@ -121,9 +121,10 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
             if (currentGroup) {
                 /* Assign the contact to the group */
                 newContact.groupId = Types.ObjectId(req.body.groupId) as ObjectId;
-
+                
                 /* Add the contact to the group */
-                currentGroup.members.push(newContact._id);
+                currentGroup.members.push(newContact.id); // TODO: not working as intended
+                await currentGroup.save();
             }
         }
         if (req.body.gender)

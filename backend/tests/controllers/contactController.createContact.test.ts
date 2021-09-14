@@ -169,20 +169,20 @@ describe("Integration test for contact creation", () => {
     });
 
     test("Create new contact with minimal valid data and assign it to an existing group", async () => {
-        // TODO: this lmao
-        //const reloadedTestGroup = await Group.findById(testGroup.id);
+        /* Reacquire the group from the database */
+        const reloadedTestGroup = await Group.findById(testGroup.id);
 
-        //await authAgent
-        //.post(TEST_URLS.createContact)
-        //.send({
-            //firstName: VALID_TEST_CONTACT.firstName,
-            //lastName: VALID_TEST_CONTACT.lastName,
-            //groupId: testGroup.id
-        //})
-        //.then((res: any) => {
-            //expect(res.body.status).toBe((new CreatedSuccess("Created")).status);
-            //expect(reloadedTestGroup!.members.length).toBeGreaterThan(0);
-        //});
+        await authAgent
+        .post(TEST_URLS.createContact)
+        .send({
+            firstName: VALID_TEST_CONTACT.firstName,
+            lastName: VALID_TEST_CONTACT.lastName,
+            groupId: testGroup.id
+        })
+        .then((res: any) => {
+            expect(res.body.status).toBe((new CreatedSuccess("Created")).status);
+            expect(reloadedTestGroup!.members.length).toBeGreaterThan(0);
+        });
     });
 
     afterAll(async () => {
