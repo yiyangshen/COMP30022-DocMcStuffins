@@ -87,7 +87,6 @@ describe('Recent memos', () => {
         await userAgent.get(`/api/user/logout`);
     });
 
-    // !! TODO - successful query
     test('4. Successful query with contents added', async () => {
         const oneUser = await User.findOne({email: TEST_USER_EMAIL})
         const userID = oneUser._id;

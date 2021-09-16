@@ -101,7 +101,20 @@ async function getGroupDetails(req: Request, res: Response, next: NextFunction) 
  *   - 500 Internal Server Error otherwise
  */
 async function getGroups(req: Request, res: Response, next: NextFunction) {
-
+        // requester is not authenticated
+    if (req.isUnauthenticated()) {
+        return next(new ForbiddenError("Requester is not authenticated"));
+    }
+    try {
+        // find all the group of this userId and replace all _id of user
+        // and group with its own model
+        const groups = await Group.find({ userId: (req as any).user.id })
+                                    .populate('members')
+                                    .populate('userId');
+        return res.json(new OKSuccess(groups));
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Export controller functions */

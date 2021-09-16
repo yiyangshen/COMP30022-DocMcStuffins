@@ -109,7 +109,7 @@ describe('Contacts lists (getContacts)', () => {
     test('1. Get contacts list without being authenticated', async () => {
         await userAgent.get(`/api/user/logout`);
         await userAgent
-            .get(`${BASE_URL}/count`)
+            .get(`${BASE_URL}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(403);
             })
@@ -145,5 +145,7 @@ describe('Contacts lists (getContacts)', () => {
 })
 
 afterAll(async () => {
+    const USER_ID = await User.findOne({ email: TEST_USER_EMAIL})._id;
+    await Contact.deleteMany({userId:USER_ID});
     await User.deleteOne({ email: TEST_USER_EMAIL });
 })
