@@ -21,21 +21,20 @@ const MEMO_DATE_VIEWED_2 = new Date()
 
 const BASE_URL = "/api/memos";
 
+beforeAll(async () => {
+    const newUser = new User({
+        email: TEST_USER_EMAIL,
+        password: TEST_USER_PASSWORD,
+        name: {
+            first: TEST_USER_FIRST_NAME,
+            last: TEST_USER_LAST_NAME
+        }
+    });
+    await newUser.save();
+});
+
 describe('Recent memos', () => {
     const userAgent = agent(app);
-    const memoAgent = agent(app);
-
-    beforeAll(async () => {
-        const newUser = new User({
-            email: TEST_USER_EMAIL,
-            password: TEST_USER_PASSWORD,
-            name: {
-                first: TEST_USER_FIRST_NAME,
-                last: TEST_USER_LAST_NAME
-            }
-        });
-        await newUser.save();
-    });
 
     test('1. Call recent-memos without being authenticated', async () => {
         await userAgent
@@ -133,7 +132,90 @@ describe('Recent memos', () => {
         await userAgent.get(`/api/user/logout`);
         await Memo.deleteMany({userId:userID});
     })
-    afterAll(async () => {
-        await User.deleteOne({ email: TEST_USER_EMAIL });
-    })
+
 });
+
+describe('List memos', () => {
+    const userAgent = agent(app);
+
+    test('1. Call getMemos without being authenticated', async () => {
+        await userAgent
+            .get(`${BASE_URL}`)
+            .then((res: any) => {
+                expect(res.body.status).toEqual(403);
+            })
+    });
+
+    test('2. No content found', async () => {
+        const req: any = {
+            email: TEST_USER_EMAIL,
+            password: TEST_USER_PASSWORD
+        };
+
+        await userAgent
+            .patch(`/api/user/login`)
+            .send(req)
+            .then((res: any) => {
+                expect(res.body.status).toEqual(200);
+            })
+
+        await userAgent
+            .get(`${BASE_URL}`)
+            .then((res: any) => {
+                expect(res.status).toEqual(204);
+            })
+        await userAgent.get(`/api/user/logout`);
+    });
+
+    test('3. Successful query with contents added', async () => {
+        const oneUser = await User.findOne({email: TEST_USER_EMAIL})
+        const userID = oneUser._id;
+
+        const req: any = {
+            email: TEST_USER_EMAIL,
+            password: TEST_USER_PASSWORD
+        };
+
+        await userAgent
+            .patch(`/api/user/login`)
+            .send(req)
+            .then((res: any) => {
+                expect(res.body.status).toEqual(200);
+        });
+
+        const memo1 = new Memo({
+            userId:userID,
+            title:MEMO_TITLE_1,
+            timestamps:{
+                created: MEMO_DATE_CREATED_1,
+                viewed:MEMO_DATE_VIEWED_1,
+            },
+        });
+
+        const memo2 = new Memo({
+            userId:userID,
+            title:MEMO_TITLE_2,
+            timestamps:{
+                created: MEMO_DATE_CREATED_2,
+                viewed:MEMO_DATE_VIEWED_2,
+            },
+        });
+
+        await memo1.save();
+        await memo2.save()
+
+        await userAgent
+            .get(`${BASE_URL}`)
+            .then((res: any) => {
+                console.log(res.body);
+                expect(res.status).toEqual(200);
+            })
+        await userAgent.get(`/api/user/logout`);
+        await Memo.deleteMany({userId:userID});
+    })
+
+});
+
+afterAll(async () => {
+    await User.deleteOne({ email: TEST_USER_EMAIL });
+})
