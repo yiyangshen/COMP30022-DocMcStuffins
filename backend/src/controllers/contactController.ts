@@ -123,7 +123,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
                 newContact.groupId = Types.ObjectId(req.body.groupId) as ObjectId;
                 
                 /* Add the contact to the group */
-                currentGroup.members.push(newContact.id); // TODO: not working as intended
+                currentGroup.members.push(Types.ObjectId(newContact.id) as ObjectId);
                 await currentGroup.save();
             }
         }
