@@ -9,7 +9,7 @@ import {
     JSONResponse,
     BadRequestError, NotFoundError, UnauthorizedError, InternalServerError,
     ForbiddenError,
-    OKSuccess
+    OKSuccess, NoContentSuccess
 } from "../classes";
 
 /* Amends the given contact's details;
@@ -117,6 +117,7 @@ async function getContactDetails(req: Request, res: Response, next: NextFunction
 /* Returns the currently-authenticated user's contacts, along with their representative details;
  * responds with a:
  *   - 200 OK if query is successful
+ *   - 204 No Content if query returns nothing
  *   - 403 Forbidden if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
@@ -130,6 +131,11 @@ async function getContacts(req: Request, res: Response, next: NextFunction) {
         // contact with its own model
         const contacts = await Contact.find({ userId: (req as any).user.id })
                                       .populate('groupId')
+        
+        //  in case if user doesn't have any contacts
+        if(contacts.length === 0){
+            return res.status(204).json(new NoContentSuccess());
+        }
         return res.json(new OKSuccess(contacts));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
