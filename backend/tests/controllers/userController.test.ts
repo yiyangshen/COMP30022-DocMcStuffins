@@ -1,9 +1,9 @@
 /* Import the required types and libraries */
 import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
 import { agent } from "supertest";
-import app from "../src/config/serverConfig";
+import app from "../../src/config/serverConfig";
 
-import { User } from "../src/models/index";
+import { User } from "../../src/models/index";
 
 const TEST_USER_EMAIL = "futabario@megane.jp";
 const TEST_USER_FIRST_NAME = "Futaba";

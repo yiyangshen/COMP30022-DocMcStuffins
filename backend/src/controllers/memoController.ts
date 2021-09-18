@@ -84,7 +84,23 @@ async function getMemoDetails(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getMemos(req: Request, res: Response, next: NextFunction) {
-
+    // make sure requester is authenticated
+    if (req.isUnauthenticated()) {
+        return next(new ForbiddenError("Requester is not authenticated"));
+    }
+    try {
+        // find all memos belonging to the user
+        const memos = await Memo.find({ userId: (req as any).user._id });
+        
+        // no memos were found
+        if (memos.length === 0) {
+            return res.status(204).json(new NoContentSuccess());
+        }
+        
+        return res.json(new OKSuccess(memos));
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Returns the currently-authenticated user's n recentmost memos, along with their representative details;
@@ -98,19 +114,25 @@ async function getMemos(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getRecentMemos(req: Request, res: Response, next: NextFunction) {
+    // make sure requester is authenticated
     if (req.isUnauthenticated()) {
         return next(new ForbiddenError("Requester is not authenticated"));
     }
     try {
+        // parses string n to int and verify that it is a valid request
         const n = parseInt(req.params.n);     
         if (Object.is(NaN, n) || parseInt(req.params.n) <= 0) {
             return next(new BadRequestError("Requester parameter is invalid"));
         }
+
+        // find memos, sort, and limit them to n documents
         const memos = await Memo.find({ userId: (req as any).user._id }).sort({ "timestamps.created": -1  }).limit(n);
+        
+        // no memos were found
         if (memos.length === 0) {
             return res.status(204).json(new NoContentSuccess());
         }
-        //return res.json(new OKSuccess("success"));
+
         return res.json(new OKSuccess(memos));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
