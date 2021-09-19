@@ -90,7 +90,7 @@ describe('Recent memos', () => {
     // !! TODO - successful query
     test('4. Successful query with contents added', async () => {
         const oneUser = await User.findOne({email: TEST_USER_EMAIL})
-        const userID = oneUser._id;
+        const userID = oneUser!.id;
 
         const req: any = {
             email: TEST_USER_EMAIL,
