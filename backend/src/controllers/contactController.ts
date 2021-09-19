@@ -4,7 +4,7 @@ import { body, param, validationResult } from "express-validator";
 import { ObjectId, Types } from "mongoose";
 
 /* Import required models */
-import { Contact, Gender, Group, Name } from "../models";
+import { Contact, Gender, Group, Name, User, IUser } from "../models";
 
 /* Import error and response classes */
 import {
@@ -104,7 +104,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
         
         /* Create the new contact document */
         const newContact = new Contact({
-            userId: (req as any).user._id,
+            userId: (req.user as IUser).id,
             name: new Name({
                 first: req.body.firstName,
                 last: req.body.lastName
@@ -180,7 +180,7 @@ async function getContactCount(req: Request, res: Response, next: NextFunction) 
         return next(new ForbiddenError("Requester is not authenticated"));
     }
     try {
-        const count = await Contact.countDocuments({ userId: (req as any).user._id });
+        const count = await Contact.countDocuments({ userId: (req.user as IUser).id });
         return res.json(new OKSuccess(count));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));

@@ -1,11 +1,12 @@
 /* Import the required libraries and types */
 import { hashSync } from "bcrypt";
-import { model, Model, Schema } from "mongoose";
+import { model, Model, ObjectId, Schema } from "mongoose";
 import { PASSWORD_HASH_ROUNDS } from "../config";
 import { IName, nameSchema } from "./nameModel";
 
 /* Define the user interface */
 export interface IUser {
+    id: ObjectId
     email: string;
     name: IName;
     password: string;

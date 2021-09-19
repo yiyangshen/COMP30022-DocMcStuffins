@@ -4,7 +4,7 @@ import { body, param, validationResult } from "express-validator";
 import { ObjectId, Types, isValidObjectId } from "mongoose";
 
 /* Import required models */
-import { Contact, Group } from "../models";
+import { Contact, Group, IUser } from "../models";
 
 /* Import error and response classes */
 import {
@@ -67,7 +67,7 @@ async function createGroup(req: Request, res: Response, next: NextFunction) {
         
         /* Create the new group document */
         const newGroup = new Group({
-            userId: (req as any).user._id,
+            userId: (req.user as IUser).id,
             name: req.body.name
         });
         
@@ -82,11 +82,11 @@ async function createGroup(req: Request, res: Response, next: NextFunction) {
                     newGroup.members.push(Types.ObjectId(memberId) as ObjectId);
 
                     /* Assign the contact to the group */
-                    currentContact.groupId = newGroup._id;       
+                    currentContact.groupId = newGroup.id;
                 }
             });
 
-        /* Save the new memo to the database */
+        /* Save the new group to the database */
         await newGroup.save();
         res.json(new CreatedSuccess("Group successfully created"));
     }
@@ -122,7 +122,7 @@ async function getGroupCount(req: Request, res: Response, next: NextFunction) {
         return next(new ForbiddenError("Requester is not authenticated"));
     }
     try {
-        const count = await Group.countDocuments({ userId: (req as any).user._id });
+        const count = await Group.countDocuments({ userId: (req.user as IUser).id });
         return res.json(new OKSuccess(count));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));

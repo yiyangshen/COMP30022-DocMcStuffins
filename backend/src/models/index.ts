@@ -2,7 +2,7 @@
 export { default as Contact } from "./contactModel";
 export { default as Group } from "./groupModel";
 export { default as Memo } from "./memoModel";
-export { default as User } from "./userModel";
+export { IUser, default as User } from "./userModel";
 
 /* Re-export helper interfaces, schemas, and models */
 export { default as Name } from "./nameModel";
