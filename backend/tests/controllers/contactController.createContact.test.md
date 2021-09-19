@@ -24,6 +24,7 @@
 * additionalNotes?: String
 * timestamps: Timestamps
 
+## Tests
 | No | Description                                                                   | Steps                                                                                                                                                 | Expected                                  |
 |----|-------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
 | 1  | Create new contact without authentication                                     | 1. POST `api/contacts/new` (while being logged out)                                                                                                   | 403 Forbidden                             |

@@ -29,6 +29,7 @@
 * name: String
 * members: [ObjectId]
 
+## Tests
 | No | Description                                | Steps                                                                                                                  | Expected Results                                   |
 |----|--------------------------------------------|------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|
 | 1  | Create new group when unauthenticated      | 1. POST `/api/group/new` (while not logged in)                                                                         | 403 Forbidden                                      |
