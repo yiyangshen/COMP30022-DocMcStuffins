@@ -1,6 +1,5 @@
 /* Import the required types and libraries */
 import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
-import { Types } from "mongoose";
 import { agent } from "supertest";
 
 /* Import the required classes and models */
@@ -150,8 +149,8 @@ describe("Integration test for group creation", () => {
             const reloadedTestContact2 = await Contact.findById(testContact2._id);
 
             expect(res.body.status).toBe((new CreatedSuccess("Created")).status);
-            expect(reloadedTestContact1!.groupId).toEqual(testGroup!._id);
-            expect(reloadedTestContact2!.groupId).toEqual(testGroup!._id);
+            expect(reloadedTestContact1!.groupId).toStrictEqual(testGroup!._id);
+            expect(reloadedTestContact2!.groupId).toStrictEqual(testGroup!._id);
         });
     });
 
