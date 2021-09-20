@@ -179,8 +179,8 @@ describe('Contacts lists (getContacts)', () => {
 })
 
 afterAll(async () => {
-    const USER_ID = await User.findOne({ email: TEST_USER_EMAIL_1})._id;
-    await Contact.deleteMany({userId:USER_ID});
+    const USER_ID = (await User.findOne({ email: TEST_USER_EMAIL_1}))!._id;
+    await Contact.deleteMany({ userId: USER_ID });
     await User.deleteOne({ email: TEST_USER_EMAIL_1 });
     await User.deleteOne({ email: TEST_USER_EMAIL_2 });
 })

@@ -156,7 +156,7 @@ describe('Group lists (getGroups)', () => {
 })
 
 afterAll(async () => {
-    const USER_ID = await User.findOne({ email: TEST_USER_EMAIL})._id;
+    const USER_ID = (await User.findOne({ email: TEST_USER_EMAIL}))!._id;
     await User.deleteOne({ email: TEST_USER_EMAIL });
     await Contact.deleteMany({userId:USER_ID});
     await Group.deleteMany({userId:USER_ID});
