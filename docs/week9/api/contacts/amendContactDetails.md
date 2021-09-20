@@ -42,7 +42,7 @@
 #### Data
 
 ```typescript
-???
+"Contact successfully amended"
 ```
 
 ### Possible errors

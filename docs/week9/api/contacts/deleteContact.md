@@ -41,4 +41,4 @@
 | 401         | Unauthorized          | Requester is not authenticated                                        |
 | 403         | Forbidden             | Contact to delete does not belong to the currently-authenticated user |
 | 404         | Not Found             | No contacts with the given ID exists in the database                  |
-| 500         | Internal Server Error | Something has gone wrong                           |
+| 500         | Internal Server Error | Something has gone wrong                                              |

@@ -55,9 +55,10 @@
 
 ### Possible errors
 
-| Status code | Status text           | Cause                                               |
-| :---------- | :-------------------- | :-------------------------------------------------- |
-| 400         | Bad Request           | Request params are malformed                        |
-| 401         | Unauthorized          | Requester is not authenticated                      |
-| 404         | Not Found             | No contacts with the given ID exist in the database |
+| Status code | Status text           | Cause                                                                         |
+| :---------- | :-------------------- | :---------------------------------------------------------------------------- |
+| 400         | Bad Request           | Request params are malformed                                                  |
+| 401         | Unauthorized          | Requester is not authenticated                                                |
+| 403         | Forbidden             | Contact to get details on does not belong to the currently-authenticated user |
+| 404         | Not Found             | No contacts with the given ID exist in the database                           |
 | 500         | Internal Server Error | Something has gone wrong                            |
