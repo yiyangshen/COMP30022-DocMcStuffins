@@ -4,11 +4,11 @@ import { body, param, validationResult } from "express-validator";
 import { ObjectId, Types } from "mongoose";
 
 /* Import required models */
-import { Contact, Gender, Group, Name, User, IUser } from "../models";
+import { Contact, Gender, Group, Name, IUser } from "../models";
 
 /* Import error and response classes */
 import {
-    BadRequestError, ForbiddenError, InternalServerError, NotFoundError, UnauthorizedError,  
+    BadRequestError, ForbiddenError, InternalServerError, NotFoundError,  
     CreatedSuccess, NoContentSuccess, OKSuccess
 } from "../classes";
 
@@ -206,11 +206,29 @@ async function getContactDetails(req: Request, res: Response, next: NextFunction
 /* Returns the currently-authenticated user's contacts, along with their representative details;
  * responds with a:
  *   - 200 OK if query is successful
+ *   - 204 No Content if query returns nothing
  *   - 403 Forbidden if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function getContacts(req: Request, res: Response, next: NextFunction) {
-
+    // requester is not authenticated
+    if (req.isUnauthenticated()) {
+        return next(new ForbiddenError("Requester is not authenticated"));
+    }
+    try {
+        // find all the contacts of this userId and replace all _id of
+        // contact with its own model
+        const contacts = await Contact.find({ userId: (req as any).user.id })
+                                      .populate('groupId')
+        
+        //  in case if user doesn't have any contacts
+        if(contacts.length === 0){
+            return res.status(204).json(new NoContentSuccess());
+        }
+        return res.json(new OKSuccess(contacts));
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Returns the currently-authenticated user's contacts that fuzzy-matches the given search string;
