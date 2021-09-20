@@ -104,7 +104,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
         
         /* Create the new contact document */
         const newContact = new Contact({
-            userId: (req.user as IUser).id,
+            userId: (req.user as IUser)._id,
             name: new Name({
                 first: req.body.firstName,
                 last: req.body.lastName
@@ -123,7 +123,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
                 newContact.groupId = Types.ObjectId(req.body.groupId) as ObjectId;
                 
                 /* Add the contact to the group */
-                currentGroup.members.push(Types.ObjectId(newContact.id) as ObjectId);
+                currentGroup.members.push(newContact._id);
                 await currentGroup.save();
             }
         }
@@ -180,7 +180,7 @@ async function getContactCount(req: Request, res: Response, next: NextFunction) 
         return next(new ForbiddenError("Requester is not authenticated"));
     }
     try {
-        const count = await Contact.countDocuments({ userId: (req.user as IUser).id });
+        const count = await Contact.countDocuments({ userId: (req.user as IUser)._id });
         return res.json(new OKSuccess(count));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));

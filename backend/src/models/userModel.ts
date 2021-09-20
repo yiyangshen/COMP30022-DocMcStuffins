@@ -6,7 +6,7 @@ import { IName, nameSchema } from "./nameModel";
 
 /* Define the user interface */
 export interface IUser {
-    id: ObjectId
+    _id: ObjectId
     email: string;
     name: IName;
     password: string;

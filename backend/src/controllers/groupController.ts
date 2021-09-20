@@ -67,7 +67,7 @@ async function createGroup(req: Request, res: Response, next: NextFunction) {
         
         /* Create the new group document */
         const newGroup = new Group({
-            userId: (req.user as IUser).id,
+            userId: (req.user as IUser)._id,
             name: req.body.name
         });
         
@@ -82,7 +82,8 @@ async function createGroup(req: Request, res: Response, next: NextFunction) {
                     newGroup.members.push(Types.ObjectId(memberId) as ObjectId);
 
                     /* Assign the contact to the group */
-                    currentContact.groupId = newGroup.id;
+                    currentContact.groupId = newGroup._id;
+                    await currentContact.save();
                 }
             });
 
@@ -122,7 +123,7 @@ async function getGroupCount(req: Request, res: Response, next: NextFunction) {
         return next(new ForbiddenError("Requester is not authenticated"));
     }
     try {
-        const count = await Group.countDocuments({ userId: (req.user as IUser).id });
+        const count = await Group.countDocuments({ userId: (req.user as IUser)._id });
         return res.json(new OKSuccess(count));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));

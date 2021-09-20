@@ -60,7 +60,7 @@ async function createMemo(req: Request, res: Response, next: NextFunction) {
         
         /* Create the new memo document */
         const newMemo = new Memo({
-            userId: (req.user as IUser).id,
+            userId: (req.user as IUser)._id,
             title: req.body.title
         });
         
@@ -139,7 +139,7 @@ async function getRecentMemos(req: Request, res: Response, next: NextFunction) {
         if (Object.is(NaN, n) || parseInt(req.params.n) <= 0) {
             return next(new BadRequestError("Requester parameter is invalid"));
         }
-        const memos = await Memo.find({ userId: (req.user as IUser).id }).sort({ "timestamps.created": -1  }).limit(n);
+        const memos = await Memo.find({ userId: (req.user as IUser)._id }).sort({ "timestamps.created": -1  }).limit(n);
         if (memos.length === 0) {
             return res.status(204).json(new NoContentSuccess());
         }

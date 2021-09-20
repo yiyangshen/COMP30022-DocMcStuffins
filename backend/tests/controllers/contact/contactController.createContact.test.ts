@@ -7,11 +7,11 @@ import { agent } from "supertest";
 import {
     BadRequestError, ForbiddenError,
     CreatedSuccess, OKSuccess
-} from "../../src/classes";
-import { Contact, Gender, Group, Name, User } from "../../src/models";
+} from "../../../src/classes";
+import { Contact, Gender, Group, Name, User } from "../../../src/models";
 
 /* Import the Express application */
-import app from "../../src/config/serverConfig";
+import app from "../../../src/config/serverConfig";
 
 /* Define test constants */
 const BASE_URL = "/api";
@@ -81,7 +81,7 @@ describe("Integration test for contact creation", () => {
     
     /* Create test group */
     const testGroup = new Group({
-        userId: testUser.id,
+        userId: testUser._id,
         name: TEST_GROUP.name,
         members: TEST_GROUP.members
     });
@@ -105,7 +105,7 @@ describe("Integration test for contact creation", () => {
             });
     });
 
-    test("Create new contact without authentication", async () => {
+    test("1. Create new contact without authentication", async () => {
         await unauthAgent
         .post(TEST_URLS.createContact)
         .send({
@@ -117,7 +117,7 @@ describe("Integration test for contact creation", () => {
         });
     });
 
-    test("Create new contact with minimal valid data", async () => {
+    test("2. Create new contact with minimal valid data", async () => {
         await authAgent
         .post(TEST_URLS.createContact)
         .send({
@@ -129,7 +129,7 @@ describe("Integration test for contact creation", () => {
         });
     });
 
-    test("Create new contact with full valid data", async () => {
+    test("3. Create new contact with full valid data", async () => {
         await authAgent
         .post(TEST_URLS.createContact)
         .send(VALID_TEST_CONTACT)
@@ -138,7 +138,7 @@ describe("Integration test for contact creation", () => {
         });
     });
 
-    test("Create new contact with no data", async () => {
+    test("4. Create new contact with no data", async () => {
         await authAgent
         .post(TEST_URLS.createContact)
         .send({})
@@ -147,7 +147,7 @@ describe("Integration test for contact creation", () => {
         });
     });
 
-    test("Create new contact with minimal invalid data", async () => {
+    test("5. Create new contact with minimal invalid data", async () => {
         await authAgent
         .post(TEST_URLS.createContact)
         .send({
@@ -159,7 +159,7 @@ describe("Integration test for contact creation", () => {
         });
     });
     
-    test("Create new contact with full invalid data", async () => {
+    test("6. Create new contact with full invalid data", async () => {
         await authAgent
         .post(TEST_URLS.createContact)
         .send(INVALID_TEST_CONTACT)
@@ -168,17 +168,17 @@ describe("Integration test for contact creation", () => {
         });
     });
 
-    test("Create new contact with minimal valid data and assign it to an existing group", async () => {
+    test("7. Create new contact with minimal valid data and assign it to an existing group", async () => {
         await authAgent
         .post(TEST_URLS.createContact)
         .send({
             firstName: VALID_TEST_CONTACT.firstName,
             lastName: VALID_TEST_CONTACT.lastName,
-            groupId: testGroup.id
+            groupId: testGroup._id
         })
         .then(async (res: any) => {
             /* Reacquire the test group */
-            const reloadedTestGroup = await Group.findById(testGroup!.id);
+            const reloadedTestGroup = await Group.findById(testGroup!._id);
 
             expect(res.body.status).toBe((new CreatedSuccess("Created")).status);
             expect(reloadedTestGroup!.members.length).toBeGreaterThan(0);
@@ -190,21 +190,12 @@ describe("Integration test for contact creation", () => {
         await authAgent.patch(TEST_URLS.logout);
         
         /* Delete test user */
-        await User.deleteOne({
-            email: TEST_USER.email
-        });
+        await User.deleteMany();
         
         /* Delete test groups */
-        await Group.deleteOne({
-            name: TEST_GROUP.name
-        });
+        await Group.deleteMany();
 
         /* Delete test contacts */
-        await Contact.deleteMany({
-            name: {
-                first : VALID_TEST_CONTACT.firstName,
-                last: VALID_TEST_CONTACT.lastName
-            }
-        });
+        await Contact.deleteMany();
     });
 });
