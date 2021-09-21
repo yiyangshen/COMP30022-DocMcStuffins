@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 /* Import the required libraries and types */
-import { getContacts } from "../api";
+import { getContacts } from "../api/contactApi";
 import { IContact } from "../interfaces";
 
 function ViewContacts() {

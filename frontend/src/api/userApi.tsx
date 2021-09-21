@@ -1,6 +1,5 @@
 /* Import the required libraries and types */
 import axios from "axios";
-import history from "./history";
 
 /* Change the API base URL based on the environment */
 var BASE_URL: string = "";
@@ -83,17 +82,5 @@ async function registerUser(
     });
 }
 
-/* Returns the currently-authenticated user's contacts, along with their representative details;
- * responds with a:
- *   - 200 OK if query is successful
- *   - 204 No Content if query returns nothing
- *   - 401 Unauthorized if the requester is not authenticated
- *   - 500 Internal Server Error otherwise
- */
-function getContacts() {
-    const endpoint = `${BASE_URL}/contacts/`;
-    return axios.get(endpoint);
-}
-
 /* Export api functions */
-export { getContacts };
+export { getUserProfile, loginUser, logoutUser, registerUser };
