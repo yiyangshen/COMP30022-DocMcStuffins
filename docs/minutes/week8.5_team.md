@@ -24,21 +24,27 @@
 ### Josh
 
 #### Project Management
+- consolidate UI usability testing questionnaire replies
 
 #### Frontend
+- create contact, group, and memo creation pages
+- integrate API calls with frontend
 
 ### Livya
 
 #### Project Management
+- consolidate UI usability testing questionnaire replies
 
 #### Frontend
+- create contact, group, and memo list pages
+- integrate API calls with frontend
 
 ### Nathan
 
 #### Project Management
 - write API documentation
 - write test documentation standards
-- update Trello boards
+- update 'Spirints' Trello board
 
 ### Stanley
 

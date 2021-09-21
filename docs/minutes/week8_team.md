@@ -28,9 +28,8 @@
 #### Project Management
 
 #### Frontend
-- create contact, group, and memo creation pages
+- create and send out questionnaire for UI usability testing
 - integrate dashboard with search and navigation bar
-- perform usability testing on the application UI
 
 ### Livya
 
@@ -38,8 +37,9 @@
 - review acceptance criteria
 
 #### Frontend
-- create contact, group, and memo list pages
-- perform usability testing on the application UI
+- create and send out questionnaire for UI usability testing
+- create login/out React components
+- create navbar and search bar React components
 
 ### Nathan
 
@@ -56,5 +56,3 @@
 
 #### Backend
 - write tests for group and memo creation controllers
-- create contact, group, and memo deletion controllers
-- write tests for contact, group, and memo deletion controllers
