@@ -21,7 +21,7 @@ async function getUserProfile(req: Request, res: Response, next: NextFunction) {
         return next(new UnauthorizedError("User is not authenticated"));
     }
     try {
-        res.json(new OKSuccess(req.user as Express.User));
+        res.json(new OKSuccess(req.user));
     } catch (err) {
         next(new InternalServerError("Failed fetching the user"));
     }
