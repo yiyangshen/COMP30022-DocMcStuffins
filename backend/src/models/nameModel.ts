@@ -26,5 +26,5 @@ const nameSchema: Schema = new Schema({
 
 /* Export the name schema and model */
 export { nameSchema }
-const Name = model("Name", nameSchema);
+const Name = model<IName>("Name", nameSchema);
 export default Name;

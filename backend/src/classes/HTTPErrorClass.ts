@@ -39,6 +39,6 @@ export class NotFoundError extends HTTPError {
 /* HTTP Error response format for 500 Internal Server Error errors */
 export class InternalServerError extends HTTPError {
     constructor(message: string) {
-        super(500, "InternalServerError", message);
+        super(500, "Internal Server Error", message);
     }    
 }

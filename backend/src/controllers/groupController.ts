@@ -1,15 +1,15 @@
 /* Import required libraries and types */
 import { Request, Response, NextFunction } from "express";
+import { body, param, validationResult } from "express-validator";
+import { ObjectId, Types, isValidObjectId } from "mongoose";
 
 /* Import required models */
-import { Group } from "../models";
+import { Contact, Group, IUser } from "../models";
 
 /* Import error and response classes */
 import {
-    JSONResponse,
-    BadRequestError, NotFoundError, UnauthorizedError, InternalServerError,
-    ForbiddenError,
-    OKSuccess
+    BadRequestError, ForbiddenError, InternalServerError, NotFoundError, UnauthorizedError,  
+    CreatedSuccess, OKSuccess
 } from "../classes";
 
 /* Amends the given group's details;
@@ -41,7 +41,59 @@ async function amendGroupDetails(req: Request, res: Response, next: NextFunction
  *   - 500 Internal Server Error otherwise
  */
 async function createGroup(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new ForbiddenError("User is not authenticated"));
+        }
+        
+        /* Validate and sanitise the required inputs */
+        await body("name").isAscii().trim().run(req);
 
+        /* Validate and sanitise the optional inputs */
+        if (req.body.members) {
+            /* Check that each element of the members array is an ObjectId */
+            await body("members").custom((memberIds: Array<string>) => {
+                return memberIds.every((memberId: string) => {
+                    return isValidObjectId(memberId);
+                });
+            }).run(req);
+        }
+        
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
+        }
+        
+        /* Create the new group document */
+        const newGroup = new Group({
+            userId: (req.user as IUser)._id,
+            name: req.body.name
+        });
+        
+        /* Assign the optional values appropriately */
+        if (req.body.members)
+            req.body.members.forEach(async (memberId: string) => {
+                /* Verify that the contact is in the database */
+                const currentContact = await Contact.findById(memberId); 
+
+                if (currentContact) {
+                    /* Add the contact to the group */
+                    newGroup.members.push(Types.ObjectId(memberId) as ObjectId);
+
+                    /* Assign the contact to the group */
+                    currentContact.groupId = newGroup._id;
+                    await currentContact.save();
+                }
+            });
+
+        /* Save the new group to the database */
+        await newGroup.save();
+        res.json(new CreatedSuccess("Group successfully created"));
+    }
+    catch (err) {
+        return next(new InternalServerError("Something's gone wrong"));
+    }
 }
 
 /* Deletes the given group and deassociates all its members from the group;
@@ -71,7 +123,7 @@ async function getGroupCount(req: Request, res: Response, next: NextFunction) {
         return next(new ForbiddenError("Requester is not authenticated"));
     }
     try {
-        const count = await Group.countDocuments({ userId: (req as any).user._id });
+        const count = await Group.countDocuments({ userId: (req.user as IUser)._id });
         return res.json(new OKSuccess(count));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));

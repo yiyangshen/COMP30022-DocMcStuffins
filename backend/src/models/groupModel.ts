@@ -5,7 +5,7 @@ import { IContact, contactSchema } from "./contactModel";
 export interface IGroup {
     userId: ObjectId;
     name: string;
-    members: Array<ObjectId>
+    members: Array<ObjectId>;
 }
 
 /* Define the group schema */
@@ -19,14 +19,13 @@ const groupSchema: Schema = new Schema({
         type: String,
         required: true
     },
-    members: [{
-        type : Schema.Types.ObjectId,
-        ref: "Contact",
-        default: {}
-    }]
+    members: {
+        type: [Schema.Types.ObjectId],
+        default: []
+    }
 });
 
 /* Export the group schema and model */
 export { groupSchema }
-const Group = model("Group", groupSchema);
+const Group = model<IGroup>("Group", groupSchema);
 export default Group;

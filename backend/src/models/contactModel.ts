@@ -80,5 +80,5 @@ const contactSchema: Schema = new Schema({
 
 /* Export the contact schema and model */
 export { contactSchema, Gender }
-const Contact = model("Contact", contactSchema);
+const Contact = model<IContact>("Contact", contactSchema);
 export default Contact;

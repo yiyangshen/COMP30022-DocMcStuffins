@@ -1,15 +1,14 @@
 /* Import required libraries and types */
 import { Request, Response, NextFunction } from "express";
+import { body, param, validationResult } from "express-validator";
 
 /* Import required models */
-import { Group, Memo } from "../models";
+import { Memo, IUser } from "../models";
 
 /* Import error and response classes */
 import {
-    JSONResponse, NoContentSuccess,
-    BadRequestError, NotFoundError, UnauthorizedError, InternalServerError,
-    ForbiddenError,
-    OKSuccess
+    BadRequestError, ForbiddenError, InternalServerError, NotFoundError, UnauthorizedError,  
+    CreatedSuccess, NoContentSuccess, OKSuccess
 } from "../classes";
 
 /* Amends the given memo's details;
@@ -41,7 +40,41 @@ async function amendMemoDetails(req: Request, res: Response, next: NextFunction)
  *   - 500 Internal Server Error otherwise
  */
 async function createMemo(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new ForbiddenError("User is not authenticated"));
+        }
+        
+        /* Validate and sanitise the required inputs */
+        await body("title").isAscii().trim().run(req);
 
+        /* Validate and sanitise the optional inputs */
+        if (req.body.notes)
+            await body("notes").isAscii().trim().run(req);
+        
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
+        }
+        
+        /* Create the new memo document */
+        const newMemo = new Memo({
+            userId: (req.user as IUser)._id,
+            title: req.body.title
+        });
+        
+        /* Assign the optional values appropriately */
+        if (req.body.notes)
+            newMemo.notes = req.body.notes;
+
+        /* Save the new memo to the database */
+        await newMemo.save();
+        res.json(new CreatedSuccess("Memo successfully created"));
+    }
+    catch (err) {
+        return next(new InternalServerError("Something's gone wrong"));
+    }
 }
 
 /* Deletes the given memo;

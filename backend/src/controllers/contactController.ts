@@ -1,15 +1,15 @@
 /* Import required libraries and types */
 import { Request, Response, NextFunction } from "express";
+import { body, param, validationResult } from "express-validator";
+import { ObjectId, Types } from "mongoose";
 
 /* Import required models */
-import { User, Contact } from "../models";
+import { Contact, Gender, Group, Name, IUser } from "../models";
 
 /* Import error and response classes */
 import {
-    JSONResponse,
-    BadRequestError, NotFoundError, UnauthorizedError, InternalServerError,
-    ForbiddenError,
-    OKSuccess, NoContentSuccess
+    BadRequestError, ForbiddenError, InternalServerError, NotFoundError,  
+    CreatedSuccess, NoContentSuccess, OKSuccess
 } from "../classes";
 
 /* Amends the given contact's details;
@@ -61,7 +61,96 @@ async function amendContactDetails(req: Request, res: Response, next: NextFuncti
  *   - 500 Internal Server Error otherwise
  */
 async function createContact(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new ForbiddenError("User is not authenticated"));
+        }
+        
+        /* Validate and sanitise the required inputs */
+        await body("firstName").isAlpha().trim().run(req);
+        await body("lastName").isAlpha().trim().run(req);
+        
+        /* Validate and sanitise the optional inputs */
+        if (req.body.middleName)
+            await body("middleName").isAlpha().trim().run(req);
+        if (req.body.groupId)
+            await body("groupId").isMongoId().run(req);
+        if (req.body.gender)
+            await body("gender").isIn([
+            Gender.Male,
+            Gender.Female,
+            Gender.Other
+        ]).run(req);
+        if (req.body.dateOfBirth)
+            await body("dateOfBirth").isRFC3339().run(req);
+        if (req.body.lastMet)
+            await body("lastMet").isRFC3339().run(req);
+        if (req.body.phoneNumber)
+            await body("phoneNumber").isNumeric().trim().run(req);
+        if (req.body.email)
+            await body("email").isEmail().trim().escape().run(req);
+        if (req.body.photo)
+            await body("photo").isBase64().run(req);
+        if (req.body.relationship)
+            await body("relationship").isAscii().trim().run(req);
+        if (req.body.additionalNotes)
+            await body("additionalNotes").isAscii().trim().run(req);
 
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
+        }
+        
+        /* Create the new contact document */
+        const newContact = new Contact({
+            userId: (req.user as IUser)._id,
+            name: new Name({
+                first: req.body.firstName,
+                last: req.body.lastName
+            })
+        });
+        
+        /* Assign the optional values appropriately */
+        if (req.body.middleName)
+            newContact.name.middle = req.body.middleName;
+        if (req.body.groupId) {
+            /* Check if the group is in the database */
+            const currentGroup = await Group.findById(req.body.groupId);
+
+            if (currentGroup) {
+                /* Assign the contact to the group */
+                newContact.groupId = Types.ObjectId(req.body.groupId) as ObjectId;
+                
+                /* Add the contact to the group */
+                currentGroup.members.push(newContact._id);
+                await currentGroup.save();
+            }
+        }
+        if (req.body.gender)
+            newContact.gender = req.body.gender;
+        if (req.body.dateOfBirth)
+            newContact.dateOfBirth = new Date(req.body.dateOfBirth);
+        if (req.body.lastMet)
+            newContact.dateOfBirth = new Date(req.body.lastMet);
+        if (req.body.phoneNumber)
+            newContact.phoneNumber = req.body.phoneNumber;
+        if (req.body.email)
+            newContact.email = req.body.email.toLowerCase();
+        if (req.body.photo)
+            newContact.photo = req.body.photo;
+        if (req.body.relationship)
+            newContact.relationship = req.body.relationship;
+        if (req.body.additionalNotes)
+            newContact.additionalNotes = req.body.additionalNotes;
+        
+        /* Save the new contact to the database */
+        await newContact.save();
+        res.json(new CreatedSuccess("Contact successfully created"));
+    }
+    catch(err) {
+        return next(new InternalServerError("Something's gone wrong"));
+    }
 }
 
 /* Deletes the given contact and deassociates it from its group, if present;
@@ -91,7 +180,7 @@ async function getContactCount(req: Request, res: Response, next: NextFunction) 
         return next(new ForbiddenError("Requester is not authenticated"));
     }
     try {
-        const count = await Contact.countDocuments({ userId: (req as any).user.id });
+        const count = await Contact.countDocuments({ userId: (req.user as IUser)._id });
         return res.json(new OKSuccess(count));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));

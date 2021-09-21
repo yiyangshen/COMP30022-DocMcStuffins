@@ -24,6 +24,7 @@
     "cors": "*",
     "express": "*",
     "express-session": "*",
+    "express-validator": "*",
     "mongoose": "*",
     "passport": "*",
     "passport-local": "*",

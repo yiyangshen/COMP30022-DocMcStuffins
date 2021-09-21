@@ -26,5 +26,5 @@ const timestampsSchema: Schema = new Schema({
 
 /* Export the timestamp schema and model */
 export { timestampsSchema }
-const Timestamps = model("Timestamps", timestampsSchema);
+const Timestamps = model<ITimestamps>("Timestamps", timestampsSchema);
 export default Timestamps;
