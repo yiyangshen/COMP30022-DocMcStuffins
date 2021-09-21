@@ -196,7 +196,7 @@ async function deleteContact(req: Request, res: Response, next: NextFunction) {
         if (contact.groupId) {
             const group = await Group.findById(contact.groupId);
             if (group) {
-                group.members.filter(contactId => contactId.toString() !== contact._id);
+                group.members = group.members.filter(contactId => contactId.toString() !== contact._id.toString());
                 await group.save();
             }
         }
