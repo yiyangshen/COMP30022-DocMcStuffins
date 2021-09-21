@@ -191,6 +191,15 @@ async function deleteContact(req: Request, res: Response, next: NextFunction) {
         if (contact.userId.toString() !== (req.user as IUser)._id.toString()) {
             return next(new ForbiddenError("Contact to delete does not belong to the currently-authenticated user"));
         }
+
+        /* Remove the contact from the membership of their group if there is */
+        if (contact.groupId) {
+            const group = await Group.findById(contact.groupId);
+            if (group) {
+                group.members.filter(contactId => contactId.toString() !== contact._id);
+                await group.save();
+            }
+        }
         
         /* Delete the contact */
         await Contact.findByIdAndDelete(contact._id);

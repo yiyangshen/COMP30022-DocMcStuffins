@@ -134,6 +134,17 @@ async function deleteGroup(req: Request, res: Response, next: NextFunction) {
             return next(new ForbiddenError("Group to delete does not belong to the currently-authenticated user"));
         }
 
+        /* Remove the membership of this group from any contact if there is */
+        if (group.members) {
+            group.members.forEach(async (memberId) => {
+                const member = await Contact.findById(memberId);
+                if (member) {
+                    member.groupId === undefined;
+                    await member.save();
+                }
+            });
+        }
+
         /* Delete the group */
         await Group.findByIdAndDelete(group._id);
         res.json(new OKSuccess("Group successfully deleted"));
