@@ -33,7 +33,7 @@
         timestamps: {
             created: Date,
             viewed: Date,
-            modified: Date
+            modified?: Date
         }
     }
 ]
@@ -56,5 +56,5 @@ null
 | Status code | Status text           | Cause                              |
 | :---------- | :-------------------- | :--------------------------------- |
 | 400         | Bad Request           | Request params is malformed        |
-| 403         | Forbidden             | Requester is not authenticated     |
+| 401         | Unauthorized          | Requester is not authenticated     |
 | 500         | Internal Server Error | Something has gone wrong           |

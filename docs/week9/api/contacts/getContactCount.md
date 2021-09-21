@@ -31,5 +31,5 @@ number
 
 | Status code | Status text           | Cause                          |
 | :---------- | :-------------------- | :----------------------------- |
-| 403         | Forbidden             | Requester is not authenticated |
+| 401         | Unauthorized          | Requester is not authenticated |
 | 500         | Internal Server Error | Something has gone wrong       |

@@ -37,6 +37,7 @@
         middle?: string,
         last: string
     },
+    groupId?: string,
     gender: string,
     dateOfBirth?: Date,
     lastMet?: Date,
