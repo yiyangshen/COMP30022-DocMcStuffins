@@ -30,7 +30,6 @@ function Navi() {
                 <Link to="#" className="menu-bars">
                     <FaIcons.FaBars onClick={showSidebar} />
                 </Link>
-
                 <Form className="form-center">
                     <h2>
                         <input type="text" placeholder="Search" className="" />

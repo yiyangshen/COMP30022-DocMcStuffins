@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #060b26;
+    background-color: #b5d7ff;
     height: 80px;
     display: flex;
     justify-content: start;
@@ -13,7 +13,7 @@
 }
 
 .nav-menu {
-    background-color: #060b26;
+    background-color: #fcfcfc;
     width: 250px;
     height: 100vh;
     display: flex;
@@ -40,7 +40,7 @@
 
 .nav-text a {
     text-decoration: none;
-    color: #f5f5f5;
+    color: #434343;
     font-size: 18px;
     width: 95%;
     height: 100%;
@@ -51,22 +51,29 @@
 }
 
 .nav-text a:hover {
-    background-color: #1a83ff;
+    background: #6baffd;
+    color: #ffffff;
+}
+
+.logout {
+    position: fixed;
+    bottom: 0;
 }
 
 .nav-menu-items {
     width: 100%;
 }
 
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
+.navbar-toggle {
+    background-color: #fcfcfc;
+    width: 100%;
+    height: 80px;
     display: flex;
-    flex-direction: column;
+    justify-content: start;
     align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+}
+span {
+    margin-left: 12px;
 }
 
 /* The sidebar menu */
@@ -99,64 +106,15 @@ input[type="password"] {
 
 h1 {
     font-family: inter;
-    font-size: 32px;
+    font-size: 24px;
 }
 
 h2 {
     font-family: inter;
-    font-size: 24px;
+    font-size: 18px;
 }
 
 p {
     font-family: inter;
-    font-size: 18px;
-}
-
-.logo {
-    display: block;
-    width: 75px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-}
-
-.logout {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
-.icon {
-    display: inline-block;
-    margin-right: 8px;
-}
-
-/* The navigation menu links */
-.sidenav a {
-    margin: 1px 9px 1px 9px;
-    padding: 2px 2px 2px 2px;
-    text-decoration: none;
-    display: block;
-    color: #434343;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-    background: #6baffd;
-    color: #ffffff;
-    border-radius: 10px;
-}
-
-.sidenav a:hover path {
-    fill: #ffffff;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-    .sidenav {
-        padding-top: 15px;
-    }
-    .sidenav a {
-        font-size: 18px;
-    }
+    font-size: 14px;
 }
