@@ -12,6 +12,7 @@ import history from "./history";
 import Nav from "./components/nav";
 import SignIn from "./components/signin";
 import SignUp from "./components/signup";
+import ViewContacts from "./components/viewContacts";
 
 /* Component to create routes */
 function App() {
@@ -27,7 +28,11 @@ function App() {
                         <Route exact path="/dashboard" />
                         <Route exact path="/profile" />
 
-                        <Route exact path="/contacts" />
+                        <Route
+                            exact
+                            path="/contacts"
+                            component={ViewContacts}
+                        />
                         <Route exact path="/contacts/add" />
 
                         <Route exact path="/groups" />
