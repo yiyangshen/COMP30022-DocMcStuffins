@@ -19,10 +19,10 @@ const groupSchema: Schema = new Schema({
         type: String,
         required: true
     },
-    members: {
-        type: [Schema.Types.ObjectId],
-        default: []
-    }
+    members: [{
+        type: Schema.Types.ObjectId,
+        ref: "Contact"
+    }]
 });
 
 /* Export the group schema and model */

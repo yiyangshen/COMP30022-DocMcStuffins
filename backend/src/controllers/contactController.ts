@@ -8,7 +8,7 @@ import { Contact, Gender, Group, Name, IUser } from "../models";
 
 /* Import error and response classes */
 import {
-    BadRequestError, ForbiddenError, InternalServerError, NotFoundError,  
+    BadRequestError, ForbiddenError, InternalServerError, NotFoundError, UnauthorizedError,  
     CreatedSuccess, NoContentSuccess, OKSuccess
 } from "../classes";
 
@@ -57,14 +57,14 @@ async function amendContactDetails(req: Request, res: Response, next: NextFuncti
  * responds with a:
  *   - 201 Created if creation is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function createContact(req: Request, res: Response, next: NextFunction) {
     try {
         /* Check if the user is authenticated */
         if (req.isUnauthenticated()) {
-            return next(new ForbiddenError("User is not authenticated"));
+            return next(new UnauthorizedError("User is not authenticated"));
         }
         
         /* Validate and sanitise the required inputs */
@@ -159,9 +159,8 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
  * responds with a:
  *   - 200 OK if deletion is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the contact to delete does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the contact to delete does not belong to the currently-authenticated user
  *   - 404 Not Found if the given contact ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
@@ -172,12 +171,12 @@ async function deleteContact(req: Request, res: Response, next: NextFunction) {
 /* Returns a count of the currently-authenticated user's contacts;
  * responds with a:
  *   - 200 OK if query is successful
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function getContactCount(req: Request, res: Response, next: NextFunction) {
     if (req.isUnauthenticated()) {
-        return next(new ForbiddenError("Requester is not authenticated"));
+        return next(new UnauthorizedError("Requester is not authenticated"));
     }
     try {
         const count = await Contact.countDocuments({ userId: (req.user as IUser)._id });
@@ -193,9 +192,8 @@ async function getContactCount(req: Request, res: Response, next: NextFunction) 
  * responds with a:
  *   - 200 OK if query is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the contact to return details on does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the contact to return details on does not belong to the currently-authenticated user
  *   - 404 Not Found if the given contact ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
@@ -207,13 +205,13 @@ async function getContactDetails(req: Request, res: Response, next: NextFunction
  * responds with a:
  *   - 200 OK if query is successful
  *   - 204 No Content if query returns nothing
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function getContacts(req: Request, res: Response, next: NextFunction) {
     // requester is not authenticated
     if (req.isUnauthenticated()) {
-        return next(new ForbiddenError("Requester is not authenticated"));
+        return next(new UnauthorizedError("Requester is not authenticated"));
     }
     try {
         // find all the contacts of this userId and replace all _id of
@@ -238,7 +236,7 @@ async function getContacts(req: Request, res: Response, next: NextFunction) {
  *   - 200 OK if query returns something
  *   - 204 No Content if the query returns nothing
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function searchContactName(req: Request, res: Response, next: NextFunction) {

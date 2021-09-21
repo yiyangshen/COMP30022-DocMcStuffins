@@ -20,9 +20,8 @@ import {
  * responds with a:
  *   - 200 OK if amendment is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the group to amend does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the group to amend does not belong to the currently-authenticated user
  *   - 404 Not Found if the given group ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
@@ -37,14 +36,14 @@ async function amendGroupDetails(req: Request, res: Response, next: NextFunction
  * responds with a:
  *   - 201 Created if creation is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function createGroup(req: Request, res: Response, next: NextFunction) {
     try {
         /* Check if the user is authenticated */
         if (req.isUnauthenticated()) {
-            return next(new ForbiddenError("User is not authenticated"));
+            return next(new UnauthorizedError("User is not authenticated"));
         }
         
         /* Validate and sanitise the required inputs */
@@ -102,9 +101,8 @@ async function createGroup(req: Request, res: Response, next: NextFunction) {
  * responds with a:
  *   - 200 OK if deletion is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the group to delete does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the group to delete does not belong to the currently-authenticated user
  *   - 404 Not Found if the given group ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
@@ -115,12 +113,12 @@ async function deleteGroup(req: Request, res: Response, next: NextFunction) {
 /* Returns a count of the currently-authenticated user's groups;
  * responds with a:
  *   - 200 OK if query is successful
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function getGroupCount(req: Request, res: Response, next: NextFunction) {
     if (req.isUnauthenticated()) {
-        return next(new ForbiddenError("Requester is not authenticated"));
+        return next(new UnauthorizedError("Requester is not authenticated"));
     }
     try {
         const count = await Group.countDocuments({ userId: (req.user as IUser)._id });
@@ -136,9 +134,8 @@ async function getGroupCount(req: Request, res: Response, next: NextFunction) {
  * responds with a:
  *   - 200 OK if query is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the group to return details on does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the group to return details on does not belong to the currently-authenticated user
  *   - 404 Not Found if the given group ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
@@ -149,13 +146,13 @@ async function getGroupDetails(req: Request, res: Response, next: NextFunction) 
 /* Returns the currently-authenticated user's groups, along with their representative details;
  * responds with a:
  *   - 200 OK if query is successful
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function getGroups(req: Request, res: Response, next: NextFunction) {
         // requester is not authenticated
     if (req.isUnauthenticated()) {
-        return next(new ForbiddenError("Requester is not authenticated"));
+        return next(new UnauthorizedError("Requester is not authenticated"));
     }
     try {
         // find all the group of this userId and replace all _id of 

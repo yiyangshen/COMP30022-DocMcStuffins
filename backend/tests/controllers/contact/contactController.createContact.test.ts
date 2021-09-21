@@ -6,7 +6,7 @@ import { agent } from "supertest";
 /* Import the required classes and models */
 import {
     BadRequestError, ForbiddenError,
-    CreatedSuccess, OKSuccess
+    CreatedSuccess, OKSuccess, UnauthorizedError
 } from "../../../src/classes";
 import { Contact, Gender, Group, Name, User } from "../../../src/models";
 
@@ -113,7 +113,7 @@ describe("Integration test for contact creation", () => {
             lastName: VALID_TEST_CONTACT.lastName
         })
         .then((res: any) => {
-            expect(res.body.status).toBe((new ForbiddenError("Forbidden")).status);
+            expect(res.body.status).toBe((new UnauthorizedError("Unauthorized")).status);
         });
     });
 

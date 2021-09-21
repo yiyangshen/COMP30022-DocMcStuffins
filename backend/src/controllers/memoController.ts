@@ -19,9 +19,8 @@ import {
  * responds with a:
  *   - 200 OK if amendment is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the memo to amend does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the memo to amend does not belong to the currently-authenticated user
  *   - 404 Not Found if the given memo ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
@@ -36,14 +35,14 @@ async function amendMemoDetails(req: Request, res: Response, next: NextFunction)
  * responds with a:
  *   - 201 Created if creation is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function createMemo(req: Request, res: Response, next: NextFunction) {
     try {
         /* Check if the user is authenticated */
         if (req.isUnauthenticated()) {
-            return next(new ForbiddenError("User is not authenticated"));
+            return next(new UnauthorizedError("User is not authenticated"));
         }
         
         /* Validate and sanitise the required inputs */
@@ -83,9 +82,8 @@ async function createMemo(req: Request, res: Response, next: NextFunction) {
  * responds with a:
  *   - 200 OK if deletion is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the memo to delete does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the memo to delete does not belong to the currently-authenticated user
  *   - 404 Not Found if the given memo ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
@@ -99,9 +97,8 @@ async function deleteMemo(req: Request, res: Response, next: NextFunction) {
  * responds with a:
  *   - 200 OK if query is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the group to return details on does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the group to return details on does not belong to the currently-authenticated user
  *   - 404 Not Found if the given memo ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
@@ -113,13 +110,13 @@ async function getMemoDetails(req: Request, res: Response, next: NextFunction) {
  * responds with a:
  *   - 200 OK if query returns something
  *   - 204 No Content if the query returns nothing
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function getMemos(req: Request, res: Response, next: NextFunction) {
     // make sure requester is authenticated
     if (req.isUnauthenticated()) {
-        return next(new ForbiddenError("Requester is not authenticated"));
+        return next(new UnauthorizedError("Requester is not authenticated"));
     }
     try {
         // find all memos belonging to the user
@@ -143,13 +140,13 @@ async function getMemos(req: Request, res: Response, next: NextFunction) {
  *   - 200 OK if query is successful
  *   - 204 No Content if the query returns nothing
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function getRecentMemos(req: Request, res: Response, next: NextFunction) {
     // make sure requester is authenticated
     if (req.isUnauthenticated()) {
-        return next(new ForbiddenError("Requester is not authenticated"));
+        return next(new UnauthorizedError("Requester is not authenticated"));
     }
     try {
         // parses string n to int and verify that it is a valid request

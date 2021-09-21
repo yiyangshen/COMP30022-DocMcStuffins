@@ -90,7 +90,7 @@ describe('Group count', () => {
         await userAgent
             .get(`${BASE_URL}/count`)
             .then((res: any) => {
-                expect(res.body.status).toEqual(403);
+                expect(res.body.status).toEqual(401);
             })
     });
 
@@ -125,7 +125,7 @@ describe('Group lists (getGroups)', () => {
         await userAgent
             .get(`${BASE_URL}`)
             .then((res: any) => {
-                expect(res.body.status).toEqual(403);
+                expect(res.body.status).toEqual(401);
             })
     });
 

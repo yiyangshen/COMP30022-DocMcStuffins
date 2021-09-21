@@ -40,7 +40,7 @@ describe('Recent memos', () => {
         await userAgent
             .get(`${BASE_URL}/recent/:2`)
             .then((res: any) => {
-                expect(res.body.status).toEqual(403);
+                expect(res.body.status).toEqual(401);
             })
     });
 
@@ -142,7 +142,7 @@ describe('List memos', () => {
         await userAgent
             .get(`${BASE_URL}`)
             .then((res: any) => {
-                expect(res.body.status).toEqual(403);
+                expect(res.body.status).toEqual(401);
             })
     });
 
