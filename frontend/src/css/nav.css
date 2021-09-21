@@ -1,15 +1,21 @@
 .navbar {
     background-color: #b5d7ff;
-    height: 80px;
+    height: 70px;
     display: flex;
-    justify-content: start;
     align-items: center;
 }
 
 .menu-bars {
     margin-left: 2rem;
+    margin-right: 2rem;
     font-size: 2rem;
     background: none;
+    color: #434343;
+    text-decoration: none;
+}
+
+.menu-bars:hover {
+    color: #ffffff;
 }
 
 .nav-menu {
@@ -31,7 +37,6 @@
 
 .nav-text {
     display: flex;
-    justify-content: start;
     align-items: center;
     padding: 8px 0px 8px 16px;
     list-style: none;
@@ -56,12 +61,13 @@
 }
 
 .logout {
-    position: fixed;
-    bottom: 0;
+    position: absolute;
+    bottom: 0px;
 }
 
 .nav-menu-items {
     width: 100%;
+    color: #434343;
 }
 
 .navbar-toggle {
@@ -69,7 +75,6 @@
     width: 100%;
     height: 80px;
     display: flex;
-    justify-content: start;
     align-items: center;
 }
 span {
@@ -93,6 +98,10 @@ span {
     background-color: #b5d7ff;
 }
 
+.form-center {
+    margin-left: 2rem;
+}
+
 input[type="text"],
 input[type="password"] {
     border-radius: 50px;
@@ -107,14 +116,17 @@ input[type="password"] {
 h1 {
     font-family: inter;
     font-size: 24px;
+    color: #434343;
 }
 
 h2 {
     font-family: inter;
     font-size: 18px;
+    color: #434343;
 }
 
 p {
     font-family: inter;
     font-size: 14px;
+    color: #434343;
 }

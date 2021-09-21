@@ -1,23 +1,13 @@
 /* Import the required libraries and types */
-import React, { useState, useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { ReactSVG } from "react-svg";
-import { Nav, Navbar, Form } from "react-bootstrap";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Form } from "react-bootstrap";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { SidebarData } from "./sidebarData";
 
 /* Import components */
 import "../css/nav.css";
-import history from "../history";
-import Logo from "../img/logo.svg";
-import Dashboard from "../img/dashboard.svg";
-import Contacts from "../img/contacts.svg";
-import Groups from "../img/groups.svg";
-import Memos from "../img/memos.svg";
-import Logout from "../img/logout.svg";
-import BackArrow from "../img/back-arrow.svg";
-import FrontArrow from "../img/front-arrow.svg";
 
 function Navi() {
     const [sidebar, setSidebar] = useState(false);
@@ -35,13 +25,9 @@ function Navi() {
                         <input type="text" placeholder="Search" className="" />
                     </h2>
                 </Form>
-                <Nav>
-                    <Nav.Item>
-                        <Nav.Link href="/profile">
-                            <h2>Profile</h2>
-                        </Nav.Link>
-                    </Nav.Item>
-                </Nav>
+                <Link to="/profile" className="menu-bars">
+                    <h2>Profile</h2>
+                </Link>
             </div>
 
             <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
