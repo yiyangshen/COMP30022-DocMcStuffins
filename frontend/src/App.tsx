@@ -2,6 +2,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Router, Route, Switch } from "react-router-dom";
+import axios from "axios";
 // import * as FaIcons from "react-icons/fa";
 
 // import axios from "axios";
@@ -13,6 +14,20 @@ import Nav from "./components/nav";
 import SignIn from "./components/signin";
 import SignUp from "./components/signup";
 import ViewContacts from "./components/viewContacts";
+
+/* Enable credentials to be shared among pages */
+axios.defaults.withCredentials = true;
+
+/* Change the Axios base URL based on the environment */
+switch (process.env.NODE_ENV) {
+    case "production":
+        axios.defaults.baseURL = "https://snaccs-in-a-van.herokuapp.com";
+        break;
+    case "development":
+    default:
+        axios.defaults.baseURL = "http://localhost:48080/api";
+        break;
+}
 
 /* Component to create routes */
 function App() {

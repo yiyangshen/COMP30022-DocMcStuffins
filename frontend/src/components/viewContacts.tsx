@@ -1,7 +1,29 @@
+import React, { useEffect, useState } from "react";
+
 /* Import the required libraries and types */
+import { getContacts } from "../api";
+import { IContact } from "../interfaces";
 
 function ViewContacts() {
-    return (
+    const [contactsList, setContactsList] = useState<Array<IContact>>([]);
+    const [error, setError] = useState(true);
+
+    useEffect(() => {
+        getContacts().then(
+            (response) => {
+                var data = response.data.items;
+                setContactsList(data);
+                setError(false);
+            },
+            (error) => {
+                setError(true);
+            }
+        );
+    });
+
+    return error ? (
+        <h3>Error</h3>
+    ) : (
         <div className="border">
             <div className="title">
                 <h2>
@@ -16,17 +38,15 @@ function ViewContacts() {
                     <th>Email</th>
                 </tr>
 
-                <tr className="table-contents">
-                    <td>Livya</td>
-                    <td>+61 123456789</td>
-                    <td>livya@gmail.com</td>
-                </tr>
-
-                <tr className="table-contents">
-                    <td>Livya</td>
-                    <td>+61 123456789</td>
-                    <td>livya@gmail.com</td>
-                </tr>
+                {contactsList.map((contacts, i) => (
+                    <div key={i}>
+                        <tr className="table-contents">
+                            <td>{contacts.name}</td>
+                            <td>{contacts.phoneNumber}</td>
+                            <td>{contacts.email}</td>
+                        </tr>
+                    </div>
+                ))}
             </table>
 
             <div className="table"></div>
