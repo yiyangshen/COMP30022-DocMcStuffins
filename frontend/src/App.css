@@ -5,15 +5,21 @@
     margin-top: 2vw;
     width: 96vw;
     height: 100%;
-    background-color: black;
+    /* background-color: black; */
 }
 
 table {
     width: 100%;
-    border-radius: 10px;
     text-align: left;
     border-collapse: separate;
     border-spacing: 0 10px;
+    border-style: hidden;
+    overflow: hidden;
+}
+
+tr {
+    border-collapse: separate;
+    border-radius: 10px;
 }
 
 td {

@@ -15,11 +15,13 @@ function ViewContacts() {
                     <th>Phone</th>
                     <th>Email</th>
                 </tr>
+
                 <tr className="table-contents">
                     <td>Livya</td>
                     <td>+61 123456789</td>
                     <td>livya@gmail.com</td>
                 </tr>
+
                 <tr className="table-contents">
                     <td>Livya</td>
                     <td>+61 123456789</td>
