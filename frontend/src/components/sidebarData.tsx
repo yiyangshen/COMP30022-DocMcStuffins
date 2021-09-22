@@ -25,11 +25,4 @@ export const SidebarData = [
         icon: <AiIcons.AiFillFileText />,
         cName: "nav-text",
     },
-
-    {
-        title: "Logout",
-        path: "/signin",
-        icon: <AiIcons.AiFillCaretLeft />,
-        cName: "nav-text logout",
-    },
 ];

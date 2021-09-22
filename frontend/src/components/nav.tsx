@@ -8,6 +8,7 @@ import { SidebarData } from "./sidebarData";
 
 /* Import components */
 import "../css/nav.css";
+import { logoutUser } from "../api/userApi";
 
 function Navi() {
     const [sidebar, setSidebar] = useState(false);
@@ -47,6 +48,14 @@ function Navi() {
                             </li>
                         );
                     })}
+                    <li className="navbar-toggle">
+                        <Link to="#" onClick={logoutUser}>
+                            <h2 className="menu-bars logout">
+                                <AiIcons.AiFillCaretLeft />
+                                <span>Logout</span>
+                            </h2>
+                        </Link>
+                    </li>
                 </ul>
             </nav>
         </>

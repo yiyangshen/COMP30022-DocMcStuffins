@@ -57,7 +57,16 @@ async function loginUser(email: String, password: String) {
  */
 async function logoutUser() {
     const endpoint = `${BASE_URL}/user/logout`;
-    return await axios.patch(endpoint);
+    return await axios.patch(endpoint).then(
+        (response) => {
+            history.push("/signin");
+            console.log(response);
+        },
+        (error) => {
+            alert("Error");
+            console.log(error);
+        }
+    );
 }
 
 /* Registers and subsequently authenticates a new user;
