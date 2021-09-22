@@ -14,7 +14,7 @@ import { Contact, Gender, Group, Name, User } from "../../../src/models";
 import app from "../../../src/config/serverConfig";
 
 /* Define test constants */
-const BASE_URL = "/api/contacts";
+const BASE_URL = "/api/groups";
 
 /* Define test data */
 const TEST_USER = {
@@ -24,31 +24,37 @@ const TEST_USER = {
     password: "test password"
 };
 
-const TEST_CONTACT_1 = {
+const TEST_GROUP_1 = {
     userId: "tottallywrong",
-    firstName: "Phake",
-    middleName: "Pherson",
-    lastName: "McTest",
-    groupId: Types.ObjectId(),
-    gender: Gender.Other,
-    dateOfBirth: new Date(),
-    lastMet: new Date(),
-    phoneNumber: "0123456789",
-    email: "phake.mctest@test.com",
-    photo: "VGhpcyBpcyBzdXBwb3NlZCB0byBiZSBhIEJhc2U2NC1lbmNvZGVkIHBpY3R1cmUsIGJ1dCBhbGFzIGl0J3MganVzdCBCYXNlNjQtZW5jb2RlZCBwbGFpbnRleHQu",
-    relationship: "Imaginary friend",
-    additionalNotes: "The friend is indeed, a lie"
+    name: "DocMcStuffins",
+    members: []
 };
 
-const TEST_CONTACT_2 = {
+const TEST_GROUP_2 = {
+    name: "PorkBelly",
+    members: []
+};
+
+
+
+const TEST_CONTACT_1 = {
     firstName: "Shino",
+    middleName: "Sinon",
     lastName: "Asada",
     gender: Gender.Female,
     email: "sinon@megane.jp",
     relationship: "Tomodachi",
 };
 
-describe("getContactDetails Tests", () => {
+const TEST_CONTACT_2 = {
+    firstName: "Reisi",
+    lastName: "Munakata",
+    gender: Gender.Male,
+    email: "munakatareisi@megane.jp",
+    relationship: "Suko no hito"
+};
+
+describe("getGroupDetails Tests", () => {
     /* Create user agents */
     const unauthAgent = agent(app);
     const authAgent = agent(app);
@@ -63,9 +69,33 @@ describe("getContactDetails Tests", () => {
         })
     });
 
+    //  Create test contacts
+    const testContact1 = new Contact({
+        userId : testUser._id,
+        firstName: TEST_CONTACT_1.firstName,
+        middleName: TEST_CONTACT_1.middleName,
+        lastName: TEST_CONTACT_1.lastName,
+        gender: TEST_CONTACT_1.gender,
+        email: TEST_CONTACT_1.email,
+        relationship: TEST_CONTACT_1.relationship,
+    })
+
+    const testContact2 = new Contact({
+        userId : testUser._id,
+        firstName: TEST_CONTACT_2.firstName,
+        lastName: TEST_CONTACT_2.lastName,
+        gender: TEST_CONTACT_2.gender,
+        email: TEST_CONTACT_2.email,
+        relationship: TEST_CONTACT_2.relationship,
+    })
+
     beforeAll(async () => {
         /* Save test user in database */
         await testUser.save();
+
+        //  Save testContacts
+        await testContact1.save();
+        await testContact2.save();
 
         /* Authenticate user agent */
         await authAgent
@@ -81,7 +111,7 @@ describe("getContactDetails Tests", () => {
             });
     });
 
-    test("1. Get contact details without authentication", async () => {
+    test("1. Get group details without authentication", async () => {
         await unauthAgent
             .get(`${BASE_URL}/1`)
             .then((res: any) => {
@@ -89,7 +119,7 @@ describe("getContactDetails Tests", () => {
         });
     });
 
-    test("2. Get contact details with malformed parameter", async () => {
+    test("2. Get group details with malformed parameter", async () => {
         await authAgent
             .get(`${BASE_URL}`)
             .then((res: any) => {
@@ -97,17 +127,17 @@ describe("getContactDetails Tests", () => {
         });
     });
 
-    test("3. Get contact details with contact ID not belonging to the requester", async () => {
-        const testContact = new Contact(TEST_CONTACT_1);
-        await testContact.save();
+    test("3. Get group details with group ID not belonging to the requester", async () => {
+        const testGroup = new Group(TEST_GROUP_1);
+        await testGroup.save();
         await authAgent
-            .get(`${BASE_URL}/${testContact._id}`)
+            .get(`${BASE_URL}/${testGroup._id}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(403);
             });
     });
 
-    test("4. Get contact details with contact ID that does not exist", async () => {
+    test("4. Get group details with group ID that does not exist", async () => {
         await authAgent
             .get(`${BASE_URL}/0`)
             .then((res: any) => {
@@ -115,18 +145,15 @@ describe("getContactDetails Tests", () => {
             });
     });
 
-    test("5. Get contact details successfully", async () => {
-        const testContact = new Contact({
-            firstName: TEST_CONTACT_2.firstName,
-            lastName: TEST_CONTACT_2.lastName,
-            gender: TEST_CONTACT_2.gender,
-            email: TEST_CONTACT_2.email,
-            relationship: TEST_CONTACT_2.relationship,
-            userId : testUser._id
+    test("5. Get group details successfully", async () => {
+        const testGroup = new Group({
+            name : TEST_GROUP_2.name,
+            userId : testUser._id,
+            members: [testContact1, testContact2],
         });
-        await testContact.save();
+        await testGroup.save();
         await authAgent
-            .get(`${BASE_URL}/${testContact._id}`)
+            .get(`${BASE_URL}/${testGroup._id}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
             });
@@ -142,5 +169,9 @@ describe("getContactDetails Tests", () => {
 
         /* Delete test contacts */
         await Contact.deleteMany();
+
+        
+        /* Delete test contacts */
+        await Group.deleteMany();
     });
 });
