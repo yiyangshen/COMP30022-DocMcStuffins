@@ -134,7 +134,7 @@ async function createContact(item: IContact) {
  *   - 500 Internal Server Error otherwise
  */
 async function searchContactName(name: String) {
-    const endpoint = `${BASE_URL}/search/name/${name}`;
+    const endpoint = `${BASE_URL}/contacts/search/name/${name}`;
     return await axios.post(endpoint);
 }
 

@@ -5,6 +5,7 @@ import React from "react";
 import "../css/signin.css";
 import history from "../history";
 import { loginUser } from "../api/userApi";
+import { Link } from "react-router-dom";
 
 /* Component for Sign In */
 class Signin extends React.Component {
@@ -31,17 +32,13 @@ class Signin extends React.Component {
         const { email, password } = this.state;
 
         return (
-            <div>
+            <div className="border">
                 <div>
                     <h1>Sign In</h1>
                     <p>Don't have an account? </p>
-                    <button
-                        className="base-button"
-                        type="button"
-                        onClick={() => history.push(`/signup`)}
-                    >
+                    <Link to="#" onClick={() => history.push(`/signup`)}>
                         <p>Create one here.</p>
-                    </button>
+                    </Link>
                 </div>
                 <br />
 
@@ -68,6 +65,9 @@ class Signin extends React.Component {
                             onChange={this.handleChange}
                             required
                         />
+
+                        <br />
+                        <br />
 
                         <button className="base-button" type="submit">
                             <h2>Sign In</h2>

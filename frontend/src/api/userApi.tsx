@@ -92,13 +92,24 @@ async function registerUser(
     password: String
 ) {
     const endpoint = `${BASE_URL}/user/register`;
-    return await axios.patch(endpoint, {
-        firstName,
-        middleName,
-        lastName,
-        email,
-        password,
-    });
+    return await axios
+        .patch(endpoint, {
+            firstName,
+            middleName,
+            lastName,
+            email,
+            password,
+        })
+        .then(
+            (response) => {
+                history.push("/dashboard");
+                console.log(response);
+            },
+            (error) => {
+                alert("Please enter a valid email & password");
+                console.log(error);
+            }
+        );
 }
 
 /* Export api functions */
