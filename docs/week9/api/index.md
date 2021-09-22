@@ -33,7 +33,7 @@
 {
     status: 200 | 201 | 204,
     statusText: "Success" | "Created" | "No Content",
-    mimetype: "list/application/json" | "list/boolean" | "list/number" | "list/string"
+    mimetype: "list/application/json" | "list/text/boolean" | "list/text/number" | "list/text/string"
     data: [ {...} | (true | false) | number | string ]
 }
 ```
@@ -49,7 +49,7 @@
     data: {
         status: 400 | 401 | 403 | 404 | 500,
         statusText: "Bad Request", "Unauthorized", "Forbidden", "Not Found", "Internal Server Error",
-        body: any    
+        body: string
     }
 }
 ```

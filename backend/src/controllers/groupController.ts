@@ -107,7 +107,50 @@ async function createGroup(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function deleteGroup(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
 
+        /* Validate and sanitise the required inputs */
+        await body("id").isMongoId().run(req);
+
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body is malformed"));
+        }
+
+        /* Find the specified group */
+        const group = await Group.findById(req.body.id);
+
+        /* Check if the group exists */
+        if (!group) {
+            return next(new NotFoundError("No groups with the given ID exists in the database"));
+        }
+
+        /* Check if the group belongs to the currently authenticated user */
+        if (group.userId.toString() !== (req.user as IUser)._id.toString()) {
+            return next(new ForbiddenError("Group to delete does not belong to the currently-authenticated user"));
+        }
+
+        /* Remove the membership of this group from any contact if there is */
+        if (group.members) {
+            group.members.forEach(async (memberId) => {
+                const member = await Contact.findById(memberId);
+                if (member) {
+                    member.groupId = undefined;
+                    await member.save();
+                }
+            });
+        }
+
+        /* Delete the group */
+        await Group.findByIdAndDelete(group._id);
+        res.json(new OKSuccess("Group successfully deleted"));
+    } catch (err) {
+        return next(new InternalServerError("Something has gone wrong"));
+    }
 }
 
 /* Returns a count of the currently-authenticated user's groups;
@@ -157,7 +200,7 @@ async function getGroups(req: Request, res: Response, next: NextFunction) {
     try {
         // find all the group of this userId and replace all _id of 
         // group with its own model
-        const groups = await Group.find({ userId: (req as any).user.id })
+        const groups = await Group.find({ userId: (req.user as IUser)._id })
                                     .populate('members')
         return res.json(new OKSuccess(groups));
     } catch (error) {
