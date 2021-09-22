@@ -218,6 +218,10 @@ async function getContactDetails(req: Request, res: Response, next: NextFunction
                 return next(new ForbiddenError("Contact does not belong to the user"));
             }
 
+            // update recently-viewed timestamp
+            contact.timestamps.viewed = new Date();
+            await contact.save();
+
             return res.json(new OKSuccess(contact));
             
 
