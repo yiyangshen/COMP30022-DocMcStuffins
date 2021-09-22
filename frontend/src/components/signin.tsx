@@ -36,7 +36,7 @@ class Signin extends React.Component {
                 <div>
                     <h1>Sign In</h1>
                     <p>Don't have an account? </p>
-                    <Link to="#" onClick={() => history.push(`/signup`)}>
+                    <Link to="#" onClick={() => history.push(`/register`)}>
                         <p>Create one here.</p>
                     </Link>
                 </div>
