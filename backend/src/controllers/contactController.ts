@@ -1,7 +1,7 @@
 /* Import required libraries and types */
 import { Request, Response, NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
-import { ObjectId, Types } from "mongoose";
+import { ObjectId, Types, isValidObjectId } from "mongoose";
 
 /* Import required models */
 import { Contact, Gender, Group, Name, IUser } from "../models";
@@ -205,30 +205,27 @@ async function getContactDetails(req: Request, res: Response, next: NextFunction
 
     try {
         // verify that the parameter is valid
-        if(req.params.id){
-            const contact = await Contact.findOne({_id:req.params.id})
-                                         .populate('groupId');
-
-            // verify that contact exist 
-            if(!contact){
-                return next(new NotFoundError("Contact does not exist"));
-            }
-            // verify that the contact id is under the authenticated user
-            if(contact.userId !== (req.user as IUser)._id){
-                return next(new ForbiddenError("Contact does not belong to the user"));
-            }
-
-            // update recently-viewed timestamp
-            contact.timestamps.viewed = new Date();
-            await contact.save();
-
-            return res.json(new OKSuccess(contact));
-            
-
-        } else {
-            // request parameter is malformed
-            return next(new BadRequestError("Requester parameter is invalid"));
+        if (!(isValidObjectId(req.params.id))) {
+            return next(new BadRequestError("Request body is malformed"));
         }
+        const contact = await Contact.findOne({_id:req.params.id})
+                                     .populate('groupId');
+
+        // verify that contact exist 
+        if(!contact){
+            return next(new NotFoundError("Contact does not exist"));
+        }
+        // verify that the contact id is under the authenticated user
+        if(contact.userId !== (req.user as IUser)._id){
+            return next(new ForbiddenError("Contact does not belong to the user"));
+        }
+
+        // update recently-viewed timestamp
+        contact.timestamps.viewed = new Date();
+        await contact.save();
+
+        return res.json(new OKSuccess(contact));
+            
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
     }

@@ -140,7 +140,34 @@ async function getGroupCount(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getGroupDetails(req: Request, res: Response, next: NextFunction) {
+    // requester is not authenticated
+    if(req.isUnauthenticated()){
+        return next(new UnauthorizedError("Requester is not authenticated"));
+    }
 
+    try {
+        // verify that the parameter is valid
+        if (!(isValidObjectId(req.params.id))) {
+            return next(new BadRequestError("Request body is malformed"));
+        }
+        
+        const group = await Group.findOne({_id:req.params.id})
+                                 .populate('members');
+
+        // verify that group exist 
+        if(!group){
+            return next(new NotFoundError("Contact does not exist"));
+        }
+
+        // verify that the group  is under the authenticated user
+        if(group.userId.toString() !== (req.user as IUser)._id.toString()){
+            return next(new ForbiddenError("Contact does not belong to the user"));
+        }
+
+        return res.json(new OKSuccess(group)); 
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Returns the currently-authenticated user's groups, along with their representative details;
