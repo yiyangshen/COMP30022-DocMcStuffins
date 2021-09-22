@@ -165,7 +165,48 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function deleteContact(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
 
+        /* Validate and sanitise the required inputs */
+        await body("id").isMongoId().run(req);
+
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body is malformed"));
+        }
+
+        /* Find the specified contact */
+        const contact = await Contact.findById(req.body.id);
+
+        /* Check if the contact exists */
+        if (!contact) {
+            return next(new NotFoundError("No contacts with the given ID exists in the database"));
+        }
+
+        /* Check if the contact belongs to the currently authenticated user */
+        if (contact.userId.toString() !== (req.user as IUser)._id.toString()) {
+            return next(new ForbiddenError("Contact to delete does not belong to the currently-authenticated user"));
+        }
+
+        /* Remove the contact from the membership of their group if there is */
+        if (contact.groupId) {
+            const group = await Group.findById(contact.groupId);
+            if (group) {
+                group.members = group.members.filter(contactId => contactId.toString() !== contact._id.toString());
+                await group.save();
+            }
+        }
+        
+        /* Delete the contact */
+        await Contact.findByIdAndDelete(contact._id);
+        res.json(new OKSuccess("Contact successfully deleted"));
+    } catch (err) {
+        return next(new InternalServerError("Something has gone wrong"));
+    }
 }
 
 /* Returns a count of the currently-authenticated user's contacts;
@@ -216,7 +257,7 @@ async function getContacts(req: Request, res: Response, next: NextFunction) {
     try {
         // find all the contacts of this userId and replace all _id of
         // contact with its own model
-        const contacts = await Contact.find({ userId: (req as any).user.id })
+        const contacts = await Contact.find({ userId: (req.user as IUser)._id })
                                       .populate('groupId')
         
         //  in case if user doesn't have any contacts

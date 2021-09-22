@@ -88,7 +88,39 @@ async function createMemo(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function deleteMemo(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
 
+        /* Validate and sanitise the required inputs */
+        await body("id").isMongoId().run(req);
+
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body is malformed"));
+        }
+
+        /* Find the specified memo */
+        const memo = await Memo.findById(req.body.id);
+
+        /* Check if the memo exists */
+        if (!memo) {
+            return next(new NotFoundError("No memos with the given ID exists in the database"));
+        }
+
+        /* Check if the memo belongs to the currently authenticated user */
+        if (memo.userId.toString() !== (req.user as IUser)._id.toString()) {
+            return next(new ForbiddenError("Memo to delete does not belong to the currently-authenticated user"));
+        }
+
+        /* Delete the memo */
+        await Memo.findByIdAndDelete(memo._id);
+        res.json(new OKSuccess("Memo successfully deleted"));
+    } catch (err) {
+        return next(new InternalServerError("Something has gone wrong"));
+    }
 }
 
 /* Returns the given memo's details;
@@ -120,7 +152,7 @@ async function getMemos(req: Request, res: Response, next: NextFunction) {
     }
     try {
         // find all memos belonging to the user
-        const memos = await Memo.find({ userId: (req as any).user._id });
+        const memos = await Memo.find({ userId: (req.user as IUser)._id });
         
         // no memos were found
         if (memos.length === 0) {
@@ -156,7 +188,7 @@ async function getRecentMemos(req: Request, res: Response, next: NextFunction) {
         }
 
         // find memos, sort, and limit them to n documents
-        const memos = await Memo.find({ userId: (req as any).user._id }).sort({ "timestamps.created": -1  }).limit(n);
+        const memos = await Memo.find({ userId: (req.user as IUser)._id }).sort({ "timestamps.created": -1  }).limit(n);
         
         // no memos were found
         if (memos.length === 0) {

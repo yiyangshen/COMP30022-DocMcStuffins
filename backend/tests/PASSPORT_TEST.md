@@ -25,4 +25,4 @@
 | 1   | Required fields | Login with empty data               | 1. Send a post request with empty field                        | n/a                 | 400 Bad request  | ✅           |
 | 2   | Required fields | Login with valid email and password | 1. Send post request with valid email and password             | n/a                 | 200 Success      | ✅           |
 | 3   | Required fields | Login with invalid email            | 1. Send post request with invalid (unregistered email)         | n/a                 | 404 Not Found    | ✅           |
-| 4   | Required fields | Login with incorrect password       | 1. Send a post request with valid email but incorrect password | 1. `password='012'` | 401 Unauthorised | ✅           |
+| 4   | Required fields | Login with incorrect password       | 1. Send a post request with valid email but incorrect password | 1. `password='012'` | 401 Unauthorized | ✅           |
