@@ -14,18 +14,24 @@ import { Contact, Gender, Group, Name, User } from "../../../src/models";
 import app from "../../../src/config/serverConfig";
 
 /* Define test constants */
-const BASE_URL = "/api/groups";
+const BASE_URL = "/api/groups/details";
 
 /* Define test data */
-const TEST_USER = {
+const TEST_USER_1 = {
     email: "test.mctest@test.com",
     firstName: "Test",
     lastName: "McTest",
     password: "test password"
 };
 
+const TEST_USER_2 = {
+    email: "lasagne@pizza.com",
+    firstName: "Test",
+    lastName: "McTest",
+    password: "test password"
+};
+
 const TEST_GROUP_1 = {
-    userId: "tottallywrong",
     name: "DocMcStuffins",
     members: []
 };
@@ -59,50 +65,78 @@ describe("getGroupDetails Tests", () => {
     const unauthAgent = agent(app);
     const authAgent = agent(app);
     
-    /* Create test user */
-    const testUser = new User({
-        email: TEST_USER.email,
-        password: TEST_USER.password,
+    /* Create test users */
+    const testUser1 = new User({
+        email: TEST_USER_1.email,
+        password: TEST_USER_1.password,
         name: new Name({
-            first: TEST_USER.firstName,
-            last: TEST_USER.lastName
+            first: TEST_USER_1.firstName,
+            last: TEST_USER_1.lastName
+        })
+    });
+    const testUser2 = new User({
+        email: TEST_USER_2.email,
+        password: TEST_USER_2.password,
+        name: new Name({
+            first: TEST_USER_2.firstName,
+            last: TEST_USER_2.lastName
         })
     });
 
     //  Create test contacts
     const testContact1 = new Contact({
-        userId : testUser._id,
-        firstName: TEST_CONTACT_1.firstName,
-        middleName: TEST_CONTACT_1.middleName,
-        lastName: TEST_CONTACT_1.lastName,
+        userId : testUser1._id,
+        name: {
+            first: TEST_CONTACT_1.firstName,
+            last: TEST_CONTACT_1.lastName
+        },
         gender: TEST_CONTACT_1.gender,
         email: TEST_CONTACT_1.email,
         relationship: TEST_CONTACT_1.relationship,
     })
 
     const testContact2 = new Contact({
-        userId : testUser._id,
-        firstName: TEST_CONTACT_2.firstName,
-        lastName: TEST_CONTACT_2.lastName,
+        userId : testUser1._id,
+        name: {
+            first: TEST_CONTACT_2.firstName,
+            last: TEST_CONTACT_2.lastName
+        },
         gender: TEST_CONTACT_2.gender,
         email: TEST_CONTACT_2.email,
         relationship: TEST_CONTACT_2.relationship,
     })
 
+    // Create test groups
+    const testGroup1 = new Group({
+        name : TEST_GROUP_1.name,
+        userId : testUser2._id,
+        members: [],
+    });
+    const testGroup2 = new Group({
+        name : TEST_GROUP_2.name,
+        userId : testUser1._id,
+        members: [testContact1, testContact2],
+    });
+
     beforeAll(async () => {
         /* Save test user in database */
-        await testUser.save();
+        await testUser1.save();
+        await testUser2.save();
 
         //  Save testContacts
         await testContact1.save();
         await testContact2.save();
 
+        // save test groups
+        await testGroup1.save();
+        await testGroup2.save();
+
         /* Authenticate user agent */
         await authAgent
             .patch(`/api/user/login`)
             .send({
-                email: TEST_USER.email,
-                password: TEST_USER.password
+                email: TEST_USER_1.email,
+                password: TEST_USER_1.password
             })
             .then((res: any) => {
                 if (res.body.status === (new OKSuccess("OK")).status) {
@@ -113,7 +147,7 @@ describe("getGroupDetails Tests", () => {
 
     test("1. Get group details without authentication", async () => {
         await unauthAgent
-            .get(`${BASE_URL}/1`)
+            .get(`${BASE_URL}/${testGroup1._id}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(401);
         });
@@ -121,39 +155,32 @@ describe("getGroupDetails Tests", () => {
 
     test("2. Get group details with malformed parameter", async () => {
         await authAgent
-            .get(`${BASE_URL}`)
+            .get(`${BASE_URL}/something`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(400);
         });
     });
 
     test("3. Get group details with group ID not belonging to the requester", async () => {
-        const testGroup = new Group(TEST_GROUP_1);
-        await testGroup.save();
         await authAgent
-            .get(`${BASE_URL}/${testGroup._id}`)
+            .get(`${BASE_URL}/${testGroup1._id}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(403);
             });
     });
 
     test("4. Get group details with group ID that does not exist", async () => {
+        const id = Types.ObjectId();
         await authAgent
-            .get(`${BASE_URL}/0`)
+            .get(`${BASE_URL}/${id}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(404);
             });
     });
 
     test("5. Get group details successfully", async () => {
-        const testGroup = new Group({
-            name : TEST_GROUP_2.name,
-            userId : testUser._id,
-            members: [testContact1, testContact2],
-        });
-        await testGroup.save();
         await authAgent
-            .get(`${BASE_URL}/${testGroup._id}`)
+            .get(`${BASE_URL}/${testGroup2._id}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
             });
@@ -171,7 +198,7 @@ describe("getGroupDetails Tests", () => {
         await Contact.deleteMany();
 
         
-        /* Delete test contacts */
+        /* Delete test groups */
         await Group.deleteMany();
     });
 });
