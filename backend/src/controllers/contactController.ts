@@ -1,7 +1,6 @@
 /* Import required libraries and types */
 import { Request, Response, NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
-import { ObjectId, Types } from "mongoose";
 
 /* Import required models */
 import { Contact, Gender, Group, Name, IUser } from "../models";
@@ -30,14 +29,124 @@ import {
  * responds with a:
  *   - 200 OK if amendment is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the group to amend does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the group to amend does not belong to the currently-authenticated user
  *   - 404 Not Found if the given contact ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
 async function amendContactDetails(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("User is not authenticated"));
+        }
+        
+        /* Validate and sanitise the required inputs */
+        await body("id").isMongoId().run(req);
+        
+        /* Validate and sanitise the optional inputs */
+        if (req.body.firstName)
+            await body("firstName").isAlpha().trim().run(req);
+        if (req.body.middleName)
+            await body("middleName").isAlpha().trim().run(req);
+        if (req.body.lastName)
+            await body("lastName").isAlpha().trim().run(req);
+        if (req.body.groupId)
+            await body("groupId").isMongoId().run(req);
+        if (req.body.gender)
+            await body("gender").isIn([
+            Gender.Male,
+            Gender.Female,
+            Gender.Other
+        ]).run(req);
+        if (req.body.dateOfBirth)
+            await body("dateOfBirth").isRFC3339().run(req);
+        if (req.body.lastMet)
+            await body("lastMet").isRFC3339().run(req);
+        if (req.body.phoneNumber)
+            await body("phoneNumber").isNumeric().trim().run(req);
+        if (req.body.email)
+            await body("email").isEmail().trim().escape().run(req);
+        if (req.body.photo)
+            await body("photo").isBase64().run(req);
+        if (req.body.relationship)
+            await body("relationship").isAscii().trim().run(req);
+        if (req.body.additionalNotes)
+            await body("additionalNotes").isAscii().trim().run(req);
 
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
+        }
+
+        /* Find the specified contact */
+        const contact = await Contact.findById(req.body.id);
+
+        /* Check if the contact exists */
+        if (!contact) {
+            return next(new NotFoundError("No contacts with the given ID exists in the database"));
+        }
+
+        /* Check if the contact belongs to the currently authenticated user */
+        if (contact.userId.toString() !== (req.user as IUser)._id.toString()) {
+            return next(new ForbiddenError("Contact to amend does not belong to the currently-authenticated user"));
+        }
+
+        /* Update each field of the contact if there is any amendment */
+        if (req.body.firstName)
+            contact.name.first = req.body.firstName;
+        if (req.body.middleName)
+            contact.name.middle = req.body.middleName;
+        if (req.body.lastName)
+            contact.name.last = req.body.lastName;
+        if (req.body.groupId) {
+            /* Check if the contact already belongs to a group */
+            if (contact.groupId) {
+                const oldGroup = await Group.findById(contact.groupId);
+
+                /* Remove the membership of the current group */
+                if (oldGroup) {
+                    oldGroup.members = oldGroup.members.filter(memberId => memberId.toString() !== contact._id.toString());
+                    await oldGroup.save();
+                }
+            }
+
+            /* Assign the new group to the contact */
+            const newGroup = await Group.findById(req.body.groupId);
+            if (newGroup) {
+                contact.groupId = newGroup._id;
+
+                /* Update the new group membership to include this contact */
+                newGroup.members.push(contact._id);
+                await newGroup.save();
+            }
+        }
+        if (req.body.gender)
+            contact.gender = req.body.gender;
+        if (req.body.dateOfBirth)
+            contact.dateOfBirth = new Date(req.body.dateOfBirth);
+        if (req.body.lastMet)
+            contact.lastMet = new Date(req.body.lastMet);
+        if (req.body.phoneNumber)
+            contact.phoneNumber = req.body.phoneNumber;
+        if (req.body.email)
+            contact.email = req.body.email.toLowerCase();
+        if (req.body.photo)
+            contact.photo = req.body.photo;
+        if (req.body.relationship)
+            contact.relationship = req.body.relationship;
+        if (req.body.additionalNotes)
+            contact.additionalNotes = req.body.additionalNotes;
+        
+        /* Update the modified timestamp */
+        contact.timestamps.modified = new Date();
+
+        /* Save the amended contact to the database */
+        await contact.save();
+        res.json(new OKSuccess("Contact successfully amended"));
+    } catch (err) {
+        return next(new InternalServerError("Something has gone wrong"));
+    }
 }
 
 /* Creates a new contact with the given details;
@@ -120,7 +229,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
 
             if (currentGroup) {
                 /* Assign the contact to the group */
-                newContact.groupId = Types.ObjectId(req.body.groupId) as ObjectId;
+                newContact.groupId = currentGroup._id;
                 
                 /* Add the contact to the group */
                 currentGroup.members.push(newContact._id);

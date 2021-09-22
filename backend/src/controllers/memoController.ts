@@ -25,7 +25,54 @@ import {
  *   - 500 Internal Server Error otherwise
  */
 async function amendMemoDetails(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("User is not authenticated"));
+        }
 
+        /* Validate and sanitise the required inputs */
+        await body("id").isMongoId().run(req);
+
+        /* Validate and sanitise the optional inputs */
+        if (req.body.title)
+            await body("title").isAscii().trim().run(req);
+        if (req.body.notes)
+            await body("notes").isAscii().trim().run(req);
+
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
+        }
+
+        /* Find the specified memo */
+        const memo = await Memo.findById(req.body.id);
+
+        /* Check if the memo exists */
+        if (!memo) {
+            return next(new NotFoundError("No memos with the given ID exists in the database"));
+        }
+
+        /* Check if the memo belongs to the currently authenticated user */
+        if (memo.userId.toString() !== (req.user as IUser)._id.toString()) {
+            return next(new ForbiddenError("Memo to amend does not belong to the currently-authenticated user"));
+        }
+
+        /* Update each field of the memo if there is any amendment */
+        if (req.body.title)
+            memo.title = req.body.title;
+        if (req.body.notes)
+            memo.notes = req.body.notes;
+
+        /* Update the modified timestamp */
+        memo.timestamps.modified = new Date();
+        
+        /* Save the amended memo to the database */
+        await memo.save();
+        res.json(new OKSuccess("Memo successfully amended"));
+    } catch (err) {
+        return next(new InternalServerError("Something's gone wrong"));
+    }
 }
 
 /* Creates a new memo with the given details;

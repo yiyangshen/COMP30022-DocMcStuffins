@@ -1,7 +1,7 @@
 /* Import required libraries and types */
 import { Request, Response, NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
-import { ObjectId, Types, isValidObjectId } from "mongoose";
+import { isValidObjectId } from "mongoose";
 
 /* Import required models */
 import { Contact, Group, IUser } from "../models";
@@ -26,7 +26,78 @@ import {
  *   - 500 Internal Server Error otherwise
  */
 async function amendGroupDetails(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("User is not authenticated"));
+        }
 
+        /* Validate and sanitise the required inputs */
+        await body("id").isMongoId().run(req);
+
+        /* Validate and sanitise the optional inputs */
+        if (req.body.name)
+            await body("name").isAscii().trim().run(req);
+        if (req.body.members) {
+            /* Check that each element of the members array is an ObjectId */
+            await body("members").custom((memberIds: Array<string>) => {
+                return memberIds.every((memberId: string) => {
+                    return isValidObjectId(memberId);
+                });
+            }).run(req);
+        }
+
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
+        }
+
+        /* Find the specified group */
+        const group = await Group.findById(req.body.id);
+
+        /* Check if the group exists */
+        if (!group) {
+            return next(new NotFoundError("No groups with the given ID exists in the database"));
+        }
+
+        /* Check if the group belongs to the currently authenticated user */
+        if (group.userId.toString() !== (req.user as IUser)._id.toString()) {
+            return next(new ForbiddenError("Group to amend does not belong to the currently-authenticated user"));
+        }
+
+        /* Update each field of the group if there is any amendment */
+        if (req.body.name)
+            group.name = req.body.name;
+        if (req.body.members) {
+            /* Remove all the membership of the current members */
+            if (group.members) {
+                group.members.forEach(async (memberId) => {
+                    const oldMember = await Contact.findById(memberId);
+                    if (oldMember) {
+                        oldMember.groupId = undefined;
+                        await oldMember.save();
+                    }
+                });
+                group.members = [];
+            }
+
+            /* Assign the new members to the group */
+            req.body.members.forEach(async (memberId: string) => {
+                const newMember = await Contact.findById(memberId);
+                if (newMember) {
+                    group.members.push(newMember._id);
+                    newMember.groupId = group._id;
+                    await newMember.save();
+                }
+            });
+        }
+
+        /* Save the amended group to the database */
+        await group.save();
+        res.json(new OKSuccess("Group successfully amended"));
+    } catch (err) {
+        return next(new InternalServerError("Something has gone wrong"));
+    }
 }
 
 /* Creates a new group with the given details;
@@ -78,7 +149,7 @@ async function createGroup(req: Request, res: Response, next: NextFunction) {
 
                 if (currentContact) {
                     /* Add the contact to the group */
-                    newGroup.members.push(Types.ObjectId(memberId) as ObjectId);
+                    newGroup.members.push(currentContact._id);
 
                     /* Assign the contact to the group */
                     currentContact.groupId = newGroup._id;
