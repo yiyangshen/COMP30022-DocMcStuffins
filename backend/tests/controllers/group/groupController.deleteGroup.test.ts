@@ -1,12 +1,11 @@
 /* Import the required types and libraries */
 import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
-import { Types } from "mongoose";
 import { agent } from "supertest";
 
 /* Import the required classes and models */
 import {
-    BadRequestError, ForbiddenError,
-    CreatedSuccess, OKSuccess, UnauthorizedError, NotFoundError
+    BadRequestError, ForbiddenError, UnauthorizedError, NotFoundError,
+    CreatedSuccess, OKSuccess
 } from "../../../src/classes";
 import { Contact, Gender, Group, Name, User } from "../../../src/models";
 
@@ -16,25 +15,24 @@ import app from "../../../src/config/serverConfig";
 /* Define test constants */
 const BASE_URL = "/api";
 const TEST_URLS = {
-    deleteContact: `${BASE_URL}/contacts/delete`,
+    deleteGroup: `${BASE_URL}/groups/delete`,
     login: `${BASE_URL}/user/login`,
     logout: `${BASE_URL}/user/logout`
-}
+};
 
-/* Define test data */
 const TEST_USER = {
-    email: "futabario@megane.jp",
+    email: "futaba.rio@megane.jp",
     firstName: "Rio",
     lastName: "Futaba",
-    password: "Megane wa kakkoi desu!"
+    password: "Megane Wa Kakkoi Desu!"
 };
 
 const TEST_USER_ALT = {
-    email: "asadashino@megane.jp",
+    email: "asada.shino@megane.jp",
     firstName: "Asada",
     lastName: "Shino",
-    password: "Kirito-kun"
-}
+    password: "Hecate Bow Marksman"
+};
 
 const TEST_GROUP = {
     name: "Megane Lovers"
@@ -46,7 +44,7 @@ const TEST_CONTACT = {
     gender: Gender.Female,
 };
 
-describe("Integration test for contact deletion", () => {
+describe("Integration test for group deletion", () => {
     /* Create user agents */
     const unauthAgent = agent(app);
     const authAgent = agent(app);
@@ -88,88 +86,80 @@ describe("Integration test for contact deletion", () => {
             });
     });
 
-    test("1. Delete contact without authentication", async () => {
+    test("1. Delete group without authentication", async () => {
         await unauthAgent
-            .delete(TEST_URLS.deleteContact)
+            .delete(TEST_URLS.deleteGroup)
             .send({})
             .then((res: any) => {
                 expect(res.body.status).toBe((new UnauthorizedError("Unauthorized")).status);
             });
-    })
+    });
 
-    test("2. Delete ungrouped contact", async () => {
-        /* Create a new contact */
-        const contact = new Contact({
+    test("2. Delete group with no members", async () => {
+        /* Create a new group */
+        const group = new Group({
             userId: testUser._id,
-            name: new Name({
-                first: TEST_CONTACT.firstName,
-                last: TEST_CONTACT.lastName
-            }),
-            gender: TEST_CONTACT.gender
+            name: TEST_GROUP.name
         });
-        await contact.save();
+        await group.save();
 
-        /* Delete the new contact */
+        /* Delete the new group */
         await authAgent
-            .delete(TEST_URLS.deleteContact)
-            .send({ id: contact._id })
+            .delete(TEST_URLS.deleteGroup)
+            .send({ id: group._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new OKSuccess("OK")).status);
             });
 
-        /* Check that the contact has been deleted */
-        expect(await Contact.findById(contact._id)).toBeNull();
+        /* Check that the group has been deleted */
+        expect(await Group.findById(group._id)).toBeNull();
     });
 
-    test("3. Delete contact with no data", async () => {
+    test("3. Delete group with no data", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteContact)
+            .delete(TEST_URLS.deleteGroup)
             .send({})
             .then((res: any) => {
                 expect(res.body.status).toBe((new BadRequestError("Bad Request")).status);
             });
     });
 
-    test("4. Delete contact with invalid data", async () => {
+    test("4. Delete group with invalid data", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteContact)
+            .delete(TEST_URLS.deleteGroup)
             .send({ id: "Invalid id" })
             .then((res: any) => {
                 expect(res.body.status).toBe((new BadRequestError("Bad Request")).status);
             });
     });
 
-    test("5. Delete non-existing contact", async () => {
+    test("5. Delete non-existing group", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteContact)
+            .delete(TEST_URLS.deleteGroup)
             .send({ id: testUser._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new NotFoundError("not Found")).status);
             });
     });
 
-    test("6. Delete contact belonging to another user", async () => {
-        /* Create a new contact that belongs to another user */
-        const contact = new Contact({
+    test("6. Delete group belonging to another user", async () => {
+        /* Create a new group that belongs to another user */
+        const group = new Group({
             userId: testUserAlt._id,
-            name: new Name({
-                first: TEST_CONTACT.firstName,
-                last: TEST_CONTACT.lastName
-            }),
-            gender: TEST_CONTACT.gender
+            name: TEST_GROUP.name
         });
-        await contact.save();
+        await group.save();
 
         /* Attempt to delete this contact */
         await authAgent
-            .delete(TEST_URLS.deleteContact)
-            .send({ id: contact._id })
+            .delete(TEST_URLS.deleteGroup)
+            .send({ id: group._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new ForbiddenError("Forbidden")).status);
             });
     });
 
-    test("7. Delete grouped contact", async () => {
+    test("7. Delete group with one member", async () => {
         /* Create a new group with no members */
         const group = new Group({
             userId: testUser._id,
@@ -192,20 +182,20 @@ describe("Integration test for contact deletion", () => {
         await group.save();
         await contact.save();
 
-        /* Delete this contact */
+        /* Delete this group */
         await authAgent
-            .delete(TEST_URLS.deleteContact)
-            .send({ id: contact._id })
+            .delete(TEST_URLS.deleteGroup)
+            .send({ id: group._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new OKSuccess("OK")).status);
             });
 
-        /* Check that the contact has been deleted */
-        expect(await Contact.findById(contact._id)).toBeNull();
-        
-        /* Check that the group has no members */
-        const groupFinal = await Group.findById(group._id);
-        expect(groupFinal!.members.length).toBe(0);
+        /* Check that the group has been deleted */
+        expect(await Group.findById(group._id)).toBeNull();
+
+        /* Check that the contact is ungrouped */
+        const contactFinal = await Contact.findById(contact._id);
+        expect(contactFinal!.groupId).toBeUndefined();
     });
 
     afterAll(async () => {
@@ -221,4 +211,4 @@ describe("Integration test for contact deletion", () => {
         /* Delete test contacts */
         await Contact.deleteMany();
     })
-})
+});
