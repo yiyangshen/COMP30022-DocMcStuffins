@@ -3,9 +3,6 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
-// import * as FaIcons from "react-icons/fa";
-
-// import axios from "axios";
 import "./App.css";
 
 /* Import components */
