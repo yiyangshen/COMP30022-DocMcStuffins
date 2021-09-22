@@ -20,9 +20,9 @@ switch (process.env.NODE_ENV) {
  *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
-function getContacts() {
+async function getContacts() {
     const endpoint = `${BASE_URL}/contacts/`;
-    return axios.get(endpoint);
+    return await axios.get(endpoint);
 }
 
 /* Export api functions */

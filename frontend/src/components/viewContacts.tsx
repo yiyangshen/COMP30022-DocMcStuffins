@@ -1,57 +1,88 @@
-import React, { useEffect, useState } from "react";
+/* Import the required libraries and types */
+import React from "react";
 
 /* Import the required libraries and types */
 import { getContacts } from "../api/contactApi";
 import { IContact } from "../interfaces";
 
-function ViewContacts() {
-    const [contactsList, setContactsList] = useState<Array<IContact>>([]);
-    const [error, setError] = useState(true);
+/* Component to view contacts */
+class ViewContacts extends React.Component {
+    /* Declare states */
+    state = {
+        error: null,
+        isLoaded: false,
+        contactsList: [] as IContact[],
+    };
 
-    useEffect(() => {
+    /* During loading page */
+    async componentDidMount() {
         getContacts().then(
             (response) => {
                 var data = response.data.items;
-                setContactsList(data);
-                setError(false);
+                this.setState({ contactsList: data, isLoaded: true });
             },
             (error) => {
-                setError(true);
+                this.setState({ isLoaded: true, error });
+                console.log(error);
             }
         );
-    });
+    }
 
-    return error ? (
-        <h3>Error</h3>
-    ) : (
-        <div className="border">
-            <div className="title">
-                <h2>
-                    <b>Contacts</b>
-                </h2>
-            </div>
+    render() {
+        const { error, isLoaded, contactsList } = this.state;
 
-            <table>
-                <tr className="table-lable">
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                </tr>
-
-                {contactsList.map((contacts, i) => (
-                    <div key={i}>
-                        <tr className="table-contents">
-                            <td>{contacts.name}</td>
-                            <td>{contacts.phoneNumber}</td>
-                            <td>{contacts.email}</td>
-                        </tr>
+        if (error === true) {
+            return <h3 className="error">No Order Present</h3>;
+        } else if (isLoaded === false) {
+            return <h3 className="error">Loading...</h3>;
+        } else {
+            return (
+                <div className="border">
+                    <div className="title">
+                        <h2>
+                            <b>Contacts</b>
+                        </h2>
                     </div>
-                ))}
-            </table>
 
-            <div className="table"></div>
-        </div>
-    );
+                    <table>
+                        <thead>
+                            <tr className="table-lable">
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        {contactsList !== undefined &&
+                        contactsList.length > 0 ? (
+                            <div>
+                                {contactsList.map((contacts, i) => (
+                                    <div key={i}>
+                                        <tbody>
+                                            <tr className="table-contents">
+                                                <td>{contacts.name}</td>
+                                                <td>{contacts.phoneNumber}</td>
+                                                <td>{contacts.email}</td>
+                                            </tr>
+                                        </tbody>
+                                    </div>
+                                ))}{" "}
+                            </div>
+                        ) : (
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>No data yet</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        )}
+                    </table>
+
+                    <div className="table"></div>
+                </div>
+            );
+        }
+    }
 }
 
 export default ViewContacts;
