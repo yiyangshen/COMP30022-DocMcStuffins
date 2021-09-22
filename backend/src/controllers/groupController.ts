@@ -139,7 +139,7 @@ async function deleteGroup(req: Request, res: Response, next: NextFunction) {
             group.members.forEach(async (memberId) => {
                 const member = await Contact.findById(memberId);
                 if (member) {
-                    member.groupId === undefined;
+                    member.groupId = undefined;
                     await member.save();
                 }
             });
