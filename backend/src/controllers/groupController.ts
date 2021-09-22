@@ -200,7 +200,7 @@ async function getGroups(req: Request, res: Response, next: NextFunction) {
     try {
         // find all the group of this userId and replace all _id of 
         // group with its own model
-        const groups = await Group.find({ userId: (req as any).user.id })
+        const groups = await Group.find({ userId: (req.user as IUser)._id })
                                     .populate('members')
         return res.json(new OKSuccess(groups));
     } catch (error) {

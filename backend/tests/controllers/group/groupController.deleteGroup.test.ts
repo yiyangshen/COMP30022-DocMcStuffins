@@ -5,7 +5,7 @@ import { agent } from "supertest";
 /* Import the required classes and models */
 import {
     BadRequestError, ForbiddenError, UnauthorizedError, NotFoundError,
-    CreatedSuccess, OKSuccess
+    OKSuccess
 } from "../../../src/classes";
 import { Contact, Gender, Group, Name, User } from "../../../src/models";
 
@@ -150,7 +150,7 @@ describe("Integration test for group deletion", () => {
         });
         await group.save();
 
-        /* Attempt to delete this contact */
+        /* Attempt to delete this group */
         await authAgent
             .delete(TEST_URLS.deleteGroup)
             .send({ id: group._id })
@@ -210,5 +210,5 @@ describe("Integration test for group deletion", () => {
 
         /* Delete test contacts */
         await Contact.deleteMany();
-    })
+    });
 });

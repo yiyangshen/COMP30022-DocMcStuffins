@@ -152,7 +152,7 @@ async function getMemos(req: Request, res: Response, next: NextFunction) {
     }
     try {
         // find all memos belonging to the user
-        const memos = await Memo.find({ userId: (req as any).user._id });
+        const memos = await Memo.find({ userId: (req.user as IUser)._id });
         
         // no memos were found
         if (memos.length === 0) {
@@ -188,7 +188,7 @@ async function getRecentMemos(req: Request, res: Response, next: NextFunction) {
         }
 
         // find memos, sort, and limit them to n documents
-        const memos = await Memo.find({ userId: (req as any).user._id }).sort({ "timestamps.created": -1  }).limit(n);
+        const memos = await Memo.find({ userId: (req.user as IUser)._id }).sort({ "timestamps.created": -1  }).limit(n);
         
         // no memos were found
         if (memos.length === 0) {

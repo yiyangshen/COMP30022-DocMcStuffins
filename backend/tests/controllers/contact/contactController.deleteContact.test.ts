@@ -1,12 +1,11 @@
 /* Import the required types and libraries */
 import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
-import { Types } from "mongoose";
 import { agent } from "supertest";
 
 /* Import the required classes and models */
 import {
     BadRequestError, ForbiddenError,
-    CreatedSuccess, OKSuccess, UnauthorizedError, NotFoundError
+    OKSuccess, UnauthorizedError, NotFoundError
 } from "../../../src/classes";
 import { Contact, Gender, Group, Name, User } from "../../../src/models";
 
@@ -220,5 +219,5 @@ describe("Integration test for contact deletion", () => {
 
         /* Delete test contacts */
         await Contact.deleteMany();
-    })
+    });
 })
