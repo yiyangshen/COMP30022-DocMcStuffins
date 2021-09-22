@@ -1,5 +1,6 @@
 /* Import the required libraries and types */
 import axios from "axios";
+import history from "../history";
 
 /* Change the API base URL based on the environment */
 var BASE_URL: string = "";
@@ -20,8 +21,8 @@ switch (process.env.NODE_ENV) {
  *   - 500 Internal Server Error otherwise
  */
 async function getUserProfile() {
-    const endpoint = `${BASE_URL}/user/login`;
-    return await axios.patch(endpoint);
+    const endpoint = `${BASE_URL}/user/profile`;
+    return await axios.get(endpoint);
 }
 
 /* Authenticate the user;
@@ -36,7 +37,16 @@ async function getUserProfile() {
  */
 async function loginUser(email: String, password: String) {
     const endpoint = `${BASE_URL}/user/login`;
-    return await axios.patch(endpoint, { email, password });
+    return await axios.patch(endpoint, { email, password }).then(
+        (response) => {
+            history.push("/dashboard");
+            console.log(response);
+        },
+        (error) => {
+            alert("Please enter a valid email & password");
+            console.log(error);
+        }
+    );
 }
 
 /* Deauthenticates the currently-authenticated user;

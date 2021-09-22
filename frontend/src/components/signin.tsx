@@ -4,6 +4,7 @@ import React from "react";
 /* Import components */
 import "../css/signin.css";
 import history from "../history";
+import { loginUser } from "../api/userApi";
 
 /* Component for Sign In */
 class Signin extends React.Component {
@@ -19,8 +20,11 @@ class Signin extends React.Component {
 
     /* Handle when click on submit button */
     handleSubmit = (event: { preventDefault: () => void }) => {
+        const { email, password } = this.state;
         event.preventDefault();
-        history.push("/dashboard");
+
+        /* Login customer. Then push new entry to history */
+        loginUser(email, password);
     };
 
     render() {
