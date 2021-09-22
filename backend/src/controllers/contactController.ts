@@ -198,7 +198,36 @@ async function getContactCount(req: Request, res: Response, next: NextFunction) 
  *   - 500 Internal Server Error otherwise
  */
 async function getContactDetails(req: Request, res: Response, next: NextFunction) {
+    // requester is not authenticated
+    if(req.isUnauthenticated()){
+        return next(new UnauthorizedError("Requester is not authenticated"));
+    }
 
+    try {
+        // verify that the parameter is valid
+        if(req.params.id){
+            const contact = await Contact.findOne({_id:req.params.id})
+                                         .populate('groupId');
+
+            // verify that contact exist 
+            if(!contact){
+                return next(new NotFoundError("Contact does not exist"));
+            }
+            // verify that the contact id is under the authenticated user
+            if(contact.userId !== (req.user as IUser)._id){
+                return next(new ForbiddenError("Contact does not belong to the user"));
+            }
+
+            return res.json(new OKSuccess(contact));
+            
+
+        } else {
+            // request parameter is malformed
+            return next(new BadRequestError("Requester parameter is invalid"));
+        }
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Returns the currently-authenticated user's contacts, along with their representative details;
@@ -216,7 +245,7 @@ async function getContacts(req: Request, res: Response, next: NextFunction) {
     try {
         // find all the contacts of this userId and replace all _id of
         // contact with its own model
-        const contacts = await Contact.find({ userId: (req as any).user.id })
+        const contacts = await Contact.find({ userId: (req.user as IUser)._id })
                                       .populate('groupId')
         
         //  in case if user doesn't have any contacts
