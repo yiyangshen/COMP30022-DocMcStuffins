@@ -1,17 +1,21 @@
 /* Import the required libraries and types */
 import React from "react";
+import { Link } from "react-router-dom";
 
 /* Import components */
 import "../css/signin.css";
 import history from "../history";
+import { registerUser } from "../api/userApi";
 
 /* Component for Sign Up */
 class Signup extends React.Component {
     state = {
-        name: "",
+        firstName: "",
+        middleName: "",
+        lastName: "",
         email: "",
         password: "",
-        confirm_password: "",
+        confirmPassword: "",
     };
 
     /* Set state accordingly to the target */
@@ -21,39 +25,76 @@ class Signup extends React.Component {
 
     /* Handle when click on submit button */
     handleSubmit = (event: { preventDefault: () => void }) => {
+        const {
+            firstName,
+            middleName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+        } = this.state;
         event.preventDefault();
-        history.push("/dashboard");
+
+        /* Register user. Then push new entry to history */
+        if (password === confirmPassword) {
+            registerUser(firstName, middleName, lastName, email, password);
+        } else {
+            alert("Please enter the same password");
+        }
     };
 
     render() {
-        const { name, email, password, confirm_password } = this.state;
+        const {
+            firstName,
+            middleName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+        } = this.state;
 
         return (
-            <div>
+            <div className="border">
                 <div>
                     <h1>Sign Up</h1>
                     <p>Already have an account? </p>
-                    <button
-                        className="base-button"
-                        type="button"
-                        onClick={() => history.push(`/signin`)}
-                    >
+                    <Link to="#" onClick={() => history.push(`/signin`)}>
                         <p>Sign In here.</p>
-                    </button>
+                    </Link>
                 </div>
                 <br />
 
                 <div>
                     <form onSubmit={this.handleSubmit}>
-                        <p>Full Name</p>
+                        <p>First Name</p>
                         <input
                             id="name"
                             type="text"
                             name="name"
                             placeholder="name"
-                            value={name}
+                            value={firstName}
                             onChange={this.handleChange}
                             required
+                        />
+
+                        <p>Middle Name</p>
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            placeholder="name"
+                            value={middleName}
+                            onChange={this.handleChange}
+                        />
+
+                        <p>Last Name</p>
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            placeholder="name"
+                            value={lastName}
+                            onChange={this.handleChange}
                         />
 
                         <p>Email</p>
@@ -84,10 +125,13 @@ class Signup extends React.Component {
                             type="password"
                             name="conpassword"
                             placeholder="password"
-                            value={confirm_password}
+                            value={confirmPassword}
                             onChange={this.handleChange}
                             required
                         />
+
+                        <br />
+                        <br />
 
                         <button className="base-button" type="submit">
                             <h2>Sign In</h2>
