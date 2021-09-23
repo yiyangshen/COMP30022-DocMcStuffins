@@ -149,6 +149,7 @@ describe("getGroupDetails Tests", () => {
         await unauthAgent
             .get(`${BASE_URL}/${testGroup1._id}`)
             .then((res: any) => {
+                console.log(res.body.data);
                 expect(res.body.status).toEqual(401);
         });
     });
@@ -157,6 +158,7 @@ describe("getGroupDetails Tests", () => {
         await authAgent
             .get(`${BASE_URL}/something`)
             .then((res: any) => {
+                console.log(res.body.data);
                 expect(res.body.status).toEqual(400);
         });
     });
@@ -165,6 +167,7 @@ describe("getGroupDetails Tests", () => {
         await authAgent
             .get(`${BASE_URL}/${testGroup1._id}`)
             .then((res: any) => {
+                console.log(res.body.data);
                 expect(res.body.status).toEqual(403);
             });
     });
@@ -174,6 +177,7 @@ describe("getGroupDetails Tests", () => {
         await authAgent
             .get(`${BASE_URL}/${id}`)
             .then((res: any) => {
+                console.log(res.body.data);
                 expect(res.body.status).toEqual(404);
             });
     });
@@ -182,6 +186,7 @@ describe("getGroupDetails Tests", () => {
         await authAgent
             .get(`${BASE_URL}/${testGroup2._id}`)
             .then((res: any) => {
+                console.log(res.body.data);
                 expect(res.body.status).toEqual(200);
             });
     });

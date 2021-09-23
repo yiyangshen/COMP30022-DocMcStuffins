@@ -99,6 +99,7 @@ describe("getmemoDetails Tests", () => {
         await unauthAgent
             .get(`${BASE_URL}/${testMemo1._id}`)
             .then((res: any) => {
+                console.log(res.body.data);
                 expect(res.body.status).toEqual(401);
         });
     });
@@ -107,6 +108,7 @@ describe("getmemoDetails Tests", () => {
         await authAgent
             .get(`${BASE_URL}/something`)
             .then((res: any) => {
+                console.log(res.body.data);
                 expect(res.body.status).toEqual(400);
         });
     });
@@ -115,6 +117,7 @@ describe("getmemoDetails Tests", () => {
         await authAgent
             .get(`${BASE_URL}/${testMemo1._id}`)
             .then((res: any) => {
+                console.log(res.body.data);
                 expect(res.body.status).toEqual(403);
             });
     });
@@ -124,6 +127,7 @@ describe("getmemoDetails Tests", () => {
         await authAgent
             .get(`${BASE_URL}/${id}`)
             .then((res: any) => {
+                console.log(res.body.data);
                 expect(res.body.status).toEqual(404);
             });
     });
@@ -132,6 +136,7 @@ describe("getmemoDetails Tests", () => {
         await authAgent
             .get(`${BASE_URL}/${testMemo2._id}`)
             .then((res: any) => {
+                console.log(res.body.data);
                 expect(res.body.status).toEqual(200);
             });
     });
