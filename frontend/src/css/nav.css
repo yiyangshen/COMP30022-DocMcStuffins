@@ -1,3 +1,91 @@
+.navbar {
+    background-color: #b5d7ff;
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+.menu-bars {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    font-size: 2rem;
+    background: none;
+    color: #434343;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.menu-bars:hover {
+    background-color: #6baffd;
+    color: #ffffff;
+}
+
+.nav-menu {
+    background-color: #fcfcfc;
+    width: 250px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    transition: 850ms;
+}
+
+.nav-menu.active {
+    left: 0;
+    transition: 350ms;
+}
+
+.nav-text {
+    display: flex;
+    align-items: center;
+    padding: 8px 0px 8px 16px;
+    list-style: none;
+    height: 60px;
+}
+
+.nav-text a {
+    text-decoration: none;
+    color: #434343;
+    font-size: 18px;
+    width: 95%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: 4px;
+}
+
+.nav-text a:hover {
+    background: #6baffd;
+    color: #ffffff;
+}
+
+.logout {
+    position: absolute;
+    bottom: 10px;
+    font-size: 18px;
+    padding: 8px 10px 8px 16px;
+}
+
+.nav-menu-items {
+    width: 100%;
+    color: #434343;
+}
+
+.navbar-toggle {
+    background-color: #fcfcfc;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+span {
+    margin-left: 12px;
+}
+
 /* The sidebar menu */
 .sidenav {
     height: 100%; /* Full-height: remove this if you want "auto" height */
@@ -5,7 +93,7 @@
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
-    left: 0;
+    left: -180px;
     background-color: #fcfcfc; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
@@ -13,6 +101,10 @@
 
 .header {
     background-color: #b5d7ff;
+}
+
+.form-center {
+    margin-left: 2rem;
 }
 
 input[type="text"],
@@ -24,68 +116,4 @@ input[type="password"] {
     border-bottom: none;
     background-color: #fcfcfc;
     padding: 10px 1px 10px 10px;
-}
-
-h1 {
-    font-family: inter;
-    font-size: 32px;
-}
-
-h2 {
-    font-family: inter;
-    font-size: 24px;
-}
-
-p {
-    font-family: inter;
-    font-size: 18px;
-}
-
-.logo {
-    display: block;
-    width: 75px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-}
-
-.logout {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
-.icon {
-    display: inline-block;
-    margin-right: 8px;
-}
-
-/* The navigation menu links */
-.sidenav a {
-    margin: 1px 9px 1px 9px;
-    padding: 2px 2px 2px 2px;
-    text-decoration: none;
-    display: block;
-    color: #434343;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-    background: #6baffd;
-    color: #ffffff;
-    border-radius: 10px;
-}
-
-.sidenav a:hover path {
-    fill: #ffffff;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-    .sidenav {
-        padding-top: 15px;
-    }
-    .sidenav a {
-        font-size: 18px;
-    }
 }

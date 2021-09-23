@@ -1,6 +1,6 @@
 /* Import the required libraries and types */
 import connectMongoDBSession from "connect-mongodb-session"
-// import cors from "cors";
+import cors from "cors";
 import express from "express";
 import session from "express-session";
 // import path from "path";
@@ -28,13 +28,11 @@ app.use(passport.session());
 import "./passportConfig";
 
 /* Enable CORS */
-/*
 app.use(cors({
     origin: ["http://localhost:3000", "http://localhost:48080", "https://snaccs-in-a-van.herokuapp.com"],
     credentials: true,
     optionsSuccessStatus: 200
 }));
-*/
 
 /* Register API routes */
 app.use("/api", routes);
