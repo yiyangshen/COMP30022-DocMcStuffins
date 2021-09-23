@@ -127,6 +127,10 @@ async function getMemoDetails(req: Request, res: Response, next: NextFunction) {
             return next(new ForbiddenError("Contact does not belong to the user"));
         }
 
+        // update recently-viewed timestamp
+        memo.timestamps.viewed = new Date();
+        await memo.save();
+
         return res.json(new OKSuccess(memo)); 
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
