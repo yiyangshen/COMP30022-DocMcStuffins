@@ -1,11 +1,12 @@
 /* Import the required libraries and types */
 import { hashSync } from "bcrypt";
-import { model, Model, Schema } from "mongoose";
+import { model, Model, ObjectId, Schema } from "mongoose";
 import { PASSWORD_HASH_ROUNDS } from "../config";
 import { IName, nameSchema } from "./nameModel";
 
 /* Define the user interface */
 export interface IUser {
+    _id: ObjectId
     email: string;
     name: IName;
     password: string;
@@ -33,5 +34,5 @@ const userSchema: Schema = new Schema({
 
 /* Export the user schema and model */
 export { userSchema }
-const User = model("User", userSchema);
+const User = model<IUser>("User", userSchema);
 export default User;

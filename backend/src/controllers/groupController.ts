@@ -1,15 +1,15 @@
 /* Import required libraries and types */
 import { Request, Response, NextFunction } from "express";
+import { body, param, validationResult } from "express-validator";
+import { ObjectId, Types, isValidObjectId } from "mongoose";
 
 /* Import required models */
-import { Group } from "../models";
+import { Contact, Group, IUser } from "../models";
 
 /* Import error and response classes */
 import {
-    JSONResponse,
-    BadRequestError, NotFoundError, UnauthorizedError, InternalServerError,
-    ForbiddenError,
-    OKSuccess
+    BadRequestError, ForbiddenError, InternalServerError, NotFoundError, UnauthorizedError,  
+    CreatedSuccess, OKSuccess
 } from "../classes";
 
 /* Amends the given group's details;
@@ -20,9 +20,8 @@ import {
  * responds with a:
  *   - 200 OK if amendment is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the group to amend does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the group to amend does not belong to the currently-authenticated user
  *   - 404 Not Found if the given group ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
@@ -37,11 +36,63 @@ async function amendGroupDetails(req: Request, res: Response, next: NextFunction
  * responds with a:
  *   - 201 Created if creation is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function createGroup(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("User is not authenticated"));
+        }
+        
+        /* Validate and sanitise the required inputs */
+        await body("name").isAscii().trim().run(req);
 
+        /* Validate and sanitise the optional inputs */
+        if (req.body.members) {
+            /* Check that each element of the members array is an ObjectId */
+            await body("members").custom((memberIds: Array<string>) => {
+                return memberIds.every((memberId: string) => {
+                    return isValidObjectId(memberId);
+                });
+            }).run(req);
+        }
+        
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
+        }
+        
+        /* Create the new group document */
+        const newGroup = new Group({
+            userId: (req.user as IUser)._id,
+            name: req.body.name
+        });
+        
+        /* Assign the optional values appropriately */
+        if (req.body.members)
+            req.body.members.forEach(async (memberId: string) => {
+                /* Verify that the contact is in the database */
+                const currentContact = await Contact.findById(memberId); 
+
+                if (currentContact) {
+                    /* Add the contact to the group */
+                    newGroup.members.push(Types.ObjectId(memberId) as ObjectId);
+
+                    /* Assign the contact to the group */
+                    currentContact.groupId = newGroup._id;
+                    await currentContact.save();
+                }
+            });
+
+        /* Save the new group to the database */
+        await newGroup.save();
+        res.json(new CreatedSuccess("Group successfully created"));
+    }
+    catch (err) {
+        return next(new InternalServerError("Something's gone wrong"));
+    }
 }
 
 /* Deletes the given group and deassociates all its members from the group;
@@ -50,28 +101,70 @@ async function createGroup(req: Request, res: Response, next: NextFunction) {
  * responds with a:
  *   - 200 OK if deletion is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the group to delete does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the group to delete does not belong to the currently-authenticated user
  *   - 404 Not Found if the given group ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
 async function deleteGroup(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
 
+        /* Validate and sanitise the required inputs */
+        await body("id").isMongoId().run(req);
+
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body is malformed"));
+        }
+
+        /* Find the specified group */
+        const group = await Group.findById(req.body.id);
+
+        /* Check if the group exists */
+        if (!group) {
+            return next(new NotFoundError("No groups with the given ID exists in the database"));
+        }
+
+        /* Check if the group belongs to the currently authenticated user */
+        if (group.userId.toString() !== (req.user as IUser)._id.toString()) {
+            return next(new ForbiddenError("Group to delete does not belong to the currently-authenticated user"));
+        }
+
+        /* Remove the membership of this group from any contact if there is */
+        if (group.members) {
+            group.members.forEach(async (memberId) => {
+                const member = await Contact.findById(memberId);
+                if (member) {
+                    member.groupId = undefined;
+                    await member.save();
+                }
+            });
+        }
+
+        /* Delete the group */
+        await Group.findByIdAndDelete(group._id);
+        res.json(new OKSuccess("Group successfully deleted"));
+    } catch (err) {
+        return next(new InternalServerError("Something has gone wrong"));
+    }
 }
 
 /* Returns a count of the currently-authenticated user's groups;
  * responds with a:
  *   - 200 OK if query is successful
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function getGroupCount(req: Request, res: Response, next: NextFunction) {
     if (req.isUnauthenticated()) {
-        return next(new ForbiddenError("Requester is not authenticated"));
+        return next(new UnauthorizedError("Requester is not authenticated"));
     }
     try {
-        const count = await Group.countDocuments({ userId: (req as any).user._id });
+        const count = await Group.countDocuments({ userId: (req.user as IUser)._id });
         return res.json(new OKSuccess(count));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
@@ -84,24 +177,62 @@ async function getGroupCount(req: Request, res: Response, next: NextFunction) {
  * responds with a:
  *   - 200 OK if query is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the group to return details on does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the group to return details on does not belong to the currently-authenticated user
  *   - 404 Not Found if the given group ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
 async function getGroupDetails(req: Request, res: Response, next: NextFunction) {
+    // requester is not authenticated
+    if(req.isUnauthenticated()){
+        return next(new UnauthorizedError("Requester is not authenticated"));
+    }
 
+    try {
+        // verify that the parameter is valid
+        if (!(isValidObjectId(req.params.id))) {
+            return next(new BadRequestError("Request body is malformed"));
+        }
+        
+        const group = await Group.findOne({_id:req.params.id})
+                                 .populate('members');
+
+        // verify that group exist 
+        if(!group){
+            return next(new NotFoundError("Contact does not exist"));
+        }
+
+        // verify that the group  is under the authenticated user
+        if(group.userId.toString() !== (req.user as IUser)._id.toString()){
+            return next(new ForbiddenError("Contact does not belong to the user"));
+        }
+
+        return res.json(new OKSuccess(group)); 
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Returns the currently-authenticated user's groups, along with their representative details;
  * responds with a:
  *   - 200 OK if query is successful
- *   - 403 Forbidden if the requester is not authenticated
+ *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
 async function getGroups(req: Request, res: Response, next: NextFunction) {
-
+        // requester is not authenticated
+    if (req.isUnauthenticated()) {
+        return next(new UnauthorizedError("Requester is not authenticated"));
+    }
+    try {
+        // find all the group of this userId and replace all _id of 
+        // group with its own model
+        const groups = await Group.find({ userId: (req.user as IUser)._id })
+                                    .populate('members')
+        return res.json(new OKSuccess(groups));
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Export controller functions */
