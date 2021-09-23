@@ -33,8 +33,8 @@
 ## getGroupDetails Tests
 | No  | Description                                                        | Steps                                                                                  | Expected         |
 | --- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- | ---------------- |
-| 1   | Get group details without authentication                         | 1. POST `api/group/:id` (while being logged out)                                    | 401 Unauthorized |
-| 2   | Get group details with malformed parameter                       | 1. Log in<br>2. POST `api/group/:id` with malformed `id`                            | 400 Bad Request  |
-| 3   | Get group details with group ID not belonging to the requester | 1. Log in<br>2. POST `api/group/:id` with `id` being the contact ID of another user | 403 Forbidden    |
-| 4   | Get group details with group ID that does not exist            | 1. Log in<br>2. POST `api/group/:id` with `id` being `0`                            | 404 Not Found    |
-| 5   | Get group details successfully                                   | 1. Log in<br>2. POST `api/group/:id` with the correct `id`                          | 200 OK           |
+| 1   | Get group details without authentication                         | 1. POST `api/group/details/:id` (while being logged out)                                    | 401 Unauthorized |
+| 2   | Get group details with malformed parameter                       | 1. Log in<br>2. POST `api/group/details:id` with malformed `id`                            | 400 Bad Request  |
+| 3   | Get group details with group ID not belonging to the requester | 1. Log in<br>2. POST `api/group/details/:id` with `id` being the contact ID of another user | 403 Forbidden    |
+| 4   | Get group details with group ID that does not exist            | 1. Log in<br>2. POST `api/group/details/:id` with `id` being some new objectid                           | 404 Not Found    |
+| 5   | Get group details successfully                                   | 1. Log in<br>2. POST `api/group/details/:id` with the correct `id`                          | 200 OK           |

@@ -216,7 +216,7 @@ async function getContactDetails(req: Request, res: Response, next: NextFunction
             return next(new NotFoundError("Contact does not exist"));
         }
         // verify that the contact id is under the authenticated user
-        if(contact.userId !== (req.user as IUser)._id){
+        if(contact.userId.toString() !== (req.user as IUser)._id.toString()){
             return next(new ForbiddenError("Contact does not belong to the user"));
         }
 

@@ -14,7 +14,7 @@ import { Contact, Gender, Group, Name, User } from "../../../src/models";
 import app from "../../../src/config/serverConfig";
 
 /* Define test constants */
-const BASE_URL = "/api/contacts";
+const BASE_URL = "/api/contacts/details";
 
 /* Define test data */
 const TEST_USER_1 = {
@@ -78,11 +78,37 @@ describe("getContactDetails Tests", () => {
         })
     });
 
+    const testContact1 = new Contact({
+        name: {
+            first : TEST_CONTACT_1.firstName,
+            last : TEST_CONTACT_1.lastName
+        },
+        gender: TEST_CONTACT_1.gender,
+        email: TEST_CONTACT_1.email,
+        relationship: TEST_CONTACT_1.relationship,
+        userId : testUser2._id
+    });
+
+    const testContact2 = new Contact({
+        name: {
+            first : TEST_CONTACT_2.firstName,
+            last : TEST_CONTACT_2.lastName
+        },
+        gender: TEST_CONTACT_2.gender,
+        email: TEST_CONTACT_2.email,
+        relationship: TEST_CONTACT_2.relationship,
+        userId : testUser1._id
+    });
+
     beforeAll(async () => {
         /* Save test user in database */
         await testUser1.save();
         await testUser2.save();
 
+        //  save contacts in database
+        await testContact1.save();
+        await testContact2.save();
+        
         /* Authenticate user agent */
         await authAgent
             .patch(`/api/user/login`)
@@ -99,7 +125,7 @@ describe("getContactDetails Tests", () => {
 
     test("1. Get contact details without authentication", async () => {
         await unauthAgent
-            .get(`${BASE_URL}/1`)
+            .get(`${BASE_URL}/${testContact1._id}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(401);
         });
@@ -107,53 +133,32 @@ describe("getContactDetails Tests", () => {
 
     test("2. Get contact details with malformed parameter", async () => {
         await authAgent
-            .get(`${BASE_URL}`)
+            .get(`${BASE_URL}/something`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(400);
         });
     });
 
     test("3. Get contact details with user ID not belonging to the requester", async () => {
-        const testContact = new Contact({
-            name: {
-                first : TEST_CONTACT_1.firstName,
-                last : TEST_CONTACT_1.lastName
-            },
-            gender: TEST_CONTACT_1.gender,
-            email: TEST_CONTACT_1.email,
-            relationship: TEST_CONTACT_1.relationship,
-            userId : testUser2._id
-        });
-        await testContact.save();
         await authAgent
-            .get(`${BASE_URL}/${testContact._id}`)
+            .get(`${BASE_URL}/${testContact1._id}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(403);
             });
     });
 
     test("4. Get contact details with contact ID that does not exist", async () => {
+        const id = Types.ObjectId();
         await authAgent
-            .get(`${BASE_URL}/0`)
+            .get(`${BASE_URL}/${id}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(404);
             });
     });
 
     test("5. Get contact details successfully", async () => {
-        const testContact = new Contact({
-            name: {
-                first : TEST_CONTACT_2.firstName,
-                last : TEST_CONTACT_2.lastName
-            },
-            gender: TEST_CONTACT_2.gender,
-            email: TEST_CONTACT_2.email,
-            relationship: TEST_CONTACT_2.relationship,
-            userId : testUser1._id
-        });
-        await testContact.save();
         await authAgent
-            .get(`${BASE_URL}/${testContact._id}`)
+            .get(`${BASE_URL}/${testContact2._id}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
             });
