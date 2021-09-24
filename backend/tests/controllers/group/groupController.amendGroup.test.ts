@@ -15,7 +15,7 @@ import app from "../../../src/config/serverConfig";
 /* Define test constants */
 const BASE_URL = "/api";
 const TEST_URLS = {
-    amendContact: `${BASE_URL}/contacts/details/amend`,
+    amendGroup: `${BASE_URL}/groups/details/amend`,
     login: `${BASE_URL}/user/login`,
     logout: `${BASE_URL}/user/logout`
 };
@@ -39,6 +39,10 @@ const TEST_GROUP_1 = {
     name: "Megane Lovers"
 };
 
+const TEST_GROUP_1_AMENDED = {
+    name: "Megane Fans"
+};
+
 const TEST_GROUP_2 = {
     name: "Kawaii Researchers"
 };
@@ -50,14 +54,7 @@ const TEST_CONTACT = {
     relationship: "Tomodachi"
 };
 
-const TEST_CONTACT_AMENDED = {
-    firstName: "Yuuma",
-    lastName: "Kunimi",
-    gender: Gender.Male,
-    relationship: "Koibito"
-};
-
-describe("Integration test for contact amendment", () => {
+describe("Integration test for group amendment", () => {
     /* Create user agents */
     const unauthAgent = agent(app);
     const authAgent = agent(app);
@@ -99,109 +96,91 @@ describe("Integration test for contact amendment", () => {
             });
     });
 
-    test("1. Amend contact without authentication", async () => {
+    test("1. Amend group without authentication", async () => {
         await unauthAgent
-            .patch(TEST_URLS.amendContact)
+            .patch(TEST_URLS.amendGroup)
             .send({})
             .then((res: any) => {
                 expect(res.body.status).toBe((new UnauthorizedError("Unauthorized")).status);
             });
     });
 
-    test("2. Amend existing contact without changing groupId", async () => {
-        /* Create a new contact */
-        const contact = new Contact({
+    test("2. Amend existing group without changing memebrs", async () => {
+        /* Create a new group */
+        const group = new Group({
             userId: testUser._id,
-            name: new Name({
-                first: TEST_CONTACT.firstName,
-                last: TEST_CONTACT.lastName
-            }),
-            gender: TEST_CONTACT.gender,
-            relationship: TEST_CONTACT.relationship
+            name: TEST_GROUP_1.name
         });
-        await contact.save();
+        await group.save();
 
-        /* Amend the new contact */
+        /* Amend the new group */
         await authAgent
-            .patch(TEST_URLS.amendContact)
+            .patch(TEST_URLS.amendGroup)
             .send({
-                id: contact._id,
-                firstName: TEST_CONTACT_AMENDED.firstName,
-                lastName: TEST_CONTACT_AMENDED.lastName,
-                gender: TEST_CONTACT_AMENDED.gender,
-                relationship: TEST_CONTACT_AMENDED.relationship
+                id: group._id,
+                name: TEST_GROUP_1_AMENDED.name
             })
             .then((res: any) => {
                 expect(res.body.status).toBe((new OKSuccess("OK")).status);
             });
 
-        /* Check that only the contact's firstName and relationship has been changed */
-        const amendedContact = await Contact.findById(contact._id);
-        expect(amendedContact).toBeTruthy();
-        expect(amendedContact!.name.first).toBe(TEST_CONTACT_AMENDED.firstName);
-        expect(amendedContact!.name.last).toBe(TEST_CONTACT_AMENDED.lastName);
-        expect(amendedContact!.gender).toBe(TEST_CONTACT_AMENDED.gender);
-        expect(amendedContact!.relationship).toBe(TEST_CONTACT_AMENDED.relationship);
+        /* Check that the group's name has been changed */
+        const amendedGroup = await Group.findById(group._id);
+        expect(amendedGroup).toBeTruthy();
+        expect(amendedGroup!.name).toBe(TEST_GROUP_1_AMENDED.name);
     });
 
-    test("3. Amend contact with no data", async () => {
+    test("3. Amend group with no data", async () => {
         await authAgent
-            .patch(TEST_URLS.amendContact)
+            .patch(TEST_URLS.amendGroup)
             .send({})
             .then((res: any) => {
                 expect(res.body.status).toBe((new BadRequestError("Bad Request")).status);
             });
     });
 
-    test("4. Amend contact with invalid data", async () => {
+    test("4. Amend group with invalid data", async () => {
         await authAgent
-            .patch(TEST_URLS.amendContact)
+            .patch(TEST_URLS.amendGroup)
             .send({ id: "Invalid id" })
             .then((res: any) => {
                 expect(res.body.status).toBe((new BadRequestError("Bad Request")).status);
             });
     });
     
-    test("5. Amend non-existing contact", async () => {
+    test("5. Amend non-existing group", async () => {
         await authAgent
-            .patch(TEST_URLS.amendContact)
+            .patch(TEST_URLS.amendGroup)
             .send({
                 id: testUser._id,
-                firstName: "Mai",
-                lastName: "Sakurajima"
+                name: "Mai"
             })
             .then((res: any) => {
                 expect(res.body.status).toBe((new NotFoundError("Not Found")).status);
             });
     });
 
-    test("6. Amend contact belonging to another user", async () => {
-        /* Create a new contact that belongs to another user */
-        const contact = new Contact({
+    test("6. Amend group belonging to another user", async () => {
+        /* Create a new group that belongs to another user */
+        const group = new Group({
             userId: testUserAlt._id,
-            name: new Name({
-                first: TEST_CONTACT.firstName,
-                last: TEST_CONTACT.lastName
-            }),
-            gender: TEST_CONTACT.gender,
-            relationship: TEST_CONTACT.relationship
+            name: TEST_GROUP_1.name
         });
-        await contact.save();
+        await group.save();
 
-        /* Attempt to amend this contact */
+        /* Attempt to amend this group */
         await authAgent
-            .patch(TEST_URLS.amendContact)
+            .patch(TEST_URLS.amendGroup)
             .send({
-                id: contact._id,
-                firstName: "Shouko",
-                lastName: "Makinohara"
+                id: group._id,
+                name: "Sakuta"
             })
             .then((res: any) => {
                 expect(res.body.status).toBe((new ForbiddenError("Forbidden")).status);
             });
     });
 
-    test("7. Amend existing contact while changing groupId", async () => {
+    test("7. Amend existing group while changing members", async () => {
         /* Create two new groups */
         const group1 = new Group({
             userId: testUser._id,
@@ -226,12 +205,11 @@ describe("Integration test for contact amendment", () => {
 
         /* Add contact to group 1 */
         await authAgent
-            .patch(TEST_URLS.amendContact)
+            .patch(TEST_URLS.amendGroup)
             .send({
-                id: contact._id,
-                firstName: TEST_CONTACT.firstName,
-                lastName: TEST_CONTACT.lastName,
-                groupId: group1._id
+                id: group1._id,
+                name: TEST_GROUP_1,
+                members: [contact._id]
             })
             .then(async (res: any) => {
                 expect(res.body.status).toBe((new OKSuccess("OK")).status);
@@ -247,12 +225,11 @@ describe("Integration test for contact amendment", () => {
 
         /* Move contact from group 1 to group 2 */
         await authAgent
-            .patch(TEST_URLS.amendContact)
+            .patch(TEST_URLS.amendGroup)
             .send({
-                id: contact._id,
-                firstName: TEST_CONTACT.firstName,
-                lastName: TEST_CONTACT.lastName,
-                groupId: group2._id
+                id: group2._id,
+                name: TEST_GROUP_2,
+                members: [contact._id]
             })
             .then(async (res: any) => {
                 expect(res.body.status).toBe((new OKSuccess("OK")).status);
@@ -272,11 +249,10 @@ describe("Integration test for contact amendment", () => {
 
         /* Remove contact from group 2 */
         await authAgent
-            .patch(TEST_URLS.amendContact)
+            .patch(TEST_URLS.amendGroup)
             .send({
-                id: contact._id,
-                firstName: TEST_CONTACT.firstName,
-                lastName: TEST_CONTACT.lastName
+                id: group2._id,
+                name: TEST_GROUP_2
             })
             .then(async (res: any) => {
                 expect(res.body.status).toBe((new OKSuccess("OK")).status);
