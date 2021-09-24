@@ -50,24 +50,22 @@ class DashB extends React.Component{
                             {memoList !== undefined &&
                             memoList.length > 0 ?
                             <div>
-                                {memoList.map((memos, i) => ( //change contacts to memos
+                                {memoList.map((memos, i) => (
                                     <div key={i}> // dont change i
+                                        <div className = "MemoPage">
+                                        <img className = "MemoPng" src={Memo} alt="logo" onClick={() => history.push(`/memos/id`)}/>
+                                        <h2 className ="MemoText">{memos.title}</h2>
+                                    </div>
                                     </div>
                                 ))}{" "}
                             </div>
                             :
-                            <div className = "MemoPages">
-                                <div className = "MemoPage">
-                                    <img className = "MemoPng" src={Memo} alt="logo" onClick={() => history.push(`/memos/id`)}/>
-                                    <h2 className ="MemoText">Groceries</h2>
-                                </div>
-                                
-                                <div className = "MemoPage"> 
-                                    <img className = "AddMoreMemo" src={MemoMore} alt="logo" onClick={() => history.push(`/memos/create`)}/>
-                                    <h2 className ="MemoText">Add More...</h2>
-                                </div>
-                            </div>
+                             null
                             }
+                            <div className = "MemoPage">
+                                <img className = "AddMoreMemo" src={MemoMore} alt="logo" onClick={() => history.push(`/memos/create`)}/>
+                                <h2 className ="MemoText">Add More...</h2>
+                            </div>
                         </div>
 
                         <div className="box">

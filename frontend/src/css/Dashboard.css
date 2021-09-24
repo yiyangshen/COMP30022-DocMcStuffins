@@ -88,15 +88,13 @@
   width: 100%;
   height: 25%;
 }
-.MemoPages{
-  display: flex;
-}
 .MemoPage{
-  position: relative;
   margin-left: 1vw;
+  width: 250px;
+  height: 250px;
 }
 .MemoText{
-  position: absolute;
-  bottom: 9vh;
+  position: relative;
+  bottom: 11vh;
   left: 0.5vw;
 }

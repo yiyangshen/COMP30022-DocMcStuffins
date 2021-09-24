@@ -34,11 +34,11 @@ async function getMemoDetails(id: String){ //id not used
     return await axios.delete(endpoint);
 }
 async function getMemos(id: String) {
-    const endpoint = `${BASE_URL}/memos/:id`;
+    const endpoint = `${BASE_URL}/memos/${id}`;
     return await axios.get(endpoint);
 }
 async function getRecentMemos(n: number) {
-    const endpoint = `${BASE_URL}/memos/recent/:n`;
+    const endpoint = `${BASE_URL}/memos/recent/${n}`;
     return await axios.get(endpoint);
 }
 
