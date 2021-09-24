@@ -45,7 +45,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 43px;
+  margin-top: 20px;
   margin-bottom: auto;
 }
 .Group:hover {
@@ -53,7 +53,6 @@
 }
 .container {
   text-align: center;
-  margin-top: -30px;
 }
 
 .Contacts {
@@ -71,7 +70,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: auto;
 }
 .Contacts:hover {
@@ -79,7 +78,6 @@
 }
 .Contactscontainer{
   text-align: center;
-  margin-top: -30px;
 }
 
 
