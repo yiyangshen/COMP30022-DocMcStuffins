@@ -89,14 +89,15 @@ class DashB extends React.Component{
                             
                             <div className = "RecentGroups">
                                 <h3>Recent Groups</h3>
-                                <div className ="RecentGroup">
-                                    <span className ="dot" onClick={() => history.push(`/groups/id`)}>
-                                        <div className= "RecentGroupText">
-                                            <h2>Family</h2>
-                                            <h1>5</h1>
-                                        </div>
-                                    </span>
-                                </div>
+                                <span className ="dot" onClick={() => history.push(`/groups/id`)}>
+                                    <div className= "RecentGroupText">
+                                        <h2>Family</h2>
+                                        <h1>5</h1>
+                                    </div>
+                                </span>
+                                <span className ="dotMore" onClick={() => history.push(`/groups/create`)}>
+                                    <h1>Add more...</h1>
+                                </span>
                             </div>
                         </div>
 
