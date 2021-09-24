@@ -11,5 +11,6 @@
         "<rootDir>/node_modules/",
         "<rootDir>/src/"
     ],
+    "testTimeout": 10000,
     "verbose": true
 }
