@@ -1,7 +1,7 @@
 /* Import required libraries and types */
 import { Request, Response, NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
-import { isValidObjectId } from "mongoose";
+import { isValidObjectId, ObjectId } from "mongoose";
 
 /* Import required models */
 import { Contact, Group, IUser } from "../models";
@@ -15,7 +15,7 @@ import {
 /* Amends the given group's details;
  * requires, in the request body:
  *   - id: ObjectId
- *   - name?: string
+ *   - name: string
  *   - members?: [ObjectId]
  * responds with a:
  *   - 200 OK if amendment is successful
@@ -34,10 +34,9 @@ async function amendGroupDetails(req: Request, res: Response, next: NextFunction
 
         /* Validate and sanitise the required inputs */
         await body("id").isMongoId().run(req);
+        await body("name").isAscii().trim().run(req);
 
         /* Validate and sanitise the optional inputs */
-        if (req.body.name)
-            await body("name").isAscii().trim().run(req);
         if (req.body.members) {
             /* Check that each element of the members array is an ObjectId */
             await body("members").custom((memberIds: Array<string>) => {
@@ -65,37 +64,59 @@ async function amendGroupDetails(req: Request, res: Response, next: NextFunction
             return next(new ForbiddenError("Group to amend does not belong to the currently-authenticated user"));
         }
 
-        /* Update each field of the group if there is any amendment */
-        if (req.body.name)
-            group.name = req.body.name;
-        if (req.body.members) {
-            /* Remove all the membership of the current members */
-            if (group.members) {
-                group.members.forEach(async (memberId) => {
-                    const oldMember = await Contact.findById(memberId);
-                    if (oldMember) {
-                        oldMember.groupId = undefined;
-                        await oldMember.save();
-                    }
-                });
-                group.members = [];
-            }
+        /* Update the name field of the group */
+        group.name = req.body.name;
 
-            /* Assign the new members to the group */
-            req.body.members.forEach(async (memberId: string) => {
-                const newMember = await Contact.findById(memberId);
-                if (newMember) {
-                    group.members.push(newMember._id);
-                    newMember.groupId = group._id;
-                    await newMember.save();
+        /* Update the members field of the group */
+        const newMembers = new Map();
+        const oldMembers = [...group.members];
+        group.members = [];
+        if (req.body.members)
+            /* Update the membership of each new member */
+            for (let memberId of req.body.members) {
+                const member = await Contact.findById(memberId);
+                if (member) {
+                    /* Check if there is a change in the membership of this new member */
+                    if (member.groupId?.toString() !== group._id.toString()) {
+                        /* Remove the membership of the old group if there is any */
+                        if (member.groupId) {
+                            const oldGroup = await Group.findById(member.groupId);
+                            if (oldGroup) {
+                                oldGroup.members = oldGroup.members.filter(memberId => memberId.toString() !== member._id.toString());
+                                await oldGroup.save();
+                            }
+                        }
+                        
+                        /* Assign the member to the new group */
+                        member.groupId = group._id;
+                        member.timestamps.modified = new Date();
+                        await member.save();
+                    }
+
+                    /* Add this new member to the group members */
+                    group.members.push(member._id);
+                    newMembers.set(member._id.toString(), true);
                 }
-            });
+            }
+        
+        /* Remove the membership of the old members */
+        for (let memberId of oldMembers) {
+            /* Check if this old member is a recurring member */
+            if (!newMembers.has(memberId.toString())) {
+                const member = await Contact.findById(memberId);
+                if (member) {
+                    member.groupId = undefined;
+                    member.timestamps.modified = new Date();
+                    await member.save();
+                }
+            }
         }
 
         /* Save the amended group to the database */
         await group.save();
         res.json(new OKSuccess("Group successfully amended"));
     } catch (err) {
+        console.log(err);
         return next(new InternalServerError("Something has gone wrong"));
     }
 }
@@ -143,19 +164,29 @@ async function createGroup(req: Request, res: Response, next: NextFunction) {
         
         /* Assign the optional values appropriately */
         if (req.body.members)
-            req.body.members.forEach(async (memberId: string) => {
+            for (let memberId of req.body.members) {
                 /* Verify that the contact is in the database */
                 const currentContact = await Contact.findById(memberId); 
 
                 if (currentContact) {
+                    /* Remove the contact from the old group if it belongs to one previously */
+                    if (currentContact.groupId) {
+                        const oldGroup = await Group.findById(currentContact.groupId);
+                        if (oldGroup) {
+                            oldGroup.members = oldGroup.members.filter(oldMemberId => oldMemberId.toString() !== currentContact._id.toString());
+                            await oldGroup.save();
+                        }
+                    }
+
                     /* Add the contact to the group */
                     newGroup.members.push(currentContact._id);
 
                     /* Assign the contact to the group */
                     currentContact.groupId = newGroup._id;
+                    currentContact.timestamps.modified = new Date();
                     await currentContact.save();
                 }
-            });
+            }
 
         /* Save the new group to the database */
         await newGroup.save();
@@ -206,14 +237,13 @@ async function deleteGroup(req: Request, res: Response, next: NextFunction) {
         }
 
         /* Remove the membership of this group from any contact if there is */
-        if (group.members) {
-            group.members.forEach(async (memberId) => {
-                const member = await Contact.findById(memberId);
-                if (member) {
-                    member.groupId = undefined;
-                    await member.save();
-                }
-            });
+        for (let memberId of group.members) {
+            const member = await Contact.findById(memberId);
+            if (member) {
+                member.groupId = undefined;
+                member.timestamps.modified = new Date();
+                await member.save();
+            }
         }
 
         /* Delete the group */

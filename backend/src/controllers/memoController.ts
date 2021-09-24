@@ -33,10 +33,9 @@ async function amendMemoDetails(req: Request, res: Response, next: NextFunction)
 
         /* Validate and sanitise the required inputs */
         await body("id").isMongoId().run(req);
+        await body("title").isAscii().trim().run(req);
 
         /* Validate and sanitise the optional inputs */
-        if (req.body.title)
-            await body("title").isAscii().trim().run(req);
         if (req.body.notes)
             await body("notes").isAscii().trim().run(req);
 
@@ -59,10 +58,8 @@ async function amendMemoDetails(req: Request, res: Response, next: NextFunction)
         }
 
         /* Update each field of the memo if there is any amendment */
-        if (req.body.title)
-            memo.title = req.body.title;
-        if (req.body.notes)
-            memo.notes = req.body.notes;
+        memo.title = req.body.title;
+        memo.notes = req.body.notes ? req.body.notes : undefined;
 
         /* Update the modified timestamp */
         memo.timestamps.modified = new Date();

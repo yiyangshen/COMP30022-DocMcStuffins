@@ -14,9 +14,9 @@ import {
 /* Amends the given contact's details;
  * requires, in the request body:
  *   - id: ObjectId
- *   - firstName?: string
+ *   - firstName: string
  *   - middleName?: string
- *   - lastName?: string
+ *   - lastName: string
  *   - groupId?: ObjectId
  *   - gender?: string
  *   - dateOfBirth?: Date
@@ -43,14 +43,12 @@ async function amendContactDetails(req: Request, res: Response, next: NextFuncti
         
         /* Validate and sanitise the required inputs */
         await body("id").isMongoId().run(req);
+        await body("firstName").isAlpha().trim().run(req);
+        await body("lastName").isAlpha().trim().run(req);
         
         /* Validate and sanitise the optional inputs */
-        if (req.body.firstName)
-            await body("firstName").isAlpha().trim().run(req);
         if (req.body.middleName)
             await body("middleName").isAlpha().trim().run(req);
-        if (req.body.lastName)
-            await body("lastName").isAlpha().trim().run(req);
         if (req.body.groupId)
             await body("groupId").isMongoId().run(req);
         if (req.body.gender)
@@ -92,51 +90,42 @@ async function amendContactDetails(req: Request, res: Response, next: NextFuncti
             return next(new ForbiddenError("Contact to amend does not belong to the currently-authenticated user"));
         }
 
-        /* Update each field of the contact if there is any amendment */
-        if (req.body.firstName)
-            contact.name.first = req.body.firstName;
-        if (req.body.middleName)
-            contact.name.middle = req.body.middleName;
-        if (req.body.lastName)
-            contact.name.last = req.body.lastName;
-        if (req.body.groupId) {
-            /* Check if the contact already belongs to a group */
-            if (contact.groupId) {
-                const oldGroup = await Group.findById(contact.groupId);
+        /* Update the required fields of the contact */
+        contact.name.first = req.body.firstName;
+        contact.name.last = req.body.lastName;
 
-                /* Remove the membership of the current group */
-                if (oldGroup) {
-                    oldGroup.members = oldGroup.members.filter(memberId => memberId.toString() !== contact._id.toString());
-                    await oldGroup.save();
-                }
+        /* Update the optional fields of the contact */
+        contact.name.middle = req.body.middleName ? req.body.middleName : undefined;
+        contact.gender = req.body.gender ? req.body.gender : undefined;
+        contact.dateOfBirth = req.body.DateOfBirth ? new Date(req.body.dateOfBirth) : undefined;
+        contact.lastMet = req.body.lastMet ? new Date(req.body.lastMet) : undefined;
+        contact.phoneNumber = req.body.phoneNumber ? req.body.phoneNumber : undefined;
+        contact.email = req.body.email ? req.body.email.toLowerCase() : undefined;
+        contact.photo = req.body.photo ? req.body.photo : undefined;
+        contact.relationship = req.body.relationship ? req.body.relationship : undefined;
+        contact.additionalNotes = req.body.additionalNotes ? req.body.additionalNotes : undefined;
+
+        /* Check for any amendment in the group membership */
+        if (req.body.groupId?.toString() !== contact.groupId?.toString()) {
+            /* Remove the membership of the current group */
+            const oldGroup = contact.groupId ? await Group.findById(contact.groupId) : undefined;
+            if (oldGroup) {
+                oldGroup.members = oldGroup.members.filter(memberId => memberId.toString() !== contact._id.toString());
+                await oldGroup.save();
             }
 
-            /* Assign the new group to the contact */
-            const newGroup = await Group.findById(req.body.groupId);
+            /* Assign the new group to the contact if it exists */
+            const newGroup = req.body.groupId ? await Group.findById(req.body.groupId) : undefined;
             if (newGroup) {
                 contact.groupId = newGroup._id;
 
                 /* Update the new group membership to include this contact */
                 newGroup.members.push(contact._id);
                 await newGroup.save();
+            } else {
+                contact.groupId = undefined;
             }
         }
-        if (req.body.gender)
-            contact.gender = req.body.gender;
-        if (req.body.dateOfBirth)
-            contact.dateOfBirth = new Date(req.body.dateOfBirth);
-        if (req.body.lastMet)
-            contact.lastMet = new Date(req.body.lastMet);
-        if (req.body.phoneNumber)
-            contact.phoneNumber = req.body.phoneNumber;
-        if (req.body.email)
-            contact.email = req.body.email.toLowerCase();
-        if (req.body.photo)
-            contact.photo = req.body.photo;
-        if (req.body.relationship)
-            contact.relationship = req.body.relationship;
-        if (req.body.additionalNotes)
-            contact.additionalNotes = req.body.additionalNotes;
         
         /* Update the modified timestamp */
         contact.timestamps.modified = new Date();
