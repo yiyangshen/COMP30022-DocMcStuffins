@@ -1,6 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { agent } from "supertest";
-import app from "../src/config/serverConfig";
+import app from "../../src/config/serverConfig";
 
 const BASE_URL = "/api/errorHandling";
 

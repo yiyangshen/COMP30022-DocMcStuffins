@@ -1,10 +1,10 @@
 /* Import the required types and libraries */
 import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
 import { agent } from "supertest";
-import app from "../../src/config/serverConfig";
+import app from "../../../src/config/serverConfig";
 
 /* Import models */
-import { User, Contact } from "../../src/models/index";
+import { User, Contact } from "../../../src/models/index";
 
 const TEST_USER_EMAIL_1 = "phil@gaming.comt"; 
 const TEST_USER_EMAIL_2 = TEST_USER_EMAIL_1 + "1"; 
@@ -79,43 +79,6 @@ beforeAll(async () => {
     await newContact2.save();
 });
 
-describe('Contact count', () => {
-    const userAgent = agent(app);
-
-    test('1. Get a contact count without being authorised', async () => {
-        await userAgent.get(`/api/user/logout`);
-        await userAgent
-            .get(`${BASE_URL}/count`)
-            .then((res: any) => {
-                expect(res.body.status).toEqual(401);
-            })
-    });
-
-    test('2. Get contact count of an authenticated user', async () => {
-        const req: any = {
-            email: TEST_USER_EMAIL_1,
-            password: TEST_USER_PASSWORD
-        };
-
-        await userAgent
-            .patch(`/api/user/login`)
-            .send(req)
-            .then((res: any) => {
-                expect(res.body.status).toEqual(200);
-            })
-
-        await userAgent
-            .get(`${BASE_URL}/count`)
-            .then((res: any) => {
-                expect(res.body.status).toEqual(200);
-                expect(res.body.data).toEqual(2);
-            })
-        await userAgent.get(`/api/user/logout`);
-    });
-
-
-});
-
 describe('Contacts lists (getContacts)', () => {
     const userAgent = agent(app);
 
@@ -176,11 +139,11 @@ describe('Contacts lists (getContacts)', () => {
             })
         await userAgent.get(`/api/user/logout`);
     })
-})
+});
 
 afterAll(async () => {
     const USER_ID = (await User.findOne({ email: TEST_USER_EMAIL_1}))!._id;
     await Contact.deleteMany({ userId: USER_ID });
     await User.deleteOne({ email: TEST_USER_EMAIL_1 });
     await User.deleteOne({ email: TEST_USER_EMAIL_2 });
-})
+});

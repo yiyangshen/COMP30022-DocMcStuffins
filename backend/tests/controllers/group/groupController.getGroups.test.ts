@@ -1,10 +1,10 @@
 /* Import the required types and libraries */
 import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
 import { agent } from "supertest";
-import app from "../../src/config/serverConfig";
+import app from "../../../src/config/serverConfig";
 
 /* Import models */
-import { User, Contact, Group } from "../../src/models/index";
+import { User, Contact, Group } from "../../../src/models/index";
 
 const TEST_USER_EMAIL = "phil@gaming.comm";
 const TEST_USER_FIRST_NAME = "Philip";
@@ -83,40 +83,6 @@ beforeAll(async () => {
     await newGroup2.save();
 });
 
-describe('Group count', () => {
-    const userAgent = agent(app);
-
-    test('1. Get a group count without being authorised', async () => {
-        await userAgent
-            .get(`${BASE_URL}/count`)
-            .then((res: any) => {
-                expect(res.body.status).toEqual(401);
-            })
-    });
-
-    test('2. Get group count of an authenticated user', async () => {
-        const req: any = {
-            email: TEST_USER_EMAIL,
-            password: TEST_USER_PASSWORD
-        };
-
-        await userAgent
-            .patch(`/api/user/login`)
-            .send(req)
-            .then((res: any) => {
-                expect(res.body.status).toEqual(200);
-            })
-            
-        await userAgent
-            .get(`${BASE_URL}/count`)
-            .then((res: any) => {
-                expect(res.body.status).toEqual(200);
-                expect(res.body.data).toBe(2);
-            })
-        await userAgent.get(`/api/user/logout`);
-    });
-});
-
 describe('Group lists (getGroups)', () => {
     const userAgent = agent(app);
 
@@ -153,11 +119,11 @@ describe('Group lists (getGroups)', () => {
             })
         await userAgent.get(`/api/user/logout`);
     })
-})
+});
 
 afterAll(async () => {
     const USER_ID = (await User.findOne({ email: TEST_USER_EMAIL}))!._id;
     await User.deleteOne({ email: TEST_USER_EMAIL });
     await Contact.deleteMany({userId:USER_ID});
     await Group.deleteMany({userId:USER_ID});
-})
+});
