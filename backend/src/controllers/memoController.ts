@@ -1,6 +1,7 @@
 /* Import required libraries and types */
 import { Request, Response, NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
+import { ObjectId, Types, isValidObjectId } from "mongoose";
 
 /* Import required models */
 import { Memo, IUser } from "../models";
@@ -174,12 +175,42 @@ async function deleteMemo(req: Request, res: Response, next: NextFunction) {
  *   - 200 OK if query is successful
  *   - 400 Bad Request if the request body is malformed
  *   - 401 Unauthorized if the requester is not authenticated
- *   - 403 Forbidden if the group to return details on does not belong to the currently-authenticated user
+ *   - 403 Forbidden if the memo to return details on does not belong to the currently-authenticated user
  *   - 404 Not Found if the given memo ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
 async function getMemoDetails(req: Request, res: Response, next: NextFunction) {
+    // requester is not authenticated
+    if(req.isUnauthenticated()){
+        return next(new UnauthorizedError("Requester is not authenticated"));
+    }
 
+    try {
+        // verify that the parameter is valid
+        if (!(isValidObjectId(req.params.id))) {
+            return next(new BadRequestError("Request body is malformed"));
+        }
+        
+        const memo = await Memo.findOne({_id:req.params.id})
+
+        // verify that memo exist 
+        if(!memo){
+            return next(new NotFoundError("Contact does not exist"));
+        }
+
+        // verify that the memo  is under the authenticated user
+        if(memo.userId.toString() !== (req.user as IUser)._id.toString()){
+            return next(new ForbiddenError("Contact does not belong to the user"));
+        }
+
+        // update recently-viewed timestamp
+        memo.timestamps.viewed = new Date();
+        await memo.save();
+
+        return res.json(new OKSuccess(memo)); 
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Returns the currently-authenticated user's memos, along with their representative details;

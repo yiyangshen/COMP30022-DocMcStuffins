@@ -24,9 +24,9 @@ const TEST_CONTACT_GENDER_2 = "Male";
 const TEST_CONTACT_DATE_CREATED_2 = new Date("3/1/2021");
 const TEST_CONTACT_DATE_VIEWED_2 = new Date();
 
-const BASE_URL = "/api/contacts";
+const BASE_URL = "/api/contacts/count";
 
-describe('Contacts lists (getContacts)', () => {
+describe('Contact count', () => {
     beforeAll(async () => {
         // Register new users for testing
         // user with contact
@@ -79,10 +79,10 @@ describe('Contacts lists (getContacts)', () => {
         await newContact1.save();
         await newContact2.save();
     });
-
+    
     const userAgent = agent(app);
 
-    test('1. Get contacts list without being authenticated', async () => {
+    test('1. Get a contact count without being authorised', async () => {
         await userAgent.get(`/api/user/logout`);
         await userAgent
             .get(`${BASE_URL}`)
@@ -91,7 +91,7 @@ describe('Contacts lists (getContacts)', () => {
             })
     });
 
-    test('2. Get lists of contacts of an authenticated user', async () => {
+    test('2. Get contact count of an authenticated user', async () => {
         const req: any = {
             email: TEST_USER_EMAIL_1,
             password: TEST_USER_PASSWORD
@@ -108,34 +108,7 @@ describe('Contacts lists (getContacts)', () => {
             .get(`${BASE_URL}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
-                console.log(res.body.data);
-                // confirming contacts
-                expect(res.body.data[0].name.first).toBe(TEST_CONTACT_FIRST_NAME_1);
-                expect(res.body.data[0].name.last).toBe(TEST_CONTACT_LAST_NAME_1);
-
-                expect(res.body.data[1].name.first).toBe(TEST_CONTACT_FIRST_NAME_2);
-                expect(res.body.data[1].name.last).toBe(TEST_CONTACT_LAST_NAME_2);
-            })
-        await userAgent.get(`/api/user/logout`);
-    });
-
-    test('3. Get contact list of user with 0 contacts', async () => {
-        const req: any = {
-            email: TEST_USER_EMAIL_2,
-            password: TEST_USER_PASSWORD
-        };
-
-        await userAgent
-            .patch(`/api/user/login`)
-            .send(req)
-            .then((res: any) => {
-                expect(res.body.status).toEqual(200);
-            })
-
-        await userAgent
-            .get(`${BASE_URL}`)
-            .then((res: any) => {
-                expect(res.status).toEqual(204);
+                expect(res.body.data).toEqual(2);
             })
         await userAgent.get(`/api/user/logout`);
     });
@@ -146,5 +119,6 @@ describe('Contacts lists (getContacts)', () => {
         
         /* Delete test contacts */
         await Contact.deleteMany();
-    });
-})
+    })
+
+});
