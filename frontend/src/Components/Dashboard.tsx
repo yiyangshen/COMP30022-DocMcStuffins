@@ -49,13 +49,23 @@ class DashB extends React.Component{
                             <h3>Memos</h3>
                             {memoList !== undefined &&
                             memoList.length > 0 ?
-                            <div className = "MemoPage">
-                                <img className = "MemoPng" src={Memo} alt="logo" onClick={() => history.push(`/memos/id`)}/>
-                                <h2 className ="MemoText">Groceries</h2>
+                            <div>
+                                {memoList.map((memos, i) => ( //change contacts to memos
+                                    <div key={i}> // dont change i
+                                    </div>
+                                ))}{" "}
                             </div>
-                            :<div className = "MemoPage"> 
-                                <img className = "AddMoreMemo" src={MemoMore} alt="logo" onClick={() => history.push(`/memos/create`)}/>
-                                <h2 className ="MemoText">Add More...</h2>
+                            :
+                            <div className = "MemoPages">
+                                <div className = "MemoPage">
+                                    <img className = "MemoPng" src={Memo} alt="logo" onClick={() => history.push(`/memos/id`)}/>
+                                    <h2 className ="MemoText">Groceries</h2>
+                                </div>
+                                
+                                <div className = "MemoPage"> 
+                                    <img className = "AddMoreMemo" src={MemoMore} alt="logo" onClick={() => history.push(`/memos/create`)}/>
+                                    <h2 className ="MemoText">Add More...</h2>
+                                </div>
                             </div>
                             }
                         </div>
