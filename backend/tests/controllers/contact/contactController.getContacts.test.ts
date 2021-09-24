@@ -79,7 +79,7 @@ describe('Contacts lists (getContacts)', () => {
         await newContact1.save();
         await newContact2.save();
     });
-    
+
     const userAgent = agent(app);
 
     test('1. Get contacts list without being authenticated', async () => {
@@ -89,7 +89,7 @@ describe('Contacts lists (getContacts)', () => {
             .then((res: any) => {
                 expect(res.body.status).toEqual(401);
             })
-    })
+    });
 
     test('2. Get lists of contacts of an authenticated user', async () => {
         const req: any = {
@@ -117,7 +117,7 @@ describe('Contacts lists (getContacts)', () => {
                 expect(res.body.data[1].name.last).toBe(TEST_CONTACT_LAST_NAME_2);
             })
         await userAgent.get(`/api/user/logout`);
-    })
+    });
 
     test('3. Get contact list of user with 0 contacts', async () => {
         const req: any = {
@@ -138,7 +138,7 @@ describe('Contacts lists (getContacts)', () => {
                 expect(res.status).toEqual(204);
             })
         await userAgent.get(`/api/user/logout`);
-    })
+    });
 
     afterAll(async () => {
         /* Delete test user */
@@ -146,5 +146,5 @@ describe('Contacts lists (getContacts)', () => {
         
         /* Delete test contacts */
         await Contact.deleteMany();
-    })
+    });
 })

@@ -118,7 +118,7 @@ describe('Group lists (getGroups)', () => {
                 expect(res.body.data[1].name).toBe(TEST_GROUP_NAME_2);
             })
         await userAgent.get(`/api/user/logout`);
-    })
+    });
 
     afterAll(async () => {
         /* Deauthenticate user agent */
@@ -134,4 +134,4 @@ describe('Group lists (getGroups)', () => {
         /* Delete test groups */
         await Group.deleteMany();
     });
-})
+});

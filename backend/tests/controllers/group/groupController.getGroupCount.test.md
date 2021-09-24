@@ -1,0 +1,5 @@
+## Tests
+| No  | Feature  | Description                                   | Steps                                                                                                    | Input | Expected Results         |
+| --- | -------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ----- | ------------------------ |
+| 1   | Required | Get a group count without being logged-in     | n/a                                                                                                      | n/a   | 401 Unauthorized         |
+| 2   | Required | Get the group count of the authenticated user | <ol><li>Login</li><li>Add `x` groups (if there aren't any already)</li> <li>Call getGroupCount</li></ol> | n/a   | 200 OK, with `x` in data |
