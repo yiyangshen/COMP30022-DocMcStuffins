@@ -1,5 +1,6 @@
 /* Import the required libraries and types */
 import React from "react";
+import history from "../history";
 
 /* Import the required libraries and types */
 import { getContacts } from "../api/contactApi";
@@ -18,24 +19,21 @@ class ViewContacts extends React.Component {
     async componentDidMount() {
         getContacts().then(
             (response) => {
-                var data = response.data.items;
+                var data = response.data.data;
                 this.setState({ contactsList: data, isLoaded: true });
             },
-            //reponse self-initialised
-            //data is inside nested json
-            //return reponse, type json
             (error) => {
-                this.setState({ isLoaded: true, error }); //order does not matter, saying isloaded = true, error = error
+                this.setState({ isLoaded: true, error });
                 console.log(error);
             }
         );
     }
 
     render() {
-        const { error, isLoaded, contactsList } = this.state; //defining constants 
+        const { error, isLoaded, contactsList } = this.state;
 
         if (error === true) {
-            return <h3 className="error">No Order Present</h3>;
+            return <h3 className="error">No Contact Present</h3>;
         } else if (isLoaded === false) {
             return <h3 className="error">Loading...</h3>;
         } else {
@@ -44,6 +42,13 @@ class ViewContacts extends React.Component {
                     <div className="title">
                         <h2>
                             <b>Contacts</b>
+                            <button
+                                className="base-button top-right"
+                                type="button"
+                                onClick={() => history.push(`/contacts/new`)}
+                            >
+                                <h2>New Contact</h2>
+                            </button>
                         </h2>
                     </div>
 
@@ -56,15 +61,26 @@ class ViewContacts extends React.Component {
                             </tr>
                         </thead>
                         {contactsList !== undefined &&
-                        contactsList.length > 0 ? ( // ? = if, : = else
+                        contactsList.length > 0 ? (
                             <div>
-                                {contactsList.map((contacts, i) => ( //change contacts to memos
-                                    <div key={i}> // dont change i
+                                {contactsList.map((contact, i) => (
+                                    <div key={i}>
+                                        {" "}
                                         <tbody>
-                                            <tr className="table-contents">
-                                                <td>{contacts.name}</td>
-                                                <td>{contacts.phoneNumber}</td>
-                                                <td>{contacts.email}</td>
+                                            <tr
+                                                className="table-contents"
+                                                onClick={() =>
+                                                    history.push(
+                                                        `/contacts/details/?id=${contact.userId}`
+                                                    )
+                                                }
+                                            >
+                                                <td>
+                                                    {contact.name.first}{" "}
+                                                    {contact.name.last}
+                                                </td>
+                                                <td>{contact.phoneNumber}</td>
+                                                <td>{contact.email}</td>
                                             </tr>
                                         </tbody>
                                     </div>
