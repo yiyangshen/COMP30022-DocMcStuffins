@@ -12,6 +12,7 @@ import SignIn from "./components/signin";
 import SignUp from "./components/signup";
 import ViewContacts from "./components/viewContacts";
 import Dashboard from "./components/dashboard";
+import ViewGroups from "./components/viewGroups";
 
 /* Enable credentials to be shared among pages */
 axios.defaults.withCredentials = true;
@@ -48,7 +49,7 @@ function App() {
                         />
                         <Route exact path="/contacts/add" />
 
-                        <Route exact path="/groups" />
+                        <Route exact path="/groups" component={ViewGroups} />
                         <Route exact path="/groups/add" />
 
                         <Route exact path="/memos" />
