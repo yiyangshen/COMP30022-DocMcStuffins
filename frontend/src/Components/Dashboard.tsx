@@ -62,7 +62,6 @@ class DashB extends React.Component {
                                 {memoList.map((memos, i) => (
                                     <div key={i}>
                                         {" "}
-                                        // dont change i
                                         <div className="MemoPage">
                                             <img
                                                 className="MemoPng"
@@ -132,7 +131,6 @@ class DashB extends React.Component {
                                     {memoList.map((group, i) => (
                                         <div key={i}>
                                             {" "}
-                                            // dont change i
                                             <span
                                                 className="dot"
                                                 onClick={() =>
