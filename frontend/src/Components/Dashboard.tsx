@@ -10,6 +10,7 @@ import Contact from "../img/Profile.svg";
 import Group from "../img/3 User.svg";
 import { getRecentMemos } from "../api/memoApi";
 import { IGroup, IMemo } from "../interfaces";
+import { getGroups } from "../api/groupApi";
 
 
 class DashB extends React.Component{
@@ -32,9 +33,19 @@ class DashB extends React.Component{
                 console.log(error);
             }
         );
+        getGroups().then(
+            (response) => {
+                var data = response.data.items;
+                this.setState({ recentGroupList: data, isLoaded: true });
+            },
+            (error) => {
+                this.setState({ isLoaded: true, error });
+                console.log(error);
+            }
+        );
     }
     render() {
-        const { error, isLoaded, memoList } = this.state; //defining constants 
+        const { error, isLoaded, memoList, recentGroupList } = this.state; //defining constants 
 
         if (error === true) {
             return <h3 className="error">No Order Present</h3>;
@@ -89,12 +100,29 @@ class DashB extends React.Component{
                             
                             <div className = "RecentGroups">
                                 <h3>Recent Groups</h3>
-                                <span className ="dot" onClick={() => history.push(`/groups/id`)}>
+                                {recentGroupList !== undefined &&
+                                recentGroupList.length > 0 ?
+                                <div>
+                                    {memoList.map((group, i) => (
+                                        <div key={i}> // dont change i
+                                        <span className ="dot" onClick={() => history.push(`/groups/id`)}>
+                                            <div className= "RecentGroupText">
+                                                <h2>Family</h2>
+                                                <h1>5</h1>
+                                            </div>
+                                        </span>
+                                        </div>
+                                    ))}{" "}
+                                </div>
+                                :
+                                null
+                                }
+                                {/* <span className ="dot" onClick={() => history.push(`/groups/id`)}>
                                     <div className= "RecentGroupText">
                                         <h2>Family</h2>
                                         <h1>5</h1>
                                     </div>
-                                </span>
+                                </span> */}
                                 <span className ="dotMore" onClick={() => history.push(`/groups/create`)}>
                                     <h1>Add more...</h1>
                                 </span>
