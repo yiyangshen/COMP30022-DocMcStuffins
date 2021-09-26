@@ -4,15 +4,13 @@ import { agent } from "supertest";
 import app from "../../../src/config/serverConfig";
 
 /* Import models */
-import { User, Contact, Group } from "../../../src/models/index";
+import { User, Contact } from "../../../src/models/index";
 
-const TEST_USER_EMAIL = "phil@gaming.comm";
+const TEST_USER_EMAIL_1 = "phil@gaming.comt"; 
+const TEST_USER_EMAIL_2 = TEST_USER_EMAIL_1 + "1"; 
 const TEST_USER_FIRST_NAME = "Philip";
 const TEST_USER_LAST_NAME = "Holes";
 const TEST_USER_PASSWORD = "phillycheese";
-
-const TEST_GROUP_NAME_1 = "Doc McStuffins";
-const TEST_GROUP_NAME_2 = "Prok Belly";
 
 const TEST_CONTACT_FIRST_NAME_1 = "Adam";
 const TEST_CONTACT_LAST_NAME_1 = "Smithy";
@@ -26,24 +24,36 @@ const TEST_CONTACT_GENDER_2 = "Male";
 const TEST_CONTACT_DATE_CREATED_2 = new Date("3/1/2021");
 const TEST_CONTACT_DATE_VIEWED_2 = new Date();
 
-const BASE_URL = "/api/groups";
+const BASE_URL = "/api/contacts";
 
-describe('Group lists (getGroups)', () => {
+describe('Contacts lists (getContacts)', () => {
     beforeAll(async () => {
-        // Register new user
-        const newUser = new User({
-            email: TEST_USER_EMAIL,
+        // Register new users for testing
+        // user with contact
+        const newUser1 = new User({
+            email: TEST_USER_EMAIL_1,
             password: TEST_USER_PASSWORD,
             name: {
                 first: TEST_USER_FIRST_NAME,
                 last: TEST_USER_LAST_NAME
             }
         });
-        await newUser.save();
+        await newUser1.save(); 
     
-        // Register new Contacts
+        // user with no contact
+        const newUser2 = new User({
+            email: TEST_USER_EMAIL_2,
+            password: TEST_USER_PASSWORD,
+            name: {
+                first: TEST_USER_FIRST_NAME,
+                last: TEST_USER_LAST_NAME
+            }
+        });
+        await newUser2.save();
+        
+        // Add new contacts to newUser1 for testing 
         const newContact1 = new Contact({
-            userId : newUser._id,
+            userId : newUser1._id,
             name : {
                 first: TEST_CONTACT_FIRST_NAME_1,
                 last: TEST_CONTACT_LAST_NAME_1
@@ -55,7 +65,7 @@ describe('Group lists (getGroups)', () => {
             }
         })
         const newContact2 = new Contact({
-            userId : newUser._id,
+            userId : newUser1._id,
             name : {
                 first: TEST_CONTACT_FIRST_NAME_2,
                 last: TEST_CONTACT_LAST_NAME_2
@@ -68,25 +78,11 @@ describe('Group lists (getGroups)', () => {
         })
         await newContact1.save();
         await newContact2.save();
-    
-        // Register new groups and assign contacts to them
-        const newGroup1 = new Group({
-            userId: newUser._id,
-            name: TEST_GROUP_NAME_1,
-            members : [newContact1._id]
-        })
-        const newGroup2 = new Group({
-            userId: newUser._id,
-            name: TEST_GROUP_NAME_2,
-            members : [newContact2._id]
-        })
-        await newGroup1.save();
-        await newGroup2.save();
     });
 
     const userAgent = agent(app);
 
-    test('1. Get group list without being logged-in', async () => {
+    test('1. Get contacts list without being authenticated', async () => {
         await userAgent.get(`/api/user/logout`);
         await userAgent
             .get(`${BASE_URL}`)
@@ -95,9 +91,9 @@ describe('Group lists (getGroups)', () => {
             })
     });
 
-    test('2. Get group list of an authenticated user', async () => {
+    test('2. Get lists of contacts of an authenticated user', async () => {
         const req: any = {
-            email: TEST_USER_EMAIL,
+            email: TEST_USER_EMAIL_1,
             password: TEST_USER_PASSWORD
         };
 
@@ -113,25 +109,42 @@ describe('Group lists (getGroups)', () => {
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
                 console.log(res.body.data);
-                // confirming groups
-                expect(res.body.data[0].name).toBe(TEST_GROUP_NAME_1);
-                expect(res.body.data[1].name).toBe(TEST_GROUP_NAME_2);
+                // confirming contacts
+                expect(res.body.data[0].name.first).toBe(TEST_CONTACT_FIRST_NAME_1);
+                expect(res.body.data[0].name.last).toBe(TEST_CONTACT_LAST_NAME_1);
+
+                expect(res.body.data[1].name.first).toBe(TEST_CONTACT_FIRST_NAME_2);
+                expect(res.body.data[1].name.last).toBe(TEST_CONTACT_LAST_NAME_2);
             })
         await userAgent.get(`/api/user/logout`);
-    })
+    });
+
+    test('3. Get contact list of user with 0 contacts', async () => {
+        const req: any = {
+            email: TEST_USER_EMAIL_2,
+            password: TEST_USER_PASSWORD
+        };
+
+        await userAgent
+            .patch(`/api/user/login`)
+            .send(req)
+            .then((res: any) => {
+                expect(res.body.status).toEqual(200);
+            })
+
+        await userAgent
+            .get(`${BASE_URL}`)
+            .then((res: any) => {
+                expect(res.status).toEqual(204);
+            })
+        await userAgent.get(`/api/user/logout`);
+    });
 
     afterAll(async () => {
-        /* Deauthenticate user agent */
-        await userAgent.patch(`/api/user/logout`);
-        
         /* Delete test user */
         await User.deleteMany();
-
+        
         /* Delete test contacts */
         await Contact.deleteMany();
-
-        
-        /* Delete test groups */
-        await Group.deleteMany();
     });
 })

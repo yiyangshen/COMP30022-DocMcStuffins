@@ -12,7 +12,7 @@
 ```typescript
 {
     id: ObjectId,
-    name?: string,
+    name: string,
     members?: [ObjectId]
 }
 ```

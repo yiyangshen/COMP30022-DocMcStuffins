@@ -26,9 +26,9 @@ const TEST_CONTACT_GENDER_2 = "Male";
 const TEST_CONTACT_DATE_CREATED_2 = new Date("3/1/2021");
 const TEST_CONTACT_DATE_VIEWED_2 = new Date();
 
-const BASE_URL = "/api/groups/count";
+const BASE_URL = "/api/groups";
 
-describe('Group count', () => {
+describe('Group lists (getGroups)', () => {
     beforeAll(async () => {
         // Register new user
         const newUser = new User({
@@ -83,9 +83,11 @@ describe('Group count', () => {
         await newGroup1.save();
         await newGroup2.save();
     });
+
     const userAgent = agent(app);
 
-    test('1. Get a group count without being authorised', async () => {
+    test('1. Get group list without being logged-in', async () => {
+        await userAgent.get(`/api/user/logout`);
         await userAgent
             .get(`${BASE_URL}`)
             .then((res: any) => {
@@ -93,7 +95,7 @@ describe('Group count', () => {
             })
     });
 
-    test('2. Get group count of an authenticated user', async () => {
+    test('2. Get group list of an authenticated user', async () => {
         const req: any = {
             email: TEST_USER_EMAIL,
             password: TEST_USER_PASSWORD
@@ -105,12 +107,15 @@ describe('Group count', () => {
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
             })
-            
+
         await userAgent
             .get(`${BASE_URL}`)
             .then((res: any) => {
                 expect(res.body.status).toEqual(200);
-                expect(res.body.data).toBe(2);
+                console.log(res.body.data);
+                // confirming groups
+                expect(res.body.data[0].name).toBe(TEST_GROUP_NAME_1);
+                expect(res.body.data[1].name).toBe(TEST_GROUP_NAME_2);
             })
         await userAgent.get(`/api/user/logout`);
     });
