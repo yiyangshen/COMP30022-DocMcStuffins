@@ -21,15 +21,18 @@ class ViewContacts extends React.Component {
                 var data = response.data.items;
                 this.setState({ contactsList: data, isLoaded: true });
             },
+            //reponse self-initialised
+            //data is inside nested json
+            //return reponse, type json
             (error) => {
-                this.setState({ isLoaded: true, error });
+                this.setState({ isLoaded: true, error }); //order does not matter, saying isloaded = true, error = error
                 console.log(error);
             }
         );
     }
 
     render() {
-        const { error, isLoaded, contactsList } = this.state;
+        const { error, isLoaded, contactsList } = this.state; //defining constants 
 
         if (error === true) {
             return <h3 className="error">No Order Present</h3>;
@@ -53,10 +56,10 @@ class ViewContacts extends React.Component {
                             </tr>
                         </thead>
                         {contactsList !== undefined &&
-                        contactsList.length > 0 ? (
+                        contactsList.length > 0 ? ( // ? = if, : = else
                             <div>
-                                {contactsList.map((contacts, i) => (
-                                    <div key={i}>
+                                {contactsList.map((contacts, i) => ( //change contacts to memos
+                                    <div key={i}> // dont change i
                                         <tbody>
                                             <tr className="table-contents">
                                                 <td>{contacts.name}</td>
