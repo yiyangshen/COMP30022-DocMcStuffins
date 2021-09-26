@@ -3,7 +3,7 @@ import React from "react";
 import history from "../history";
 
 /* Import components */
-import "../css/Dashboard.css";
+import "../css/dashboard.css";
 import Memo from "../img/Group 5.svg";
 import MemoMore from "../img/RecentMemoMore.svg";
 import Contact from "../img/Profile.svg";
@@ -12,8 +12,7 @@ import { getRecentMemos } from "../api/memoApi";
 import { IGroup, IMemo } from "../interfaces";
 import { getGroups } from "../api/groupApi";
 
-
-class DashB extends React.Component{
+class DashB extends React.Component {
     /* Declare states */
     state = {
         error: null,
@@ -45,98 +44,130 @@ class DashB extends React.Component{
         );
     }
     render() {
-        const { error, isLoaded, memoList, recentGroupList } = this.state; //defining constants 
+        const { error, isLoaded, memoList, recentGroupList } = this.state;
 
         if (error === true) {
             return <h3 className="error">No Order Present</h3>;
         } else if (isLoaded === false) {
             return <h3 className="error">Loading...</h3>;
-        } else{
-                return (
-                    <div className="border">
-                        <h1>Yi Yiyang!</h1>
+        } else {
+            return (
+                <div className="border">
+                    <h1>Yi Yiyang!</h1>
 
-                        <div className = "Memos">
-                            <h3>Memos</h3>
-                            {memoList !== undefined &&
-                            memoList.length > 0 ?
+                    <div className="Memos">
+                        <h3>Memos</h3>
+                        {memoList !== undefined && memoList.length > 0 ? (
                             <div>
                                 {memoList.map((memos, i) => (
-                                    <div key={i}> // dont change i
-                                        <div className = "MemoPage">
-                                        <img className = "MemoPng" src={Memo} alt="logo" onClick={() => history.push(`/memos/id`)}/>
-                                        <h2 className ="MemoText">{memos.title}</h2>
-                                    </div>
+                                    <div key={i}>
+                                        {" "}
+                                        // dont change i
+                                        <div className="MemoPage">
+                                            <img
+                                                className="MemoPng"
+                                                src={Memo}
+                                                alt="logo"
+                                                onClick={() =>
+                                                    history.push(`/memos/id`)
+                                                }
+                                            />
+                                            <h2 className="MemoText">
+                                                {memos.title}
+                                            </h2>
+                                        </div>
                                     </div>
                                 ))}{" "}
                             </div>
-                            :
-                             null
-                            }
-                            <div className = "MemoPage">
-                                <img className = "AddMoreMemo" src={MemoMore} alt="logo" onClick={() => history.push(`/memos/create`)}/>
-                                <h2 className ="MemoText">Add More...</h2>
+                        ) : null}
+                        <div className="MemoPage">
+                            <img
+                                className="AddMoreMemo"
+                                src={MemoMore}
+                                alt="logo"
+                                onClick={() => history.push(`/memos/create`)}
+                            />
+                            <h2 className="MemoText">Add More...</h2>
+                        </div>
+                    </div>
+
+                    <div className="box">
+                        <div className="box2">
+                            <div
+                                className="Group"
+                                onClick={() => history.push(`/groups`)}
+                            >
+                                <img
+                                    className="GroupPng"
+                                    src={Group}
+                                    alt="logo"
+                                />
+                                <div className="container">
+                                    <h3>Group</h3>
+                                    <h2>6</h2>
+                                </div>
+                            </div>
+
+                            <div
+                                className="Contacts"
+                                onClick={() => history.push(`/contacts`)}
+                            >
+                                <img
+                                    className="ContactsPng"
+                                    src={Contact}
+                                    alt="logo"
+                                />
+                                <div className="Contactscontainer">
+                                    <h3>Contacts</h3>
+                                    <h2>6</h2>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="box">
-                            <div className="box2">
-                                <div className ="Group" onClick={() => history.push(`/groups`)}>
-                                    <img className = "GroupPng" src={Group} alt="logo"/>
-                                    <div className="container" >
-                                        <h3>Group</h3>
-                                        <h2>6</h2>
-                                    </div>
-                                </div>
-
-                                <div className ="Contacts" onClick={() => history.push(`/contacts`)}>
-                                    <img className = "ContactsPng" src={Contact} alt="logo"/>
-                                    <div  className="Contactscontainer" >
-                                        <h3>Contacts</h3>
-                                        <h2>6</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div className = "RecentGroups">
-                                <h3>Recent Groups</h3>
-                                {recentGroupList !== undefined &&
-                                recentGroupList.length > 0 ?
+                        <div className="RecentGroups">
+                            <h3>Recent Groups</h3>
+                            {recentGroupList !== undefined &&
+                            recentGroupList.length > 0 ? (
                                 <div>
                                     {memoList.map((group, i) => (
-                                        <div key={i}> // dont change i
-                                        <span className ="dot" onClick={() => history.push(`/groups/id`)}>
-                                            <div className= "RecentGroupText">
-                                                <h2>Family</h2>
-                                                <h1>5</h1>
-                                            </div>
-                                        </span>
+                                        <div key={i}>
+                                            {" "}
+                                            // dont change i
+                                            <span
+                                                className="dot"
+                                                onClick={() =>
+                                                    history.push(`/groups/id`)
+                                                }
+                                            >
+                                                <div className="RecentGroupText">
+                                                    <h2>Family</h2>
+                                                    <h1>5</h1>
+                                                </div>
+                                            </span>
                                         </div>
                                     ))}{" "}
                                 </div>
-                                :
-                                null
-                                }
-                                {/* <span className ="dot" onClick={() => history.push(`/groups/id`)}>
+                            ) : null}
+                            {/* <span className ="dot" onClick={() => history.push(`/groups/id`)}>
                                     <div className= "RecentGroupText">
                                         <h2>Family</h2>
                                         <h1>5</h1>
                                     </div>
                                 </span> */}
-                                <span className ="dotMore" onClick={() => history.push(`/groups/create`)}>
-                                    <h1>Add more...</h1>
-                                </span>
-                            </div>
+                            <span
+                                className="dotMore"
+                                onClick={() => history.push(`/groups/create`)}
+                            >
+                                <h1>Add more...</h1>
+                            </span>
                         </div>
-
                     </div>
-                );
-            }
+                </div>
+            );
         }
+    }
 }
 export default DashB;
-
-
 
 // export default function DashB() {
 //     return (

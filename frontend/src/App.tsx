@@ -12,6 +12,7 @@ import SignIn from "./components/signin";
 import SignUp from "./components/signup";
 import ViewContacts from "./components/viewContacts";
 import Dashboard from "./components/dashboard";
+
 /* Enable credentials to be shared among pages */
 axios.defaults.withCredentials = true;
 
@@ -37,7 +38,7 @@ function App() {
 
                     <div>
                         <Nav />
-                        <Route exact path="/dashboard" component = {Dashboard}/>
+                        <Route exact path="/dashboard" component={Dashboard} />
                         <Route exact path="/profile" />
 
                         <Route
