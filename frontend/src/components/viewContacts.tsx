@@ -42,6 +42,13 @@ class ViewContacts extends React.Component {
                     <div className="title">
                         <h2>
                             <b>Contacts</b>
+                            <button
+                                className="base-button top-right"
+                                type="button"
+                                onClick={() => history.push(`/contacts/new`)}
+                            >
+                                <h2>New Contact</h2>
+                            </button>
                         </h2>
                     </div>
 

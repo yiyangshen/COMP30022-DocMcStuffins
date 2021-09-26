@@ -48,13 +48,16 @@ function App() {
                             path="/contacts"
                             component={ViewContacts}
                         />
-                        <Route exact path="/contacts/add" />
+                        <Route exact path="/contacts/new" />
+                        <Route path="/contacts/details" />
 
                         <Route exact path="/groups" component={ViewGroups} />
-                        <Route exact path="/groups/add" />
+                        <Route exact path="/groups/new" />
+                        <Route path="/groups/details" />
 
                         <Route exact path="/memos" component={ViewMemos} />
-                        <Route exact path="/memos/add" />
+                        <Route exact path="/memos/new" />
+                        <Route path="/memos/details" />
                     </div>
                 </Switch>
             </Router>

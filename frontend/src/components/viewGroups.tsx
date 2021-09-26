@@ -43,6 +43,13 @@ class ViewGroups extends React.Component {
                     <div className="title">
                         <h2>
                             <b>Groups</b>
+                            <button
+                                className="base-button top-right"
+                                type="button"
+                                onClick={() => history.push(`/groups/new`)}
+                            >
+                                <h2>New Group</h2>
+                            </button>
                         </h2>
                     </div>
 

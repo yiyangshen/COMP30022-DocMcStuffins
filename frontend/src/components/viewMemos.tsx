@@ -44,6 +44,13 @@ class ViewMemos extends React.Component {
                     <div className="title">
                         <h2>
                             <b>Memos</b>
+                            <button
+                                className="base-button top-right"
+                                type="button"
+                                onClick={() => history.push(`/memos/new`)}
+                            >
+                                <h2>New Memo</h2>
+                            </button>
                         </h2>
                     </div>
 

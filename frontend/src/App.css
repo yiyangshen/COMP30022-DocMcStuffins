@@ -40,6 +40,16 @@ th {
     margin-bottom: 10px;
 }
 
+.title {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 h1 {
     font-family: inter;
     font-size: 24px;
