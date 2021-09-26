@@ -12,9 +12,9 @@
 ```typescript
 {
     id: ObjectId,
-    firstName?: string,
+    firstName: string,
     middleName?: string,
-    lastName?: string,
+    lastName: string,
     groupId?: string,
     gender?: "Male" | "Female" | "Other",
     dateOfBirth?: Date,

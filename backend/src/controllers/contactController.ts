@@ -1,7 +1,7 @@
 /* Import required libraries and types */
 import { Request, Response, NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
-import { ObjectId, Types } from "mongoose";
+import { ObjectId, Types, isValidObjectId } from "mongoose";
 
 /* Import required models */
 import { Contact, Gender, Group, Name, IUser } from "../models";
@@ -15,9 +15,9 @@ import {
 /* Amends the given contact's details;
  * requires, in the request body:
  *   - id: ObjectId
- *   - firstName?: string
+ *   - firstName: string
  *   - middleName?: string
- *   - lastName?: string
+ *   - lastName: string
  *   - groupId?: ObjectId
  *   - gender?: string
  *   - dateOfBirth?: Date
@@ -30,14 +30,113 @@ import {
  * responds with a:
  *   - 200 OK if amendment is successful
  *   - 400 Bad Request if the request body is malformed
- *   - 403 Forbidden if:
- *     - the requester is not authenticated
- *     - the group to amend does not belong to the currently-authenticated user
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 403 Forbidden if the group to amend does not belong to the currently-authenticated user
  *   - 404 Not Found if the given contact ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
 async function amendContactDetails(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("User is not authenticated"));
+        }
+        
+        /* Validate and sanitise the required inputs */
+        await body("id").isMongoId().run(req);
+        await body("firstName").isAlpha().trim().run(req);
+        await body("lastName").isAlpha().trim().run(req);
+        
+        /* Validate and sanitise the optional inputs */
+        if (req.body.middleName)
+            await body("middleName").isAlpha().trim().run(req);
+        if (req.body.groupId)
+            await body("groupId").isMongoId().run(req);
+        if (req.body.gender)
+            await body("gender").isIn([
+            Gender.Male,
+            Gender.Female,
+            Gender.Other
+        ]).run(req);
+        if (req.body.dateOfBirth)
+            await body("dateOfBirth").isRFC3339().run(req);
+        if (req.body.lastMet)
+            await body("lastMet").isRFC3339().run(req);
+        if (req.body.phoneNumber)
+            await body("phoneNumber").isNumeric().trim().run(req);
+        if (req.body.email)
+            await body("email").isEmail().trim().escape().run(req);
+        if (req.body.photo)
+            await body("photo").isBase64().run(req);
+        if (req.body.relationship)
+            await body("relationship").isAscii().trim().run(req);
+        if (req.body.additionalNotes)
+            await body("additionalNotes").isAscii().trim().run(req);
 
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
+        }
+
+        /* Find the specified contact */
+        const contact = await Contact.findById(req.body.id);
+
+        /* Check if the contact exists */
+        if (!contact) {
+            return next(new NotFoundError("No contacts with the given ID exists in the database"));
+        }
+
+        /* Check if the contact belongs to the currently authenticated user */
+        if (contact.userId.toString() !== (req.user as IUser)._id.toString()) {
+            return next(new ForbiddenError("Contact to amend does not belong to the currently-authenticated user"));
+        }
+
+        /* Update the required fields of the contact */
+        contact.name.first = req.body.firstName;
+        contact.name.last = req.body.lastName;
+
+        /* Update the optional fields of the contact */
+        contact.name.middle = req.body.middleName ? req.body.middleName : undefined;
+        contact.gender = req.body.gender ? req.body.gender : undefined;
+        contact.dateOfBirth = req.body.DateOfBirth ? new Date(req.body.dateOfBirth) : undefined;
+        contact.lastMet = req.body.lastMet ? new Date(req.body.lastMet) : undefined;
+        contact.phoneNumber = req.body.phoneNumber ? req.body.phoneNumber : undefined;
+        contact.email = req.body.email ? req.body.email.toLowerCase() : undefined;
+        contact.photo = req.body.photo ? req.body.photo : undefined;
+        contact.relationship = req.body.relationship ? req.body.relationship : undefined;
+        contact.additionalNotes = req.body.additionalNotes ? req.body.additionalNotes : undefined;
+
+        /* Check for any amendment in the group membership */
+        if (req.body.groupId?.toString() !== contact.groupId?.toString()) {
+            /* Remove the membership of the current group */
+            const oldGroup = contact.groupId ? await Group.findById(contact.groupId) : undefined;
+            if (oldGroup) {
+                oldGroup.members = oldGroup.members.filter(memberId => memberId.toString() !== contact._id.toString());
+                await oldGroup.save();
+            }
+
+            /* Assign the new group to the contact if it exists */
+            const newGroup = req.body.groupId ? await Group.findById(req.body.groupId) : undefined;
+            if (newGroup) {
+                contact.groupId = newGroup._id;
+
+                /* Update the new group membership to include this contact */
+                newGroup.members.push(contact._id);
+                await newGroup.save();
+            } else {
+                contact.groupId = undefined;
+            }
+        }
+        
+        /* Update the modified timestamp */
+        contact.timestamps.modified = new Date();
+
+        /* Save the amended contact to the database */
+        await contact.save();
+        res.json(new OKSuccess("Contact successfully amended"));
+    } catch (err) {
+        return next(new InternalServerError("Something has gone wrong"));
+    }
 }
 
 /* Creates a new contact with the given details;
@@ -120,7 +219,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
 
             if (currentGroup) {
                 /* Assign the contact to the group */
-                newContact.groupId = Types.ObjectId(req.body.groupId) as ObjectId;
+                newContact.groupId = currentGroup._id;
                 
                 /* Add the contact to the group */
                 currentGroup.members.push(newContact._id);
@@ -239,7 +338,37 @@ async function getContactCount(req: Request, res: Response, next: NextFunction) 
  *   - 500 Internal Server Error otherwise
  */
 async function getContactDetails(req: Request, res: Response, next: NextFunction) {
+    // requester is not authenticated
+    if(req.isUnauthenticated()){
+        return next(new UnauthorizedError("Requester is not authenticated"));
+    }
 
+    try {
+        // verify that the parameter is valid
+        if (!(isValidObjectId(req.params.id))) {
+            return next(new BadRequestError("Request body is malformed"));
+        }
+        const contact = await Contact.findOne({_id:req.params.id})
+                                     .populate('groupId');
+
+        // verify that contact exist 
+        if(!contact){
+            return next(new NotFoundError("Contact does not exist"));
+        }
+        // verify that the contact id is under the authenticated user
+        if(contact.userId.toString() !== (req.user as IUser)._id.toString()){
+            return next(new ForbiddenError("Contact does not belong to the user"));
+        }
+
+        // update recently-viewed timestamp
+        contact.timestamps.viewed = new Date();
+        await contact.save();
+
+        return res.json(new OKSuccess(contact));
+            
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }
 }
 
 /* Returns the currently-authenticated user's contacts, along with their representative details;

@@ -1,10 +1,10 @@
 /* Import the required types and libraries */
 import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
 import { agent } from "supertest";
-import app from "../../src/config/serverConfig";
+import app from "../../../src/config/serverConfig";
 
 /* Import models */
-import { User, Contact, Group } from "../../src/models/index";
+import { User, Contact, Group } from "../../../src/models/index";
 
 const TEST_USER_EMAIL = "phil@gaming.comm";
 const TEST_USER_FIRST_NAME = "Philip";
@@ -117,47 +117,9 @@ describe('Group count', () => {
     });
 });
 
-describe('Group lists (getGroups)', () => {
-    const userAgent = agent(app);
-
-    test('1. Get group list without being logged-in', async () => {
-        await userAgent.get(`/api/user/logout`);
-        await userAgent
-            .get(`${BASE_URL}`)
-            .then((res: any) => {
-                expect(res.body.status).toEqual(401);
-            })
-    });
-
-    test('2. Get group list of an authenticated user', async () => {
-        const req: any = {
-            email: TEST_USER_EMAIL,
-            password: TEST_USER_PASSWORD
-        };
-
-        await userAgent
-            .patch(`/api/user/login`)
-            .send(req)
-            .then((res: any) => {
-                expect(res.body.status).toEqual(200);
-            })
-
-        await userAgent
-            .get(`${BASE_URL}`)
-            .then((res: any) => {
-                expect(res.body.status).toEqual(200);
-                console.log(res.body.data);
-                // confirming groups
-                expect(res.body.data[0].name).toBe(TEST_GROUP_NAME_1);
-                expect(res.body.data[1].name).toBe(TEST_GROUP_NAME_2);
-            })
-        await userAgent.get(`/api/user/logout`);
-    })
-})
-
 afterAll(async () => {
     const USER_ID = (await User.findOne({ email: TEST_USER_EMAIL}))!._id;
     await User.deleteOne({ email: TEST_USER_EMAIL });
     await Contact.deleteMany({userId:USER_ID});
     await Group.deleteMany({userId:USER_ID});
-})
+});

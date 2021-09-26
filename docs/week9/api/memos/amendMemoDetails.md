@@ -12,7 +12,7 @@
 ```typescript
 {
     id: ObjectId,
-    title?: string,
+    title: string,
     notes?: string
 }
 ```
