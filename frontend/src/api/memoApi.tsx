@@ -13,28 +13,26 @@ switch (process.env.NODE_ENV) {
         break;
 }
 
-
-async function amendMemoDetails(id: String,
-    title?: String,
-    notes?: String) {
+async function amendMemoDetails(id: String, title?: String, notes?: String) {
     const endpoint = `${BASE_URL}/memos/details/amend`;
-    return await axios.patch(endpoint, {id, title, notes});
+    return await axios.patch(endpoint, { id, title, notes });
 }
-async function createMemo(title: String,
-    notes?: String) {
+async function createMemo(title: String, notes?: String) {
     const endpoint = `${BASE_URL}/memos/new`;
-    return await axios.post(endpoint, {title, notes});
+    return await axios.post(endpoint, { title, notes });
 }
-async function deleteMemo(id: String){ //id not used
+async function deleteMemo(id: String) {
+    //id not used
     const endpoint = `${BASE_URL}/memos/delete`;
     return await axios.delete(endpoint);
 }
-async function getMemoDetails(id: String){ //id not used
+async function getMemoDetails(id: String) {
+    //id not used
     const endpoint = `${BASE_URL}/memos/details/${id}`;
     return await axios.delete(endpoint);
 }
-async function getMemos(id: String) {
-    const endpoint = `${BASE_URL}/memos/${id}`;
+async function getMemos() {
+    const endpoint = `${BASE_URL}/memos/`;
     return await axios.get(endpoint);
 }
 async function getRecentMemos(n: number) {
@@ -42,11 +40,11 @@ async function getRecentMemos(n: number) {
     return await axios.get(endpoint);
 }
 
-export{
+export {
     amendMemoDetails,
     createMemo,
     deleteMemo,
     getMemoDetails,
     getMemos,
     getRecentMemos,
-}
+};
