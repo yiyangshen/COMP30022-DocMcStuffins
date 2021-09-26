@@ -1,4 +1,3 @@
-
 /* Import the required libraries and types */
 import React from "react";
 
