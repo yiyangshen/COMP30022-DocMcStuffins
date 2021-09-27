@@ -3,7 +3,7 @@ import connectMongoDBSession from "connect-mongodb-session"
 import cors from "cors";
 import express from "express";
 import session from "express-session";
-// import path from "path";
+import path from "path";
 import passport from "passport";
 import routes from "../routes";
 import timestring from "timestring";
@@ -38,12 +38,10 @@ app.use(cors({
 app.use("/api", routes);
 
 /* Serve the React app */
-/*
 app.use(express.static(path.join(__dirname, "../../frontend/build")));
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, "../../frontend/build", 'index.html'));
  });
- */
 
 /* Export the app for testing purposes */
 export default app;
