@@ -1,7 +1,8 @@
 
 /* Import the required libraries and types */
 import React from "react";
-class createProfile extends React.Component {
+import "../css/createContact.css";
+class createContact extends React.Component {
     render() {
         return (
             <div className="border">
@@ -41,7 +42,6 @@ class createProfile extends React.Component {
                     <input type="submit"/>
                 </form>
             </div>
-            
         );
     }
 }
