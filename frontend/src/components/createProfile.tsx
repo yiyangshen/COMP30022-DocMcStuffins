@@ -34,10 +34,10 @@ export default function DashB() {
             <textarea id="additionalNotes" name="additionalNotes" placeholder="Write something.."></textarea>
 
             <p>Click on the "Choose File" button to choose a picture:</p>
-            {/* <form action="/action_page.php">
-            <input type="file" id="myFile" name="filename">
-            <input type="submit">
-            </form> */}
+            <form action="/action_page.php">
+                <input type="file" id="myFile" name="filename"/>
+                <input type="submit"/>
+            </form>
 
         </div>
         
