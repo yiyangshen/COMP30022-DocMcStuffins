@@ -84,7 +84,7 @@ class DashB extends React.Component {
                                 className="AddMoreMemo"
                                 src={MemoMore}
                                 alt="logo"
-                                onClick={() => history.push(`/memos/create`)}
+                                onClick={() => history.push(`/memos/new`)}
                             />
                             <h2 className="MemoText">Add More...</h2>
                         </div>
@@ -146,11 +146,8 @@ class DashB extends React.Component {
                                     ))}{" "}
                                 </div>
                             ) : null}
-                            <span
-                                className="dotMore"
-                                onClick={() => history.push(`/groups/create`)}
-                            >
-                                <h1>Add more...</h1>
+                            <span className="dotMore" onClick={() => history.push(`/groups/new`)}>
+                                <h1 className="dotText">Add more...</h1>
                             </span>
                         </div>
                     </div>

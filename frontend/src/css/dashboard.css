@@ -26,13 +26,16 @@
     display: inline-block;
 }
 .dotMore {
-    text-align: center;
     height: 150px;
     width: 150px;
     margin-left: 1vw;
     background-color: #e7e7e7;
     border-radius: 50%;
     display: inline-block;
+}
+.dotText{
+    margin-left: 1.5vw;
+    margin-top: 2vw;
 }
 .RecentGroupText {
     margin-top: 50px;
