@@ -173,7 +173,7 @@ describe("getGroupDetails Tests", () => {
     });
 
     test("4. Get group details with group ID that does not exist", async () => {
-        const id = Types.ObjectId();
+        const id = new Types.ObjectId();
         await authAgent
             .get(`${BASE_URL}/${id}`)
             .then((res: any) => {
