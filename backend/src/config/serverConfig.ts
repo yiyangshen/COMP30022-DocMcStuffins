@@ -38,12 +38,10 @@ app.use(cors({
 app.use("/api", routes);
 
 /* Serve the React app */
-/*
 app.use(express.static(path.join(__dirname, "../../frontend/build")));
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, "../../frontend/build", 'index.html'));
  });
- */
 
 /* Export the app for testing purposes */
 export default app;
