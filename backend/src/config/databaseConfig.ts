@@ -19,8 +19,14 @@ const db = connection;
 
 /* Handle server connection events */
 db.on("error", console.error.bind(console, "Connection error: "));
-db.once("open", () => {
+db.once("open", async () => {
     console.log(`Successfully connected to MongoDB ${MONGODB_DATABASE_NAME} database.`);
+    
+    /* Wipe the session store before running tests */
+    if (process.env.NODE_ENV === "testing") {
+        const SESSIONS = await connection.db.collection("sessions");
+        await SESSIONS.deleteMany({});
+    }
 });
 
 /* Export constants */
