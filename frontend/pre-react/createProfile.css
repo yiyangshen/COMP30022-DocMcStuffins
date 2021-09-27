@@ -17,3 +17,6 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: #E7E7E7;
   }
+textarea[id = additionalNotes]{
+    height:170px
+}
