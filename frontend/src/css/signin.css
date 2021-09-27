@@ -1,0 +1,11 @@
+.base-button {
+    background-color: #6baffd;
+    padding-top: 6px;
+    border-radius: 24px;
+    border: none;
+    cursor: pointer;
+}
+
+.base-button:hover {
+    opacity: 0.8;
+}
