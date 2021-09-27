@@ -29,7 +29,7 @@ import "./passportConfig";
 
 /* Enable CORS */
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:48080", "https://snaccs-in-a-van.herokuapp.com"],
+    origin: ["http://localhost:3000", "http://localhost:48080", "https://doc-mcstuffins.herokuapp.com"],
     credentials: true,
     optionsSuccessStatus: 200
 }));
@@ -38,9 +38,9 @@ app.use(cors({
 app.use("/api", routes);
 
 /* Serve the React app */
-app.use(express.static(path.join(__dirname, "../../frontend/build")));
+app.use(express.static(path.join(__dirname, "../../../frontend/build")));
 app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, "../../frontend/build", 'index.html'));
+    res.sendFile(path.join(__dirname, "../../../frontend/build", 'index.html'));
  });
 
 /* Export the app for testing purposes */
