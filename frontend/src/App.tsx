@@ -12,6 +12,7 @@ import SignIn from "./components/signin";
 import SignUp from "./components/signup";
 import ViewContacts from "./components/viewContacts";
 import Dashboard from "./components/dashboard";
+import newContact from "./components/newContact"
 import ViewGroups from "./components/viewGroups";
 import ViewMemos from "./components/viewMemos";
 
@@ -48,7 +49,7 @@ function App() {
                             path="/contacts"
                             component={ViewContacts}
                         />
-                        <Route exact path="/contacts/new" />
+                        <Route exact path="/contacts/new" component={newContact} />
                         <Route path="/contacts/details" />
 
                         <Route exact path="/groups" component={ViewGroups} />

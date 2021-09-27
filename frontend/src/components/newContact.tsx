@@ -1,8 +1,8 @@
 
 /* Import the required libraries and types */
 import React from "react";
-import "../css/createContact.css";
-class createContact extends React.Component {
+import "../css/newContact.css";
+class newContact extends React.Component {
     render() {
         return (
             <div className="border">
@@ -45,3 +45,5 @@ class createContact extends React.Component {
         );
     }
 }
+
+export default newContact;
