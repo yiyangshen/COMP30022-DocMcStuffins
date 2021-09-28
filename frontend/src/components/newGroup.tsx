@@ -8,14 +8,16 @@ class newMemo extends React.Component {
         return (
             <div className="border">
                 <h1>Add Group</h1>
-                <label>Name</label>
-                <input type="name" id="groupName" name="groupName" placeholder="Eg. Groceries"/>
-                
-                <div className="box1">
-                    <label>Members</label>   
-                    <input type="number" id="members" name="members" placeholder="Eg. 5"/>      
-                    <Link to=".." className="addContact">add contact</Link>
+                <div className="box">
+                    <label>Name</label>
+                    <input type="name" id="groupName" name="groupName" placeholder="Eg. Unimelb"/>
+                    <div className="box1">
+                        <label>Members</label>   
+                        <input type="number" id="members" name="members" placeholder="Eg. 2"/>      
+                        <Link to=".." className="addContact">add contact</Link>
+                    </div>
                 </div>
+                
                 <table>
                     <thead>
                         <tr className="table-lable">

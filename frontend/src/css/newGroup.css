@@ -15,6 +15,7 @@ input[type=name], groupName{
     margin-top: 6px;
     margin-bottom: 16px;
     resize: vertical;
+    margin-left: 1%;
 }
 input[type=number], members{
     width: 4%;
@@ -24,6 +25,11 @@ input[type=number], members{
     margin-top: 6px;
     margin-bottom: 16px;
     resize: vertical;
+    margin-left: 1%;
+}
+.box{
+    display: flex;
+    flex-direction: column;
 }
 .addContact{
     margin-left: 1%;
