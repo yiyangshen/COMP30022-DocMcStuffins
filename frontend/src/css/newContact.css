@@ -1,5 +1,8 @@
-input[type=text], select, textarea {
-    background-color: #E7E7E7;
+input[type="text"],
+input[type="password"],
+select,
+textarea {
+    background-color: #e7e7e7;
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -7,31 +10,31 @@ input[type=text], select, textarea {
     margin-bottom: 16px;
     resize: vertical;
 }
-input[type=submit] {
-    background-color: #3182E0;
+input[type="submit"] {
+    background-color: #3182e0;
     color: white;
     padding: 12px 20px;
     border: none;
     cursor: pointer;
 }
-input[type=submit]:hover {
-    background-color: #E7E7E7;
-  }
-textarea[id = additionalNotes]{
-    height:170px
+input[type="submit"]:hover {
+    background-color: #e7e7e7;
 }
-.border{
+textarea[id="additionalNotes"] {
+    height: 170px;
+}
+.border {
     background-color: #f8fbff;
 }
 
-.boxLeft{
+.boxLeft {
     width: 50%;
 }
-.boxRight{
+.boxRight {
     flex-direction: column;
     margin-left: 1vw;
     width: 50%;
 }
-.box{
+.box {
     display: flex;
 }
