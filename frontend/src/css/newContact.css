@@ -23,3 +23,15 @@ textarea[id = additionalNotes]{
 .border{
     background-color: #f8fbff;
 }
+
+.boxLeft{
+    width: 50%;
+}
+.boxRight{
+    flex-direction: column;
+    margin-left: 1vw;
+    width: 50%;
+}
+.box{
+    display: flex;
+}
