@@ -13,6 +13,8 @@ import SignUp from "./components/signup";
 import ViewContacts from "./components/viewContacts";
 import Dashboard from "./components/dashboard";
 import newContact from "./components/newContact"
+import newMemo from "./components/newMemo";
+import newGroup from "./components/newGroup";
 import ViewGroups from "./components/viewGroups";
 import ViewMemos from "./components/viewMemos";
 
@@ -53,11 +55,11 @@ function App() {
                         <Route path="/contacts/details" />
 
                         <Route exact path="/groups" component={ViewGroups} />
-                        <Route exact path="/groups/new" />
+                        <Route exact path="/groups/new" component = {newGroup}/>
                         <Route path="/groups/details" />
 
                         <Route exact path="/memos" component={ViewMemos} />
-                        <Route exact path="/memos/new" />
+                        <Route exact path="/memos/new" component = {newMemo} />
                         <Route path="/memos/details" />
                     </div>
                 </Switch>
