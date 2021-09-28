@@ -53,7 +53,7 @@ class DashB extends React.Component {
         } else {
             return (
                 <div className="border">
-                    <h1>Yi Yiyang!</h1>
+                    <h1>Hi Yiyang!</h1>
 
                     <div className="Memos">
                         <h3>Memos</h3>
