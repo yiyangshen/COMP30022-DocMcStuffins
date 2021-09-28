@@ -39,7 +39,7 @@ async function deleteMemo(id: String) {
 async function getMemoDetails(id: String) {
     //id not used
     const endpoint = `${BASE_URL}/memos/details/${id}`;
-    return await axios.delete(endpoint);
+    return await axios.get(endpoint);
 }
 async function getMemos() {
     const endpoint = `${BASE_URL}/memos/`;

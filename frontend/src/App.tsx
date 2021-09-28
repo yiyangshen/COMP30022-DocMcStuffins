@@ -12,11 +12,12 @@ import SignIn from "./components/signin";
 import SignUp from "./components/signup";
 import ViewContacts from "./components/viewContacts";
 import Dashboard from "./components/dashboard";
-import newContact from "./components/newContact"
+import newContact from "./components/newContact";
 import newMemo from "./components/newMemo";
 import newGroup from "./components/newGroup";
 import ViewGroups from "./components/viewGroups";
 import ViewMemos from "./components/viewMemos";
+import MemoDetails from "./components/memoDetails";
 
 /* Enable credentials to be shared among pages */
 axios.defaults.withCredentials = true;
@@ -51,16 +52,24 @@ function App() {
                             path="/contacts"
                             component={ViewContacts}
                         />
-                        <Route exact path="/contacts/new" component={newContact} />
+                        <Route
+                            exact
+                            path="/contacts/new"
+                            component={newContact}
+                        />
                         <Route path="/contacts/details" />
 
                         <Route exact path="/groups" component={ViewGroups} />
-                        <Route exact path="/groups/new" component ={newGroup}/>
+                        <Route exact path="/groups/new" component={newGroup} />
                         <Route path="/groups/details" />
 
                         <Route exact path="/memos" component={ViewMemos} />
-                        <Route exact path="/memos/new" component ={newMemo} />
-                        <Route path="/memos/details" />
+                        <Route exact path="/memos/new" component={newMemo} />
+                        <Route
+                            exact
+                            path="/memos/details"
+                            component={MemoDetails}
+                        />
                     </div>
                 </Switch>
             </Router>

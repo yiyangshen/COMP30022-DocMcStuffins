@@ -1,7 +1,8 @@
 input[type="text"],
 input[type="password"],
 select,
-textarea {
+textarea,
+.box {
     background-color: #e7e7e7;
     width: 100%;
     padding: 12px;
@@ -10,6 +11,11 @@ textarea {
     margin-bottom: 16px;
     resize: vertical;
 }
+
+.white {
+    background-color: #ffffff;
+}
+
 input[type="submit"] {
     background-color: #3182e0;
     color: white;

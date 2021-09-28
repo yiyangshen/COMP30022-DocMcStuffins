@@ -73,7 +73,7 @@ class ViewMemos extends React.Component {
                                                     alt="logo"
                                                     onClick={() =>
                                                         history.push(
-                                                            `/memos/detail/?id=${memo.userId}`
+                                                            `/memos/details/?id=${memo._id}`
                                                         )
                                                     }
                                                 />
