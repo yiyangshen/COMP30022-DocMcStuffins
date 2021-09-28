@@ -36,7 +36,7 @@ const TEST_CONTACT_1 = {
     firstName: "Phake",
     middleName: "Pherson",
     lastName: "McTest",
-    groupId: Types.ObjectId(),
+    groupId: new Types.ObjectId(),
     gender: Gender.Other,
     dateOfBirth: new Date(),
     lastMet: new Date(),
@@ -151,7 +151,7 @@ describe("getContactDetails Tests", () => {
     });
 
     test("4. Get contact details with contact ID that does not exist", async () => {
-        const id = Types.ObjectId();
+        const id = new Types.ObjectId();
         await authAgent
             .get(`${BASE_URL}/${id}`)
             .then((res: any) => {

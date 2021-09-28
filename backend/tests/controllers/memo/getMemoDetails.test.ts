@@ -123,7 +123,7 @@ describe("getmemoDetails Tests", () => {
     });
 
     test("4. Get memo details with memo ID that does not exist", async () => {
-        const id = Types.ObjectId();
+        const id = new Types.ObjectId();
         await authAgent
             .get(`${BASE_URL}/${id}`)
             .then((res: any) => {
