@@ -6,20 +6,33 @@ import "../css/newGroup.css";
 class newMemo extends React.Component {
     render() {
         return (
-            <div className="box">
+            <div className="border">
                 <h1>Add Group</h1>
-                <div className="border">
-                    <label>Name</label>
-                    <input type="text" id="memoName" name="memoName" placeholder="Eg. Groceries"/>
-                    <label>Description</label>
-                    <textarea id="description" name="description" placeholder="Write something.."></textarea>
-                    
-                    <Link to=".." className="cancel">Cancel</Link>
-                    <Link to=".." className="save">Save</Link>   
+                <label>Name</label>
+                <input type="name" id="groupName" name="groupName" placeholder="Eg. Groceries"/>
+                
+                <div className="box1">
+                    <label>Members</label>   
+                    <input type="number" id="members" name="members" placeholder="Eg. 5"/>      
+                    <Link to=".." className="addContact">add contact</Link>
                 </div>
+                <table>
+                    <thead>
+                        <tr className="table-lable">
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <td>Name1</td> 
+                        <td>Phone1</td>
+                        <td>Email1</td>
+                    </tbody>
+                </table>
+
             </div>
-            
-        );
+    );
     }
 }
 

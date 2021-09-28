@@ -13,9 +13,7 @@ class newMemo extends React.Component {
                 <input type="text" id="memoName" name="memoName" placeholder="Eg. Groceries"/>
                 <label>Description</label>
                 <textarea id="description" name="description" placeholder="Write something.."></textarea>
-                
                 <Link to=".." className="cancel">Cancel</Link>
-                <Link to=".." className="save">Save</Link>   
             </div>
         );
     }

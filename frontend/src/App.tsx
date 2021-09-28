@@ -55,11 +55,11 @@ function App() {
                         <Route path="/contacts/details" />
 
                         <Route exact path="/groups" component={ViewGroups} />
-                        <Route exact path="/groups/new" component = {newGroup}/>
+                        <Route exact path="/groups/new" component ={newGroup}/>
                         <Route path="/groups/details" />
 
                         <Route exact path="/memos" component={ViewMemos} />
-                        <Route exact path="/memos/new" component = {newMemo} />
+                        <Route exact path="/memos/new" component ={newMemo} />
                         <Route path="/memos/details" />
                     </div>
                 </Switch>
