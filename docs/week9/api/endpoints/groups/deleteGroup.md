@@ -3,7 +3,7 @@
 | Key                 | Value            |
 | :------------------ | :--------------- |
 | REST endpoint       | `/groups/delete` |
-| HTTP request method | `DELETE`         |
+| HTTP request method | `POST`           |
 
 ## Request Format
 

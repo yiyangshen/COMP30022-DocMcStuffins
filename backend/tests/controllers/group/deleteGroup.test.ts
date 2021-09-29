@@ -88,7 +88,7 @@ describe("Integration test for group deletion", () => {
 
     test("1. Delete group without authentication", async () => {
         await unauthAgent
-            .delete(TEST_URLS.deleteGroup)
+            .post(TEST_URLS.deleteGroup)
             .send({})
             .then((res: any) => {
                 expect(res.body.status).toBe((new UnauthorizedError("Unauthorized")).status);
@@ -105,7 +105,7 @@ describe("Integration test for group deletion", () => {
 
         /* Delete the new group */
         await authAgent
-            .delete(TEST_URLS.deleteGroup)
+            .post(TEST_URLS.deleteGroup)
             .send({ id: group._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new OKSuccess("OK")).status);
@@ -117,7 +117,7 @@ describe("Integration test for group deletion", () => {
 
     test("3. Delete group with no data", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteGroup)
+            .post(TEST_URLS.deleteGroup)
             .send({})
             .then((res: any) => {
                 expect(res.body.status).toBe((new BadRequestError("Bad Request")).status);
@@ -126,7 +126,7 @@ describe("Integration test for group deletion", () => {
 
     test("4. Delete group with invalid data", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteGroup)
+            .post(TEST_URLS.deleteGroup)
             .send({ id: "Invalid id" })
             .then((res: any) => {
                 expect(res.body.status).toBe((new BadRequestError("Bad Request")).status);
@@ -135,7 +135,7 @@ describe("Integration test for group deletion", () => {
 
     test("5. Delete non-existing group", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteGroup)
+            .post(TEST_URLS.deleteGroup)
             .send({ id: testUser._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new NotFoundError("not Found")).status);
@@ -152,7 +152,7 @@ describe("Integration test for group deletion", () => {
 
         /* Attempt to delete this group */
         await authAgent
-            .delete(TEST_URLS.deleteGroup)
+            .post(TEST_URLS.deleteGroup)
             .send({ id: group._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new ForbiddenError("Forbidden")).status);
@@ -184,7 +184,7 @@ describe("Integration test for group deletion", () => {
 
         /* Delete this group */
         await authAgent
-            .delete(TEST_URLS.deleteGroup)
+            .post(TEST_URLS.deleteGroup)
             .send({ id: group._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new OKSuccess("OK")).status);

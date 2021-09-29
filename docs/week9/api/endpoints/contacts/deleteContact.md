@@ -3,7 +3,7 @@
 | Key                 | Value              |
 | :------------------ | :----------------- |
 | REST endpoint       | `/contacts/delete` |
-| HTTP request method | `DELETE`           |
+| HTTP request method | `POST`             |
 
 ## Request Format
 

@@ -4,7 +4,7 @@
 | :------------------------------------------- | :---------------------- | :------------------ |
 | [Counting](./getContactCount.md)             | `/contacts/count`       | `GET`               |
 | [Creation](./createContact.md)               | `/contacts/new`         | `POST`              |
-| [Deletion](./deleteContact.md)               | `/contacts/delete`      | `DELETE`            |
+| [Deletion](./deleteContact.md)               | `/contacts/delete`      | `POST`              |
 | [Detail amendment](./amendContactDetails.md) | `/contacts/amend`       | `PATCH`             |
 | [Detail retrieval](./getContactDetails.md)   | `/contacts/details/:id` | `GET`               |
 | [Listing](./getContacts.md)                  | `/contacts/`            | `GET`               |
