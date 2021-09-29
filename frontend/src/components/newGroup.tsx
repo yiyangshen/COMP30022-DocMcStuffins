@@ -4,11 +4,22 @@ import { Link } from "react-router-dom";
 import "../css/newGroup.css";
 
 /* Import the required libraries and types */
-// import { createGroup } from "../api/groupApi";
-// import { IGroup } from "../interfaces";
+import { createGroup } from "../api/groupApi";
 
 class newGroup extends React.Component {
+    state = {
+        name: "",
+        members: [] as String[],
+    };
+
+    /* Set state accordingly to the target */
+    handleChange = (event: { target: { name: any; value: String } }) => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
     render() {
+        const { name, members } = this.state;
+
         return (
             <div className="border">
                 <h1>Add Group</h1>
@@ -17,8 +28,10 @@ class newGroup extends React.Component {
                     <input
                         type="name"
                         id="groupName"
-                        name="groupName"
+                        name="name"
                         placeholder="Eg. Unimelb"
+                        value={name}
+                        onChange={this.handleChange}
                     />
                     <div className="box1">
                         <label>Members</label>

@@ -71,7 +71,7 @@ class ViewContacts extends React.Component {
                                                 className="table-contents"
                                                 onClick={() =>
                                                     history.push(
-                                                        `/contacts/details/?id=${contact.userId}`
+                                                        `/contacts/details/?id=${contact._id}`
                                                     )
                                                 }
                                             >

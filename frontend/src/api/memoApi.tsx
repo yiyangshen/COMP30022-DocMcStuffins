@@ -34,10 +34,9 @@ async function createMemo(title: String, notes?: String) {
 async function deleteMemo(id: String) {
     //id not used
     const endpoint = `${BASE_URL}/memos/delete`;
-    return await axios.delete(endpoint);
+    return await axios.delete(endpoint, { data: id });
 }
 async function getMemoDetails(id: String) {
-    //id not used
     const endpoint = `${BASE_URL}/memos/details/${id}`;
     return await axios.get(endpoint);
 }
