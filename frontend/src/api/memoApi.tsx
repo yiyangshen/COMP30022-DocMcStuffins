@@ -37,7 +37,6 @@ async function deleteMemo(id: String) {
     return await axios.delete(endpoint);
 }
 async function getMemoDetails(id: String) {
-    //id not used
     const endpoint = `${BASE_URL}/memos/details/${id}`;
     return await axios.get(endpoint);
 }

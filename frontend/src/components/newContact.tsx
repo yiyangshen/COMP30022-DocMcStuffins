@@ -1,17 +1,27 @@
 /* Import the required libraries and types */
 import React from "react";
+import Moment from "moment";
 import "../css/newContact.css";
 
 /* Import the required libraries and types */
 import { createContact } from "../api/contactApi";
-import { IContact, IName } from "../interfaces";
 
 /* Component to new contacts */
 class newContact extends React.Component {
     /* Declare states */
     state = {
-        contact: {} as IContact,
-        name: {} as IName,
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        groupId: "",
+        gender: "Other",
+        dateOfBirth: "",
+        lastMet: "",
+        phoneNumber: "",
+        email: "",
+        photo: "",
+        relationship: "",
+        additionalNotes: "",
     };
 
     /* Set state accordingly to the target */
@@ -21,17 +31,55 @@ class newContact extends React.Component {
 
     /* Handle when click on submit button */
     handleSubmit = (event: { preventDefault: () => void }) => {
-        const { contact, name } = this.state;
-        console.log(contact);
-        this.setState({ contact: name });
+        const {
+            firstName,
+            middleName,
+            lastName,
+            groupId,
+            gender,
+            dateOfBirth,
+            lastMet,
+            phoneNumber,
+            email,
+            photo,
+            relationship,
+            additionalNotes,
+        } = this.state;
         event.preventDefault();
 
         /* Create contact. Then push new entry to history */
-        createContact(contact);
+        createContact(
+            firstName,
+            middleName,
+            lastName,
+            groupId,
+            gender,
+            dateOfBirth,
+            lastMet,
+            phoneNumber,
+            email,
+            photo,
+            relationship,
+            additionalNotes
+        );
     };
 
     render() {
-        const { contact, name } = this.state;
+        const {
+            firstName,
+            middleName,
+            lastName,
+            groupId,
+            gender,
+            dateOfBirth,
+            lastMet,
+            phoneNumber,
+            email,
+            photo,
+            relationship,
+            additionalNotes,
+        } = this.state;
+
         return (
             <div className="border">
                 <h1>Add contact</h1>
@@ -42,16 +90,16 @@ class newContact extends React.Component {
                             <input
                                 type="text"
                                 id="fullName"
-                                name="first"
-                                value={name.first}
+                                name="firstName"
+                                value={firstName}
                                 placeholder="Eg. John "
                                 onChange={this.handleChange}
                             />
                             <input
                                 type="text"
                                 id="fullName"
-                                name="last"
-                                value={name.last}
+                                name="lastName"
+                                value={lastName}
                                 placeholder="Eg. Doe"
                                 onChange={this.handleChange}
                             />
@@ -60,11 +108,17 @@ class newContact extends React.Component {
                                 id="gender"
                                 name="gender"
                                 onChange={this.handleChange}
-                                value={contact.gender}
+                                value={gender}
                             >
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Others">Spoon</option>
+                                <option key="Male" value="Male">
+                                    Male
+                                </option>
+                                <option key="Female" value="Female">
+                                    Female
+                                </option>
+                                <option key="Others" value="Others">
+                                    Spoon
+                                </option>
                             </select>
                             <label>Country</label>
                             <select id="country" name="country">
@@ -77,7 +131,7 @@ class newContact extends React.Component {
                                 id="email"
                                 name="email"
                                 placeholder="Eg. JohnDoe@gmail.com"
-                                value={contact.email}
+                                value={email}
                                 onChange={this.handleChange}
                             />
                             <label>Phone Number</label>
@@ -86,7 +140,7 @@ class newContact extends React.Component {
                                 id="phoneNumber"
                                 name="phoneNumber"
                                 placeholder="Eg. 0412563286"
-                                value={contact.phoneNumber}
+                                value={phoneNumber}
                                 onChange={this.handleChange}
                             />
                             <label>Relationship</label>
@@ -94,7 +148,7 @@ class newContact extends React.Component {
                                 type="text"
                                 id="relationship"
                                 name="relationship"
-                                value={contact.relationship}
+                                value={relationship}
                                 placeholder="Eg. Friends"
                                 onChange={this.handleChange}
                             />
@@ -104,13 +158,14 @@ class newContact extends React.Component {
                                 id="firstContactTimestamp"
                                 name="lastMet"
                                 placeholder="Eg. 3.15pm, 13 Aug 2091"
+                                value={lastMet}
                                 onChange={this.handleChange}
                             />
                             <label>Assigned Group</label>
                             <select
                                 id="assignedGroup"
                                 name="groupId"
-                                value={contact.groupId}
+                                value={groupId}
                                 onChange={this.handleChange}
                             >
                                 <option value="unimelb">Unimelb</option>
@@ -121,9 +176,9 @@ class newContact extends React.Component {
                             <label>Additional Notes</label>
                             <textarea
                                 id="additionalNotes"
-                                name="additionalNotes"
+                                name="contact.additionalNotes"
                                 placeholder="Write something.."
-                                value={contact.additionalNotes}
+                                value={additionalNotes}
                                 onChange={this.handleChange}
                             ></textarea>
 

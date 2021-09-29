@@ -1,6 +1,5 @@
 /* Import the required libraries and types */
 import React from "react";
-import history from "../history";
 import "../css/newMemo.css";
 
 /* Import the required libraries and types */

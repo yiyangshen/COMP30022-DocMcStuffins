@@ -119,18 +119,46 @@ async function amendContactDetails(item: IContact) {
  *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
-async function createContact(item: IContact) {
+async function createContact(
+    firstName: string,
+    middleName: string,
+    lastName: string,
+    groupId: string,
+    gender: string,
+    dateOfBirth: string,
+    lastMet: string,
+    phoneNumber: string,
+    email: string,
+    photo: string,
+    relationship: string,
+    additionalNotes: string
+) {
     const endpoint = `${BASE_URL}/contacts/new`;
-    return await axios.post(endpoint, { item }).then(
-        (response) => {
-            history.push("/contacts");
-            console.log(response);
-        },
-        (error) => {
-            alert("Please check the input");
-            console.log(error);
-        }
-    );
+    return await axios
+        .post(endpoint, {
+            firstName,
+            middleName,
+            lastName,
+            groupId,
+            gender,
+            dateOfBirth,
+            lastMet,
+            phoneNumber,
+            email,
+            photo,
+            relationship,
+            additionalNotes,
+        })
+        .then(
+            (response) => {
+                history.push("/contacts");
+                console.log(response);
+            },
+            (error) => {
+                alert("Please check the input");
+                console.log(error);
+            }
+        );
 }
 
 /* Returns the currently-authenticated user's contacts that fuzzy-matches the given search string;

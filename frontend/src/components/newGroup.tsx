@@ -4,10 +4,19 @@ import { Link } from "react-router-dom";
 import "../css/newGroup.css";
 
 /* Import the required libraries and types */
-// import { createGroup } from "../api/groupApi";
-// import { IGroup } from "../interfaces";
+import { createGroup } from "../api/groupApi";
 
 class newGroup extends React.Component {
+    state = {
+        name: "",
+        members: [] as String[],
+    };
+
+    /* Set state accordingly to the target */
+    handleChange = (event: { target: { name: any; value: String } }) => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
     render() {
         return (
             <div className="border">
