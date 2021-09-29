@@ -14,14 +14,14 @@ import { getGroupCount, getGroups } from "../api/groupApi";
 import { getContactCount } from "../api/contactApi";
 
 class DashB extends React.Component {
-    /* Declare states */
+    /* Declare state */
     state = {
         error: null,
         isLoaded: false,
         memoList: [] as IMemo[],
         recentGroupList: [] as IGroup[],
-        groupCount: 0,
-        contactCount: -1
+        groupCount: 9,
+        contactCount: 9
     };
     /* During loading page */
     async componentDidMount() {
@@ -47,8 +47,9 @@ class DashB extends React.Component {
         );
         getGroupCount().then(
             (response) => {
-                var data = response.data;
+                var data = response.data.data;
                 this.setState({ groupCount: data, isLoaded: true });
+                console.log(response);
             },
             (error) => {
                 this.setState({ isLoaded: true, error });
@@ -57,7 +58,7 @@ class DashB extends React.Component {
         );
         getContactCount().then(
             (response) => {
-                var data = response.data;
+                var data = response.data.data;
                 this.setState({ contactCount: data, isLoaded: true });
             },
             (error) => {
@@ -141,7 +142,7 @@ class DashB extends React.Component {
                                 />
                                 <div className="Contactscontainer">
                                     <h3>Contacts</h3>
-                                    <h2>{contactCount}</h2>
+                                    <h2>{contactCount.valueOf()}</h2>
                                 </div>
                             </div>
                         </div>
