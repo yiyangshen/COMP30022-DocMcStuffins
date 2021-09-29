@@ -1,5 +1,6 @@
 /* Import the required libraries and types */
 import axios from "axios";
+import history from "../history";
 
 /* Change the API base URL based on the environment */
 var BASE_URL: string = "";
@@ -19,7 +20,16 @@ async function amendMemoDetails(id: String, title?: String, notes?: String) {
 }
 async function createMemo(title: String, notes?: String) {
     const endpoint = `${BASE_URL}/memos/new`;
-    return await axios.post(endpoint, { title, notes });
+    return await axios.post(endpoint, { title, notes }).then(
+        (response) => {
+            history.push("/memos");
+            console.log(response);
+        },
+        (error) => {
+            alert("Please check the input");
+            console.log(error);
+        }
+    );
 }
 async function deleteMemo(id: String) {
     //id not used
@@ -29,7 +39,7 @@ async function deleteMemo(id: String) {
 async function getMemoDetails(id: String) {
     //id not used
     const endpoint = `${BASE_URL}/memos/details/${id}`;
-    return await axios.delete(endpoint);
+    return await axios.get(endpoint);
 }
 async function getMemos() {
     const endpoint = `${BASE_URL}/memos/`;

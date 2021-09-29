@@ -1,5 +1,6 @@
 /* Import the required libraries and types */
 import axios from "axios";
+import history from "../history";
 import { IContact } from "../interfaces";
 
 /* Change the API base URL based on the environment */
@@ -120,7 +121,16 @@ async function amendContactDetails(item: IContact) {
  */
 async function createContact(item: IContact) {
     const endpoint = `${BASE_URL}/contacts/new`;
-    return await axios.post(endpoint, { item });
+    return await axios.post(endpoint, { item }).then(
+        (response) => {
+            history.push("/contacts");
+            console.log(response);
+        },
+        (error) => {
+            alert("Please check the input");
+            console.log(error);
+        }
+    );
 }
 
 /* Returns the currently-authenticated user's contacts that fuzzy-matches the given search string;
