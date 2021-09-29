@@ -20,8 +20,8 @@ class DashB extends React.Component {
         isLoaded: false,
         memoList: [] as IMemo[],
         recentGroupList: [] as IGroup[],
-        groupCount: Number,
-        contactCount: Number
+        groupCount: 0,
+        contactCount: -1
     };
     /* During loading page */
     async componentDidMount() {
