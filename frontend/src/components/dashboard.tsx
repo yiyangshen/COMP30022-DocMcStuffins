@@ -11,6 +11,7 @@ import Group from "../img/3 User.svg";
 import { getRecentMemos } from "../api/memoApi";
 import { IGroup, IMemo } from "../interfaces";
 import { getGroupCount, getGroups } from "../api/groupApi";
+import { getContactCount } from "../api/contactApi";
 
 class DashB extends React.Component {
     /* Declare states */
@@ -54,9 +55,19 @@ class DashB extends React.Component {
                 console.log(error);
             }
         );
+        getContactCount().then(
+            (response) => {
+                var data = response.data;
+                this.setState({ contactCount: data, isLoaded: true });
+            },
+            (error) => {
+                this.setState({ isLoaded: true, error });
+                console.log(error);
+            }
+        );
     }
     render() {
-        const { error, isLoaded, memoList, recentGroupList, groupCount } = this.state;
+        const { error, isLoaded, memoList, recentGroupList, groupCount, contactCount } = this.state;
 
         if (error === true) {
             return <h3 className="error">No Order Present</h3>;
@@ -115,7 +126,7 @@ class DashB extends React.Component {
                                 />
                                 <div className="container">
                                     <h3>Group</h3>
-                                    <h2></h2>
+                                    <h2>{groupCount}</h2>
                                 </div>
                             </div>
 
@@ -130,7 +141,7 @@ class DashB extends React.Component {
                                 />
                                 <div className="Contactscontainer">
                                     <h3>Contacts</h3>
-                                    <h2>6</h2>
+                                    <h2>{contactCount}</h2>
                                 </div>
                             </div>
                         </div>
@@ -149,11 +160,11 @@ class DashB extends React.Component {
                                                     history.push(`/groups/id`)
                                                 }
                                             >
-                                                <div className="RecentGroupText">
-                                                    <h2>{group.name}</h2>
-                                                    <h1>{group.members.length}</h1>
-                                                </div>
-                                                
+                                            <div className="RecentGroupText">
+                                                <h2>{group.name}</h2>
+                                                <h1>{group.members.length}</h1>
+                                            </div>
+                                            
                                             </span>
                                         </div>
                                     ))}{" "}
