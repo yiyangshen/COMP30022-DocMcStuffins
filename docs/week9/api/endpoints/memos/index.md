@@ -3,7 +3,7 @@
 | Functionality name                        | REST endpoint        | HTTP request method |
 | :---------------------------------------- | :------------------- | :------------------ |
 | [Creation](./createMemo.md)               | `/memos/new`         | `POST`              |
-| [Deletion](./deleteMemo.md)               | `/memos/delete`      | `DELETE`            |
+| [Deletion](./deleteMemo.md)               | `/memos/delete`      | `POST`              |
 | [Detail amendment](./amendMemoDetails.md) | `/memos/amend`       | `PATCH`             |
 | [Detail retrieval](./getMemoDetails.md)   | `/memos/details/:id` | `GET`               |
 | [Listing](./getMemos.md)                  | `/memos/`            | `GET`               |

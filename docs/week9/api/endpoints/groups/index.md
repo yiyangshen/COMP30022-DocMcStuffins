@@ -4,7 +4,7 @@
 | :----------------------------------------- | :-------------------- | :------------------ |
 | [Counting](./getGroupCount.md)             | `/groups/count`       | `GET`               |
 | [Creation](./createGroup.md)               | `/groups/new`         | `POST`              |
-| [Deletion](./deleteGroup.md)               | `/groups/delete`      | `DELETE`            |
+| [Deletion](./deleteGroup.md)               | `/groups/delete`      | `POST`              |
 | [Detail amendment](./amendGroupDetails.md) | `/groups/amend`       | `PATCH`             |
 | [Detail retrieval](./getGroupDetails.md)   | `/groups/details/:id` | `GET`               |
 | [Listing](./getGroups.md)                  | `/groups/`            | `GET`               |
