@@ -231,7 +231,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
         if (req.body.dateOfBirth)
             newContact.dateOfBirth = new Date(req.body.dateOfBirth);
         if (req.body.lastMet)
-            newContact.dateOfBirth = new Date(req.body.lastMet);
+            newContact.lastMet = new Date(req.body.lastMet);
         if (req.body.phoneNumber)
             newContact.phoneNumber = req.body.phoneNumber;
         if (req.body.email)

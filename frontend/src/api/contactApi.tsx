@@ -51,7 +51,7 @@ async function getContactCount() {
  */
 async function deleteContact(id: String) {
     const endpoint = `${BASE_URL}/contacts/delete`;
-    return await axios.delete(endpoint, { data: id }).then(
+    return await axios.post(endpoint, { id }).then(
         (response) => {
             history.push("/contacts");
             console.log(response);
@@ -134,8 +134,8 @@ async function createContact(
     lastName: string,
     groupId: string,
     gender: string,
-    dateOfBirth: string,
-    lastMet: string,
+    dateOfBirth: Date,
+    lastMet: Date,
     phoneNumber: string,
     email: string,
     photo: string,

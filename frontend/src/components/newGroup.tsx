@@ -17,6 +17,11 @@ class newGroup extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     };
 
+    /* Remember state for the next mount */
+    componentWillUnmount() {
+        const { name, members } = this.state;
+    }
+
     render() {
         const { name, members } = this.state;
 

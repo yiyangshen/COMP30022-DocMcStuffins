@@ -133,6 +133,10 @@ async function createMemo(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function deleteMemo(req: Request, res: Response, next: NextFunction) {
+    console.log(req.body);
+    console.log(req.body.id);
+    console.log(typeof req.body.id);
+    
     try {
         /* Check if the user is authenticated */
         if (req.isUnauthenticated()) {

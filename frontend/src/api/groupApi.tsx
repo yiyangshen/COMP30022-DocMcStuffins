@@ -1,5 +1,6 @@
 /* Import the required libraries and types */
 import axios from "axios";
+import history from "../history";
 
 /* Change the API base URL based on the environment */
 var BASE_URL: string = "";
@@ -13,30 +14,40 @@ switch (process.env.NODE_ENV) {
         break;
 }
 
-async function amendGroupDetails(id: String,
+async function amendGroupDetails(
+    id: String,
     name?: string,
-    members?: [String]){
+    members?: [String]
+) {
     const endpoint = `${BASE_URL}/groups/details/amend`;
-    return await axios.patch(endpoint, {id, name, members});
+    return await axios.patch(endpoint, { id, name, members });
 }
-async function createGroup(name: string,
-    members?: [String]){
+async function createGroup(name: string, members?: [String]) {
     const endpoint = `${BASE_URL}/groups/new`;
-    return await axios.post(endpoint, {name, members});
+    return await axios.post(endpoint, { name, members });
 }
-async function deleteGroup(id: String){
+async function deleteGroup(id: String) {
     const endpoint = `${BASE_URL}/groups/delete`;
-    return await axios.delete(endpoint);
+    return await axios.post(endpoint, { id }).then(
+        (response) => {
+            history.push("/groups");
+            console.log(response);
+        },
+        (error) => {
+            alert("Group could not be deleted");
+            console.log(error);
+        }
+    );
 }
-async function getGroupCount(){
+async function getGroupCount() {
     const endpoint = `${BASE_URL}/groups/count`;
     return await axios.get(endpoint);
 }
-async function getGroupDetails(id: String){
+async function getGroupDetails(id: String) {
     const endpoint = `${BASE_URL}/groups/details/:id`;
     return await axios.get(endpoint);
 }
-async function getGroups(){
+async function getGroups() {
     const endpoint = `${BASE_URL}/groups/`;
     return await axios.get(endpoint);
 }

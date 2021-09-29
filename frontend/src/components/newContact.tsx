@@ -15,8 +15,9 @@ class newContact extends React.Component {
         lastName: "",
         groupId: "",
         gender: "Other",
-        dateOfBirth: "",
-        lastMet: "",
+        dateOfBirthData: new Date(),
+        lastMet: new Date(),
+        lastMetData: "",
         phoneNumber: "",
         email: "",
         photo: "",
@@ -37,8 +38,8 @@ class newContact extends React.Component {
             lastName,
             groupId,
             gender,
-            dateOfBirth,
-            lastMet,
+            dateOfBirthData,
+            lastMetData,
             phoneNumber,
             email,
             photo,
@@ -46,6 +47,9 @@ class newContact extends React.Component {
             additionalNotes,
         } = this.state;
         event.preventDefault();
+
+        var dateOfBirth = new Date(dateOfBirthData);
+        var lastMet = new Date(lastMetData);
 
         /* Create contact. Then push new entry to history */
         createContact(
@@ -71,8 +75,8 @@ class newContact extends React.Component {
             lastName,
             groupId,
             gender,
-            dateOfBirth,
-            lastMet,
+            dateOfBirthData,
+            lastMetData,
             phoneNumber,
             email,
             photo,
@@ -156,9 +160,9 @@ class newContact extends React.Component {
                             <input
                                 type="text"
                                 id="firstContactTimestamp"
-                                name="lastMet"
+                                name="lastMetData"
                                 placeholder="Eg. 3.15pm, 13 Aug 2091"
-                                value={lastMet}
+                                value={lastMetData}
                                 onChange={this.handleChange}
                             />
                             <label>Assigned Group</label>

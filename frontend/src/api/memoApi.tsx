@@ -32,10 +32,19 @@ async function createMemo(title: String, notes?: String) {
     );
 }
 async function deleteMemo(id: String) {
-    //id not used
     const endpoint = `${BASE_URL}/memos/delete`;
-    return await axios.delete(endpoint, { data: id });
+    return await axios.post(endpoint, { id }).then(
+        (response) => {
+            history.push("/memos");
+            console.log(response);
+        },
+        (error) => {
+            alert("Memo could not be deleted");
+            console.log(error);
+        }
+    );
 }
+
 async function getMemoDetails(id: String) {
     const endpoint = `${BASE_URL}/memos/details/${id}`;
     return await axios.get(endpoint);
