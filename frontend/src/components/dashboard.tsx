@@ -27,7 +27,7 @@ class DashB extends React.Component {
     async componentDidMount() {
         getRecentMemos(5).then(
             (response) => {
-                var data = response.data.items;
+                var data = response.data.data;
                 this.setState({ memoList: data, isLoaded: true });
             },
             (error) => {
@@ -37,7 +37,7 @@ class DashB extends React.Component {
         );
         getGroups().then(
             (response) => {
-                var data = response.data.items;
+                var data = response.data.data;
                 this.setState({ recentGroupList: data, isLoaded: true });
             },
             (error) => {
