@@ -12,7 +12,7 @@ class newGroup extends React.Component {
         return (
             <div className="border">
                 <h1>Add Group</h1>
-                <div className="box">
+                <div className="AGbox">
                     <label>Name</label>
                     <input
                         type="name"

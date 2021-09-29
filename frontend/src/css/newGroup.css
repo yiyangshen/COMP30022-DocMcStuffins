@@ -27,7 +27,7 @@ input[type=number], members{
     resize: vertical;
     margin-left: 1%;
 }
-.box{
+.AGbox{
     display: flex;
     flex-direction: column;
 }
