@@ -18,6 +18,8 @@ class newGroup extends React.Component {
     };
 
     render() {
+        const { name, members } = this.state;
+
         return (
             <div className="border">
                 <h1>Add Group</h1>
@@ -26,8 +28,10 @@ class newGroup extends React.Component {
                     <input
                         type="name"
                         id="groupName"
-                        name="groupName"
+                        name="name"
                         placeholder="Eg. Unimelb"
+                        value={name}
+                        onChange={this.handleChange}
                     />
                     <div className="box1">
                         <label>Members</label>

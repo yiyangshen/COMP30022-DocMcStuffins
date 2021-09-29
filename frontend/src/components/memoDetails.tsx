@@ -3,7 +3,7 @@ import React from "react";
 import "../css/newMemo.css";
 
 /* Import the required libraries and types */
-import { getMemoDetails } from "../api/memoApi";
+import { getMemoDetails, deleteMemo } from "../api/memoApi";
 import { getId } from "../api/userApi";
 import { IMemo } from "../interfaces";
 
@@ -35,6 +35,14 @@ class memoDetail extends React.Component {
         );
     }
 
+    /* Handle when click on delete button */
+    handleDelete = (event: { preventDefault: () => void }) => {
+        event.preventDefault();
+
+        /* delete memo. Then push new entry to history */
+        deleteMemo(this.memoId);
+    };
+
     render() {
         const { error, isLoaded, memo } = this.state;
 
@@ -54,6 +62,14 @@ class memoDetail extends React.Component {
                     <div className="box, white">
                         <h2>{memo.notes}</h2>
                     </div>
+
+                    <button
+                        className="base-button"
+                        type="button"
+                        onClick={this.handleDelete}
+                    >
+                        <h2>Delete</h2>
+                    </button>
                 </div>
             );
         }
