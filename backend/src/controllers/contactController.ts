@@ -98,7 +98,7 @@ async function amendContactDetails(req: Request, res: Response, next: NextFuncti
         /* Update the optional fields of the contact */
         contact.name.middle = req.body.middleName ? req.body.middleName : undefined;
         contact.gender = req.body.gender ? req.body.gender : undefined;
-        contact.dateOfBirth = req.body.DateOfBirth ? new Date(req.body.dateOfBirth) : undefined;
+        contact.dateOfBirth = req.body.dateOfBirth ? new Date(req.body.dateOfBirth) : undefined;
         contact.lastMet = req.body.lastMet ? new Date(req.body.lastMet) : undefined;
         contact.phoneNumber = req.body.phoneNumber ? req.body.phoneNumber : undefined;
         contact.email = req.body.email ? req.body.email.toLowerCase() : undefined;
@@ -231,7 +231,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
         if (req.body.dateOfBirth)
             newContact.dateOfBirth = new Date(req.body.dateOfBirth);
         if (req.body.lastMet)
-            newContact.dateOfBirth = new Date(req.body.lastMet);
+            newContact.lastMet = new Date(req.body.lastMet);
         if (req.body.phoneNumber)
             newContact.phoneNumber = req.body.phoneNumber;
         if (req.body.email)
