@@ -49,9 +49,18 @@ async function getContactCount() {
  *   - 404 Not Found if the given contact ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
-async function deleteContact() {
+async function deleteContact(id: String) {
     const endpoint = `${BASE_URL}/contacts/delete`;
-    return await axios.delete(endpoint);
+    return await axios.delete(endpoint, { data: id }).then(
+        (response) => {
+            history.push("/contacts");
+            console.log(response);
+        },
+        (error) => {
+            alert("Can not be deleted");
+            console.log(error);
+        }
+    );
 }
 
 /* Returns the given contact's details;
@@ -66,7 +75,7 @@ async function deleteContact() {
  *   - 500 Internal Server Error otherwise
  */
 async function getContactDetails(id: String) {
-    const endpoint = `${BASE_URL}/contacts/delete/${id}`;
+    const endpoint = `${BASE_URL}/contacts/details/${id}`;
     return await axios.get(endpoint);
 }
 

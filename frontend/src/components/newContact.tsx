@@ -1,7 +1,7 @@
 /* Import the required libraries and types */
 import React from "react";
-import Moment from "moment";
 import "../css/newContact.css";
+import history from "../history";
 
 /* Import the required libraries and types */
 import { createContact } from "../api/contactApi";
@@ -193,7 +193,16 @@ class newContact extends React.Component {
                                     name="filename"
                                 />
                             </form>
-                            <input type="submit" />
+                            <button
+                                className="base-button"
+                                type="button"
+                                onClick={() => history.push(`/contacts`)}
+                            >
+                                <h2>Cancel</h2>
+                            </button>
+                            <button className="base-button" type="submit">
+                                <h2>Submit</h2>
+                            </button>
                         </div>
                     </form>
                 </div>
