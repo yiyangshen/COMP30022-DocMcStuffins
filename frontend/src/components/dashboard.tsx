@@ -10,7 +10,7 @@ import Contact from "../img/Profile.svg";
 import Group from "../img/3 User.svg";
 import { getRecentMemos } from "../api/memoApi";
 import { IGroup, IMemo } from "../interfaces";
-import { getGroups } from "../api/groupApi";
+import { getGroupCount, getGroups } from "../api/groupApi";
 
 class DashB extends React.Component {
     /* Declare states */
@@ -19,6 +19,8 @@ class DashB extends React.Component {
         isLoaded: false,
         memoList: [] as IMemo[],
         recentGroupList: [] as IGroup[],
+        groupCount: Number,
+        contactCount: Number
     };
     /* During loading page */
     async componentDidMount() {
@@ -42,9 +44,19 @@ class DashB extends React.Component {
                 console.log(error);
             }
         );
+        getGroupCount().then(
+            (response) => {
+                var data = response.data;
+                this.setState({ groupCount: data, isLoaded: true });
+            },
+            (error) => {
+                this.setState({ isLoaded: true, error });
+                console.log(error);
+            }
+        );
     }
     render() {
-        const { error, isLoaded, memoList, recentGroupList } = this.state;
+        const { error, isLoaded, memoList, recentGroupList, groupCount } = this.state;
 
         if (error === true) {
             return <h3 className="error">No Order Present</h3>;
@@ -103,7 +115,7 @@ class DashB extends React.Component {
                                 />
                                 <div className="container">
                                     <h3>Group</h3>
-                                    <h2>6</h2>
+                                    <h2></h2>
                                 </div>
                             </div>
 
@@ -128,7 +140,7 @@ class DashB extends React.Component {
                             {recentGroupList !== undefined &&
                             recentGroupList.length > 0 ? (
                                 <div>
-                                    {memoList.map((group, i) => (
+                                    {recentGroupList.map((group, i) => (
                                         <div key={i}>
                                             {" "}
                                             <span
@@ -138,9 +150,10 @@ class DashB extends React.Component {
                                                 }
                                             >
                                                 <div className="RecentGroupText">
-                                                    <h2>Family</h2>
-                                                    <h1>5</h1>
+                                                    <h2>{group.name}</h2>
+                                                    <h1>{group.members.length}</h1>
                                                 </div>
+                                                
                                             </span>
                                         </div>
                                     ))}{" "}
