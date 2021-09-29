@@ -52,7 +52,7 @@ const contactSchema: Schema = new Schema({
         type: Date,
         default: undefined
     },
-    phoneNumbers: {
+    phoneNumber: {
         type: String,
         default: undefined
     },
