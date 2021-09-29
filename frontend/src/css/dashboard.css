@@ -1,9 +1,9 @@
-.box {
+.Dbox {
     display: flex;
     flex-direction: row;
     justify-content: left;
 }
-.box2 {
+.Dbox2 {
     display: flex;
     flex-direction: column;
     justify-content: left;

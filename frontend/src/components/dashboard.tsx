@@ -90,8 +90,8 @@ class DashB extends React.Component {
                         </div>
                     </div>
 
-                    <div className="box">
-                        <div className="box2">
+                    <div className="Dbox">
+                        <div className="Dbox2">
                             <div
                                 className="Group"
                                 onClick={() => history.push(`/groups`)}
