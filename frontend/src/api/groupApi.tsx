@@ -22,9 +22,18 @@ async function amendGroupDetails(
     const endpoint = `${BASE_URL}/groups/details/amend`;
     return await axios.patch(endpoint, { id, name, members });
 }
-async function createGroup(name: string, members?: [String]) {
+async function createGroup(name: string, members?: String[]) {
     const endpoint = `${BASE_URL}/groups/new`;
-    return await axios.post(endpoint, { name, members });
+    return await axios.post(endpoint, { name, members }).then(
+        (response) => {
+            history.push("/groups");
+            console.log(response);
+        },
+        (error) => {
+            alert("Group could not be created");
+            console.log(error);
+        }
+    );
 }
 async function deleteGroup(id: String) {
     const endpoint = `${BASE_URL}/groups/delete`;

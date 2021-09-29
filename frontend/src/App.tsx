@@ -19,6 +19,7 @@ import ViewGroups from "./components/viewGroups";
 import ViewMemos from "./components/viewMemos";
 import MemoDetails from "./components/memoDetails";
 import ContactDetails from "./components/contactDetails";
+import AddContact from "./components/addContact";
 
 /* Enable credentials to be shared among pages */
 axios.defaults.withCredentials = true;
@@ -65,6 +66,11 @@ function App() {
 
                         <Route exact path="/groups" component={ViewGroups} />
                         <Route exact path="/groups/new" component={NewGroup} />
+                        <Route
+                            exact
+                            path="/groups/new/contact"
+                            component={AddContact}
+                        />
                         <Route path="/groups/details" />
 
                         <Route exact path="/memos" component={ViewMemos} />
