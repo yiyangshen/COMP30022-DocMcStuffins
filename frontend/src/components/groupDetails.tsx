@@ -1,5 +1,6 @@
 /* Import the required libraries and types */
 import React from "react";
+import history from "../history";
 
 /* Import the required libraries and types */
 import { getGroupDetails, deleteGroup } from "../api/groupApi";
@@ -49,7 +50,22 @@ class groupDetail extends React.Component {
 
         return (
             <div className="border">
-                <h1>Group Details</h1>
+                <div className="title">
+                    <h2>
+                        <b>Group Details</b>
+                        <button
+                            className="base-button top-right"
+                            type="button"
+                            onClick={() =>
+                                history.push(
+                                    `/groups/details/ammend/?id=${this.groupId}`
+                                )
+                            }
+                        >
+                            <h2>Edit</h2>
+                        </button>
+                    </h2>
+                </div>
                 <div className="AGbox">
                     <label>Name</label>
                     <div className="box, white">

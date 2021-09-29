@@ -1,6 +1,7 @@
 /* Import the required libraries and types */
 import React from "react";
 import "../css/newContact.css";
+import history from "../history";
 
 /* Import the required libraries and types */
 import { getContactDetails, deleteContact } from "../api/contactApi";
@@ -53,7 +54,22 @@ class detailsContact extends React.Component {
         } else {
             return (
                 <div className="border">
-                    <h1>Contact Details</h1>
+                    <div className="title">
+                        <h2>
+                            <b>Contact Details</b>
+                            <button
+                                className="base-button top-right"
+                                type="button"
+                                onClick={() =>
+                                    history.push(
+                                        `/contacts/details/ammend/?id=${contact._id}`
+                                    )
+                                }
+                            >
+                                <h2>Edit</h2>
+                            </button>
+                        </h2>
+                    </div>
                     <div className="box">
                         <div className="boxLeft">
                             <label>Name</label>

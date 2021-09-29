@@ -1,6 +1,7 @@
 /* Import the required libraries and types */
 import React from "react";
 import "../css/newMemo.css";
+import history from "../history";
 
 /* Import the required libraries and types */
 import { getMemoDetails, deleteMemo } from "../api/memoApi";
@@ -53,7 +54,22 @@ class memoDetail extends React.Component {
         } else {
             return (
                 <div className="border">
-                    <h1>Memo Details</h1>
+                    <div className="title">
+                        <h2>
+                            <b>Memo Details</b>
+                            <button
+                                className="base-button top-right"
+                                type="button"
+                                onClick={() =>
+                                    history.push(
+                                        `/memos/details/ammend/?id=${this.memoId}`
+                                    )
+                                }
+                            >
+                                <h2>Edit</h2>
+                            </button>
+                        </h2>
+                    </div>
                     <label>Name</label>
                     <div className="box, white">
                         <h2>{memo.title}</h2>

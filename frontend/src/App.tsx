@@ -21,6 +21,8 @@ import MemoDetails from "./components/memoDetails";
 import ContactDetails from "./components/contactDetails";
 import AddContact from "./components/addContact";
 import GroupDetails from "./components/groupDetails";
+import Profile from "./components/profile";
+import MemoAmmend from "./components/memoAmmend";
 
 /* Enable credentials to be shared among pages */
 axios.defaults.withCredentials = true;
@@ -48,7 +50,7 @@ function App() {
                     <div>
                         <Nav />
                         <Route exact path="/dashboard" component={Dashboard} />
-                        <Route exact path="/profile" />
+                        <Route exact path="/user/profile" component={Profile} />
 
                         <Route
                             exact
@@ -61,9 +63,11 @@ function App() {
                             component={NewContact}
                         />
                         <Route
+                            exact
                             path="/contacts/details"
                             component={ContactDetails}
                         />
+                        <Route exact path="/contacts/details/ammend" />
 
                         <Route exact path="/groups" component={ViewGroups} />
                         <Route exact path="/groups/new" component={NewGroup} />
@@ -77,6 +81,7 @@ function App() {
                             path="/groups/details"
                             component={GroupDetails}
                         />
+                        <Route exact path="groups/details/ammend" />
 
                         <Route exact path="/memos" component={ViewMemos} />
                         <Route exact path="/memos/new" component={NewMemo} />
@@ -84,6 +89,11 @@ function App() {
                             exact
                             path="/memos/details"
                             component={MemoDetails}
+                        />
+                        <Route
+                            exact
+                            path="/memos/details/ammend"
+                            component={MemoAmmend}
                         />
                     </div>
                 </Switch>
