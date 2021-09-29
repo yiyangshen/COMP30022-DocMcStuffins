@@ -24,11 +24,15 @@ class newGroup extends React.Component {
     /* During loading page */
     async componentDidMount() {
         const value = await localStorage.getItem("chosen");
-        console.log(value);
         if (value) {
             this.setState({ members: JSON.parse(value) });
         }
-        this.setState({ name: JSON.parse(localStorage.name) });
+
+        const label = await localStorage.getItem("name");
+        console.log(label);
+        if (label) {
+            this.setState({ name: JSON.parse(label) });
+        }
 
         const { members } = this.state;
 
@@ -57,7 +61,8 @@ class newGroup extends React.Component {
     handleSubmit = (event: { preventDefault: () => void }) => {
         const { name, members } = this.state;
         event.preventDefault();
-
+        localStorage.removeItem("name");
+        localStorage.removeItem("chosen");
         createGroup(name, members);
     };
 
@@ -119,7 +124,7 @@ class newGroup extends React.Component {
                                         </tr>
                                     </tbody>
                                 </div>
-                            ))}{" "}
+                            ))}
                         </div>
                     ) : (
                         <tbody>

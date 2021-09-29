@@ -53,7 +53,7 @@ async function getGroupCount() {
     return await axios.get(endpoint);
 }
 async function getGroupDetails(id: String) {
-    const endpoint = `${BASE_URL}/groups/details/:id`;
+    const endpoint = `${BASE_URL}/groups/details/${id}`;
     return await axios.get(endpoint);
 }
 async function getGroups() {
