@@ -110,6 +110,11 @@
   - showing recently-accessed groups in dashboard
 
 ### Sprint
-- implementing remaining core features
-- implementing optional requested features
+- implementing remaining features
+  - core features
+  - optional requested features
+- testing
+  - improving API testing
+  - undertaking acceptance testing
 - project handover preparation
+  - standardising documentation 
