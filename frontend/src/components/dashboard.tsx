@@ -92,7 +92,7 @@ class DashB extends React.Component {
                                                 src={Memo}
                                                 alt="logo"
                                                 onClick={() =>
-                                                    history.push(`/memos/id`)
+                                                    history.push(`/memos/details/?id=${memos._id}`)
                                                 }
                                             />
                                             <h2 className="MemoText">
@@ -158,7 +158,7 @@ class DashB extends React.Component {
                                             <span
                                                 className="dot"
                                                 onClick={() =>
-                                                    history.push(`/groups/id`)
+                                                    history.push(`/memos/details/?id=${group._id}`)
                                                 }
                                             >
                                             <div className="RecentGroupText">
