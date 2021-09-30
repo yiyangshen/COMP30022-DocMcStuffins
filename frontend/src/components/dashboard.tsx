@@ -12,6 +12,7 @@ import { getRecentMemos } from "../api/memoApi";
 import { IGroup, IMemo } from "../interfaces";
 import { getGroupCount, getGroups } from "../api/groupApi";
 import { getContactCount } from "../api/contactApi";
+import {getUserProfile} from "../api/userApi"
 
 class DashB extends React.Component {
     /* Declare state */
@@ -21,10 +22,21 @@ class DashB extends React.Component {
         memoList: [] as IMemo[],
         recentGroupList: [] as IGroup[],
         groupCount: 9,
-        contactCount: 9
+        contactCount: 9,
+        username: 'name'
     };
     /* During loading page */
     async componentDidMount() {
+        getUserProfile().then(
+            (response) => {
+                var data = response.data.data.name.first;
+                this.setState({ username: data, isLoaded: true });
+            },
+            (error) => {
+                this.setState({ isLoaded: true, error });
+                console.log(error);
+            }
+        );
         getRecentMemos(5).then(
             (response) => {
                 var data = response.data.data;
@@ -68,7 +80,7 @@ class DashB extends React.Component {
         );
     }
     render() {
-        const { error, isLoaded, memoList, recentGroupList, groupCount, contactCount } = this.state;
+        const { error, isLoaded, memoList, recentGroupList, groupCount, contactCount, username } = this.state;
 
         if (error === true) {
             return <h3 className="error">No Order Present</h3>;
@@ -77,7 +89,7 @@ class DashB extends React.Component {
         } else {
             return (
                 <div className="border">
-                    <h1>Hi Yiyang!</h1>
+                    <h1>Hi {username}!</h1>
 
                     <div className="Memos">
                         <h3>Memos</h3>
