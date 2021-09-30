@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Testing |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [memo index](./index.md)<br>[endpoint index](../index.md) | [memoController.ts:getMemoDetails()](../../../../../backend/src/controllers/memoController.ts#L182-L214) | [test suite](../../../../../backend/tests/controllers/memos/getMemoDetails.test.ts)<br>[documentation](../../tests/memos/getMemoDetails.test.md) |
+
 # `getMemoDetails()`
 
 | Key                 | Value                |

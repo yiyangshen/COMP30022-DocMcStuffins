@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Testing |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [group index](./index.md)<br>[endpoint index](../index.md) | [groupController.ts:createGroup()](../../../../../backend/src/controllers/groupController.ts#L134-L198) | [test suite](../../../../../backend/tests/controllers/groups/createGroup.test.ts)<br>[documentation](../../tests/groups/createGroup.test.md) |
+
 # `createGroup()`
 
 | Key                 | Value         |

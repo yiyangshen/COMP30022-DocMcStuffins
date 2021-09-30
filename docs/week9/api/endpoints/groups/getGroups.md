@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Testing |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [group index](./index.md)<br>[endpoint index](../index.md) | [groupController.ts:getGroups()](../../../../../backend/src/controllers/groupController.ts#L323-L337) | [test suite](../../../../../backend/tests/controllers/groups/getGroups.test.ts)<br>[documentation](../../tests/groups/getGroups.test.md) |
+
 # `getGroups()`
 
 | Key                 | Value      |
