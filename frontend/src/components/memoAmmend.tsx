@@ -7,13 +7,16 @@ import history from "../history";
 import { getMemoDetails, deleteMemo, amendMemoDetails } from "../api/memoApi";
 import { getId } from "../api/userApi";
 import { IMemo } from "../interfaces";
+import { throws } from "assert";
 
 /* Component to memo detail */
 class memoDetail extends React.Component {
     state = {
         error: null,
         isLoaded: false,
-        memo: {} as IMemo,
+        id: "",
+        title: "",
+        notes: "",
     };
 
     memoId = getId() || "";
@@ -26,7 +29,9 @@ class memoDetail extends React.Component {
                 console.log(data);
                 this.setState({
                     isLoaded: true,
-                    memo: data,
+                    id: this.memoId,
+                    title: data.title,
+                    notes: data.notes,
                 });
             },
             (error) => {
@@ -38,10 +43,7 @@ class memoDetail extends React.Component {
 
     /* Set state accordingly to the target */
     handleChange = (event: { target: { name: any; value: String } }) => {
-        this.setState({
-            ...this.state.memo,
-            [event.target.name]: event.target.value,
-        });
+        this.setState({ [event.target.name]: event.target.value });
     };
 
     /* Handle when click on delete button */
@@ -54,15 +56,15 @@ class memoDetail extends React.Component {
 
     /* Handle when click on submit button */
     handleSubmit = (event: { preventDefault: () => void }) => {
-        const { memo } = this.state;
+        const { id, title, notes } = this.state;
         event.preventDefault();
 
         /* Create memo. Then push new entry to history */
-        amendMemoDetails(memo._id, memo.title, memo.notes);
+        amendMemoDetails(id, title, notes);
     };
 
     render() {
-        const { error, isLoaded, memo } = this.state;
+        const { error, isLoaded, title, notes } = this.state;
 
         if (error === true) {
             return <h3 className="error">No Memo Present</h3>;
@@ -77,23 +79,23 @@ class memoDetail extends React.Component {
                         <input
                             type="text"
                             id="memo.title"
-                            name="memo.title"
-                            value={memo.title}
-                            placeholder={memo.title}
+                            name="title"
+                            value={title}
+                            placeholder={title}
                             onChange={this.handleChange}
                         />
                         <label>Description</label>
                         <textarea
                             id="memo.notes"
-                            name="memo.notes"
-                            value={memo.notes}
-                            placeholder={memo.notes}
+                            name="notes"
+                            value={notes}
+                            placeholder={notes}
                             onChange={this.handleChange}
                         ></textarea>
                         <button
                             className="base-button"
                             type="button"
-                            onClick={() => history.push(`/memos`)}
+                            onClick={() => history.goBack}
                         >
                             <h2>Cancel</h2>
                         </button>
