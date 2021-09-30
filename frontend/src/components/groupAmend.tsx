@@ -1,26 +1,40 @@
 /* Import the required libraries and types */
 import React from "react";
+import { Link } from "react-router-dom";
 import history from "../history";
+import "../css/newGroup.css";
 
 /* Import the required libraries and types */
-import { getContacts } from "../api/contactApi";
+import { createGroup, getGroupDetails } from "../api/groupApi";
+import { getContactDetails } from "../api/contactApi";
 import { IContact } from "../interfaces";
+import { getId } from "../api/userApi";
 
-class groupAmend extends React.Component {
-    /* Declare states */
+class newGroup extends React.Component {
     state = {
-        error: null,
-        isLoaded: false,
+        name: "",
+        members: "" as any,
         contactsList: [] as IContact[],
-        chosen: [] as IContact[],
     };
 
-    /* During loading page */
-    async componentDidMount() {
-        getContacts().then(
+    /* Set state accordingly to the target */
+    handleChange = (event: { target: { name: any; value: String } }) => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
+    groupId = getId() || "";
+
+     /* During loading page */
+     async componentDidMount() {
+        getGroupDetails(this.groupId).then(
             (response) => {
                 var data = response.data.data;
-                this.setState({ contactsList: data, isLoaded: true });
+                console.log(data);
+                this.setState({
+                    isLoaded: true,
+                    contactsList: data.members,
+                    name: data.name,
+                });
             },
             (error) => {
                 this.setState({ isLoaded: true, error });
@@ -29,106 +43,107 @@ class groupAmend extends React.Component {
         );
     }
 
-    handleCheckboxChange = (e: { target: { value: any } }) => {
-        const tools = this.state.chosen; //Array in parent component
-        const value = e.target.value; //Checkbox value
-        tools.includes(value) //If Array contains value
-            ? tools.filter((tool) => tool._id !== value) // Then remove item from Array
-            : tools.push(value); // Else, push item to Array;
-        console.log(value);
-    };
+    /* Remember state for the next mount */
+    componentWillUnmount() {
+        localStorage.setItem("name", JSON.stringify(this.state.name));
+    }
 
     /* Handle when click on submit button */
-    handleOnClick = (event: { preventDefault: () => void }) => {
-        const { chosen } = this.state;
+    handleSubmit = (event: { preventDefault: () => void }) => {
+        const { name, members } = this.state;
         event.preventDefault();
-        console.log(chosen);
+        localStorage.removeItem("name");
+        localStorage.removeItem("chosen");
+        createGroup(name, members);
+    };
 
-        localStorage.setItem("chosen", JSON.stringify(chosen));
-        history.push(`/groups/new`);
+    /* Handle when click on cancel button */
+    handleCancel = (event: { preventDefault: () => void }) => {
+        localStorage.removeItem("name");
+        localStorage.removeItem("chosen");
+        history.push("/groups");
     };
 
     render() {
-        const { error, isLoaded, contactsList } = this.state;
+        const { name, contactsList, members } = this.state;
 
-        if (error === true) {
-            return <h3 className="error">No Contact Present</h3>;
-        } else if (isLoaded === false) {
-            return <h3 className="error">Loading...</h3>;
-        } else {
-            return (
-                <div className="border">
-                    <div className="title">
-                        <h2>
-                            <b>Adding Contacts to Group</b>
-                            <button
-                                className="base-button top-right"
-                                type="button"
-                                onClick={this.handleOnClick}
-                            >
-                                <h2>Add to Group</h2>
-                            </button>
-                        </h2>
+        return (
+            <div className="border">
+                <h1>Edit Group</h1>
+                <div className="AGbox">
+                    <label>Name</label>
+                    <input
+                        type="name"
+                        id="groupName"
+                        name="name"
+                        placeholder="Eg. Unimelb"
+                        value={name}
+                        onChange={this.handleChange}
+                    />
+                    <div className="box1">
+                        <label>Members</label>
+                        <div className="box, white">
+                            <h2>{contactsList.length}</h2>
+                        </div>
+                        <Link to="/groups/new/contact" className="addContact">
+                            add contact
+                        </Link>
                     </div>
-
-                    <table>
-                        <thead>
-                            <tr className="table-lable">
-                                <th>
-                                    <input type="checkbox" />
-                                </th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                            </tr>
-                        </thead>
-                        {contactsList !== undefined &&
-                        contactsList.length > 0 ? (
-                            <div>
-                                {contactsList.map((contact, i) => (
-                                    <div key={i}>
-                                        {" "}
-                                        <tbody>
-                                            <tr className="table-contents">
-                                                <td>
-                                                    <input
-                                                        type="checkbox"
-                                                        name="id"
-                                                        value={contact._id}
-                                                        onChange={
-                                                            this
-                                                                .handleCheckboxChange
-                                                        }
-                                                    />
-                                                </td>
-
-                                                <td>
-                                                    {contact.name.first}{" "}
-                                                    {contact.name.last}
-                                                </td>
-                                                <td>{contact.phoneNumber}</td>
-                                                <td>{contact.email}</td>
-                                            </tr>
-                                        </tbody>
-                                    </div>
-                                ))}{" "}
-                            </div>
-                        ) : (
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td>No data yet</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        )}
-                    </table>
-
-                    <div className="table"></div>
                 </div>
-            );
-        }
+
+                <table>
+                    <thead>
+                        <tr className="table-lable">
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    {contactsList !== undefined && contactsList.length > 0 ? (
+                        <div>
+                            {contactsList.map((contact, i) => (
+                                <div key={i}>
+                                    {" "}
+                                    <tbody>
+                                        <tr className="table-contents">
+                                            <td>
+                                                {contact.name.first}{" "}
+                                                {contact.name.last}
+                                            </td>
+                                            <td>{contact.phoneNumber}</td>
+                                            <td>{contact.email}</td>
+                                        </tr>
+                                    </tbody>
+                                </div>
+                            ))}{" "}
+                        </div>
+                    ) : (
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>No data yet</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    )}
+                </table>
+                <button
+                    className="base-button"
+                    type="button"
+                    onClick={this.handleCancel}
+                >
+                    <h2>Cancel</h2>
+                </button>
+                <button
+                    className="base-button"
+                    type="submit"
+                    onClick={this.handleSubmit}
+                >
+                    <h2>Submit</h2>
+                </button>
+            </div>
+        );
     }
 }
 
-export default groupAmend;
+export default newGroup;

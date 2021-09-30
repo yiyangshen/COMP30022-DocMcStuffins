@@ -91,9 +91,10 @@ function App() {
                         />
                         <Route
                             exact
-                            path="groups/details/ammend"
+                            path="/groups/details/ammend"
                             component={GroupAmend}
                         />
+
 
                         <Route exact path="/memos" component={ViewMemos} />
                         <Route exact path="/memos/new" component={NewMemo} />
