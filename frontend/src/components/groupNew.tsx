@@ -2,14 +2,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import history from "../history";
-import "../css/newGroup.css";
-
-/* Import the required libraries and types */
-import { createGroup } from "../api/groupApi";
-import { getContactDetails } from "../api/contactApi";
 import { IContact } from "../interfaces";
 
-class newGroup extends React.Component {
+/* Import components */
+import { createGroup } from "../api/groupApi";
+import { getContactDetails } from "../api/contactApi";
+import "../css/newGroup.css";
+
+/* Component for new cgroup */
+class groupNew extends React.Component {
+    /* Declare states */
     state = {
         name: "",
         members: "" as any,
@@ -23,19 +25,19 @@ class newGroup extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
+        /* Retrieve item in local storage and parse them */
         const value = await localStorage.getItem("chosen");
         if (value) {
             this.setState({ members: JSON.parse(value) });
         }
-
         const label = await localStorage.getItem("name");
-        console.log(label);
         if (label) {
             this.setState({ name: JSON.parse(label) });
         }
 
         const { members } = this.state;
 
+        /* Loop through all contact ids and get their details, set the state */
         for (var i = 0; i < members.length; i++) {
             getContactDetails(members[i]).then(
                 (response) => {
@@ -61,6 +63,8 @@ class newGroup extends React.Component {
     handleSubmit = (event: { preventDefault: () => void }) => {
         const { name, members } = this.state;
         event.preventDefault();
+
+        /* Remove item from local storage and create group */
         localStorage.removeItem("name");
         localStorage.removeItem("chosen");
         createGroup(name, members);
@@ -68,11 +72,13 @@ class newGroup extends React.Component {
 
     /* Handle when click on cancel button */
     handleCancel = (event: { preventDefault: () => void }) => {
+        /* Remove item from local storage and push to group page */
         localStorage.removeItem("name");
         localStorage.removeItem("chosen");
         history.push("/groups");
     };
 
+    /* Render the component to the screen */
     render() {
         const { name, contactsList, members } = this.state;
 
@@ -155,4 +161,5 @@ class newGroup extends React.Component {
     }
 }
 
-export default newGroup;
+/* Export component */
+export default groupNew;

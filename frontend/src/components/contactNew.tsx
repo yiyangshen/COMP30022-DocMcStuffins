@@ -3,11 +3,11 @@ import React from "react";
 import "../css/newContact.css";
 import history from "../history";
 
-/* Import the required libraries and types */
+/* Import components */
 import { createContact } from "../api/contactApi";
 
-/* Component to new contacts */
-class newContact extends React.Component {
+/* Component for new contacts */
+class contactNew extends React.Component {
     /* Declare states */
     state = {
         firstName: "",
@@ -48,10 +48,11 @@ class newContact extends React.Component {
         } = this.state;
         event.preventDefault();
 
+        /* Change value from string into contact */
         var dateOfBirth = new Date(dateOfBirthData);
         var lastMet = new Date(lastMetData);
 
-        /* Create contact. Then push new entry to history */
+        /* Create contact then push new entry to history */
         createContact(
             firstName,
             middleName,
@@ -68,6 +69,7 @@ class newContact extends React.Component {
         );
     };
 
+    /* Render the component to the screen */
     render() {
         const {
             firstName,
@@ -234,4 +236,5 @@ class newContact extends React.Component {
     }
 }
 
-export default newContact;
+/* Export component */
+export default contactNew;

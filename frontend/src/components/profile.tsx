@@ -15,6 +15,7 @@ class profile extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
+        /* Get user profile and set the states */
         getUserProfile().then(
             (response) => {
                 var data = response.data.data;
@@ -31,9 +32,11 @@ class profile extends React.Component {
         );
     }
 
+    /* Render the component to the screen */
     render() {
         const { error, isLoaded, user } = this.state;
 
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
             return <h3 className="error">No user found</h3>;
         } else if (isLoaded === false) {
@@ -73,4 +76,5 @@ class profile extends React.Component {
     }
 }
 
+/* Export component */
 export default profile;

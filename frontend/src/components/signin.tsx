@@ -1,14 +1,15 @@
 /* Import the required libraries and types */
 import React from "react";
+import { Link } from "react-router-dom";
+import history from "../history";
 
 /* Import components */
 import "../css/signin.css";
-import history from "../history";
 import { loginUser } from "../api/userApi";
-import { Link } from "react-router-dom";
 
 /* Component for Sign In */
 class Signin extends React.Component {
+    /* Declare states */
     state = {
         email: "",
         password: "",
@@ -24,10 +25,11 @@ class Signin extends React.Component {
         const { email, password } = this.state;
         event.preventDefault();
 
-        /* Login customer. Then push new entry to history */
+        /* Login user then push new entry to history */
         loginUser(email, password);
     };
 
+    /* Render the component to the screen */
     render() {
         const { email, password } = this.state;
 
@@ -79,4 +81,5 @@ class Signin extends React.Component {
     }
 }
 
+/* Export component */
 export default Signin;

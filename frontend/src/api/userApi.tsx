@@ -14,7 +14,9 @@ switch (process.env.NODE_ENV) {
         break;
 }
 
-/* Get ID from the URL */
+/* Get ID from the URL;
+ * responds with an String id that is retrieved from the URL
+ */
 function getId() {
     const query = history.location.search;
     const id = query.replace("?id=", "");

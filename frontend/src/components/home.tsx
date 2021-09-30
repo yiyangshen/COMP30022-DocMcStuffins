@@ -2,8 +2,9 @@
 import React from "react";
 import history from "../history";
 
-/* Component to home */
+/* Component for home */
 class home extends React.Component {
+    /* Render the component to the screen */
     render() {
         return (
             <div className="border">
@@ -30,4 +31,5 @@ class home extends React.Component {
     }
 }
 
+/* Export component */
 export default home;

@@ -1,6 +1,7 @@
 /* Import the required libraries and types */
 import React from "react";
 import history from "../history";
+import { IGroup, IMemo } from "../interfaces";
 
 /* Import components */
 import "../css/dashboard.css";
@@ -9,24 +10,26 @@ import MemoMore from "../img/RecentMemoMore.svg";
 import Contact from "../img/Profile.svg";
 import Group from "../img/3 User.svg";
 import { getRecentMemos } from "../api/memoApi";
-import { IGroup, IMemo } from "../interfaces";
 import { getGroupCount, getGroups } from "../api/groupApi";
 import { getContactCount } from "../api/contactApi";
-import {getUserProfile} from "../api/userApi"
+import { getUserProfile } from "../api/userApi";
 
-class DashB extends React.Component {
+/* Component for dashboard */
+class dashboard extends React.Component {
     /* Declare state */
     state = {
         error: null,
         isLoaded: false,
         memoList: [] as IMemo[],
         recentGroupList: [] as IGroup[],
-        groupCount: 9,
-        contactCount: 9,
-        username: 'name'
+        groupCount: 0,
+        contactCount: 0,
+        username: "",
     };
+
     /* During loading page */
     async componentDidMount() {
+        /* Get user profile and set the states */
         getUserProfile().then(
             (response) => {
                 var data = response.data.data.name.first;
@@ -37,6 +40,8 @@ class DashB extends React.Component {
                 console.log(error);
             }
         );
+
+        /* Get top 5 recent memos and set the states */
         getRecentMemos(5).then(
             (response) => {
                 var data = response.data.data;
@@ -47,6 +52,8 @@ class DashB extends React.Component {
                 console.log(error);
             }
         );
+
+        /* Get groups and set the states */
         getGroups().then(
             (response) => {
                 var data = response.data.data;
@@ -57,6 +64,8 @@ class DashB extends React.Component {
                 console.log(error);
             }
         );
+
+        /* Get group count and set the states */
         getGroupCount().then(
             (response) => {
                 var data = response.data.data;
@@ -68,6 +77,8 @@ class DashB extends React.Component {
                 console.log(error);
             }
         );
+
+        /* Get contact count and set the states */
         getContactCount().then(
             (response) => {
                 var data = response.data.data;
@@ -79,11 +90,22 @@ class DashB extends React.Component {
             }
         );
     }
-    render() {
-        const { error, isLoaded, memoList, recentGroupList, groupCount, contactCount, username } = this.state;
 
+    /* Render the component to the screen */
+    render() {
+        const {
+            error,
+            isLoaded,
+            memoList,
+            recentGroupList,
+            groupCount,
+            contactCount,
+            username,
+        } = this.state;
+
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
-            return <h3 className="error">No Order Present</h3>;
+            return <h3 className="error">Internal Error</h3>;
         } else if (isLoaded === false) {
             return <h3 className="error">Loading...</h3>;
         } else {
@@ -104,7 +126,9 @@ class DashB extends React.Component {
                                                 src={Memo}
                                                 alt="logo"
                                                 onClick={() =>
-                                                    history.push(`/memos/details/?id=${memos._id}`)
+                                                    history.push(
+                                                        `/memos/details/?id=${memos._id}`
+                                                    )
                                                 }
                                             />
                                             <h2 className="MemoText">
@@ -170,20 +194,26 @@ class DashB extends React.Component {
                                             <span
                                                 className="dot"
                                                 onClick={() =>
-                                                    history.push(`/groups/details/?id=${group._id}`)
+                                                    history.push(
+                                                        `/groups/details/?id=${group._id}`
+                                                    )
                                                 }
                                             >
-                                            <div className="RecentGroupText">
-                                                <h2>{group.name}</h2>
-                                                <h1>{group.members.length}</h1>
-                                            </div>
-                                            
+                                                <div className="RecentGroupText">
+                                                    <h2>{group.name}</h2>
+                                                    <h1>
+                                                        {group.members.length}
+                                                    </h1>
+                                                </div>
                                             </span>
                                         </div>
                                     ))}{" "}
                                 </div>
                             ) : null}
-                            <span className="dotMore" onClick={() => history.push(`/groups/new`)}>
+                            <span
+                                className="dotMore"
+                                onClick={() => history.push(`/groups/new`)}
+                            >
                                 <h1 className="dotText">Add more...</h1>
                             </span>
                         </div>
@@ -193,51 +223,6 @@ class DashB extends React.Component {
         }
     }
 }
-export default DashB;
 
-// export default function DashB() {
-//     return (
-//         <div className="border">
-//             <div className = "everything">
-//                 <h1>Yi Yiyang!</h1>
-//                 <div className = "Memos">
-//                     <h1>Memos</h1>
-//                     <div className = "MemoPage">
-//                         <img className = "MemoPng" src={Memo} alt="logo" onClick={() => history.push(`/memos/id`)}/>
-//                         <h2 className ="MemoText">Groceries</h2>
-//                     </div>
-//                 </div>
-
-//                 <div>
-//                     <div className = "RecentGroups">
-//                         <h1>Recent Groups</h1>
-//                         <div className ="RecentGroup">
-//                             <span className ="dot" onClick={() => history.push(`/groups/id`)}>
-//                                 <div className= "RecentGroupText">
-//                                     <h2>Family</h2>
-//                                     <h3>5</h3>
-//                                 </div>
-//                             </span>
-//                         </div>
-//                     </div>
-//                 </div>
-
-//                 <div className ="Group" onClick={() => history.push(`/groups`)}>
-//                     <img className = "GroupPng" src={Group} alt="logo"/>
-//                     <div className="container" >
-//                         <h1>Group</h1>
-//                         <h2>6</h2>
-//                     </div>
-//                 </div>
-
-//                 <div className ="Contacts" onClick={() => history.push(`/contacts`)}>
-//                     <img className = "ContactsPng" src={Contact} alt="logo"/>
-//                     <div  className="Contactscontainer" >
-//                         <h1>Contacts</h1>
-//                         <h2>6</h2>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
+/* Export component */
+export default dashboard;

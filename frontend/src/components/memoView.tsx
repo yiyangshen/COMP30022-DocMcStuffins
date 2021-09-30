@@ -1,15 +1,15 @@
 /* Import the required libraries and types */
 import React from "react";
 import history from "../history";
-
-/* Import the required libraries and types */
-import { getMemos } from "../api/memoApi";
 import { IMemo } from "../interfaces";
+
+/* Import components */
+import { getMemos } from "../api/memoApi";
 import Memo from "../img/Group 5.svg";
 import { Col, Row } from "react-bootstrap";
 
-/* Component to view memos */
-class ViewMemos extends React.Component {
+/* Component for view memos */
+class memoView extends React.Component {
     /* Declare states */
     state = {
         error: null,
@@ -19,6 +19,7 @@ class ViewMemos extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
+        /* Get all memos and set states */
         getMemos().then(
             (response) => {
                 var data = response.data.data;
@@ -30,12 +31,13 @@ class ViewMemos extends React.Component {
             }
         );
     }
-
+    /* Render the component to the screen */
     render() {
         const { error, isLoaded, memosList } = this.state;
 
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
-            return <h3 className="error">No Group Present</h3>;
+            return <h3 className="error">No Memo Present</h3>;
         } else if (isLoaded === false) {
             return <h3 className="error">Loading...</h3>;
         } else {
@@ -95,4 +97,5 @@ class ViewMemos extends React.Component {
     }
 }
 
-export default ViewMemos;
+/* Export component */
+export default memoView;

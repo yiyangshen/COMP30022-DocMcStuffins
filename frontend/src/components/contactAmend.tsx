@@ -1,15 +1,16 @@
 /* Import the required libraries and types */
 import React from "react";
-import "../css/newContact.css";
 import history from "../history";
 import moment from "moment";
 
-/* Import the required libraries and types */
+/* Import components */
 import { getContactDetails, amendContactDetails } from "../api/contactApi";
 import { getId } from "../api/userApi";
+import "../css/newContact.css";
 
-/* Component to contact details */
+/* Component for amending a contact */
 class contactAmend extends React.Component {
+    /* Declare states */
     state = {
         error: null,
         isLoaded: false,
@@ -27,10 +28,12 @@ class contactAmend extends React.Component {
         additionalNotes: "",
     };
 
+    /* Extract id from the url */
     contactId = getId() || "";
 
     /* During loading page */
     async componentDidMount() {
+        /* Get contact details and set the states */
         getContactDetails(this.contactId).then(
             (response) => {
                 var data = response.data.data;
@@ -85,7 +88,7 @@ class contactAmend extends React.Component {
         var dateOfBirth = new Date(dateOfBirthData);
         var lastMet = new Date(lastMetData);
 
-        /* Amend contact. Then push new entry to history */
+        /* Amend contact details then push new entry to history */
         amendContactDetails(
             firstName,
             middleName,
@@ -102,6 +105,7 @@ class contactAmend extends React.Component {
         );
     };
 
+    /* Render the component to the screen */
     render() {
         const {
             error,
@@ -120,6 +124,7 @@ class contactAmend extends React.Component {
             additionalNotes,
         } = this.state;
 
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
             return <h3 className="error">No Contact Present</h3>;
         } else if (isLoaded === false) {
@@ -276,4 +281,5 @@ class contactAmend extends React.Component {
     }
 }
 
+/* Export component */
 export default contactAmend;

@@ -1,25 +1,28 @@
 /* Import the required libraries and types */
 import React from "react";
-import "../css/newContact.css";
 import history from "../history";
 
-/* Import the required libraries and types */
+/* Import components */
 import { getContactDetails, deleteContact } from "../api/contactApi";
 import { getId } from "../api/userApi";
 import { IContact } from "../interfaces";
+import "../css/newContact.css";
 
-/* Component to contact details */
+/* Component for contact details */
 class detailsContact extends React.Component {
+    /* Declare states */
     state = {
         error: null,
         isLoaded: false,
         contact: {} as IContact,
     };
 
+    /* Extract id from the url */
     contactId = getId() || "";
 
     /* During loading page */
     async componentDidMount() {
+        /* Get contact details and set the states */
         getContactDetails(this.contactId).then(
             (response) => {
                 var data = response.data.data;
@@ -40,13 +43,15 @@ class detailsContact extends React.Component {
     handleDelete = (event: { preventDefault: () => void }) => {
         event.preventDefault();
 
-        /* Create memo. Then push new entry to history */
+        /* Delete contact then push new entry to history */
         deleteContact(this.contactId);
     };
 
+    /* Render the component to the screen */
     render() {
         const { error, isLoaded, contact } = this.state;
 
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
             return <h3 className="error">No Group Present</h3>;
         } else if (isLoaded === false) {
@@ -131,4 +136,5 @@ class detailsContact extends React.Component {
     }
 }
 
+/* Export component */
 export default detailsContact;
