@@ -9,7 +9,7 @@ import { getId } from "../api/userApi";
 import { IContact } from "../interfaces";
 
 /* Component to contact details */
-class detailsContact extends React.Component {
+class contactAmend extends React.Component {
     state = {
         error: null,
         isLoaded: false,
@@ -191,4 +191,4 @@ class detailsContact extends React.Component {
     }
 }
 
-export default detailsContact;
+export default contactAmend;
