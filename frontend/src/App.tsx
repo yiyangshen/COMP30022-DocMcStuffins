@@ -12,8 +12,20 @@ import SignIn from "./components/signin";
 import SignUp from "./components/signup";
 import ViewContacts from "./components/viewContacts";
 import Dashboard from "./components/dashboard";
+import NewContact from "./components/newContact";
+import NewMemo from "./components/newMemo";
+import NewGroup from "./components/newGroup";
 import ViewGroups from "./components/viewGroups";
 import ViewMemos from "./components/viewMemos";
+import MemoDetails from "./components/memoDetails";
+import ContactDetails from "./components/contactDetails";
+import AddContact from "./components/addContact";
+import GroupDetails from "./components/groupDetails";
+import Profile from "./components/profile";
+import MemoAmend from "./components/memoAmend";
+import GroupAmend from "./components/groupAmend";
+import ContactAmend from "./components/contactAmend";
+import Home from "./components/home";
 
 /* Enable credentials to be shared among pages */
 axios.defaults.withCredentials = true;
@@ -35,29 +47,67 @@ function App() {
         <div>
             <Router history={history}>
                 <Switch>
+                    <Route exact path="/" component={Home} />
                     <Route exact path="/signin" component={SignIn} />
                     <Route exact path="/register" component={SignUp} />
 
                     <div>
                         <Nav />
                         <Route exact path="/dashboard" component={Dashboard} />
-                        <Route exact path="/profile" />
+                        <Route exact path="/user/profile" component={Profile} />
 
                         <Route
                             exact
                             path="/contacts"
                             component={ViewContacts}
                         />
-                        <Route exact path="/contacts/new" />
-                        <Route path="/contacts/details" />
+                        <Route
+                            exact
+                            path="/contacts/new"
+                            component={NewContact}
+                        />
+                        <Route
+                            exact
+                            path="/contacts/details"
+                            component={ContactDetails}
+                        />
+                        <Route
+                            exact
+                            path="/contacts/details/amend"
+                            component={ContactAmend}
+                        />
 
                         <Route exact path="/groups" component={ViewGroups} />
-                        <Route exact path="/groups/new" />
-                        <Route path="/groups/details" />
+                        <Route exact path="/groups/new" component={NewGroup} />
+                        <Route
+                            exact
+                            path="/groups/new/contact"
+                            component={AddContact}
+                        />
+                        <Route
+                            exact
+                            path="/groups/details"
+                            component={GroupDetails}
+                        />
+                        <Route
+                            exact
+                            path="/groups/details/amend"
+                            component={GroupAmend}
+                        />
+
 
                         <Route exact path="/memos" component={ViewMemos} />
-                        <Route exact path="/memos/new" />
-                        <Route path="/memos/details" />
+                        <Route exact path="/memos/new" component={NewMemo} />
+                        <Route
+                            exact
+                            path="/memos/details"
+                            component={MemoDetails}
+                        />
+                        <Route
+                            exact
+                            path="/memos/details/amend"
+                            component={MemoAmend}
+                        />
                     </div>
                 </Switch>
             </Router>

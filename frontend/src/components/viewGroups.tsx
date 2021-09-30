@@ -70,7 +70,7 @@ class ViewGroups extends React.Component {
                                                     className="dot"
                                                     onClick={() =>
                                                         history.push(
-                                                            `/group/details/?id=${group.userId}`
+                                                            `/groups/details/?id=${group._id}`
                                                         )
                                                     }
                                                 >

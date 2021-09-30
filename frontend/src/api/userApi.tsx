@@ -14,6 +14,13 @@ switch (process.env.NODE_ENV) {
         break;
 }
 
+/* Get ID from the URL */
+function getId() {
+    const query = history.location.search;
+    const id = query.replace("?id=", "");
+    return id;
+}
+
 /* Retrieves the currently-authenticated user's profile details;
  * responds with a:
  *   - 200 OK if the details was successfully retrieved
@@ -113,4 +120,4 @@ async function registerUser(
 }
 
 /* Export api functions */
-export { getUserProfile, loginUser, logoutUser, registerUser };
+export { getId, getUserProfile, loginUser, logoutUser, registerUser };

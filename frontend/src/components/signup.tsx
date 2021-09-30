@@ -70,8 +70,8 @@ class Signup extends React.Component {
                         <input
                             id="name"
                             type="text"
-                            name="name"
-                            placeholder="name"
+                            name="firstName"
+                            placeholder="first name"
                             value={firstName}
                             onChange={this.handleChange}
                             required
@@ -81,8 +81,8 @@ class Signup extends React.Component {
                         <input
                             id="name"
                             type="text"
-                            name="name"
-                            placeholder="name"
+                            name="middleName"
+                            placeholder="middle name"
                             value={middleName}
                             onChange={this.handleChange}
                         />
@@ -91,8 +91,8 @@ class Signup extends React.Component {
                         <input
                             id="name"
                             type="text"
-                            name="name"
-                            placeholder="name"
+                            name="lastName"
+                            placeholder="last name"
                             value={lastName}
                             onChange={this.handleChange}
                         />
@@ -123,8 +123,8 @@ class Signup extends React.Component {
                         <input
                             id="conpassword"
                             type="password"
-                            name="conpassword"
-                            placeholder="password"
+                            name="confirmPassword"
+                            placeholder="confirm password"
                             value={confirmPassword}
                             onChange={this.handleChange}
                             required

@@ -6,13 +6,13 @@ import history from "../history";
 import { getContacts } from "../api/contactApi";
 import { IContact } from "../interfaces";
 
-/* Component to view contacts */
-class ViewContacts extends React.Component {
+class addContact extends React.Component {
     /* Declare states */
     state = {
         error: null,
         isLoaded: false,
         contactsList: [] as IContact[],
+        chosen: [] as IContact[],
     };
 
     /* During loading page */
@@ -29,6 +29,25 @@ class ViewContacts extends React.Component {
         );
     }
 
+    handleCheckboxChange = (e: { target: { value: any } }) => {
+        const tools = this.state.chosen; //Array in parent component
+        const value = e.target.value; //Checkbox value
+        tools.includes(value) //If Array contains value
+            ? tools.filter((tool) => tool._id !== value) // Then remove item from Array
+            : tools.push(value); // Else, push item to Array;
+        console.log(value);
+    };
+
+    /* Handle when click on submit button */
+    handleOnClick = (event: { preventDefault: () => void }) => {
+        const { chosen } = this.state;
+        event.preventDefault();
+        console.log(chosen);
+
+        localStorage.setItem("chosen", JSON.stringify(chosen));
+        history.push(`/groups/new`);
+    };
+
     render() {
         const { error, isLoaded, contactsList } = this.state;
 
@@ -41,13 +60,13 @@ class ViewContacts extends React.Component {
                 <div className="border">
                     <div className="title">
                         <h2>
-                            <b>Contacts</b>
+                            <b>Adding Contacts to Group</b>
                             <button
                                 className="base-button top-right"
                                 type="button"
-                                onClick={() => history.push(`/contacts/new`)}
+                                onClick={this.handleOnClick}
                             >
-                                <h2>New Contact</h2>
+                                <h2>Add to Group</h2>
                             </button>
                         </h2>
                     </div>
@@ -55,6 +74,9 @@ class ViewContacts extends React.Component {
                     <table>
                         <thead>
                             <tr className="table-lable">
+                                <th>
+                                    <input type="checkbox" />
+                                </th>
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
@@ -67,14 +89,19 @@ class ViewContacts extends React.Component {
                                     <div key={i}>
                                         {" "}
                                         <tbody>
-                                            <tr
-                                                className="table-contents"
-                                                onClick={() =>
-                                                    history.push(
-                                                        `/contacts/details/?id=${contact._id}`
-                                                    )
-                                                }
-                                            >
+                                            <tr className="table-contents">
+                                                <td>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="id"
+                                                        value={contact._id}
+                                                        onChange={
+                                                            this
+                                                                .handleCheckboxChange
+                                                        }
+                                                    />
+                                                </td>
+
                                                 <td>
                                                     {contact.name.first}{" "}
                                                     {contact.name.last}
@@ -104,4 +131,4 @@ class ViewContacts extends React.Component {
     }
 }
 
-export default ViewContacts;
+export default addContact;

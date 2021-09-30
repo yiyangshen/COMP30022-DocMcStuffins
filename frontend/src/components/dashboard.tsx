@@ -10,21 +10,36 @@ import Contact from "../img/Profile.svg";
 import Group from "../img/3 User.svg";
 import { getRecentMemos } from "../api/memoApi";
 import { IGroup, IMemo } from "../interfaces";
-import { getGroups } from "../api/groupApi";
+import { getGroupCount, getGroups } from "../api/groupApi";
+import { getContactCount } from "../api/contactApi";
+import {getUserProfile} from "../api/userApi"
 
 class DashB extends React.Component {
-    /* Declare states */
+    /* Declare state */
     state = {
         error: null,
         isLoaded: false,
         memoList: [] as IMemo[],
         recentGroupList: [] as IGroup[],
+        groupCount: 9,
+        contactCount: 9,
+        username: 'name'
     };
     /* During loading page */
     async componentDidMount() {
+        getUserProfile().then(
+            (response) => {
+                var data = response.data.data.name.first;
+                this.setState({ username: data, isLoaded: true });
+            },
+            (error) => {
+                this.setState({ isLoaded: true, error });
+                console.log(error);
+            }
+        );
         getRecentMemos(5).then(
             (response) => {
-                var data = response.data.items;
+                var data = response.data.data;
                 this.setState({ memoList: data, isLoaded: true });
             },
             (error) => {
@@ -34,8 +49,29 @@ class DashB extends React.Component {
         );
         getGroups().then(
             (response) => {
-                var data = response.data.items;
+                var data = response.data.data;
                 this.setState({ recentGroupList: data, isLoaded: true });
+            },
+            (error) => {
+                this.setState({ isLoaded: true, error });
+                console.log(error);
+            }
+        );
+        getGroupCount().then(
+            (response) => {
+                var data = response.data.data;
+                this.setState({ groupCount: data, isLoaded: true });
+                console.log(response);
+            },
+            (error) => {
+                this.setState({ isLoaded: true, error });
+                console.log(error);
+            }
+        );
+        getContactCount().then(
+            (response) => {
+                var data = response.data.data;
+                this.setState({ contactCount: data, isLoaded: true });
             },
             (error) => {
                 this.setState({ isLoaded: true, error });
@@ -44,7 +80,7 @@ class DashB extends React.Component {
         );
     }
     render() {
-        const { error, isLoaded, memoList, recentGroupList } = this.state;
+        const { error, isLoaded, memoList, recentGroupList, groupCount, contactCount, username } = this.state;
 
         if (error === true) {
             return <h3 className="error">No Order Present</h3>;
@@ -53,7 +89,7 @@ class DashB extends React.Component {
         } else {
             return (
                 <div className="border">
-                    <h1>Yi Yiyang!</h1>
+                    <h1>Hi {username}!</h1>
 
                     <div className="Memos">
                         <h3>Memos</h3>
@@ -68,7 +104,7 @@ class DashB extends React.Component {
                                                 src={Memo}
                                                 alt="logo"
                                                 onClick={() =>
-                                                    history.push(`/memos/id`)
+                                                    history.push(`/memos/details/?id=${memos._id}`)
                                                 }
                                             />
                                             <h2 className="MemoText">
@@ -84,14 +120,14 @@ class DashB extends React.Component {
                                 className="AddMoreMemo"
                                 src={MemoMore}
                                 alt="logo"
-                                onClick={() => history.push(`/memos/create`)}
+                                onClick={() => history.push(`/memos/new`)}
                             />
                             <h2 className="MemoText">Add More...</h2>
                         </div>
                     </div>
 
-                    <div className="box">
-                        <div className="box2">
+                    <div className="Dbox">
+                        <div className="Dbox2">
                             <div
                                 className="Group"
                                 onClick={() => history.push(`/groups`)}
@@ -103,7 +139,7 @@ class DashB extends React.Component {
                                 />
                                 <div className="container">
                                     <h3>Group</h3>
-                                    <h2>6</h2>
+                                    <h2>{groupCount}</h2>
                                 </div>
                             </div>
 
@@ -118,7 +154,7 @@ class DashB extends React.Component {
                                 />
                                 <div className="Contactscontainer">
                                     <h3>Contacts</h3>
-                                    <h2>6</h2>
+                                    <h2>{contactCount.valueOf()}</h2>
                                 </div>
                             </div>
                         </div>
@@ -128,35 +164,27 @@ class DashB extends React.Component {
                             {recentGroupList !== undefined &&
                             recentGroupList.length > 0 ? (
                                 <div>
-                                    {memoList.map((group, i) => (
+                                    {recentGroupList.map((group, i) => (
                                         <div key={i}>
                                             {" "}
                                             <span
                                                 className="dot"
                                                 onClick={() =>
-                                                    history.push(`/groups/id`)
+                                                    history.push(`/groups/details/?id=${group._id}`)
                                                 }
                                             >
-                                                <div className="RecentGroupText">
-                                                    <h2>Family</h2>
-                                                    <h1>5</h1>
-                                                </div>
+                                            <div className="RecentGroupText">
+                                                <h2>{group.name}</h2>
+                                                <h1>{group.members.length}</h1>
+                                            </div>
+                                            
                                             </span>
                                         </div>
                                     ))}{" "}
                                 </div>
                             ) : null}
-                            {/* <span className ="dot" onClick={() => history.push(`/groups/id`)}>
-                                    <div className= "RecentGroupText">
-                                        <h2>Family</h2>
-                                        <h1>5</h1>
-                                    </div>
-                                </span> */}
-                            <span
-                                className="dotMore"
-                                onClick={() => history.push(`/groups/create`)}
-                            >
-                                <h1>Add more...</h1>
+                            <span className="dotMore" onClick={() => history.push(`/groups/new`)}>
+                                <h1 className="dotText">Add more...</h1>
                             </span>
                         </div>
                     </div>

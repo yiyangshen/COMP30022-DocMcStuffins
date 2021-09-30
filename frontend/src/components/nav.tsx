@@ -26,7 +26,7 @@ function Navi() {
                         <input type="text" placeholder="Search" className="" />
                     </h2>
                 </Form>
-                <Link to="/profile" className="menu-bars">
+                <Link to="/user/profile" className="menu-bars">
                     <h2>Profile</h2>
                 </Link>
             </div>
