@@ -1,6 +1,7 @@
 /* Import the required libraries and types */
 import React from "react";
 import history from "../history";
+import moment from "moment";
 
 /* Import components */
 import { getContactDetails, deleteContact } from "../api/contactApi";
@@ -23,13 +24,13 @@ class detailsContact extends React.Component {
     /* During loading page */
     async componentDidMount() {
         /* Get contact details and set the states */
-        getContactDetails(this.contactId).then(
+        await getContactDetails(this.contactId).then(
             (response) => {
-                var data = response.data.data;
+                var data = response.data;
                 console.log(data);
                 this.setState({
                     isLoaded: true,
-                    contact: data,
+                    contact: data.data,
                 });
             },
             (error) => {
@@ -104,15 +105,21 @@ class detailsContact extends React.Component {
                         </div>
                         <label>Date of Birth</label>
                         <div className="box, white">
-                            <h2>{contact.dateOfBirth}</h2>
+                            <h2>
+                                {moment(contact.dateOfBirth).format(
+                                    "DD MMM YYYY"
+                                )}
+                            </h2>
                         </div>
                         <label>First Contact Timestamp</label>
                         <div className="box, white">
-                            <h2>{contact.lastMet}</h2>
+                            <h2>
+                                {moment(contact.lastMet).format("DD MMM YYYY")}
+                            </h2>
                         </div>
                         <label>Assigned Group</label>
                         <div className="box, white">
-                            <h2>{contact.groupId}</h2>
+                            <h2>{contact.groupId?.name}</h2>
                         </div>
                     </div>
 

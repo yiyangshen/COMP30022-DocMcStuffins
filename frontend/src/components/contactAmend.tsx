@@ -2,10 +2,12 @@
 import React from "react";
 import history from "../history";
 import moment from "moment";
+import { IGroup } from "../interfaces";
 
 /* Import components */
 import { getContactDetails, amendContactDetails } from "../api/contactApi";
 import { getId } from "../api/userApi";
+import { getGroups } from "../api/groupApi";
 import "../css/newContact.css";
 
 /* Component for amending a contact */
@@ -26,6 +28,7 @@ class contactAmend extends React.Component {
         photo: "",
         relationship: "",
         additionalNotes: "",
+        groupsList: [] as IGroup[],
     };
 
     /* Extract id from the url */
@@ -46,15 +49,27 @@ class contactAmend extends React.Component {
                     groupId: data.groupId,
                     gender: data.gender,
                     dateOfBirthData: moment(data.dateOfBirth).format(
-                        "DD MMM, YYYY"
+                        "DD MMM YYYY"
                     ),
-                    lastMetData: moment(data.lastMet).format("DD MMM, YYYY"),
+                    lastMetData: moment(data.lastMet).format("DD MMM YYYY"),
                     phoneNumber: data.phoneNumber,
                     email: data.email,
                     photo: data.photo,
                     relationship: data.relationship,
                     additionalNotes: data.additionalNotes,
                 });
+            },
+            (error) => {
+                this.setState({ isLoaded: true, error });
+                console.log(error);
+            }
+        );
+
+        /* Get all groups and set states */
+        await getGroups().then(
+            (response) => {
+                var data = response.data.data;
+                this.setState({ groupsList: data, isLoaded: true });
             },
             (error) => {
                 this.setState({ isLoaded: true, error });
@@ -85,11 +100,20 @@ class contactAmend extends React.Component {
             additionalNotes,
         } = this.state;
         event.preventDefault();
-        var dateOfBirth = new Date(dateOfBirthData);
-        var lastMet = new Date(lastMetData);
+
+        let dateOfBirth = new Date(-8640000000000000);
+        let lastMet = new Date(-8640000000000000);
+
+        if (dateOfBirthData !== "") {
+            dateOfBirth = new Date(dateOfBirthData);
+        }
+        if (lastMetData !== "") {
+            lastMet = new Date(lastMetData);
+        }
 
         /* Amend contact details then push new entry to history */
         amendContactDetails(
+            this.contactId,
             firstName,
             middleName,
             lastName,
@@ -122,6 +146,7 @@ class contactAmend extends React.Component {
             photo,
             relationship,
             additionalNotes,
+            groupsList,
         } = this.state;
 
         /* Checks if it returns an error, still loading, or has a value accordingly */
@@ -232,10 +257,16 @@ class contactAmend extends React.Component {
                                 <select
                                     id="assignedGroup"
                                     name="groupId"
-                                    defaultValue={groupId}
+                                    value={groupId}
+                                    placeholder={groupId}
                                     onChange={this.handleChange}
                                 >
-                                    <option value="unimelb">Unimelb</option>
+                                    <option value=" ">None</option>
+                                    {groupsList.map((group, i) => (
+                                        <option key={i} value={group._id}>
+                                            {group.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
