@@ -58,7 +58,7 @@ class groupDetail extends React.Component {
                             type="button"
                             onClick={() =>
                                 history.push(
-                                    `/groups/details/ammend/?id=${this.groupId}`
+                                    `/groups/details/amend/?id=${this.groupId}`
                                 )
                             }
                         >

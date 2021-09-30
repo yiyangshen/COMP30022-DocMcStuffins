@@ -62,7 +62,7 @@ class detailsContact extends React.Component {
                                 type="button"
                                 onClick={() =>
                                     history.push(
-                                        `/contacts/details/ammend/?id=${contact._id}`
+                                        `/contacts/details/amend/?id=${contact._id}`
                                     )
                                 }
                             >
