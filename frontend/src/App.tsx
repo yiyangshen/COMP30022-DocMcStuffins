@@ -22,7 +22,7 @@ import ContactDetails from "./components/contactDetails";
 import AddContact from "./components/addContact";
 import GroupDetails from "./components/groupDetails";
 import Profile from "./components/profile";
-import MemoAmmend from "./components/memoAmmend";
+import MemoAmend from "./components/memoAmend";
 import GroupAmend from "./components/groupAmend";
 import ContactAmend from "./components/contactAmend";
 import Home from "./components/home";
@@ -73,7 +73,7 @@ function App() {
                         />
                         <Route
                             exact
-                            path="/contacts/details/ammend"
+                            path="/contacts/details/amend"
                             component={ContactAmend}
                         />
 
@@ -91,7 +91,7 @@ function App() {
                         />
                         <Route
                             exact
-                            path="/groups/details/ammend"
+                            path="/groups/details/amend"
                             component={GroupAmend}
                         />
 
@@ -105,8 +105,8 @@ function App() {
                         />
                         <Route
                             exact
-                            path="/memos/details/ammend"
-                            component={MemoAmmend}
+                            path="/memos/details/amend"
+                            component={MemoAmend}
                         />
                     </div>
                 </Switch>

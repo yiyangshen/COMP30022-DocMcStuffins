@@ -62,7 +62,7 @@ class memoDetail extends React.Component {
                                 type="button"
                                 onClick={() =>
                                     history.push(
-                                        `/memos/details/ammend/?id=${this.memoId}`
+                                        `/memos/details/amend/?id=${this.memoId}`
                                     )
                                 }
                             >
