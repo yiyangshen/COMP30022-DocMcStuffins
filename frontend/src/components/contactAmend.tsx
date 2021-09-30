@@ -99,7 +99,6 @@ class contactAmend extends React.Component {
             relationship,
             additionalNotes
         );
-        // deleteContact(this.contactId);
     }
 
     
@@ -160,8 +159,8 @@ class contactAmend extends React.Component {
                                     <option key="Female" value="Female">
                                         Female
                                     </option>
-                                    <option key="Others" value="Others">
-                                        Spoon
+                                    <option key="Other" value="Other">
+                                        Other
                                     </option>
                                 </select>
                                 <label>Country</label>
