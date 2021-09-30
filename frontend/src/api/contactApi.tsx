@@ -103,6 +103,7 @@ async function getContactDetails(id: String) {
  *   - 500 Internal Server Error otherwise
  */
 async function amendContactDetails(
+    id: string,
     firstName: string,
     middleName: string,
     lastName: string,
@@ -116,9 +117,10 @@ async function amendContactDetails(
     relationship: string,
     additionalNotes: string
 ) {
-    const endpoint = `${BASE_URL}/contacts/details/ammend`;
+    const endpoint = `${BASE_URL}/contacts/details/amend`;
     return await axios
         .patch(endpoint, {
+            id,
             firstName,
             middleName,
             lastName,

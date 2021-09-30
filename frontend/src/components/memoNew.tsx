@@ -3,10 +3,12 @@ import React from "react";
 import history from "../history";
 import "../css/newMemo.css";
 
-/* Import the required libraries and types */
+/* Import components */
 import { createMemo } from "../api/memoApi";
 
-class newMemo extends React.Component {
+/* Component for new memo */
+class memoNew extends React.Component {
+    /* Declare states */
     state = {
         title: "",
         notes: "",
@@ -22,10 +24,11 @@ class newMemo extends React.Component {
         const { title, notes } = this.state;
         event.preventDefault();
 
-        /* Create memo. Then push new entry to history */
+        /* Create memo then push new entry to history */
         createMemo(title, notes);
     };
 
+    /* Render the component to the screen */
     render() {
         const { title, notes } = this.state;
 
@@ -66,4 +69,5 @@ class newMemo extends React.Component {
     }
 }
 
-export default newMemo;
+/* Export component */
+export default memoNew;

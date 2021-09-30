@@ -1,14 +1,14 @@
 /* Import the required libraries and types */
 import React from "react";
 import history from "../history";
-
-/* Import the required libraries and types */
-import { getGroups } from "../api/groupApi";
 import { IGroup } from "../interfaces";
+
+/* Import components */
+import { getGroups } from "../api/groupApi";
 import { Col, Row } from "react-bootstrap";
 
-/* Component to view groups */
-class ViewGroups extends React.Component {
+/* Component for view groups */
+class groupView extends React.Component {
     /* Declare states */
     state = {
         error: null,
@@ -18,6 +18,7 @@ class ViewGroups extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
+        /* Get all groups and set states */
         getGroups().then(
             (response) => {
                 var data = response.data.data;
@@ -30,9 +31,11 @@ class ViewGroups extends React.Component {
         );
     }
 
+    /* Render the component to the screen */
     render() {
         const { error, isLoaded, groupsList } = this.state;
 
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
             return <h3 className="error">No Group Present</h3>;
         } else if (isLoaded === false) {
@@ -94,4 +97,5 @@ class ViewGroups extends React.Component {
     }
 }
 
-export default ViewGroups;
+/* Export component */
+export default groupView;

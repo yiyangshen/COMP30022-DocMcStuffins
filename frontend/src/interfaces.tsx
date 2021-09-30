@@ -34,7 +34,7 @@ export interface IGroup {
 export interface IContact {
     _id: string;
     userId: string;
-    groupId?: string;
+    groupId?: IGroup;
     name: IName;
     gender: string;
     dateOfBirth?: Date;

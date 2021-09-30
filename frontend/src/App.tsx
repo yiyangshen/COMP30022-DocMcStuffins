@@ -7,25 +7,28 @@ import "./App.css";
 
 /* Import components */
 import history from "./history";
+import Home from "./components/home";
 import Nav from "./components/nav";
 import SignIn from "./components/signin";
 import SignUp from "./components/signup";
-import ViewContacts from "./components/viewContacts";
-import Dashboard from "./components/dashboard";
-import NewContact from "./components/newContact";
-import NewMemo from "./components/newMemo";
-import NewGroup from "./components/newGroup";
-import ViewGroups from "./components/viewGroups";
-import ViewMemos from "./components/viewMemos";
-import MemoDetails from "./components/memoDetails";
-import ContactDetails from "./components/contactDetails";
-import AddContact from "./components/addContact";
-import GroupDetails from "./components/groupDetails";
 import Profile from "./components/profile";
-import MemoAmend from "./components/memoAmend";
-import GroupAmend from "./components/groupAmend";
+import Dashboard from "./components/dashboard";
+
+import ContactView from "./components/contactView";
+import ContactNew from "./components/contactNew";
+import ContactDetails from "./components/contactDetails";
 import ContactAmend from "./components/contactAmend";
-import Home from "./components/home";
+
+import GroupDetails from "./components/groupDetails";
+import GroupAmend from "./components/groupAmend";
+import GroupAddContact from "./components/groupAddContact";
+import GroupNew from "./components/groupNew";
+import GroupView from "./components/groupView";
+
+import MemoNew from "./components/memoNew";
+import MemoView from "./components/memoView";
+import MemoDetails from "./components/memoDetails";
+import MemoAmend from "./components/memoAmend";
 
 /* Enable credentials to be shared among pages */
 axios.defaults.withCredentials = true;
@@ -56,15 +59,11 @@ function App() {
                         <Route exact path="/dashboard" component={Dashboard} />
                         <Route exact path="/user/profile" component={Profile} />
 
-                        <Route
-                            exact
-                            path="/contacts"
-                            component={ViewContacts}
-                        />
+                        <Route exact path="/contacts" component={ContactView} />
                         <Route
                             exact
                             path="/contacts/new"
-                            component={NewContact}
+                            component={ContactNew}
                         />
                         <Route
                             exact
@@ -77,12 +76,12 @@ function App() {
                             component={ContactAmend}
                         />
 
-                        <Route exact path="/groups" component={ViewGroups} />
-                        <Route exact path="/groups/new" component={NewGroup} />
+                        <Route exact path="/groups" component={GroupView} />
+                        <Route exact path="/groups/new" component={GroupNew} />
                         <Route
                             exact
                             path="/groups/new/contact"
-                            component={AddContact}
+                            component={GroupAddContact}
                         />
                         <Route
                             exact
@@ -95,9 +94,8 @@ function App() {
                             component={GroupAmend}
                         />
 
-
-                        <Route exact path="/memos" component={ViewMemos} />
-                        <Route exact path="/memos/new" component={NewMemo} />
+                        <Route exact path="/memos" component={MemoView} />
+                        <Route exact path="/memos/new" component={MemoNew} />
                         <Route
                             exact
                             path="/memos/details"
@@ -115,4 +113,5 @@ function App() {
     );
 }
 
+/* Export component */
 export default App;

@@ -3,12 +3,13 @@ import React from "react";
 import "../css/newMemo.css";
 import history from "../history";
 
-/* Import the required libraries and types */
+/* Import components */
 import { getMemoDetails, deleteMemo, amendMemoDetails } from "../api/memoApi";
 import { getId } from "../api/userApi";
 
-/* Component to memo detail */
+/* Component for memo detail */
 class memoDetail extends React.Component {
+    /* Declare states */
     state = {
         error: null,
         isLoaded: false,
@@ -17,10 +18,12 @@ class memoDetail extends React.Component {
         notes: "",
     };
 
+    /* Extract id from the url */
     memoId = getId() || "";
 
     /* During loading page */
     async componentDidMount() {
+        /* Get memo details and set the states */
         getMemoDetails(this.memoId).then(
             (response) => {
                 var data = response.data.data;
@@ -48,7 +51,7 @@ class memoDetail extends React.Component {
     handleDelete = (event: { preventDefault: () => void }) => {
         event.preventDefault();
 
-        /* delete memo. Then push new entry to history */
+        /* Delete memo then push new entry to history */
         deleteMemo(this.memoId);
     };
 
@@ -57,13 +60,15 @@ class memoDetail extends React.Component {
         const { id, title, notes } = this.state;
         event.preventDefault();
 
-        /* Create memo. Then push new entry to history */
+        /* Amend memo details then push new entry to history */
         amendMemoDetails(id, title, notes);
     };
 
+    /* Render the component to the screen */
     render() {
         const { error, isLoaded, title, notes } = this.state;
 
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
             return <h3 className="error">No Memo Present</h3>;
         } else if (isLoaded === false) {
@@ -107,4 +112,5 @@ class memoDetail extends React.Component {
     }
 }
 
+/* Export component */
 export default memoDetail;

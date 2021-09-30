@@ -1,25 +1,28 @@
 /* Import the required libraries and types */
 import React from "react";
-import "../css/newMemo.css";
 import history from "../history";
-
-/* Import the required libraries and types */
-import { getMemoDetails, deleteMemo } from "../api/memoApi";
-import { getId } from "../api/userApi";
 import { IMemo } from "../interfaces";
 
-/* Component to memo detail */
+/* Import components */
+import { getMemoDetails, deleteMemo } from "../api/memoApi";
+import { getId } from "../api/userApi";
+import "../css/newMemo.css";
+
+/* Component for memo detail */
 class memoDetail extends React.Component {
+    /* Declare states */
     state = {
         error: null,
         isLoaded: false,
         memo: {} as IMemo,
     };
 
+    /* Extract id from the url */
     memoId = getId() || "";
 
     /* During loading page */
     async componentDidMount() {
+        /* Get memo details and set the states */
         getMemoDetails(this.memoId).then(
             (response) => {
                 var data = response.data.data;
@@ -40,15 +43,17 @@ class memoDetail extends React.Component {
     handleDelete = (event: { preventDefault: () => void }) => {
         event.preventDefault();
 
-        /* delete memo. Then push new entry to history */
+        /* Delete memo then push new entry to history */
         deleteMemo(this.memoId);
     };
 
+    /* Render the component to the screen */
     render() {
         const { error, isLoaded, memo } = this.state;
 
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
-            return <h3 className="error">No Group Present</h3>;
+            return <h3 className="error">No MemoPresent</h3>;
         } else if (isLoaded === false) {
             return <h3 className="error">Loading...</h3>;
         } else {
@@ -92,4 +97,5 @@ class memoDetail extends React.Component {
     }
 }
 
+/* Export component */
 export default memoDetail;

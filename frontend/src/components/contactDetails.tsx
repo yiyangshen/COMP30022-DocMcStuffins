@@ -1,32 +1,36 @@
 /* Import the required libraries and types */
 import React from "react";
-import "../css/newContact.css";
 import history from "../history";
+import moment from "moment";
 
-/* Import the required libraries and types */
+/* Import components */
 import { getContactDetails, deleteContact } from "../api/contactApi";
 import { getId } from "../api/userApi";
 import { IContact } from "../interfaces";
+import "../css/newContact.css";
 
-/* Component to contact details */
+/* Component for contact details */
 class detailsContact extends React.Component {
+    /* Declare states */
     state = {
         error: null,
         isLoaded: false,
         contact: {} as IContact,
     };
 
+    /* Extract id from the url */
     contactId = getId() || "";
 
     /* During loading page */
     async componentDidMount() {
-        getContactDetails(this.contactId).then(
+        /* Get contact details and set the states */
+        await getContactDetails(this.contactId).then(
             (response) => {
-                var data = response.data.data;
+                var data = response.data;
                 console.log(data);
                 this.setState({
                     isLoaded: true,
-                    contact: data,
+                    contact: data.data,
                 });
             },
             (error) => {
@@ -40,13 +44,15 @@ class detailsContact extends React.Component {
     handleDelete = (event: { preventDefault: () => void }) => {
         event.preventDefault();
 
-        /* Create memo. Then push new entry to history */
+        /* Delete contact then push new entry to history */
         deleteContact(this.contactId);
     };
 
+    /* Render the component to the screen */
     render() {
         const { error, isLoaded, contact } = this.state;
 
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
             return <h3 className="error">No Group Present</h3>;
         } else if (isLoaded === false) {
@@ -99,15 +105,21 @@ class detailsContact extends React.Component {
                         </div>
                         <label>Date of Birth</label>
                         <div className="box, white">
-                            <h2>{contact.dateOfBirth}</h2>
+                            <h2>
+                                {moment(contact.dateOfBirth).format(
+                                    "DD MMM YYYY"
+                                )}
+                            </h2>
                         </div>
                         <label>First Contact Timestamp</label>
                         <div className="box, white">
-                            <h2>{contact.lastMet}</h2>
+                            <h2>
+                                {moment(contact.lastMet).format("DD MMM YYYY")}
+                            </h2>
                         </div>
                         <label>Assigned Group</label>
                         <div className="box, white">
-                            <h2>{contact.groupId}</h2>
+                            <h2>{contact.groupId?.name}</h2>
                         </div>
                     </div>
 
@@ -131,4 +143,5 @@ class detailsContact extends React.Component {
     }
 }
 
+/* Export component */
 export default detailsContact;

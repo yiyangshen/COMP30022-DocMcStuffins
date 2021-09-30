@@ -1,22 +1,24 @@
 /* Import the required libraries and types */
 import React from "react";
 import history from "../history";
+import { IContact } from "../interfaces";
 
 /* Import the required libraries and types */
 import { getContacts } from "../api/contactApi";
-import { IContact } from "../interfaces";
 
-/* Component to view contacts */
-class ViewContacts extends React.Component {
+/* Component for adding contact to a specified group */
+class addContact extends React.Component {
     /* Declare states */
     state = {
         error: null,
         isLoaded: false,
         contactsList: [] as IContact[],
+        chosen: [] as IContact[],
     };
 
     /* During loading page */
     async componentDidMount() {
+        /* Get contacts and set the states */
         getContacts().then(
             (response) => {
                 var data = response.data.data;
@@ -29,11 +31,32 @@ class ViewContacts extends React.Component {
         );
     }
 
+    /* Handle change whne checkbock is clicked */
+    handleCheckboxChange = (e: { target: { value: any } }) => {
+        const checkboxes = this.state.chosen; //Array in parent component
+        const value = e.target.value; //Checkbox value
+        checkboxes.includes(value) //If Array contains value
+            ? checkboxes.filter((checkbox) => checkbox._id !== value) // Then remove item from Array
+            : checkboxes.push(value); // Else, push item to Array;
+    };
+
+    /* Handle when click on submit button */
+    handleOnClick = (event: { preventDefault: () => void }) => {
+        const { chosen } = this.state;
+        event.preventDefault();
+
+        /* Store checked item in local storage to access it in different page, then go back to creating new group */
+        localStorage.setItem("chosen", JSON.stringify(chosen));
+        history.push(`/groups/new`);
+    };
+
+    /* Render the component to the screen */
     render() {
         const { error, isLoaded, contactsList } = this.state;
 
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
-            return <h3 className="error">No Contact Present</h3>;
+            return <h3 className="error">No Contact Present to be added</h3>;
         } else if (isLoaded === false) {
             return <h3 className="error">Loading...</h3>;
         } else {
@@ -41,13 +64,13 @@ class ViewContacts extends React.Component {
                 <div className="border">
                     <div className="title">
                         <h2>
-                            <b>Contacts</b>
+                            <b>Adding Contacts to Group</b>
                             <button
                                 className="base-button top-right"
                                 type="button"
-                                onClick={() => history.push(`/contacts/new`)}
+                                onClick={this.handleOnClick}
                             >
-                                <h2>New Contact</h2>
+                                <h2>Add to Group</h2>
                             </button>
                         </h2>
                     </div>
@@ -55,6 +78,9 @@ class ViewContacts extends React.Component {
                     <table>
                         <thead>
                             <tr className="table-lable">
+                                <th>
+                                    <input type="checkbox" />
+                                </th>
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
@@ -67,14 +93,19 @@ class ViewContacts extends React.Component {
                                     <div key={i}>
                                         {" "}
                                         <tbody>
-                                            <tr
-                                                className="table-contents"
-                                                onClick={() =>
-                                                    history.push(
-                                                        `/contacts/details/?id=${contact._id}`
-                                                    )
-                                                }
-                                            >
+                                            <tr className="table-contents">
+                                                <td>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="id"
+                                                        value={contact._id}
+                                                        onChange={
+                                                            this
+                                                                .handleCheckboxChange
+                                                        }
+                                                    />
+                                                </td>
+
                                                 <td>
                                                     {contact.name.first}{" "}
                                                     {contact.name.last}
@@ -104,4 +135,5 @@ class ViewContacts extends React.Component {
     }
 }
 
-export default ViewContacts;
+/* Export component */
+export default addContact;

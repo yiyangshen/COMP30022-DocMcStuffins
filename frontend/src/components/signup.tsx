@@ -1,14 +1,15 @@
 /* Import the required libraries and types */
 import React from "react";
 import { Link } from "react-router-dom";
+import history from "../history";
 
 /* Import components */
 import "../css/signin.css";
-import history from "../history";
 import { registerUser } from "../api/userApi";
 
 /* Component for Sign Up */
 class Signup extends React.Component {
+    /* Declare states */
     state = {
         firstName: "",
         middleName: "",
@@ -35,7 +36,7 @@ class Signup extends React.Component {
         } = this.state;
         event.preventDefault();
 
-        /* Register user. Then push new entry to history */
+        /* Register user then push new entry to history */
         if (password === confirmPassword) {
             registerUser(firstName, middleName, lastName, email, password);
         } else {
@@ -43,6 +44,7 @@ class Signup extends React.Component {
         }
     };
 
+    /* Render the component to the screen */
     render() {
         const {
             firstName,
@@ -143,4 +145,5 @@ class Signup extends React.Component {
     }
 }
 
+/* Export component */
 export default Signup;
