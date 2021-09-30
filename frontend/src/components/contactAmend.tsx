@@ -61,24 +61,24 @@ class contactAmend extends React.Component {
         } else {
             return (
                 <div className="border">
-                    <h1>Add contact</h1>
+                    <h1>Edit contact</h1>
                     <div className="box">
                         <form onSubmit={this.handleSave}>
                             <div className="boxLeft">
                                 <label>Name</label>
-                                <input
-                                    type="text"
-                                    id="fullName"
-                                    name="firstName"
-                                    value={contact.name.first}
-                                    placeholder="Eg. John "
-                                    onChange={this.handleChange}
-                                />
+                                    <input
+                                        type="text"
+                                        id="fullName"
+                                        name="firstName"
+                                        defaultValue={contact.name.first}
+                                        placeholder="Eg. John "
+                                        onChange={this.handleChange}
+                                    />
                                 <input
                                     type="text"
                                     id="fullName"
                                     name="lastName"
-                                    value={contact.name.last}
+                                    defaultValue={contact.name.last}
                                     placeholder="Eg. Doe"
                                     onChange={this.handleChange}
                                 />
@@ -87,7 +87,7 @@ class contactAmend extends React.Component {
                                     id="gender"
                                     name="gender"
                                     onChange={this.handleChange}
-                                    value={contact.gender}
+                                    defaultValue={contact.gender}
                                 >
                                     <option key="Male" value="Male">
                                         Male
@@ -110,7 +110,7 @@ class contactAmend extends React.Component {
                                     id="email"
                                     name="email"
                                     placeholder="Eg. JohnDoe@gmail.com"
-                                    value={contact.email}
+                                    defaultValue={contact.email}
                                     onChange={this.handleChange}
                                 />
                                 <label>Phone Number</label>
@@ -119,7 +119,7 @@ class contactAmend extends React.Component {
                                     id="phoneNumber"
                                     name="phoneNumber"
                                     placeholder="Eg. 0412563286"
-                                    value={contact.phoneNumber}
+                                    defaultValue={contact.phoneNumber}
                                     onChange={this.handleChange}
                                 />
                                 <label>Relationship</label>
@@ -127,7 +127,7 @@ class contactAmend extends React.Component {
                                     type="text"
                                     id="relationship"
                                     name="relationship"
-                                    value={contact.relationship}
+                                    defaultValue={contact.relationship}
                                     placeholder="Eg. Friends"
                                     onChange={this.handleChange}
                                 />
@@ -137,14 +137,14 @@ class contactAmend extends React.Component {
                                     id="firstContactTimestamp"
                                     name="lastMetData"
                                     placeholder="Eg. 3.15pm, 13 Aug 2091"
-                                    value={contact.lastMet?.toDateString()}
+                                    defaultValue={contact.lastMet?.toDateString()}
                                     onChange={this.handleChange}
                                 />
                                 <label>Assigned Group</label>
                                 <select
                                     id="assignedGroup"
                                     name="groupId"
-                                    value={contact.groupId}
+                                    defaultValue={contact.groupId}
                                     onChange={this.handleChange}
                                 >
                                     <option value="unimelb">Unimelb</option>
@@ -157,7 +157,7 @@ class contactAmend extends React.Component {
                                     id="additionalNotes"
                                     name="contact.additionalNotes"
                                     placeholder="Write something.."
-                                    value={contact.additionalNotes}
+                                    defaultValue={contact.additionalNotes}
                                     onChange={this.handleChange}
                                 ></textarea>
     
@@ -192,3 +192,4 @@ class contactAmend extends React.Component {
 }
 
 export default contactAmend;
+
