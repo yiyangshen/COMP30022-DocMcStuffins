@@ -23,8 +23,9 @@ import AddContact from "./components/addContact";
 import GroupDetails from "./components/groupDetails";
 import Profile from "./components/profile";
 import MemoAmmend from "./components/memoAmmend";
-import GroupAmend from "./components/groupAmend"
-import ContactAmend from "./components/contactAmend"
+import GroupAmend from "./components/groupAmend";
+import ContactAmend from "./components/contactAmend";
+import Home from "./components/home";
 
 /* Enable credentials to be shared among pages */
 axios.defaults.withCredentials = true;
@@ -46,6 +47,7 @@ function App() {
         <div>
             <Router history={history}>
                 <Switch>
+                    <Route exact path="/" component={Home} />
                     <Route exact path="/signin" component={SignIn} />
                     <Route exact path="/register" component={SignUp} />
 
@@ -69,7 +71,11 @@ function App() {
                             path="/contacts/details"
                             component={ContactDetails}
                         />
-                        <Route exact path="/contacts/details/ammend" component = {ContactAmend}/>
+                        <Route
+                            exact
+                            path="/contacts/details/ammend"
+                            component={ContactAmend}
+                        />
 
                         <Route exact path="/groups" component={ViewGroups} />
                         <Route exact path="/groups/new" component={NewGroup} />
@@ -83,7 +89,11 @@ function App() {
                             path="/groups/details"
                             component={GroupDetails}
                         />
-                        <Route exact path="groups/details/ammend" component={GroupAmend}/>
+                        <Route
+                            exact
+                            path="groups/details/ammend"
+                            component={GroupAmend}
+                        />
 
                         <Route exact path="/memos" component={ViewMemos} />
                         <Route exact path="/memos/new" component={NewMemo} />

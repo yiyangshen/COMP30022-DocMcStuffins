@@ -6,8 +6,6 @@ import history from "../history";
 /* Import the required libraries and types */
 import { getMemoDetails, deleteMemo, amendMemoDetails } from "../api/memoApi";
 import { getId } from "../api/userApi";
-import { IMemo } from "../interfaces";
-import { throws } from "assert";
 
 /* Component to memo detail */
 class memoDetail extends React.Component {
