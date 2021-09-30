@@ -4,7 +4,11 @@ import "../css/newContact.css";
 import history from "../history";
 
 /* Import the required libraries and types */
-import { getContactDetails, amendContactDetails, createContact, deleteContact} from "../api/contactApi";
+import {
+    getContactDetails,
+    createContact,
+    deleteContact,
+} from "../api/contactApi";
 import { getId } from "../api/userApi";
 
 /* Component to contact details */
@@ -29,7 +33,6 @@ class contactAmend extends React.Component {
 
     contactId = getId() || "";
 
-    
     /* During loading page */
     async componentDidMount() {
         getContactDetails(this.contactId).then(
@@ -100,11 +103,12 @@ class contactAmend extends React.Component {
             additionalNotes
         );
         // deleteContact(this.contactId);
-    }
+    };
 
-    
     render() {
-        const { error, isLoaded, 
+        const {
+            error,
+            isLoaded,
             firstName,
             middleName,
             lastName,
@@ -131,14 +135,14 @@ class contactAmend extends React.Component {
                         <form onSubmit={this.handleSave}>
                             <div className="boxLeft">
                                 <label>Name</label>
-                                    <input
-                                        type="text"
-                                        id="fullName"
-                                        name="firstName"
-                                        defaultValue={firstName}
-                                        placeholder="Eg. John "
-                                        onChange={this.handleChange}
-                                    />
+                                <input
+                                    type="text"
+                                    id="fullName"
+                                    name="firstName"
+                                    defaultValue={firstName}
+                                    placeholder="Eg. John "
+                                    onChange={this.handleChange}
+                                />
                                 <input
                                     type="text"
                                     id="fullName"
@@ -215,7 +219,7 @@ class contactAmend extends React.Component {
                                     <option value="unimelb">Unimelb</option>
                                 </select>
                             </div>
-    
+
                             <div className="boxRight">
                                 <label>Additional Notes</label>
                                 <textarea
@@ -225,10 +229,10 @@ class contactAmend extends React.Component {
                                     defaultValue={additionalNotes}
                                     onChange={this.handleChange}
                                 ></textarea>
-    
+
                                 <p>
-                                    Click on the "Choose File" button to choose a
-                                    picture:
+                                    Click on the "Choose File" button to choose
+                                    a picture:
                                 </p>
                                 <form action="/action_page.php">
                                     <input
@@ -257,4 +261,3 @@ class contactAmend extends React.Component {
 }
 
 export default contactAmend;
-

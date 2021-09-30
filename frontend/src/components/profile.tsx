@@ -1,6 +1,5 @@
 /* Import the required libraries and types */
 import React from "react";
-import history from "../history";
 
 /* Import the required libraries and types */
 import { getUserProfile } from "../api/userApi";
