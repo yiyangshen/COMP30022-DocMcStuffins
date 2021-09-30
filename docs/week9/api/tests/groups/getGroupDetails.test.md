@@ -1,4 +1,9 @@
-# [getGroupDetails()](../../../../../backend/src/controllers/groupController.ts)
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [group index](./index.md)<br>[test index](../index.md) | [groupController.ts:getGroupDetails()](../../../../../backend/src/controllers/groupController.ts#L286-L315) | [documentation](../../endpoints/groups/getGroupDetails.md) |
+# `getGroupDetails()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -39,4 +44,3 @@
 | 3   | Get group details with group ID not belonging to the requester | 1. Log in<br>2. GET `api/group/details/:id` with `id` being the contact ID of another user | 403 Forbidden    |
 | 4   | Get group details with group ID that does not exist            | 1. Log in<br>2. GET `api/group/details/:id` with `id` being some new objectid              | 404 Not Found    |
 | 5   | Get group details successfully                                 | 1. Log in<br>2. GET `api/group/details/:id` with the correct `id`                          | 200 OK           |
-[back to index](./index.md)

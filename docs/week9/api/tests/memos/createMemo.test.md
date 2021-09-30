@@ -1,4 +1,9 @@
-# [createMemo()](../../../../../backend/src/controllers/memoController.ts)
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [memo index](./index.md)<br>[test index](../index.md) | [memoController.ts:createMemo()](../../../../../backend/src/controllers/memoController.ts#L86-L122) | [documentation](../../endpoints/memos/createMemo.md) |
+# `createMemo()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -22,4 +27,3 @@
 | 4   | Create new memo with no data              | 1. Log in<br>2. POST `api/memos/new` with no data                | 400 Bad Request  |
 | 5   | Create new memo with minimal invalid data | 1. Log in<br>2. POST `/api/memos/new` with invalid `title`       | 400 Bad Request  |
 | 6   | Create new memo with full invalid data    | 1. Log in<br>2. POST `/api/memos/new` with complete invalid data | 400 Bad Request  |
-[back to index](./index.md)

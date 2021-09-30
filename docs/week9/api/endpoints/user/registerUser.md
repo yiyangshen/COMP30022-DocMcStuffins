@@ -2,7 +2,7 @@
 
 | Indices | Implementation | Testing |
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [user index](./index.md)<br>[endpoint index](../index.md) | [userController.ts:registerUser()](../../../../../backend/src/controllers/userController.ts#L93-L121) | [test suite](../../../../../backend/tests/controllers/user/registerUser.test.ts)<br>[documentation](../../tests/user/registerUser.test.md) |
+| [user index](./index.md)<br>[endpoint index](../index.md) | [userController.ts:registerUser()](../../../../../backend/src/controllers/userController.ts#L93-L121) |  [test suite](../../../../../backend/tests/controllers/user/userController.test.ts)<br>[documentation](../../tests/user/userControllerTest.md) |
 
 # `registerUser()`
 

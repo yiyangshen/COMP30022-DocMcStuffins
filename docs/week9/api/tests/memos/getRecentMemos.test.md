@@ -1,3 +1,8 @@
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [memo index](./index.md)<br>[test index](../index.md) | [memoController.ts:getRecentMemos()](../../../../../backend/src/controllers/memoController.ts#L253-L277) | [documentation](../../endpoints/memos/getRecentMemos.md) |
 # [getRecentMemos()](../../../../../backend/src/controllers/memoController.ts)
 ## Relevant Models
 > Attributes ending with '?' are optional
@@ -18,4 +23,3 @@
 | 2   | Check for malformed request parameter | 1. Log in<br>2. GET `api/memos/recent/n` with `n = "something"`            | 400 Bad request  |
 | 3   | No content were found                 | 1. Log in<br>2. GET `api/memos/recent/n` with `n = 1`                      | 204 No Content   |
 | 4   | Successful query                      | 1. Log in<br>2. Add some memos<br>3. GET `api/memos/recent/n` with `n = 1` | 200 OK           |
-[back to index](./index.md)
