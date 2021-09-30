@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Testing |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [user index](./index.md)<br>[endpoint index](../index.md) | [userController.ts:logoutUser()](../../../../../backend/src/controllers/userController.ts#L66-L76) | [test suite](../../../../../backend/tests/controllers/user/logoutUser.test.ts)<br>[documentation](../../tests/user/logoutUser.test.md) |
+
 # `logoutUser()`
 
 | Key                 | Value          |

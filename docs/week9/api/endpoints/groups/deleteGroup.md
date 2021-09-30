@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Testing |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [group index](./index.md)<br>[endpoint index](../index.md) | [groupController.ts:deleteGroup()](../../../../../backend/src/controllers/groupController.ts#L211-L255) | [test suite](../../../../../backend/tests/controllers/groups/deleteGroup.test.ts)<br>[documentation](../../tests/groups/deleteGroup.test.md) |
+
 # `deleteGroup()`
 
 | Key                 | Value            |

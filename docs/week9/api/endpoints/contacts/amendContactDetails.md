@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Testing |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:amendContactDetails()](../../../../../backend/src/controllers/contactController.ts#L38-L140) | [test suite](../../../../../backend/tests/controllers/contacts/amendContactDetails.test.ts)<br>[documentation](../../tests/contacts/amendContactDetails.test.md) |
+
 # `amendContactDetails()`
 
 | Key                 | Value                     |

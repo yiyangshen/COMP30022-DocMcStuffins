@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Testing |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [group index](./index.md)<br>[endpoint index](../index.md) | [groupController.ts:amendGroupDetails()](../../../../../backend/src/controllers/groupController.ts#L28-L122) | [test suite](../../../../../backend/tests/controllers/groups/amendGroupDetails.test.ts)<br>[documentation](../../tests/groups/amendGroupDetails.test.md) |
+
 # `amendGroupDetails()`
 
 | Key                 | Value                   |
