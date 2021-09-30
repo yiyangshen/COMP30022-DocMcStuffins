@@ -102,6 +102,14 @@ class newContact extends React.Component {
                             <input
                                 type="text"
                                 id="fullName"
+                                name="middleName"
+                                value={middleName}
+                                placeholder="Eg. Mid"
+                                onChange={this.handleChange}
+                            />
+                            <input
+                                type="text"
+                                id="fullName"
                                 name="lastName"
                                 value={lastName}
                                 placeholder="Eg. Doe"
@@ -156,6 +164,15 @@ class newContact extends React.Component {
                                 placeholder="Eg. Friends"
                                 onChange={this.handleChange}
                             />
+                            <label>Date of Birth</label>
+                            <input
+                                type="text"
+                                id="dateOfBirth"
+                                name="dateOfBirthData"
+                                placeholder="Eg. 3.15pm, 13 Aug 2091"
+                                value={dateOfBirthData}
+                                onChange={this.handleChange}
+                            />
                             <label>First Contact Timestamp</label>
                             <input
                                 type="text"
@@ -194,7 +211,9 @@ class newContact extends React.Component {
                                 <input
                                     type="file"
                                     id="myFile"
-                                    name="filename"
+                                    name="photo"
+                                    value={photo}
+                                    onChange={this.handleChange}
                                 />
                             </form>
                             <button

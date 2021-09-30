@@ -1,6 +1,20 @@
+# [getMemos()](../../../../../backend/src/controllers/memoController.ts)
+## Relevant Models
+> Attributes ending with '?' are optional
+### User
+* email: String
+* name: Name
+* password: String (min. length 6)
+
+### Memo
+* userId: ObjectId
+* title: String
+* notes?: String
+* timestamps?: Timestamps
 ## Tests
-| No  | Description                         | Steps                                              | Expected Results |
-| --- | ----------------------------------- | -------------------------------------------------- | ---------------- |
-| 1   | Request without being authenticated | n/a                                                | 401 Unauthorized |
-| 2   | No content were found               | 1. Send a request without adding memos before-hand | 204 No Content   |
-| 3   | Successful query                    | 1. Create memos and then send a request            | 200 OK           |
+| No  | Description                         | Steps                                           | Expected Results |
+| --- | ----------------------------------- | ----------------------------------------------- | ---------------- |
+| 1   | Request without being authenticated | 1. GET `/api/memos` (while not logged in)       | 401 Unauthorized |
+| 2   | No content were found               | 1. Log in<br>2. GET `api/memos`                 | 204 No Content   |
+| 3   | Successful query                    | 1. Log in<br>3. Add memos<br>2. GET `api/memos` | 200 OK           |
+[back to index](./index.md)

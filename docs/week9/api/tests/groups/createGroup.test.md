@@ -1,3 +1,4 @@
+# [createGroup()](../../../../../backend/src/controllers/groupController.ts)
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -38,3 +39,4 @@
 | 4   | Create new group with no data              | 1. Log in<br>2. POST `api/groups/new` with no data                                                                     | 400 Bad Request                                    |
 | 5   | Create new group with minimal invalid data | 1. Log in<br>2. POST `/api/groups/new` with invalid `name`                                                             | 400 Bad Request                                    |
 | 6   | Create new group with full invalid data    | 1. Log in<br>2. POST `/api/groups/new` with complete invalid data                                                      | 400 Bad Request                                    |
+[back to index](./index.md)

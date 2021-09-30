@@ -1,3 +1,4 @@
+# [amendMemoDetails()](../../../../../backend/src/controllers/memoController.ts)
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -20,3 +21,4 @@
 | 4   | Amend memo with invalid data         | 1. Log in<br>2. PATCH `/api/memos/details/amend` with invalid `id`                                                                                             | 400 Bad Request                                 |
 | 5   | Amend non-existing memo              | 1. Log in as `User1`<br>2. PATCH `/api/memos/details/amend` with `id` set to `User1`'s id                                                                      | 404 Not Found                                   |
 | 6   | Amend memo belonging to another user | 1. Create a new contact `Memo1` with `userId` set to `User2`'s id<br>2. Log in as `User1`<br>3. PATCH `/api/memos/details/amend` with `id` set to `Memo1`'s id | 403 Forbidden                                   |
+[back to index](./index.md)

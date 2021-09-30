@@ -4,7 +4,7 @@
 
 > Communication tool up to date?
 
-Yes, we are still using [Slack](https://doc-mcstuffins.slack.com/) for all internal team communications and most communications with the client.
+Yes, we are still using [Slack](https://doc-mcstuffins.slack.com/) for all internal team communications and most communications with the client. Notably, if someone runs into a problem, help is generally requested in the appropriate channels. On more complicated problems, an impromptu partial team meeting is usually organised to resolve problems as soon as possible.
 
 > Team documents up to date, including meeting minutes and task assignments?
 
@@ -16,7 +16,7 @@ Sure, here is our [GitHub repository](https://github.com/techn0mancr/COMP30022-D
 
 > Are all team members collaborating as equally as feasible? Elaborate as needed.
 
-Yes, we are collaborating relatively equally to the project. The major job divisions in this sprint are:
+Yes, we are collaborating relatively equally to the project. We have a weekly work assignment team meeting to ensure that everyone always has work to do; this is detailed in the [weekly *team* meeting minutes](https://github.com/techn0mancr/COMP30022-DocMcStuffins/tree/main/docs/minutes). The major job divisions in this sprint are:
 
 - backend API endpoints + testing + documentation
   - Dyno
@@ -26,7 +26,9 @@ Yes, we are collaborating relatively equally to the project. The major job divis
   - Joshua
   - Livya
 - general project documentation
-  - Nathanael  
+  - Nathanael
+
+Specific details of the work undertaken by each person can be found in our [Trello boards](https://trello.com/nputro/boards) (notably the archives) and the aforementioned meeting minutes.
 
 > Have you done a sprint retrospective?
 
@@ -56,19 +58,21 @@ During this sprint, we completed the following tasks:
 
 > Do you have coding standards? If so, give link.
 
-We are not following a well-established industry coding standard, but we do have internally established pseudo-standards:
-  - general coding: [contactController.ts:createContact()](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/backend/src/controllers/contactController.ts)
-  - test writing: [createContact.test.ts](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/backend/tests/controllers/contact/createContact.test.ts)
-  - endpoint documentation: [createContact.md](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/api/endpoints/contacts/createContact.md)
-  - testing documentation: [createContact.test.md](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/api/tests/contacts/createContact.test.md)
+We have internally established pseudo-standards:
+  - general coding: [contactController.ts:amendContactDetails()](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/backend/src/controllers/contactController.ts)
+  - test writing: [amendContactDetails.test.ts](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/backend/tests/controllers/contact/amendContactDetails.test.ts)
+  - endpoint documentation: [amendContactDetails.md](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/api/endpoints/contacts/amendContactDetails.md)
+  - testing documentation: [amendContactDetails.test.md](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/api/tests/contacts/amendContactDetails.test.md)
 
 > Do you have a testing plan? If so, give link.
 
-We don't currently have a separate document describing our testing plan, but so far we have:
+So far we have:
   - written [acceptance criteria](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week6/product_backlog.md) for our user stories
   - written [integration tests](https://github.com/techn0mancr/COMP30022-DocMcStuffins/tree/main/backend/tests) for all of the implemented backend API endpoints
   - set up [continuous integration](https://github.com/techn0mancr/COMP30022-DocMcStuffins/actions) to run all tests on a commit/pull request to `main`
   - set up [continuous deployment](https://github.com/techn0mancr/COMP30022-DocMcStuffins/deployments) such that it only deploys our application if all tests are passed
+
+Our CI automatically generates testing reports, an example of which can be seen [here](https://github.com/techn0mancr/COMP30022-DocMcStuffins/commit/b2ae070be6371849540378cb1d4bdc133107a4b1/checks/3743689833/logs).
 
 > Do you have a deployment pipeline? If so, elaborate on your tool and status of deployment.
 

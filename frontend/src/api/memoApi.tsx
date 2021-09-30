@@ -16,7 +16,16 @@ switch (process.env.NODE_ENV) {
 
 async function amendMemoDetails(id: String, title?: String, notes?: String) {
     const endpoint = `${BASE_URL}/memos/details/amend`;
-    return await axios.patch(endpoint, { id, title, notes });
+    return await axios.patch(endpoint, { id, title, notes }).then(
+        (response) => {
+            history.push("/memos");
+            console.log(response);
+        },
+        (error) => {
+            alert("Please check the input");
+            console.log(error);
+        }
+    );
 }
 async function createMemo(title: String, notes?: String) {
     const endpoint = `${BASE_URL}/memos/new`;
