@@ -4,20 +4,32 @@ import "../css/newContact.css";
 import history from "../history";
 
 /* Import the required libraries and types */
-import { getContactDetails, amendContactDetails} from "../api/contactApi";
+import { getContactDetails, amendContactDetails, createContact, deleteContact} from "../api/contactApi";
 import { getId } from "../api/userApi";
-import { IContact } from "../interfaces";
 
 /* Component to contact details */
 class contactAmend extends React.Component {
     state = {
         error: null,
         isLoaded: false,
-        contact: {} as IContact,
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        groupId: "",
+        gender: "Other",
+        dateOfBirthData: "",
+        lastMet: "",
+        lastMetData: "",
+        phoneNumber: "",
+        email: "",
+        photo: "",
+        relationship: "",
+        additionalNotes: "",
     };
 
     contactId = getId() || "";
 
+    
     /* During loading page */
     async componentDidMount() {
         getContactDetails(this.contactId).then(
@@ -26,7 +38,19 @@ class contactAmend extends React.Component {
                 console.log(data);
                 this.setState({
                     isLoaded: true,
-                    contact: data,
+                    firstName: data.name.first,
+                    middleName: data.name.middle,
+                    lastName: data.name.last,
+                    groupId: data.groupId,
+                    gender: data.gender,
+                    dateOfBirthData: data.dateOfBirthData,
+                    lastMet: data.lastMet,
+                    lastMetData: data.lastMetData,
+                    phoneNumber: data.phoneNumber,
+                    email: data.email,
+                    photo: data.photo,
+                    relationship: data.relationship,
+                    additionalNotes: data.additionalNotes,
                 });
             },
             (error) => {
@@ -40,19 +64,60 @@ class contactAmend extends React.Component {
     handleChange = (event: { target: { name: any; value: String } }) => {
         this.setState({ [event.target.name]: event.target.value });
     };
-
     /* Handle when click on save button */
     handleSave = (event: { preventDefault: () => void }) => {
-        const {contact} = this.state;
+        const {
+            firstName,
+            middleName,
+            lastName,
+            groupId,
+            gender,
+            dateOfBirthData,
+            lastMetData,
+            phoneNumber,
+            email,
+            photo,
+            relationship,
+            additionalNotes,
+        } = this.state;
         event.preventDefault();
+        var dateOfBirth = new Date(dateOfBirthData);
+        var lastMet = new Date(lastMetData);
+        deleteContact(this.contactId);
+        /* Create contact. Then push new entry to history */
+        createContact(
+            firstName,
+            middleName,
+            lastName,
+            groupId,
+            gender,
+            dateOfBirth,
+            lastMet,
+            phoneNumber,
+            email,
+            photo,
+            relationship,
+            additionalNotes
+        );
+        // deleteContact(this.contactId);
+    }
 
-        /* Create memo. Then push new entry to history */
-        amendContactDetails(contact);
-    };
-
-
+    
     render() {
-        const { error, isLoaded, contact } = this.state;
+        const { error, isLoaded, 
+            firstName,
+            middleName,
+            lastName,
+            groupId,
+            gender,
+            dateOfBirthData,
+            lastMetData,
+            phoneNumber,
+            email,
+            photo,
+            relationship,
+            additionalNotes,
+        } = this.state;
 
         if (error === true) {
             return <h3 className="error">No Contact Present</h3>;
@@ -70,7 +135,7 @@ class contactAmend extends React.Component {
                                         type="text"
                                         id="fullName"
                                         name="firstName"
-                                        defaultValue={contact.name.first}
+                                        defaultValue={firstName}
                                         placeholder="Eg. John "
                                         onChange={this.handleChange}
                                     />
@@ -78,7 +143,7 @@ class contactAmend extends React.Component {
                                     type="text"
                                     id="fullName"
                                     name="lastName"
-                                    defaultValue={contact.name.last}
+                                    defaultValue={lastName}
                                     placeholder="Eg. Doe"
                                     onChange={this.handleChange}
                                 />
@@ -87,7 +152,7 @@ class contactAmend extends React.Component {
                                     id="gender"
                                     name="gender"
                                     onChange={this.handleChange}
-                                    defaultValue={contact.gender}
+                                    defaultValue={gender}
                                 >
                                     <option key="Male" value="Male">
                                         Male
@@ -110,7 +175,7 @@ class contactAmend extends React.Component {
                                     id="email"
                                     name="email"
                                     placeholder="Eg. JohnDoe@gmail.com"
-                                    defaultValue={contact.email}
+                                    defaultValue={email}
                                     onChange={this.handleChange}
                                 />
                                 <label>Phone Number</label>
@@ -119,7 +184,7 @@ class contactAmend extends React.Component {
                                     id="phoneNumber"
                                     name="phoneNumber"
                                     placeholder="Eg. 0412563286"
-                                    defaultValue={contact.phoneNumber}
+                                    defaultValue={phoneNumber}
                                     onChange={this.handleChange}
                                 />
                                 <label>Relationship</label>
@@ -127,7 +192,7 @@ class contactAmend extends React.Component {
                                     type="text"
                                     id="relationship"
                                     name="relationship"
-                                    defaultValue={contact.relationship}
+                                    defaultValue={relationship}
                                     placeholder="Eg. Friends"
                                     onChange={this.handleChange}
                                 />
@@ -137,14 +202,14 @@ class contactAmend extends React.Component {
                                     id="firstContactTimestamp"
                                     name="lastMetData"
                                     placeholder="Eg. 3.15pm, 13 Aug 2091"
-                                    defaultValue={contact.lastMet?.toDateString()}
+                                    defaultValue={lastMetData}
                                     onChange={this.handleChange}
                                 />
                                 <label>Assigned Group</label>
                                 <select
                                     id="assignedGroup"
                                     name="groupId"
-                                    defaultValue={contact.groupId}
+                                    defaultValue={groupId}
                                     onChange={this.handleChange}
                                 >
                                     <option value="unimelb">Unimelb</option>
@@ -157,7 +222,7 @@ class contactAmend extends React.Component {
                                     id="additionalNotes"
                                     name="contact.additionalNotes"
                                     placeholder="Write something.."
-                                    defaultValue={contact.additionalNotes}
+                                    defaultValue={additionalNotes}
                                     onChange={this.handleChange}
                                 ></textarea>
     
