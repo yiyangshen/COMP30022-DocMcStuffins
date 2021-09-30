@@ -2,13 +2,10 @@
 import React from "react";
 import "../css/newContact.css";
 import history from "../history";
+import moment from "moment";
 
 /* Import the required libraries and types */
-import {
-    getContactDetails,
-    createContact,
-    deleteContact,
-} from "../api/contactApi";
+import { getContactDetails, amendContactDetails } from "../api/contactApi";
 import { getId } from "../api/userApi";
 
 /* Component to contact details */
@@ -22,7 +19,6 @@ class contactAmend extends React.Component {
         groupId: "",
         gender: "Other",
         dateOfBirthData: "",
-        lastMet: "",
         lastMetData: "",
         phoneNumber: "",
         email: "",
@@ -46,9 +42,10 @@ class contactAmend extends React.Component {
                     lastName: data.name.last,
                     groupId: data.groupId,
                     gender: data.gender,
-                    dateOfBirthData: data.dateOfBirthData,
-                    lastMet: data.lastMet,
-                    lastMetData: data.lastMetData,
+                    dateOfBirthData: moment(data.dateOfBirth).format(
+                        "DD MMM, YYYY"
+                    ),
+                    lastMetData: moment(data.lastMet).format("DD MMM, YYYY"),
                     phoneNumber: data.phoneNumber,
                     email: data.email,
                     photo: data.photo,
@@ -67,6 +64,7 @@ class contactAmend extends React.Component {
     handleChange = (event: { target: { name: any; value: String } }) => {
         this.setState({ [event.target.name]: event.target.value });
     };
+
     /* Handle when click on save button */
     handleSave = (event: { preventDefault: () => void }) => {
         const {
@@ -86,9 +84,9 @@ class contactAmend extends React.Component {
         event.preventDefault();
         var dateOfBirth = new Date(dateOfBirthData);
         var lastMet = new Date(lastMetData);
-        deleteContact(this.contactId);
-        /* Create contact. Then push new entry to history */
-        createContact(
+
+        /* Amend contact. Then push new entry to history */
+        amendContactDetails(
             firstName,
             middleName,
             lastName,
@@ -102,7 +100,6 @@ class contactAmend extends React.Component {
             relationship,
             additionalNotes
         );
-        // deleteContact(this.contactId);
     };
 
     render() {
@@ -141,6 +138,14 @@ class contactAmend extends React.Component {
                                     name="firstName"
                                     defaultValue={firstName}
                                     placeholder="Eg. John "
+                                    onChange={this.handleChange}
+                                />
+                                <input
+                                    type="text"
+                                    id="fullName"
+                                    name="middleName"
+                                    defaultValue={middleName}
+                                    placeholder="Eg. Mid "
                                     onChange={this.handleChange}
                                 />
                                 <input
@@ -200,6 +205,15 @@ class contactAmend extends React.Component {
                                     placeholder="Eg. Friends"
                                     onChange={this.handleChange}
                                 />
+                                <label>Date of Birth</label>
+                                <input
+                                    type="text"
+                                    id="dateOfBirth"
+                                    name="dateOfBirthData"
+                                    placeholder="Eg. 3.15pm, 13 Aug 2001"
+                                    defaultValue={dateOfBirthData}
+                                    onChange={this.handleChange}
+                                />
                                 <label>First Contact Timestamp</label>
                                 <input
                                     type="text"
@@ -238,7 +252,9 @@ class contactAmend extends React.Component {
                                     <input
                                         type="file"
                                         id="myFile"
-                                        name="filename"
+                                        name="photo"
+                                        value={photo}
+                                        onChange={this.handleChange}
                                     />
                                 </form>
                                 <button

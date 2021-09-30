@@ -6,7 +6,7 @@ import "../css/newGroup.css";
 
 /* Import the required libraries and types */
 import { createGroup, getGroupDetails } from "../api/groupApi";
-import { getContactDetails } from "../api/contactApi";
+// import { getContactDetails } from "../api/contactApi";
 import { IContact } from "../interfaces";
 import { getId } from "../api/userApi";
 
@@ -24,8 +24,8 @@ class newGroup extends React.Component {
 
     groupId = getId() || "";
 
-     /* During loading page */
-     async componentDidMount() {
+    /* During loading page */
+    async componentDidMount() {
         getGroupDetails(this.groupId).then(
             (response) => {
                 var data = response.data.data;
@@ -65,7 +65,7 @@ class newGroup extends React.Component {
     };
 
     render() {
-        const { name, contactsList, members } = this.state;
+        const { name, contactsList } = this.state;
 
         return (
             <div className="border">

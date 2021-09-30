@@ -97,6 +97,10 @@ class detailsContact extends React.Component {
                         <div className="box, white">
                             <h2>{contact.relationship}</h2>
                         </div>
+                        <label>Date of Birth</label>
+                        <div className="box, white">
+                            <h2>{contact.dateOfBirth}</h2>
+                        </div>
                         <label>First Contact Timestamp</label>
                         <div className="box, white">
                             <h2>{contact.lastMet}</h2>

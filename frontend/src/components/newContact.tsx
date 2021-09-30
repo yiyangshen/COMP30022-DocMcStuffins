@@ -169,7 +169,7 @@ class newContact extends React.Component {
                                 type="text"
                                 id="dateOfBirth"
                                 name="dateOfBirthData"
-                                placeholder="Eg. 3.15pm, 13 Aug 2091"
+                                placeholder="Eg. 3.15pm, 13 Aug 2001"
                                 value={dateOfBirthData}
                                 onChange={this.handleChange}
                             />

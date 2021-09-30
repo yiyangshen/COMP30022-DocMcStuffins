@@ -1,7 +1,6 @@
 /* Import the required libraries and types */
 import axios from "axios";
 import history from "../history";
-import { IContact } from "../interfaces";
 
 /* Change the API base URL based on the environment */
 var BASE_URL: string = "";
@@ -103,9 +102,46 @@ async function getContactDetails(id: String) {
  *   - 404 Not Found if the given contact ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
-async function amendContactDetails(item: IContact) {
+async function amendContactDetails(
+    firstName: string,
+    middleName: string,
+    lastName: string,
+    groupId: string,
+    gender: string,
+    dateOfBirth: Date,
+    lastMet: Date,
+    phoneNumber: string,
+    email: string,
+    photo: string,
+    relationship: string,
+    additionalNotes: string
+) {
     const endpoint = `${BASE_URL}/contacts/details/ammend`;
-    return await axios.patch(endpoint, { item });
+    return await axios
+        .patch(endpoint, {
+            firstName,
+            middleName,
+            lastName,
+            groupId,
+            gender,
+            dateOfBirth,
+            lastMet,
+            phoneNumber,
+            email,
+            photo,
+            relationship,
+            additionalNotes,
+        })
+        .then(
+            (response) => {
+                history.push("/contacts");
+                console.log(response);
+            },
+            (error) => {
+                alert("Please check the input");
+                console.log(error);
+            }
+        );
 }
 
 /* Creates a new contact with the given details;
