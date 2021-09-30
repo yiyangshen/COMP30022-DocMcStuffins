@@ -1,3 +1,4 @@
+# [createContact()](../../../../../backend/src/controllers/contactController.ts)
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -34,3 +35,4 @@
 | 5   | Create new contact with minimal invalid data                                  | 1. Log in<br>2. POST `api/contacts/new` with invalid `firstName` and `lastName`                                                                       | 400 Bad Request                           |
 | 6   | Create new contact with full invalid data                                     | 1. Log in<br>2. POST `api/contacts/new` with all invalid fields                                                                                       | 400 Bad Request                           |
 | 7   | Create new contact with minimal valid data and assign it to an existing group | 1. Log in<br>2. POST `api/contacts/new` with valid `firstName`, `lastName` and `groupId`<br>3. Check the group member count associated with `groupId` | 201 Created<br>`group.members.length > 0` |
+[back to index](./index.md)

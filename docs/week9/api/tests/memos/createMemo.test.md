@@ -1,3 +1,4 @@
+# [createMemo()](../../../../../backend/src/controllers/memoController.ts)
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -21,3 +22,4 @@
 | 4   | Create new memo with no data              | 1. Log in<br>2. POST `api/memos/new` with no data                | 400 Bad Request  |
 | 5   | Create new memo with minimal invalid data | 1. Log in<br>2. POST `/api/memos/new` with invalid `title`       | 400 Bad Request  |
 | 6   | Create new memo with full invalid data    | 1. Log in<br>2. POST `/api/memos/new` with complete invalid data | 400 Bad Request  |
+[back to index](./index.md)
