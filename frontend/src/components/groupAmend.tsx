@@ -37,7 +37,10 @@ class newGroup extends React.Component {
         if (label) {
             this.setState({ name: JSON.parse(label) });
         }
-        amendGroupDetails(this.groupId, this.state.name, this.state.members);
+        if(this.state.name){
+            amendGroupDetails(this.groupId, this.state.name, this.state.members);
+        }
+        
 
         getGroupDetails(this.groupId).then(
             (response) => {
