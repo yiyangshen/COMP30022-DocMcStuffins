@@ -18,6 +18,7 @@ class groupView extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
+        localStorage.removeItem("name");
         /* Get all groups and set states */
         getGroups().then(
             (response) => {

@@ -22,6 +22,7 @@ class groupDetail extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
+        localStorage.removeItem("name");
         /* Get group details and set the states */
         getGroupDetails(this.groupId).then(
             (response) => {

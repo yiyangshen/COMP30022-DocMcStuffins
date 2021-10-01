@@ -33,7 +33,16 @@ async function amendGroupDetails(
     members?: [String]
 ) {
     const endpoint = `${BASE_URL}/groups/details/amend`;
-    return await axios.patch(endpoint, { id, name, members });
+    return await axios.patch(endpoint, { id, name, members }).then(
+        (response) => {
+            history.push("/groups");
+            console.log(response);
+        },
+        (error) => {
+            alert("Group could not be created");
+            console.log(error);
+        }
+    );;
 }
 
 /* Creates a new group with the given details;
