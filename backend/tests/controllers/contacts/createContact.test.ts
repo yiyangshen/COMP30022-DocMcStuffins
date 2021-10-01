@@ -38,7 +38,7 @@ const VALID_TEST_CONTACT = {
     firstName: "Phake",
     middleName: "Pherson",
     lastName: "McTest",
-    groupId: Types.ObjectId(),
+    groupId: new Types.ObjectId(),
     gender: Gender.Other,
     dateOfBirth: new Date(),
     lastMet: new Date(),

@@ -1,28 +1,29 @@
 /* Import the required libraries and types */
 import React from "react";
 import history from "../history";
+import { IGroup } from "../interfaces";
 
-/* Import the required libraries and types */
-import { getMemos } from "../api/memoApi";
-import { IMemo } from "../interfaces";
-import Memo from "../img/Group 5.svg";
+/* Import components */
+import { getGroups } from "../api/groupApi";
 import { Col, Row } from "react-bootstrap";
 
-/* Component to view memos */
-class ViewMemos extends React.Component {
+/* Component for view groups */
+class groupView extends React.Component {
     /* Declare states */
     state = {
         error: null,
         isLoaded: false,
-        memosList: [] as IMemo[],
+        groupsList: [] as IGroup[],
     };
 
     /* During loading page */
     async componentDidMount() {
-        getMemos().then(
+        localStorage.removeItem("name");
+        /* Get all groups and set states */
+        getGroups().then(
             (response) => {
                 var data = response.data.data;
-                this.setState({ memosList: data, isLoaded: true });
+                this.setState({ groupsList: data, isLoaded: true });
             },
             (error) => {
                 this.setState({ isLoaded: true, error });
@@ -31,9 +32,11 @@ class ViewMemos extends React.Component {
         );
     }
 
+    /* Render the component to the screen */
     render() {
-        const { error, isLoaded, memosList } = this.state;
+        const { error, isLoaded, groupsList } = this.state;
 
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
             return <h3 className="error">No Group Present</h3>;
         } else if (isLoaded === false) {
@@ -43,21 +46,21 @@ class ViewMemos extends React.Component {
                 <div className="border">
                     <div className="title">
                         <h2>
-                            <b>Memos</b>
+                            <b>Groups</b>
                             <button
                                 className="base-button top-right"
                                 type="button"
-                                onClick={() => history.push(`/memos/new`)}
+                                onClick={() => history.push(`/groups/new`)}
                             >
-                                <h2>New Memo</h2>
+                                <h2>New Group</h2>
                             </button>
                         </h2>
                     </div>
 
-                    {memosList !== undefined && memosList.length > 0 ? (
+                    {groupsList !== undefined && groupsList.length > 0 ? (
                         <div>
                             <Row>
-                                {memosList.map((memo, i) => (
+                                {groupsList.map((group, i) => (
                                     <div key={i}>
                                         <Col
                                             xs={{ span: 6 }}
@@ -66,20 +69,20 @@ class ViewMemos extends React.Component {
                                             lg={{ span: 2 }}
                                             xl={{ span: 1 }}
                                         >
-                                            <div className="MemoPage">
-                                                <img
-                                                    className="MemoPng"
-                                                    src={Memo}
-                                                    alt="logo"
+                                            <div className="RecentGroupText">
+                                                <span
+                                                    className="dot"
                                                     onClick={() =>
                                                         history.push(
-                                                            `/memos/detail/?id=${memo.userId}`
+                                                            `/groups/details/?id=${group._id}`
                                                         )
                                                     }
-                                                />
-                                                <h2 className="MemoText">
-                                                    {memo.title}
-                                                </h2>
+                                                >
+                                                    <h2>{group.name}</h2>
+                                                    <h1>
+                                                        {group.members.length}
+                                                    </h1>
+                                                </span>
                                             </div>
                                         </Col>
                                     </div>
@@ -87,7 +90,7 @@ class ViewMemos extends React.Component {
                             </Row>
                         </div>
                     ) : (
-                        <h3>No memo available</h3>
+                        <h3>No group available</h3>
                     )}
                 </div>
             );
@@ -95,4 +98,5 @@ class ViewMemos extends React.Component {
     }
 }
 
-export default ViewMemos;
+/* Export component */
+export default groupView;

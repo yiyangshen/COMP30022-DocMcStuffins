@@ -83,7 +83,7 @@ describe("Integration test for memo deletion", () => {
 
     test("1. Delete memo without authentication", async () => {
         await unauthAgent
-            .delete(TEST_URLS.deleteMemo)
+            .post(TEST_URLS.deleteMemo)
             .send({})
             .then((res: any) => {
                 expect(res.body.status).toBe((new UnauthorizedError("Unauthorized")).status);
@@ -101,7 +101,7 @@ describe("Integration test for memo deletion", () => {
 
         /* Delete the new memo */
         await authAgent
-            .delete(TEST_URLS.deleteMemo)
+            .post(TEST_URLS.deleteMemo)
             .send({ id: memo._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new OKSuccess("OK")).status);
@@ -110,7 +110,7 @@ describe("Integration test for memo deletion", () => {
 
     test("3. Delete memo with no data", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteMemo)
+            .post(TEST_URLS.deleteMemo)
             .send({})
             .then((res: any) => {
                 expect(res.body.status).toBe((new BadRequestError("Bad Request")).status);
@@ -119,7 +119,7 @@ describe("Integration test for memo deletion", () => {
 
     test("4. Delete memo with invalid data", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteMemo)
+            .post(TEST_URLS.deleteMemo)
             .send({ id: "Invalid id" })
             .then((res: any) => {
                 expect(res.body.status).toBe((new BadRequestError("Bad Request")).status);
@@ -128,7 +128,7 @@ describe("Integration test for memo deletion", () => {
 
     test("5. Delete non-existing memo", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteMemo)
+            .post(TEST_URLS.deleteMemo)
             .send({ id: testUser._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new NotFoundError("not Found")).status);
@@ -146,7 +146,7 @@ describe("Integration test for memo deletion", () => {
 
         /* Attempt to delete this memo */
         await authAgent
-            .delete(TEST_URLS.deleteMemo)
+            .post(TEST_URLS.deleteMemo)
             .send({ id: memo._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new ForbiddenError("Forbidden")).status);

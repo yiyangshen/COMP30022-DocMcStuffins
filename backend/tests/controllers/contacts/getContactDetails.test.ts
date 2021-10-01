@@ -8,13 +8,13 @@ import {
     BadRequestError, ForbiddenError,
     CreatedSuccess, OKSuccess, UnauthorizedError
 } from "../../../src/classes";
-import { Name, User, Memo } from "../../../src/models";
+import { Contact, Gender, Group, Name, User } from "../../../src/models";
 
 /* Import the Express application */
 import app from "../../../src/config/serverConfig";
 
 /* Define test constants */
-const BASE_URL = "/api/memos/details";
+const BASE_URL = "/api/contacts/details";
 
 /* Define test data */
 const TEST_USER_1 = {
@@ -31,15 +31,31 @@ const TEST_USER_2 = {
     password: "test password"
 };
 
-const TEST_MEMO_1 = {
-    title : "Secret Meeting"
-}
+const TEST_CONTACT_1 = {
+    userId: "tottallywrong",
+    firstName: "Phake",
+    middleName: "Pherson",
+    lastName: "McTest",
+    groupId: new Types.ObjectId(),
+    gender: Gender.Other,
+    dateOfBirth: new Date(),
+    lastMet: new Date(),
+    phoneNumber: "0123456789",
+    email: "phake.mctest@test.com",
+    photo: "VGhpcyBpcyBzdXBwb3NlZCB0byBiZSBhIEJhc2U2NC1lbmNvZGVkIHBpY3R1cmUsIGJ1dCBhbGFzIGl0J3MganVzdCBCYXNlNjQtZW5jb2RlZCBwbGFpbnRleHQu",
+    relationship: "Imaginary friend",
+    additionalNotes: "The friend is indeed, a lie"
+};
 
-const TEST_MEMO_2 = {
-    title : "Lunch"
-}
+const TEST_CONTACT_2 = {
+    firstName: "Shino",
+    lastName: "Asada",
+    gender: Gender.Female,
+    email: "sinon@megane.jp",
+    relationship: "Tomodachi",
+};
 
-describe("getmemoDetails Tests", () => {
+describe("getContactDetails Tests", () => {
     /* Create user agents */
     const unauthAgent = agent(app);
     const authAgent = agent(app);
@@ -62,13 +78,25 @@ describe("getmemoDetails Tests", () => {
         })
     });
 
-    const testMemo1 = new Memo({
-        title : TEST_MEMO_1.title,
+    const testContact1 = new Contact({
+        name: {
+            first : TEST_CONTACT_1.firstName,
+            last : TEST_CONTACT_1.lastName
+        },
+        gender: TEST_CONTACT_1.gender,
+        email: TEST_CONTACT_1.email,
+        relationship: TEST_CONTACT_1.relationship,
         userId : testUser2._id
     });
 
-    const testMemo2 = new Memo({
-        title : TEST_MEMO_2.title,
+    const testContact2 = new Contact({
+        name: {
+            first : TEST_CONTACT_2.firstName,
+            last : TEST_CONTACT_2.lastName
+        },
+        gender: TEST_CONTACT_2.gender,
+        email: TEST_CONTACT_2.email,
+        relationship: TEST_CONTACT_2.relationship,
         userId : testUser1._id
     });
 
@@ -77,9 +105,9 @@ describe("getmemoDetails Tests", () => {
         await testUser1.save();
         await testUser2.save();
 
-        //  save memos in database
-        await testMemo1.save();
-        await testMemo2.save();
+        //  save contacts in database
+        await testContact1.save();
+        await testContact2.save();
         
         /* Authenticate user agent */
         await authAgent
@@ -95,16 +123,16 @@ describe("getmemoDetails Tests", () => {
             });
     });
 
-    test("1. Get memo details without authentication", async () => {
+    test("1. Get contact details without authentication", async () => {
         await unauthAgent
-            .get(`${BASE_URL}/${testMemo1._id}`)
+            .get(`${BASE_URL}/${testContact1._id}`)
             .then((res: any) => {
                 console.log(res.body.data);
                 expect(res.body.status).toEqual(401);
         });
     });
 
-    test("2. Get memo details with malformed parameter", async () => {
+    test("2. Get contact details with malformed parameter", async () => {
         await authAgent
             .get(`${BASE_URL}/something`)
             .then((res: any) => {
@@ -113,17 +141,17 @@ describe("getmemoDetails Tests", () => {
         });
     });
 
-    test("3. Get memo details with user ID not belonging to the requester", async () => {
+    test("3. Get contact details with user ID not belonging to the requester", async () => {
         await authAgent
-            .get(`${BASE_URL}/${testMemo1._id}`)
+            .get(`${BASE_URL}/${testContact1._id}`)
             .then((res: any) => {
                 console.log(res.body.data);
                 expect(res.body.status).toEqual(403);
             });
     });
 
-    test("4. Get memo details with memo ID that does not exist", async () => {
-        const id = Types.ObjectId();
+    test("4. Get contact details with contact ID that does not exist", async () => {
+        const id = new Types.ObjectId();
         await authAgent
             .get(`${BASE_URL}/${id}`)
             .then((res: any) => {
@@ -132,9 +160,9 @@ describe("getmemoDetails Tests", () => {
             });
     });
 
-    test("5. Get memo details successfully", async () => {
+    test("5. Get contact details successfully", async () => {
         await authAgent
-            .get(`${BASE_URL}/${testMemo2._id}`)
+            .get(`${BASE_URL}/${testContact2._id}`)
             .then((res: any) => {
                 console.log(res.body.data);
                 expect(res.body.status).toEqual(200);
@@ -149,7 +177,7 @@ describe("getmemoDetails Tests", () => {
         /* Delete test user */
         await User.deleteMany();
 
-        /* Delete test memos */
-        await Memo.deleteMany();
+        /* Delete test contacts */
+        await Contact.deleteMany();
     });
 });

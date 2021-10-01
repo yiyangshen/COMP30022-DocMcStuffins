@@ -89,7 +89,7 @@ describe("Integration test for contact deletion", () => {
 
     test("1. Delete contact without authentication", async () => {
         await unauthAgent
-            .delete(TEST_URLS.deleteContact)
+            .post(TEST_URLS.deleteContact)
             .send({})
             .then((res: any) => {
                 expect(res.body.status).toBe((new UnauthorizedError("Unauthorized")).status);
@@ -110,7 +110,7 @@ describe("Integration test for contact deletion", () => {
 
         /* Delete the new contact */
         await authAgent
-            .delete(TEST_URLS.deleteContact)
+            .post(TEST_URLS.deleteContact)
             .send({ id: contact._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new OKSuccess("OK")).status);
@@ -122,7 +122,7 @@ describe("Integration test for contact deletion", () => {
 
     test("3. Delete contact with no data", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteContact)
+            .post(TEST_URLS.deleteContact)
             .send({})
             .then((res: any) => {
                 expect(res.body.status).toBe((new BadRequestError("Bad Request")).status);
@@ -131,7 +131,7 @@ describe("Integration test for contact deletion", () => {
 
     test("4. Delete contact with invalid data", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteContact)
+            .post(TEST_URLS.deleteContact)
             .send({ id: "Invalid id" })
             .then((res: any) => {
                 expect(res.body.status).toBe((new BadRequestError("Bad Request")).status);
@@ -140,7 +140,7 @@ describe("Integration test for contact deletion", () => {
 
     test("5. Delete non-existing contact", async () => {
         await authAgent
-            .delete(TEST_URLS.deleteContact)
+            .post(TEST_URLS.deleteContact)
             .send({ id: testUser._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new NotFoundError("not Found")).status);
@@ -161,7 +161,7 @@ describe("Integration test for contact deletion", () => {
 
         /* Attempt to delete this contact */
         await authAgent
-            .delete(TEST_URLS.deleteContact)
+            .post(TEST_URLS.deleteContact)
             .send({ id: contact._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new ForbiddenError("Forbidden")).status);
@@ -193,7 +193,7 @@ describe("Integration test for contact deletion", () => {
 
         /* Delete this contact */
         await authAgent
-            .delete(TEST_URLS.deleteContact)
+            .post(TEST_URLS.deleteContact)
             .send({ id: contact._id })
             .then((res: any) => {
                 expect(res.body.status).toBe((new OKSuccess("OK")).status);

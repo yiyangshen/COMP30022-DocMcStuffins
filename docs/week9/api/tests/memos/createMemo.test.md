@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [memo index](./index.md)<br>[test index](../index.md) | [memoController.ts:createMemo()](../../../../../backend/src/controllers/memoController.ts#L86-L122) | [documentation](../../endpoints/memos/createMemo.md) |
+# `createMemo()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User

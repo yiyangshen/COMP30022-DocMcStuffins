@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [memo index](./index.md)<br>[test index](../index.md) | [memoController.ts:deleteMemo()](../../../../../backend/src/controllers/memoController.ts#L135-L169) | [documentation](../../endpoints/memos/deleteMemo.md) |
+# `deleteMemo()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User

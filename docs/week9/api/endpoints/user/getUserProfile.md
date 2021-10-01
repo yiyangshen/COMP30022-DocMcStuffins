@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Testing |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [user index](./index.md)<br>[endpoint index](../index.md) | [userController.ts:getUserProfile()](../../../../../backend/src/controllers/userController.ts#L19-L28) | [test suite](../../../../../backend/tests/controllers/user/userController.test.ts)<br>[documentation](../../tests/user/userControllerTest.md) |
+
 # `getUserProfile()`
 
 | Key                 | Value           |

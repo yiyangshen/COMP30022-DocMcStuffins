@@ -1,9 +1,15 @@
+### Breadcrumbs
+
+| Indices | Implementation | Testing |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:deleteContact()](../../../../../backend/src/controllers/contactController.ts#L266-L309) | [test suite](../../../../../backend/tests/controllers/contacts/deleteContact.test.ts)<br>[documentation](../../tests/contacts/deleteContact.test.md) |
+
 # `deleteContact()`
 
 | Key                 | Value              |
 | :------------------ | :----------------- |
 | REST endpoint       | `/contacts/delete` |
-| HTTP request method | `DELETE`           |
+| HTTP request method | `POST`             |
 
 ## Request Format
 

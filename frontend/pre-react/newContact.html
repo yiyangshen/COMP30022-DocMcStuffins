@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="../pre-react/newContact.css"/>
+    <body>
+
+        <h1>Add contact</h1>
+        <label for="fullName">Name</label>
+        <input type="text" id="fullName" name="fullName" placeholder="Eg. John Doe">
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Others">Spoon</option>
+        </select>
+        <label for="country">Country</label>
+        <select id="country" name="country">
+            <option value="australia">Australia</option>
+            <option value="china">China</option>
+        </select>
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" placeholder="Eg. JohnDoe@gmail.com">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Eg. 0412563286">
+        <label for="relationship">Email</label>
+        <input type="text" id="relationship" name="relationship" placeholder="Eg. Friends">
+        <label for="firstContactTimestamp">Email</label>
+        <input type="text" id="firstContactTimestamp" name="firstContactTimestamp" placeholder="Eg. 3.15pm, 13 Aug 2091">
+        <label for="assignedGroup">Assigned Group</label>
+        <select id="assignedGroup" name="assignedGroup">
+            <option value="unimelb">Unimelb</option>
+        </select>
+        <label for="additionalNotes">Additional Notes</label>
+        <textarea id="additionalNotes" name="additionalNotes" placeholder="Write something.."></textarea>
+
+        <p>Click on the "Choose File" button to choose a picture:</p>
+        <form action="/action_page.php">
+        <input type="file" id="myFile" name="filename">
+        <input type="submit">
+        </form>
+
+    </body>
+</html>

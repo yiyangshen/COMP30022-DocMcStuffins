@@ -1,9 +1,15 @@
+### Breadcrumbs
+
+| Indices | Implementation | Testing |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [memo index](./index.md)<br>[endpoint index](../index.md) | [memoController.ts:deleteMemo()](../../../../../backend/src/controllers/memoController.ts#L135-L169) | [test suite](../../../../../backend/tests/controllers/memos/deleteMemo.test.ts)<br>[documentation](../../tests/memos/deleteMemo.test.md) |
+
 # `deleteMemo()`
 
 | Key                 | Value           |
 | :------------------ | :-------------- |
 | REST endpoint       | `/memos/delete` |
-| HTTP request method | `DELETE`        |
+| HTTP request method | `POST`          |
 
 ## Request Format
 

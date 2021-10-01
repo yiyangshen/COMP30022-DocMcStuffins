@@ -10,7 +10,7 @@ import * as controller from "../controllers/memoController";
 
 /* Handle memo routes */
 memoRouter.get("/", controller.getMemos);
-memoRouter.delete("/delete", controller.deleteMemo);
+memoRouter.post("/delete", controller.deleteMemo);
 memoRouter.get("/details/:id", controller.getMemoDetails);
 memoRouter.patch("/details/amend", controller.amendMemoDetails);
 memoRouter.post("/new", controller.createMemo);

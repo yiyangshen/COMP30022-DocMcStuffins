@@ -11,7 +11,7 @@ import * as controller from "../controllers/groupController";
 /* Handle group routes */
 groupRouter.get("/", controller.getGroups);
 groupRouter.get("/count", controller.getGroupCount);
-groupRouter.delete("/delete", controller.deleteGroup);
+groupRouter.post("/delete", controller.deleteGroup);
 groupRouter.get("/details/:id", controller.getGroupDetails);
 groupRouter.patch("/details/amend", controller.amendGroupDetails);
 groupRouter.post("/new", controller.createGroup);

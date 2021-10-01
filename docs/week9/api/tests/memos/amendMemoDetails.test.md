@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [memo index](./index.md)<br>[test index](../index.md) | [memoController.ts:amendMemoDetails()](../../../../../backend/src/controllers/memoController.ts#L28-L74) | [documentation](../../endpoints/memos/amendMemoDetails.md) |
+# `amendMemoDetails()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User

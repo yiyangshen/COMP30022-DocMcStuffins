@@ -1,5 +1,6 @@
 import * as AiIcons from "react-icons/ai";
 
+/* Set constant and information for side bar data */
 export const SidebarData = [
     {
         title: "Dashboard",

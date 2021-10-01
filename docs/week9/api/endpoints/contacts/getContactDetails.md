@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Testing |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:getContactDetails()](../../../../../backend/src/controllers/contactController.ts#L340-L372) | [test suite](../../../../../backend/tests/controllers/contacts/getContactDetails.test.ts)<br>[documentation](../../tests/contacts/getContactDetails.test.md) |
+
 # `getContactDetails()`
 
 | Key                 | Value                   |

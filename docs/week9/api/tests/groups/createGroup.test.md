@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [group index](./index.md)<br>[test index](../index.md) | [groupController.ts:createGroup()](../../../../../backend/src/controllers/groupController.ts#L134-L198) | [documentation](../../endpoints/groups/createGroup.md) |
+# `createGroup()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User

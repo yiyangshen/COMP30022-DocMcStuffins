@@ -8,7 +8,6 @@ const MONGODB_CONNECTION_STRING = `mongodb+srv://${process.env.MONGODB_USERNAME}
 /* Configure the connection */
 const MONGODB_CONNECTION_OPTIONS = {
     dbName: MONGODB_DATABASE_NAME,
-    useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true
 };
@@ -19,12 +18,12 @@ const db = connection;
 
 /* Handle server connection events */
 db.on("error", console.error.bind(console, "Connection error: "));
-db.once("open", () => {
+db.once("open", async () => {
     console.log(`Successfully connected to MongoDB ${MONGODB_DATABASE_NAME} database.`);
     
-    /* Wipe the session store before running tests */
+    /* Wipe the session store before running CI tests */
     if (process.env.NODE_ENV === "testing") {
-        const SESSIONS = await mongoose.connection.db.collection("sessions");
+        const SESSIONS = await connection.db.collection("sessions");
         await SESSIONS.deleteMany({});
     }
 });

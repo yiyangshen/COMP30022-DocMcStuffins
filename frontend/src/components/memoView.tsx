@@ -1,27 +1,29 @@
 /* Import the required libraries and types */
 import React from "react";
 import history from "../history";
+import { IMemo } from "../interfaces";
 
-/* Import the required libraries and types */
-import { getGroups } from "../api/groupApi";
-import { IGroup } from "../interfaces";
+/* Import components */
+import { getMemos } from "../api/memoApi";
+import Memo from "../img/Group 5.svg";
 import { Col, Row } from "react-bootstrap";
 
-/* Component to view groups */
-class ViewGroups extends React.Component {
+/* Component for view memos */
+class memoView extends React.Component {
     /* Declare states */
     state = {
         error: null,
         isLoaded: false,
-        groupsList: [] as IGroup[],
+        memosList: [] as IMemo[],
     };
 
     /* During loading page */
     async componentDidMount() {
-        getGroups().then(
+        /* Get all memos and set states */
+        getMemos().then(
             (response) => {
                 var data = response.data.data;
-                this.setState({ groupsList: data, isLoaded: true });
+                this.setState({ memosList: data, isLoaded: true });
             },
             (error) => {
                 this.setState({ isLoaded: true, error });
@@ -29,12 +31,13 @@ class ViewGroups extends React.Component {
             }
         );
     }
-
+    /* Render the component to the screen */
     render() {
-        const { error, isLoaded, groupsList } = this.state;
+        const { error, isLoaded, memosList } = this.state;
 
+        /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
-            return <h3 className="error">No Group Present</h3>;
+            return <h3 className="error">No Memo Present</h3>;
         } else if (isLoaded === false) {
             return <h3 className="error">Loading...</h3>;
         } else {
@@ -42,21 +45,21 @@ class ViewGroups extends React.Component {
                 <div className="border">
                     <div className="title">
                         <h2>
-                            <b>Groups</b>
+                            <b>Memos</b>
                             <button
                                 className="base-button top-right"
                                 type="button"
-                                onClick={() => history.push(`/groups/new`)}
+                                onClick={() => history.push(`/memos/new`)}
                             >
-                                <h2>New Group</h2>
+                                <h2>New Memo</h2>
                             </button>
                         </h2>
                     </div>
 
-                    {groupsList !== undefined && groupsList.length > 0 ? (
+                    {memosList !== undefined && memosList.length > 0 ? (
                         <div>
                             <Row>
-                                {groupsList.map((group, i) => (
+                                {memosList.map((memo, i) => (
                                     <div key={i}>
                                         <Col
                                             xs={{ span: 6 }}
@@ -65,20 +68,20 @@ class ViewGroups extends React.Component {
                                             lg={{ span: 2 }}
                                             xl={{ span: 1 }}
                                         >
-                                            <div className="RecentGroupText">
-                                                <span
-                                                    className="dot"
+                                            <div className="MemoPage">
+                                                <img
+                                                    className="MemoPng"
+                                                    src={Memo}
+                                                    alt="logo"
                                                     onClick={() =>
                                                         history.push(
-                                                            `/group/details/?id=${group.userId}`
+                                                            `/memos/details/?id=${memo._id}`
                                                         )
                                                     }
-                                                >
-                                                    <h2>{group.name}</h2>
-                                                    <h1>
-                                                        {group.members.length}
-                                                    </h1>
-                                                </span>
+                                                />
+                                                <h2 className="MemoText">
+                                                    {memo.title}
+                                                </h2>
                                             </div>
                                         </Col>
                                     </div>
@@ -86,7 +89,7 @@ class ViewGroups extends React.Component {
                             </Row>
                         </div>
                     ) : (
-                        <h3>No group available</h3>
+                        <h3>No memo available</h3>
                     )}
                 </div>
             );
@@ -94,4 +97,5 @@ class ViewGroups extends React.Component {
     }
 }
 
-export default ViewGroups;
+/* Export component */
+export default memoView;

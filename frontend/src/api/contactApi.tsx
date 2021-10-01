@@ -1,6 +1,6 @@
 /* Import the required libraries and types */
 import axios from "axios";
-import { IContact } from "../interfaces";
+import history from "../history";
 
 /* Change the API base URL based on the environment */
 var BASE_URL: string = "";
@@ -48,9 +48,18 @@ async function getContactCount() {
  *   - 404 Not Found if the given contact ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
-async function deleteContact() {
+async function deleteContact(id: String) {
     const endpoint = `${BASE_URL}/contacts/delete`;
-    return await axios.delete(endpoint);
+    return await axios.post(endpoint, { id }).then(
+        (response) => {
+            history.push("/contacts");
+            console.log(response);
+        },
+        (error) => {
+            alert("Can not be deleted");
+            console.log(error);
+        }
+    );
 }
 
 /* Returns the given contact's details;
@@ -65,7 +74,7 @@ async function deleteContact() {
  *   - 500 Internal Server Error otherwise
  */
 async function getContactDetails(id: String) {
-    const endpoint = `${BASE_URL}/contacts/delete/${id}`;
+    const endpoint = `${BASE_URL}/contacts/details/${id}`;
     return await axios.get(endpoint);
 }
 
@@ -93,9 +102,48 @@ async function getContactDetails(id: String) {
  *   - 404 Not Found if the given contact ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
-async function amendContactDetails(item: IContact) {
-    const endpoint = `${BASE_URL}/contacts/details/ammend`;
-    return await axios.patch(endpoint, { item });
+async function amendContactDetails(
+    id: string,
+    firstName: string,
+    middleName: string,
+    lastName: string,
+    groupId: string,
+    gender: string,
+    dateOfBirth: Date,
+    lastMet: Date,
+    phoneNumber: string,
+    email: string,
+    photo: string,
+    relationship: string,
+    additionalNotes: string
+) {
+    const endpoint = `${BASE_URL}/contacts/details/amend`;
+    return await axios
+        .patch(endpoint, {
+            id,
+            firstName,
+            middleName,
+            lastName,
+            groupId,
+            gender,
+            dateOfBirth,
+            lastMet,
+            phoneNumber,
+            email,
+            photo,
+            relationship,
+            additionalNotes,
+        })
+        .then(
+            (response) => {
+                history.push("/contacts");
+                console.log(response);
+            },
+            (error) => {
+                alert("Please check the input");
+                console.log(error);
+            }
+        );
 }
 
 /* Creates a new contact with the given details;
@@ -118,9 +166,46 @@ async function amendContactDetails(item: IContact) {
  *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
-async function createContact(item: IContact) {
+async function createContact(
+    firstName: string,
+    middleName: string,
+    lastName: string,
+    groupId: string,
+    gender: string,
+    dateOfBirth: Date,
+    lastMet: Date,
+    phoneNumber: string,
+    email: string,
+    photo: string,
+    relationship: string,
+    additionalNotes: string
+) {
     const endpoint = `${BASE_URL}/contacts/new`;
-    return await axios.post(endpoint, { item });
+    return await axios
+        .post(endpoint, {
+            firstName,
+            middleName,
+            lastName,
+            groupId,
+            gender,
+            dateOfBirth,
+            lastMet,
+            phoneNumber,
+            email,
+            photo,
+            relationship,
+            additionalNotes,
+        })
+        .then(
+            (response) => {
+                history.push("/contacts");
+                console.log(response);
+            },
+            (error) => {
+                alert("Please check the input");
+                console.log(error);
+            }
+        );
 }
 
 /* Returns the currently-authenticated user's contacts that fuzzy-matches the given search string;

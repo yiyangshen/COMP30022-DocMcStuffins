@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [group index](./index.md)<br>[test index](../index.md) | [groupController.ts:amendGroupDetails()](../../../../../backend/src/controllers/groupController.ts#L28-L122) | [documentation](../../endpoints/groups/amendGroupDetails.md) |
+# `amendGroupDetails()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User

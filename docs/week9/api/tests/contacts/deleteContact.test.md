@@ -1,10 +1,15 @@
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [contact index](./index.md)<br>[test index](../index.md) | [contactController.ts:deleteContact()](../../../../../backend/src/controllers/contactController.ts#L266-L309) | [documentation](../../endpoints/contacts/deleteContact.md) |
+# `deleteContact()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
 * email: String
 * name: Name
 * password: String (min. length 6)
-
 ### Contact
 * userId: ObjectId
 * groupId?: ObjectId

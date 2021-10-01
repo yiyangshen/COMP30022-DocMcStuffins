@@ -8,13 +8,13 @@ import {
     BadRequestError, ForbiddenError,
     CreatedSuccess, OKSuccess, UnauthorizedError
 } from "../../../src/classes";
-import { Contact, Gender, Group, Name, User } from "../../../src/models";
+import { Name, User, Memo } from "../../../src/models";
 
 /* Import the Express application */
 import app from "../../../src/config/serverConfig";
 
 /* Define test constants */
-const BASE_URL = "/api/groups/details";
+const BASE_URL = "/api/memos/details";
 
 /* Define test data */
 const TEST_USER_1 = {
@@ -25,47 +25,26 @@ const TEST_USER_1 = {
 };
 
 const TEST_USER_2 = {
-    email: "lasagne@pizza.com",
-    firstName: "Test",
-    lastName: "McTest",
+    email: "oatmeal@test.com",
+    firstName: "Thiccc",
+    lastName: "Oatmeale",
     password: "test password"
 };
 
-const TEST_GROUP_1 = {
-    name: "DocMcStuffins",
-    members: []
-};
+const TEST_MEMO_1 = {
+    title : "Secret Meeting"
+}
 
-const TEST_GROUP_2 = {
-    name: "PorkBelly",
-    members: []
-};
+const TEST_MEMO_2 = {
+    title : "Lunch"
+}
 
-
-
-const TEST_CONTACT_1 = {
-    firstName: "Shino",
-    middleName: "Sinon",
-    lastName: "Asada",
-    gender: Gender.Female,
-    email: "sinon@megane.jp",
-    relationship: "Tomodachi",
-};
-
-const TEST_CONTACT_2 = {
-    firstName: "Reisi",
-    lastName: "Munakata",
-    gender: Gender.Male,
-    email: "munakatareisi@megane.jp",
-    relationship: "Suko no hito"
-};
-
-describe("getGroupDetails Tests", () => {
+describe("getmemoDetails Tests", () => {
     /* Create user agents */
     const unauthAgent = agent(app);
     const authAgent = agent(app);
     
-    /* Create test users */
+    /* Create test user */
     const testUser1 = new User({
         email: TEST_USER_1.email,
         password: TEST_USER_1.password,
@@ -83,39 +62,14 @@ describe("getGroupDetails Tests", () => {
         })
     });
 
-    //  Create test contacts
-    const testContact1 = new Contact({
-        userId : testUser1._id,
-        name: {
-            first: TEST_CONTACT_1.firstName,
-            last: TEST_CONTACT_1.lastName
-        },
-        gender: TEST_CONTACT_1.gender,
-        email: TEST_CONTACT_1.email,
-        relationship: TEST_CONTACT_1.relationship,
-    })
-
-    const testContact2 = new Contact({
-        userId : testUser1._id,
-        name: {
-            first: TEST_CONTACT_2.firstName,
-            last: TEST_CONTACT_2.lastName
-        },
-        gender: TEST_CONTACT_2.gender,
-        email: TEST_CONTACT_2.email,
-        relationship: TEST_CONTACT_2.relationship,
-    })
-
-    // Create test groups
-    const testGroup1 = new Group({
-        name : TEST_GROUP_1.name,
-        userId : testUser2._id,
-        members: [],
+    const testMemo1 = new Memo({
+        title : TEST_MEMO_1.title,
+        userId : testUser2._id
     });
-    const testGroup2 = new Group({
-        name : TEST_GROUP_2.name,
-        userId : testUser1._id,
-        members: [testContact1, testContact2],
+
+    const testMemo2 = new Memo({
+        title : TEST_MEMO_2.title,
+        userId : testUser1._id
     });
 
     beforeAll(async () => {
@@ -123,14 +77,10 @@ describe("getGroupDetails Tests", () => {
         await testUser1.save();
         await testUser2.save();
 
-        //  Save testContacts
-        await testContact1.save();
-        await testContact2.save();
-
-        // save test groups
-        await testGroup1.save();
-        await testGroup2.save();
-
+        //  save memos in database
+        await testMemo1.save();
+        await testMemo2.save();
+        
         /* Authenticate user agent */
         await authAgent
             .patch(`/api/user/login`)
@@ -145,16 +95,16 @@ describe("getGroupDetails Tests", () => {
             });
     });
 
-    test("1. Get group details without authentication", async () => {
+    test("1. Get memo details without authentication", async () => {
         await unauthAgent
-            .get(`${BASE_URL}/${testGroup1._id}`)
+            .get(`${BASE_URL}/${testMemo1._id}`)
             .then((res: any) => {
                 console.log(res.body.data);
                 expect(res.body.status).toEqual(401);
         });
     });
 
-    test("2. Get group details with malformed parameter", async () => {
+    test("2. Get memo details with malformed parameter", async () => {
         await authAgent
             .get(`${BASE_URL}/something`)
             .then((res: any) => {
@@ -163,17 +113,17 @@ describe("getGroupDetails Tests", () => {
         });
     });
 
-    test("3. Get group details with group ID not belonging to the requester", async () => {
+    test("3. Get memo details with user ID not belonging to the requester", async () => {
         await authAgent
-            .get(`${BASE_URL}/${testGroup1._id}`)
+            .get(`${BASE_URL}/${testMemo1._id}`)
             .then((res: any) => {
                 console.log(res.body.data);
                 expect(res.body.status).toEqual(403);
             });
     });
 
-    test("4. Get group details with group ID that does not exist", async () => {
-        const id = Types.ObjectId();
+    test("4. Get memo details with memo ID that does not exist", async () => {
+        const id = new Types.ObjectId();
         await authAgent
             .get(`${BASE_URL}/${id}`)
             .then((res: any) => {
@@ -182,9 +132,9 @@ describe("getGroupDetails Tests", () => {
             });
     });
 
-    test("5. Get group details successfully", async () => {
+    test("5. Get memo details successfully", async () => {
         await authAgent
-            .get(`${BASE_URL}/${testGroup2._id}`)
+            .get(`${BASE_URL}/${testMemo2._id}`)
             .then((res: any) => {
                 console.log(res.body.data);
                 expect(res.body.status).toEqual(200);
@@ -199,11 +149,7 @@ describe("getGroupDetails Tests", () => {
         /* Delete test user */
         await User.deleteMany();
 
-        /* Delete test contacts */
-        await Contact.deleteMany();
-
-        
-        /* Delete test groups */
-        await Group.deleteMany();
+        /* Delete test memos */
+        await Memo.deleteMany();
     });
 });

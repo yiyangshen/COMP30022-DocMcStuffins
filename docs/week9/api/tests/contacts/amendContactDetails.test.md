@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [contact index](./index.md)<br>[test index](../index.md) | [contactController.ts:amendContactDetails()](../../../../../backend/src/controllers/contactController.ts#L38-L140) | [documentation](../../endpoints/contacts/amendContactDetails.md) |
+# `amendContactDetails()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User

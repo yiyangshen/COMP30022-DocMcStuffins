@@ -1,3 +1,9 @@
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [group index](./index.md)<br>[test index](../index.md) | [groupController.ts:deleteGroup()](../../../../../backend/src/controllers/groupController.ts#L211-L255) | [documentation](../../endpoints/groups/deleteGroup.md) |
+# `deleteGroup()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
