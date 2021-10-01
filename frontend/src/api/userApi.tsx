@@ -102,7 +102,7 @@ async function registerUser(
 ) {
     const endpoint = `${BASE_URL}/user/register`;
     return await axios
-        .patch(endpoint, {
+        .post(endpoint, {
             firstName,
             middleName,
             lastName,
