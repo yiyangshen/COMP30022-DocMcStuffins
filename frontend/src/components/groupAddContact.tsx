@@ -47,7 +47,6 @@ class addContact extends React.Component {
 
         /* Store checked item in local storage to access it in different page, then go back to creating new group */
         localStorage.setItem("chosen", JSON.stringify(chosen));
-        // history.push(`/groups/new`);
         history.goBack();
     };
 

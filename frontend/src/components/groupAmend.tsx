@@ -27,6 +27,22 @@ class newGroup extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
+        getGroupDetails(this.groupId).then(
+            (response) => {
+                var data = response.data.data;
+                console.log(data);
+                this.setState({
+                    isLoaded: true,
+                    contactsList: data.members,
+                    name: data.name,
+                });
+            },
+            (error) => {
+                this.setState({ isLoaded: true, error });
+                console.log(error);
+            }
+        );
+
         /* Retrieve item in local storage and parse them */
         const value = localStorage.getItem("chosen");
         if (value) {
@@ -45,7 +61,7 @@ class newGroup extends React.Component {
                 (response) => {
                     var data = response.data.data;
                     this.setState({
-                        contactsList: [...this.state.contactsList, data],
+                        contactsList: [this.state.contactsList, data],
                     });
                     console.log(response);
                 },
@@ -54,27 +70,13 @@ class newGroup extends React.Component {
                 }
             );
         }
-        getGroupDetails(this.groupId).then(
-            (response) => {
-                var data = response.data.data;
-                console.log(data);
-                this.setState({
-                    isLoaded: true,
-                    contactsList: data.members,
-                    name: data.name,
-                });
-            },
-            (error) => {
-                this.setState({ isLoaded: true, error });
-                console.log(error);
-            }
-        );
+
     }
 
 
     /* Handle when click on submit button */
     handleSubmit = (event: { preventDefault: () => void }) => {
-        const { name, members } = this.state;
+        const { name, members, contactsList } = this.state;
         event.preventDefault();
         localStorage.removeItem("name");
         localStorage.removeItem("chosen");
@@ -90,7 +92,7 @@ class newGroup extends React.Component {
     };
 
     render() {
-        const { name, contactsList } = this.state;
+        const { name, contactsList, members } = this.state;
 
         return (
             <div className="border">
