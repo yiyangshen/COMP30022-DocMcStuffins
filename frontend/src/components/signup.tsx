@@ -136,7 +136,7 @@ class Signup extends React.Component {
                         <br />
 
                         <button className="base-button" type="submit">
-                            <h2>Sign In</h2>
+                            <h2>Sign Up</h2>
                         </button>
                     </form>
                 </div>
