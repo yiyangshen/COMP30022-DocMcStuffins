@@ -1,7 +1,7 @@
 # Test Plan
 
 ## Overview
-Our main testing workflow is divided into 4 major stage: unit testing through Postman, integration testing through Jest, CI, and CD. Each stage of the testing plan is dependent on the previous stages — for example, it is not possible to complete CI without having successfully completed integration testing throughout Jest before-hand. Furthermore, we also did end-to-end testing to supplement all the previous 4 stages.
+Our main testing workflow is divided into 4 major stages: unit testing through Postman, integration testing through Jest, CI, and CD. Each stage of the testing plan is dependent on the previous stages — for example, it is not possible to complete CI without having successfully completed integration testing throughout Jest before-hand. Furthermore, we also did end-to-end testing to supplement all the previous 4 stages.
 
 
 ## Unit testing using Postman
