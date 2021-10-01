@@ -27,21 +27,21 @@
 
 //     /* During loading page */
 //     async componentDidMount() {
-        // getGroupDetails(this.groupId).then(
-        //     (response) => {
-        //         var data = response.data.data;
-        //         console.log(data);
-        //         this.setState({
-        //             isLoaded: true,
-        //             contactsList: data.members, //in terms of Icontacts[]
-        //             name: data.name,
-        //         });
-        //     },
-        //     (error) => {
-        //         this.setState({ isLoaded: true, error });
-        //         console.log(error);
-        //     }
-        // );
+// getGroupDetails(this.groupId).then(
+//     (response) => {
+//         var data = response.data.data;
+//         console.log(data);
+//         this.setState({
+//             isLoaded: true,
+//             contactsList: data.members, //in terms of Icontacts[]
+//             name: data.name,
+//         });
+//     },
+//     (error) => {
+//         this.setState({ isLoaded: true, error });
+//         console.log(error);
+//     }
+// );
 //         /* Retrieve item in local storage and parse them */
 //         const value = localStorage.getItem("chosen");
 //         if (value) {
@@ -51,7 +51,7 @@
 //         if (label) {
 //             this.setState({ name: JSON.parse(label) });
 //         }
-        
+
 //         const { members } = this.state;
 //         /* Loop through all contact ids and get their details, set the state */
 //         for (var i = 0; i < members.length; i++) {
@@ -174,8 +174,6 @@
 
 // export default newGroup;
 
-
-
 /* Import the required libraries and types */
 import React from "react";
 import { Link } from "react-router-dom";
@@ -183,9 +181,10 @@ import history from "../history";
 import { IContact } from "../interfaces";
 
 /* Import components */
-import { createGroup } from "../api/groupApi";
+import { amendGroupDetails, getGroupDetails } from "../api/groupApi";
 import { getContactDetails } from "../api/contactApi";
 import "../css/newGroup.css";
+import { getId } from "../api/userApi";
 
 /* Component for new cgroup */
 class groupNew extends React.Component {
@@ -196,6 +195,8 @@ class groupNew extends React.Component {
         contactsList: [] as IContact[],
     };
 
+    groupId = getId() || "";
+
     /* Set state accordingly to the target */
     handleChange = (event: { target: { name: any; value: String } }) => {
         this.setState({ [event.target.name]: event.target.value });
@@ -204,11 +205,11 @@ class groupNew extends React.Component {
     /* During loading page */
     async componentDidMount() {
         /* Retrieve item in local storage and parse them */
-        const value = localStorage.getItem("chosen");
+        const value = await localStorage.getItem("chosen");
         if (value) {
             this.setState({ members: JSON.parse(value) });
         }
-        const label = localStorage.getItem("name");
+        const label = await localStorage.getItem("name");
         if (label) {
             this.setState({ name: JSON.parse(label) });
         }
@@ -217,7 +218,7 @@ class groupNew extends React.Component {
 
         /* Loop through all contact ids and get their details, set the state */
         for (var i = 0; i < members.length; i++) {
-            getContactDetails(members[i]).then(
+            await getContactDetails(members[i]).then(
                 (response) => {
                     var data = response.data.data;
                     this.setState({
@@ -230,6 +231,30 @@ class groupNew extends React.Component {
                 }
             );
         }
+
+        await getGroupDetails(this.groupId).then(
+            (response) => {
+                var data = response.data.data;
+                console.log(data);
+                console.log(this.state.name);
+                console.log(this.state.contactsList);
+                this.setState({
+                    isLoaded: true,
+                });
+
+                if (this.state.name.trim() === "") {
+                    this.setState({ name: data.name });
+
+                    if (this.state.contactsList.length === 0) {
+                        this.setState({ contactsList: data.members }); //in terms of Icontacts[]
+                    }
+                }
+            },
+            (error) => {
+                this.setState({ isLoaded: true, error });
+                console.log(error);
+            }
+        );
     }
 
     /* Remember state for the next mount */
@@ -245,7 +270,7 @@ class groupNew extends React.Component {
         /* Remove item from local storage and create group */
         localStorage.removeItem("name");
         localStorage.removeItem("chosen");
-        createGroup(name, members);
+        amendGroupDetails(this.groupId, name, members);
     };
 
     /* Handle when click on cancel button */
@@ -258,11 +283,11 @@ class groupNew extends React.Component {
 
     /* Render the component to the screen */
     render() {
-        const { name, contactsList, members } = this.state;
+        const { name, contactsList } = this.state;
 
         return (
             <div className="border">
-                <h1>Add Group</h1>
+                <h1>Edit Group</h1>
                 <div className="AGbox">
                     <label>Name</label>
                     <input
@@ -276,7 +301,7 @@ class groupNew extends React.Component {
                     <div className="box1">
                         <label>Members</label>
                         <div className="box, white">
-                            <h2>{members.length}</h2>
+                            <h2>{contactsList.length}</h2>
                         </div>
                         <Link to="/groups/new/contact" className="addContact">
                             add contact
