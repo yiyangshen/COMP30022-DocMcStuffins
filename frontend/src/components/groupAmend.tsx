@@ -5,10 +5,11 @@ import history from "../history";
 import "../css/newGroup.css";
 
 /* Import the required libraries and types */
-import { createGroup, getGroupDetails } from "../api/groupApi";
+import { createGroup, deleteGroup, getGroupDetails } from "../api/groupApi";
 // import { getContactDetails } from "../api/contactApi";
 import { IContact } from "../interfaces";
 import { getId } from "../api/userApi";
+import { getContactDetails } from "../api/contactApi";
 
 class newGroup extends React.Component {
     state = {
@@ -26,6 +27,33 @@ class newGroup extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
+        /* Retrieve item in local storage and parse them */
+        const value = localStorage.getItem("chosen");
+        if (value) {
+            this.setState({ members: JSON.parse(value) });
+        }
+        const label = localStorage.getItem("name");
+        if (label) {
+            this.setState({ name: JSON.parse(label) });
+        }
+
+        const { members } = this.state;
+
+        /* Loop through all contact ids and get their details, set the state */
+        for (var i = 0; i < members.length; i++) {
+            getContactDetails(members[i]).then(
+                (response) => {
+                    var data = response.data.data;
+                    this.setState({
+                        contactsList: [...this.state.contactsList, data],
+                    });
+                    console.log(response);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        }
         getGroupDetails(this.groupId).then(
             (response) => {
                 var data = response.data.data;
@@ -43,10 +71,6 @@ class newGroup extends React.Component {
         );
     }
 
-    /* Remember state for the next mount */
-    componentWillUnmount() {
-        localStorage.setItem("name", JSON.stringify(this.state.name));
-    }
 
     /* Handle when click on submit button */
     handleSubmit = (event: { preventDefault: () => void }) => {
@@ -54,6 +78,7 @@ class newGroup extends React.Component {
         event.preventDefault();
         localStorage.removeItem("name");
         localStorage.removeItem("chosen");
+        deleteGroup(this.groupId);
         createGroup(name, members);
     };
 
@@ -139,7 +164,7 @@ class newGroup extends React.Component {
                     type="submit"
                     onClick={this.handleSubmit}
                 >
-                    <h2>Submit</h2>
+                    <h2>Save</h2>
                 </button>
             </div>
         );
