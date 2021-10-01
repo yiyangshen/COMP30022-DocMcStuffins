@@ -5,7 +5,7 @@ import history from "../history";
 import "../css/newGroup.css";
 
 /* Import the required libraries and types */
-import { createGroup, deleteGroup, getGroupDetails } from "../api/groupApi";
+import { amendGroupDetails, createGroup, deleteGroup, getGroupDetails } from "../api/groupApi";
 // import { getContactDetails } from "../api/contactApi";
 import { IContact } from "../interfaces";
 import { getId } from "../api/userApi";
@@ -13,6 +13,7 @@ import { getContactDetails } from "../api/contactApi";
 
 class newGroup extends React.Component {
     state = {
+        isLoaded: false,
         name: "",
         members: "" as any,
         contactsList: [] as IContact[],
@@ -27,6 +28,17 @@ class newGroup extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
+        /* Retrieve item in local storage and parse them */
+        const value = localStorage.getItem("chosen");
+        if (value) {
+            this.setState({ members: JSON.parse(value) });
+        }
+        const label = localStorage.getItem("name");
+        if (label) {
+            this.setState({ name: JSON.parse(label) });
+        }
+        amendGroupDetails(this.groupId, this.state.name, this.state.members);
+
         getGroupDetails(this.groupId).then(
             (response) => {
                 var data = response.data.data;
@@ -42,35 +54,23 @@ class newGroup extends React.Component {
                 console.log(error);
             }
         );
-
-        /* Retrieve item in local storage and parse them */
-        const value = localStorage.getItem("chosen");
-        if (value) {
-            this.setState({ members: JSON.parse(value) });
-        }
-        const label = localStorage.getItem("name");
-        if (label) {
-            this.setState({ name: JSON.parse(label) });
-        }
-
-        const { members } = this.state;
-
+        // const { members } = this.state;
         /* Loop through all contact ids and get their details, set the state */
-        for (var i = 0; i < members.length; i++) {
-            getContactDetails(members[i]).then(
-                (response) => {
-                    var data = response.data.data;
-                    this.setState({
-                        contactsList: [this.state.contactsList, data],
-                    });
-                    console.log(response);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-        }
-
+        // for (var i = 0; i < members.length; i++) {
+        //     getContactDetails(members[i]).then(
+        //         (response) => {
+        //             var data = response.data.data;
+        //             this.setState({
+        //                 contactsList: [this.state.contactsList, data],
+        //             });
+        //             console.log(response);
+        //         },
+        //         (error) => {
+        //             console.log(error);
+        //         }
+        //     );
+        // }
+        
     }
 
 
