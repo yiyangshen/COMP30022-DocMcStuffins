@@ -1,4 +1,9 @@
-# [getGroupCount()](../../../../../backend/src/controllers/groupController.ts)
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [group index](./index.md)<br>[test index](../index.md) | [groupController.ts:getGroupCount()](../../../../../backend/src/controllers/groupController.ts#L263-L273) | [documentation](../../endpoints/groups/getGroupCount.md) |
+# `getGroupCount()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -29,4 +34,3 @@
 | --- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------ |
 | 1   | Get a group count without being logged-in     | 1. GET `api/groups/count` (while being logged out)                                                                  | 401 Unauthorized         |
 | 2   | Get the group count of the authenticated user | 1. Login<br>2. Add `x` contacts (if there aren't any already)<br>3. GET `api/groups/count` (while being logged out) | 200 OK, with `x` in data |
-[back to index](./index.md)

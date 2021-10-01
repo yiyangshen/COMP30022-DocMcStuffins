@@ -1,4 +1,9 @@
-# [deleteMemo()](../../../../../backend/src/controllers/memoController.ts)
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [memo index](./index.md)<br>[test index](../index.md) | [memoController.ts:deleteMemo()](../../../../../backend/src/controllers/memoController.ts#L135-L169) | [documentation](../../endpoints/memos/deleteMemo.md) |
+# `deleteMemo()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -21,4 +26,3 @@
 | 4   | Delete memo with invalid data       | 1. Log in<br>2. DELETE `/api/memos/delete` with invalid `id`                                                                                          | 400 Bad Request                 |
 | 5   | Delete non-existing memo            | 1. Log in as `User1`<br>2. DELETE `/api/memos/delete` with `id` set to `User1`'s id                                                                   | 404 Not Found                   |
 | 6   | Delete memo belonging to other user | 1. Create a new memo `Memo1` with `userId` set to `User2`'s id<br>2. Log in as `User1`<br>3. DELETE `/api/memos/delete` with `id` set to `Memo1`'s id | 403 Forbidden                   |
-[back to index](./index.md)

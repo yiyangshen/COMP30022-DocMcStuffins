@@ -1,4 +1,9 @@
-# [getContactCount()](../../../../../backend/src/controllers/contactController.ts)
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [contact index](./index.md)<br>[test index](../index.md) | [contactController.ts:getContactCount()](../../../../../backend/src/controllers/contactController.ts#L317-L327) | [documentation](../../endpoints/contacts/getContactCount.md) |
+# `getContactCount()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -34,4 +39,3 @@
 | :--- | :--------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | ------------------------ |
 | 1    | Get a contact count without being logged-in    | 1. GET `api/contacts/count` (while being logged out)out                                                               | 401 Unauthorized         |
 | 2    | Get the contact count of the authenticaed user | 1. Login<br>2. Add `x` contacts (if there aren't any already)<br>3. GET `api/contacts/count` (while being logged out) | 200 OK, with `x` in data |
-[back to index](./index.md)

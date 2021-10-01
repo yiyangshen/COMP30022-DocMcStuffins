@@ -1,4 +1,9 @@
-# [amendGroupDetails()](../../../../../backend/src/controllers/groupController.ts)
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [group index](./index.md)<br>[test index](../index.md) | [groupController.ts:amendGroupDetails()](../../../../../backend/src/controllers/groupController.ts#L28-L122) | [documentation](../../endpoints/groups/amendGroupDetails.md) |
+# `amendGroupDetails()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -35,4 +40,3 @@
 | 5   | Amend non-existing group                        | 1. Log in as `User1`<br>2. PATCH `/api/groups/details/amend` with `id` set to `User1`'s id                                                                                                                                                                                                                    | 404 Not Found                                                                                                                                                                                                                                                                                                                                                                             |
 | 6   | Amend group belonging to another user           | 1. Create a new contact `Group1` with `userId` set to `User2`'s id<br>2. Log in as `User1`<br>3. PATCH `/api/groups/details/amend` with `id` set to `Group1`'s id                                                                                                                                             | 403 Forbidden                                                                                                                                                                                                                                                                                                                                                                             |
 | 7   | Amend existing group while changing `members`   | 1. Create two new groups `Group1` and `Group2`<br>2. Create a new contact `Contact1`<br>3. PATCH `/api/groups/details/amend` with `id` set to `Group1`'s id and `members` consisting of `Contact1`'s id<br>4. Repeat step 3 but with `id` set to `Group2`'s id<br>5. Repeat step 4 but with `members` not set | 200 OK (on each of step 3-5)<br>Step 3: `Contact1`'s `groupId` becomes `Group1`'s id, `Group1`'s `members` consists of `Contact1`'s id<br>Step 4: `Contact1`'s `groupId` becomes `Group2`'s id, `Group1`'s and `Group2`'s `members` becomes empty and consists of `Contact1`'s id, respectively<br>Step 5: `Contact1`'s `groupId` becomes `undefined`, `Group2`'s `members` becomes empty |
-[back to index](./index.md)

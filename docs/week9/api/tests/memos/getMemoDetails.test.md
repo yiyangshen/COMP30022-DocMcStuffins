@@ -1,4 +1,9 @@
-# [getMemoDetails()](../../../../../backend/src/controllers/memoController.ts)
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [memo index](./index.md)<br>[test index](../index.md) | [memoController.ts:getMemoDetails()](../../../../../backend/src/controllers/memoController.ts#L182-L214) | [documentation](../../endpoints/memos/getMemoDetails.md) |
+# `getMemoDetails()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -20,4 +25,3 @@
 | 3   | Get memo details with memo ID not belonging to the requester | 1. Log in<br>2. GET `api/memos/details/:id` with `id` being the memo ID of another user | 403 Forbidden    |
 | 4   | Get memo details with memo ID that does not exist            | 1. Log in<br>2. GET `api/memos/details/:id` with `id` some new objectid                 | 404 Not Found    |
 | 5   | Get memo details successfully                                | 1. Log in<br>2. GET `api/memos/details/:id` with the correct `id`                       | 200 OK           |
-[back to index](./index.md)

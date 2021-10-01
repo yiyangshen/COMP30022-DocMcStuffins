@@ -1,4 +1,9 @@
-# [amendContactDetails()](../../../../../backend/src/controllers/contactController.ts)
+### Breadcrumbs
+
+| Indices | Implementation | Endpoint |
+| :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [contact index](./index.md)<br>[test index](../index.md) | [contactController.ts:amendContactDetails()](../../../../../backend/src/controllers/contactController.ts#L38-L140) | [documentation](../../endpoints/contacts/amendContactDetails.md) |
+# `amendContactDetails()`
 ## Relevant Models
 > Attributes ending with '?' are optional
 ### User
@@ -35,5 +40,3 @@
 | 5   | Amend non-existing contact                        | 1. Log in as `User1`<br>2. PATCH `/api/contacts/details/amend` with `id` set to `User1`'s id                                                                                                                                                                                                        | 404 Not Found                                                                                                                                                                                                                                                                                                                                                                             |
 | 6   | Amend contact belonging to another user           | 1. Create a new contact `Contact1` with `userId` set to `User2`'s id<br>2. Log in as `User1`<br>3. PATCH `/api/contacts/details/amend` with `id` set to `Contact1`'s id                                                                                                                             | 403 Forbidden                                                                                                                                                                                                                                                                                                                                                                             |
 | 7   | Amend existing contact while changing `groupId`   | 1. Create two new groups `Group1` and `Group2`<br>2. Create a new contact `Contact1`<br>3. PATCH `/api/contacts/details/amend` with `id` set to `Contact1`'s id and `groupId` set to `Group1`<br>4. Repeat step 3 but with `groupId` set to `Group2`<br>5. Repeat step 3 but with `groupId` not set | 200 OK (on each of step 3-5)<br>Step 3: `Contact1`'s `groupId` becomes `Group1`'s id, `Group1`'s `members` consists of `Contact1`'s id<br>Step 4: `Contact1`'s `groupId` becomes `Group2`'s id, `Group1`'s and `Group2`'s `members` becomes empty and consists of `Contact1`'s id, respectively<br>Step 5: `Contact1`'s `groupId` becomes `undefined`, `Group2`'s `members` becomes empty |
-
-[back to index](./index.md)
