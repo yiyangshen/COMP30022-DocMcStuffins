@@ -32,7 +32,7 @@ Specific details of the work undertaken by each person can be found in our [Trel
 
 > Have you done a sprint retrospective?
 
-Not yet. We are planning to do it sometime this week.
+Yes, we did it before meeting the client on Friday, in here [sprint restrospective](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/minutes/week9_client-sprint_retrospective.md). After the meeting we have also created a [sprint review](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/minutes/week9_client-sprint_review.md).
 
 ## Artefacts
 
@@ -44,6 +44,8 @@ Yes, notable additions to our requirements documents are:
 > Have design artefacts been modified?
 
 Yes, notable additions to our design artifacts are:
+  - [design class diagram](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/diagrams/design_class_diagram.pdf)
+  - [domain class diagram](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/diagrams/domain_class_diagram.pdf)
   - [interactive high-level UI prototype](https://www.figma.com/proto/fKGpzYdLk4bRARublYhPbr/IT-Project)
   - [usability testing results](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/usability_testing.pdf)
 
@@ -54,7 +56,7 @@ During this sprint, we completed the following tasks:
     - controllers, routes, and tests for all but one (i.e. contact search) of the core functionality requested by the client
     - [documentation](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/api/index.md) for the available API endpoints and their tests
   - frontend
-    - [to be filled by someone from the frontend]
+    - api and integration with the backend of the core functionality requested by the client has been completed
 
 > Do you have coding standards? If so, give link.
 
@@ -66,7 +68,7 @@ We have internally established pseudo-standards:
 
 > Do you have a testing plan? If so, give link.
 
-So far we have:
+Yes, [here](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/test_plan.md). Here are the breakdown of each part:
   - written [acceptance criteria](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week6/product_backlog.md) for our user stories
   - written [integration tests](https://github.com/techn0mancr/COMP30022-DocMcStuffins/tree/main/backend/tests) for all of the implemented backend API endpoints
   - set up [continuous integration](https://github.com/techn0mancr/COMP30022-DocMcStuffins/actions) to run all tests on a commit/pull request to `main`
@@ -79,3 +81,4 @@ Our CI automatically generates testing reports, an example of which can be seen 
 Yes, a deployment pipeline has been set up since week 6. We are using the following tools:
   - [GitHub Actions](https://github.com/techn0mancr/COMP30022-DocMcStuffins/actions) for continuous integration → uses Jest and Node.js to run tests
   - [Heroku](https://dashboard.heroku.com/apps/doc-mcstuffins/deploy/github) for continuous development
+  - [Deployed Website](https://doc-mcstuffins.herokuapp.com/)
