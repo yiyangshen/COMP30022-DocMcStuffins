@@ -32,45 +32,45 @@ Specific details of the work undertaken by each person can be found in our [Trel
 
 > Have you done a sprint retrospective?
 
-Yes, we did it before meeting the client on Friday, in here [sprint restrospective](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/minutes/week9_client-sprint_retrospective.md). After the meeting we have also created a [sprint review](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/minutes/week9_client-sprint_review.md).
+Yes, we undertook a sprint retrospective before we did our sprint review. The documents that detail both ceremonies can be found in our meeting minutes folder. For convenience, the retrospective is linked [here](../minutes/week9_client-sprint_retrospective.md), while the review is linked [here](../minutes/week9_client-sprint_review.md).
 
 ## Artefacts
 
 > Have the requirements been updated?
 
 Yes, notable additions to our requirements documents are:
-  - [acceptance criteria](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week6/product_backlog.md)
+  - [acceptance criteria and story point estimations](../week6/product_backlog.md)
 
 > Have design artefacts been modified?
 
 Yes, notable additions to our design artifacts are:
-  - [design class diagram](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/diagrams/design_class_diagram.pdf)
-  - [domain class diagram](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/diagrams/domain_class_diagram.pdf)
+  - [design class diagram](./diagrams/design_class_diagram.pdf)
+  - [domain class diagram](./diagrams/domain_class_diagram.pdf)
   - [interactive high-level UI prototype](https://www.figma.com/proto/fKGpzYdLk4bRARublYhPbr/IT-Project)
-  - [usability testing results](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/usability_testing.pdf)
+  - [usability testing results](./usability_testing.pdf)
 
 > What tasks were completed in the sprint?
 
 During this sprint, we completed the following tasks:
   - backend
     - controllers, routes, and tests for all but one (i.e. contact search) of the core functionality requested by the client
-    - [documentation](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/api/index.md) for the available API endpoints and their tests
+    - [documentation](./api/index.md) for the available API endpoints and their tests
   - frontend
     - api and integration with the backend of the core functionality requested by the client has been completed
 
 > Do you have coding standards? If so, give link.
 
 We have internally established pseudo-standards:
-  - general coding: [contactController.ts:amendContactDetails()](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/backend/src/controllers/contactController.ts)
-  - test writing: [amendContactDetails.test.ts](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/backend/tests/controllers/contact/amendContactDetails.test.ts)
-  - endpoint documentation: [amendContactDetails.md](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/api/endpoints/contacts/amendContactDetails.md)
-  - testing documentation: [amendContactDetails.test.md](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/api/tests/contacts/amendContactDetails.test.md)
+  - [general coding](./api/standards/coding.standard.ts)
+  - [test writing](./api/standards/testing.standard.ts)
+  - [endpoint documentation](./api/standards/endpoint.documentation.md)
+  - [testing documentation](./api/standards/testing.documentation.md)
 
 > Do you have a testing plan? If so, give link.
 
-Yes, [here](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week9/test_plan.md). Here are the breakdown of each part:
-  - written [acceptance criteria](https://github.com/techn0mancr/COMP30022-DocMcStuffins/blob/main/docs/week6/product_backlog.md) for our user stories
-  - written [integration tests](https://github.com/techn0mancr/COMP30022-DocMcStuffins/tree/main/backend/tests) for all of the implemented backend API endpoints
+Yes, our testing plan document is linked [here](./test_plan.md). We also generated a test report, linked [here](./test_report.pdf). The things we did to fulfill our testing plan include:
+  - written [acceptance criteria](../week6/product_backlog.md) for our user stories
+  - written [integration tests](../../backend/tests) for all of the implemented backend API endpoints
   - set up [continuous integration](https://github.com/techn0mancr/COMP30022-DocMcStuffins/actions) to run all tests on a commit/pull request to `main`
   - set up [continuous deployment](https://github.com/techn0mancr/COMP30022-DocMcStuffins/deployments) such that it only deploys our application if all tests are passed
 
@@ -81,4 +81,4 @@ Our CI automatically generates testing reports, an example of which can be seen 
 Yes, a deployment pipeline has been set up since week 6. We are using the following tools:
   - [GitHub Actions](https://github.com/techn0mancr/COMP30022-DocMcStuffins/actions) for continuous integration → uses Jest and Node.js to run tests
   - [Heroku](https://dashboard.heroku.com/apps/doc-mcstuffins/deploy/github) for continuous development
-  - [Deployed Website](https://doc-mcstuffins.herokuapp.com/)
+This pipeline has successfully deployed our application, which can be seen [here](https://doc-mcstuffins.herokuapp.com/).
