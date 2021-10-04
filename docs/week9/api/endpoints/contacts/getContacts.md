@@ -38,7 +38,10 @@
             middle?: string,
             last: string
         },
-        groupId?: string,
+        group?: {
+            name: string,
+            members: [ObjectId]
+        },
         gender: string,
         dateOfBirth?: Date,
         lastMet?: Date,
