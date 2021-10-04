@@ -9,12 +9,15 @@
     justify-content: left;
     width: 20vw;
 }
-.RecentGroups {
+.RecentGroupsBox{
     background-color: #f8fbff;
     box-shadow: 0 4px 8px 0 #000000;
     transition: 0.3s;
     width: 90%;
     height: 410px;
+}
+.RecentGroups{
+    display: flex;
 }
 .dot {
     text-align: center;
@@ -90,12 +93,13 @@
     text-align: center;
 }
 
-.Memos {
+.MemoBox{
     background-color: #f8fbff;
     box-shadow: 0 4px 8px 0 #000000;
     transition: 0.3s;
-    /* width: 100%;
-  height: 5%; */
+}
+.Memos{
+    display: flex;
 }
 .MemoPage {
     margin-left: 1vw;

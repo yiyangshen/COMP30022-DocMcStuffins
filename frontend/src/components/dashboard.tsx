@@ -113,9 +113,10 @@ class dashboard extends React.Component {
                 <div className="border">
                     <h1>Hi {username}!</h1>
 
-                    <div className="Memos">
+                    <div className="MemoBox">
                         <h3>Memos</h3>
-                        {memoList !== undefined && memoList.length > 0 ? (
+                        <div className="Memos">
+                            {memoList !== undefined && memoList.length > 0 ? (
                             <div>
                                 {memoList.map((memos, i) => (
                                     <div key={i}>
@@ -138,16 +139,18 @@ class dashboard extends React.Component {
                                     </div>
                                 ))}{" "}
                             </div>
-                        ) : null}
-                        <div className="MemoPage">
-                            <img
-                                className="AddMoreMemo"
-                                src={MemoMore}
-                                alt="logo"
-                                onClick={() => history.push(`/memos/new`)}
-                            />
-                            <h2 className="MemoText">Add More...</h2>
+                            ) : null}
+                            <div className="MemoPage">
+                                <img
+                                    className="AddMoreMemo"
+                                    src={MemoMore}
+                                    alt="logo"
+                                    onClick={() => history.push(`/memos/new`)}
+                                />
+                                <h2 className="MemoText">Add More...</h2>
+                            </div>
                         </div>
+                        
                     </div>
 
                     <div className="Dbox">
@@ -183,9 +186,10 @@ class dashboard extends React.Component {
                             </div>
                         </div>
 
-                        <div className="RecentGroups">
+                        <div className="RecentGroupsBox">
                             <h3>Recent Groups</h3>
-                            {recentGroupList !== undefined &&
+                            <div className="RecentGroups">
+                                {recentGroupList !== undefined &&
                             recentGroupList.length > 0 ? (
                                 <div>
                                     {recentGroupList.map((group, i) => (
@@ -209,13 +213,15 @@ class dashboard extends React.Component {
                                         </div>
                                     ))}{" "}
                                 </div>
-                            ) : null}
-                            <span
-                                className="dotMore"
-                                onClick={() => history.push(`/groups/new`)}
-                            >
-                                <h1 className="dotText">Add more...</h1>
-                            </span>
+                                ) : null}
+                                <span
+                                    className="dotMore"
+                                    onClick={() => history.push(`/groups/new`)}
+                                >
+                                    <h1 className="dotText">Add more...</h1>
+                                </span>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
