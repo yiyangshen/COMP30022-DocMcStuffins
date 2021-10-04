@@ -6,7 +6,7 @@ import history from "../history";
 var BASE_URL: string = "";
 switch (process.env.NODE_ENV) {
     case "production":
-        BASE_URL = "https://comp30023.herokuapp.com/api";
+        BASE_URL = "https://doc-mcstuffins.herokuapp.com/api";
         break;
     case "development":
     default:

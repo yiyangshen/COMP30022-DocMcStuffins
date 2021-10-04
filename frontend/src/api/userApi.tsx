@@ -6,7 +6,7 @@ import history from "../history";
 var BASE_URL: string = "";
 switch (process.env.NODE_ENV) {
     case "production":
-        BASE_URL = "https://comp30023.herokuapp.com/api";
+        BASE_URL = "https://doc-mcstuffins.herokuapp.com/api";
         break;
     case "development":
     default:
@@ -102,7 +102,7 @@ async function registerUser(
 ) {
     const endpoint = `${BASE_URL}/user/register`;
     return await axios
-        .patch(endpoint, {
+        .post(endpoint, {
             firstName,
             middleName,
             lastName,
