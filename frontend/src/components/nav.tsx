@@ -1,5 +1,5 @@
 /* Import the required libraries and types */
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import * as FaIcons from "react-icons/fa";
@@ -13,8 +13,25 @@ import { getContacts } from "../api/contactApi";
 import { IContact, IGroup } from "../interfaces";
 import { getGroups } from "../api/groupApi";
 
+// class NamesContainer extends Component{
+//     render(){
+//         return(
+//             <div>
+//                 {this.props.names.map(name => <Name name = {name}/>)}
+//             </div>
+//         )
+//     }
+// }
 
-
+// class Name extends Component{
+//     render(){
+//         return(
+//             <div>
+//                 {this.props.name}
+//             </div>
+//         )
+//     }
+// }
 
 class Navi extends React.Component {
     /* Set state */
@@ -22,7 +39,8 @@ class Navi extends React.Component {
         showSidebar: false,
         contactList: [] as IContact[],
         groupsList: [] as IGroup[],
-        search:''
+        names:['demo'],
+        search:'',
     };
 
     async componentDidMount() {
@@ -48,21 +66,35 @@ class Navi extends React.Component {
                 console.log(error);
             }
         );
+
+        //make list of group + contact names
+        for (let i of this.state.contactList) {
+            this.setState({
+                names: [...this.state.names, i.name.first + i.name.last],
+            });
+        }
+        console.log("names = " + this.state.names);
+
     }
     
 
     handleClick = () => {
-        console.log('this is:', this);
         this.setState({showSidebar: !this.state.showSidebar} );
     }
-    handlechange = (event: { target: { name: any; value: String } }) => {
-        this.setState({ [event.target.name]: event.target.value });
+    handlechange = (event: { target: { value: any; }; }) => {
+        this.setState({ search : event.target.value});
+        console.log("search = " + this.state.search);
     };
+    dynamicSearch = () => {
+        const filtered = this.state.names.filter(name => name.toLowerCase().includes(this.state.search.toLowerCase()));
+        console.log("filtered = " + filtered);
+        return  filtered;
+    }
 
     render() {
         const{
             showSidebar,
-            contactList
+            search,
         } = this.state;
         return( 
             <div>
@@ -73,7 +105,7 @@ class Navi extends React.Component {
                     <Form className="form-center">
                         <h2>
                             <input type="text" placeholder="Search" className="Search" onChange = {this.handlechange}/>
-
+                            {this.dynamicSearch()}
                         </h2>
                     </Form>
                     <Link to="/user/profile" className="menu-bars">
@@ -110,7 +142,6 @@ class Navi extends React.Component {
                 </nav>
             </div>
         )
-        
     }
 }
 export default Navi;
