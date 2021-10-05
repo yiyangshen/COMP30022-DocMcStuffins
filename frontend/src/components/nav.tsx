@@ -5,7 +5,7 @@ import { Form } from "react-bootstrap";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { SidebarData } from "./sidebarData";
-
+import history from "../history";
 /* Import components */
 import "../css/nav.css";
 import { logoutUser } from "../api/userApi";
@@ -20,7 +20,8 @@ class Navi extends React.Component {
         showSidebar: false,
         contactList: [] as IContact[],
         groupsList: [] as IGroup[],
-        names:['$'],
+        names:[''],
+        filterdNames: '',
         search:'',
     };
 
@@ -69,15 +70,16 @@ class Navi extends React.Component {
     dynamicSearch = () => {
         if(this.state.search !== ""){
             const filtered = this.state.names.filter(name => name.toLowerCase().includes(this.state.search.toLowerCase()));
-            console.log("filtered = " + filtered);
-            return  filtered;
+            console.log("filtered Names = " + filtered);
+            return  filtered; //string[]
+        }else{
+            return [''];
         }
     }
 
     render() {
         const{
             showSidebar,
-            search,
         } = this.state;
         return( 
             <div>
@@ -87,7 +89,27 @@ class Navi extends React.Component {
                     </Link>
                     <Form className="form-center">
                             <input type="text" placeholder="Search" className="Search" onChange = {this.handlechange}/>
-                            {this.dynamicSearch()}
+                            { this.dynamicSearch().map((name, i) => (
+                                <div key={i}>
+                                    {" "}
+                                    <button
+                                        className="base-button"
+                                        type="button"    
+                                        onClick={() => history.push(`/contacts`)}
+                                    >
+                                        <h2>{name}</h2>
+                                    </button>
+                                </div>
+                            ))}
+
+
+                            {/* <button
+                                className="base-button"
+                                type="button"    
+                                onClick={() => history.push(`/contacts`)}
+                            >
+                                <h2>{this.dynamicSearch()}</h2>
+                            </button> */}
                     </Form>
                     <Link to="/user/profile" className="menu-bars">
                         <h2>Profile</h2>
