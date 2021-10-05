@@ -25,6 +25,7 @@
 |  3.1  | Group creation      |
 |  3.2  | Group listing       |
 |  3.3  | Group amendment     |
+|  3.4  | Group search        |
 |  4.1  | Memo creation       |
 |  4.2  | Memo listing        |
 |  4.3  | Memo amendment      |
@@ -60,6 +61,8 @@
 | 3.3.1 | user        | edit an existing group's details    | I can keep my groups' information up-to-date            | HIGH     |      8      |
 | 3.3.2 | user        | edit contacts of an existing group  | I can keep the categorisation of contacts up-to-date    | HIGH     |      8      |
 | 3.3.3 | user        | delete an existing group            | I can remove groups that are no longer needed           | HIGH     |      5      |
+| 3.4.1 | user        | search a group by name              | I can quickly retrieve a specific group's details       | HIGH     |      8      |
+| 3.4.2 | user        | search a group by other fields      | I can match some details to a group                     | LOW      |      8      |
 | 4.1.1 | user        | create new memos                    | I can store notes about events                          | HIGH     |      3      |
 | 4.2.1 | user        | list down my memos                  | I can see some details about my memos at a glance       | HIGH     |      2      |
 | 4.2.2 | user        | view a memo's details               | I can view the details associated with a memo           | HIGH     |      2      |
@@ -111,6 +114,8 @@
 | 3.3.2.3 | user is currently amending a group's details    | user clicks on the 'Remove' button beside each contact     | removed contact is set to be removed from said group on group amendment finalisation                                  |
 | 3.3.2.4 | user is currently amending a group's details    | user clicks on the 'Save Group' button                     | selected users are assigned to said group                                                                             |
 | 3.3.3.1 | user is currently amending a group's details    | user clicks on the 'Delete Group' button                   | user is asked for confirmation, taken back to the groups page, and notified of their successful deletion              |
+| 3.4.1.1 | user is on the groups page                      | user enters a query string in the search bar               | user is shown groups whose name fuzzy-matches the query                                                               |
+| 3.4.2.1 | user is on the groups page                      | user selects search key in the search bar                  | user's next query string is going to be searched within said key                                                      |
 | 4.1.1.1 | user is on the memos page                       | user clicks on the 'Create Memo' button                    | user is taken to the memo creation form                                                                               |
 | 4.1.1.2 | user is on the memo creation form               | user clicks on the 'Save Memo' button                      | user is taken back to the memos page and notified of their successful creation                                        |
 | 4.2.1.1 | user has no existing memos                      | user is on the memos page                                  | user is prompted to create a new memo                                                                                 |
