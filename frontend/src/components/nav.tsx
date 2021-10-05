@@ -10,7 +10,8 @@ import { SidebarData } from "./sidebarData";
 import "../css/nav.css";
 import { logoutUser } from "../api/userApi";
 import { getContacts } from "../api/contactApi";
-import { IContact } from "../interfaces";
+import { IContact, IGroup } from "../interfaces";
+import { getGroups } from "../api/groupApi";
 
 
 
@@ -20,6 +21,7 @@ class Navi extends React.Component {
     state = {
         showSidebar: false,
         contactList: [] as IContact[],
+        groupsList: [] as IGroup[],
         search:''
     };
 
@@ -35,12 +37,23 @@ class Navi extends React.Component {
                 console.log(error);
             }
         );
+        /* Get all groups and set states */
+        await getGroups().then(
+            (response) => {
+                var data = response.data.data;
+                this.setState({ groupsList: data, isLoaded: true });
+            },
+            (error) => {
+                this.setState({ isLoaded: true, error });
+                console.log(error);
+            }
+        );
     }
     
 
     handleClick = () => {
         console.log('this is:', this);
-        this.setState(!this.state.showSidebar);
+        this.setState({showSidebar: !this.state.showSidebar} );
     }
     handlechange = (event: { target: { name: any; value: String } }) => {
         this.setState({ [event.target.name]: event.target.value });
@@ -59,7 +72,8 @@ class Navi extends React.Component {
                     </Link>
                     <Form className="form-center">
                         <h2>
-                            <input type="text" placeholder="Search" className="Search"/>
+                            <input type="text" placeholder="Search" className="Search" onChange = {this.handlechange}/>
+
                         </h2>
                     </Form>
                     <Link to="/user/profile" className="menu-bars">
@@ -100,9 +114,6 @@ class Navi extends React.Component {
     }
 }
 export default Navi;
-
-
-
 
 // /* Function for navigation bar */
 // function Navi() {
