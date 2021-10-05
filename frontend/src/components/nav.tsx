@@ -121,7 +121,7 @@ class Navi extends React.Component {
                                 </div>
                             ))}
                     </Form>
-                    <Link to="/user/profile" className="menu-bars">
+                    <Link to="/user/profile" className="profile-bars">
                         <h2>Profile</h2>
                     </Link>
                 </div>
