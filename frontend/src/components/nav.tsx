@@ -69,15 +69,21 @@ class Navi extends React.Component {
     };
     dynamicSearch = () => {
         if(this.state.search !== ""){
-            // const filtered = this.state.names.filter(name => name.toLowerCase().includes(this.state.search.toLowerCase()));
             const filtered = this.state.contactList.filter(contact => (contact.name.first+contact.name.last).toLowerCase().includes(this.state.search.toLowerCase()));
-            console.log("filtered contacts = " + filtered);
+            // const filteredGroups = this.state.groupsList.filter(group => group.name.toLowerCase().includes(this.state.search.toLowerCase()));
             return  filtered; //string[]
         }else{
             return [];
         }
     }
-
+    dynamicGroupSearch = () => {
+        if(this.state.search !== ""){
+            const filtered= this.state.groupsList.filter(group => group.name.toLowerCase().includes(this.state.search.toLowerCase()));
+            return  filtered; //string[]
+        }else{
+            return [];
+        }
+    }
     render() {
         const{
             showSidebar,
@@ -90,18 +96,6 @@ class Navi extends React.Component {
                     </Link>
                     <Form className="form-center">
                             <input type="text" placeholder="Search" className="Search" onChange = {this.handlechange}/>
-                            {/* { this.dynamicSearch().map((name, i) => (
-                                <div key={i}>
-                                    {" "}
-                                    <button
-                                        className="base-button"
-                                        type="button"    
-                                        onClick={() => history.push(`/contacts`)}
-                                    >
-                                        <h2>{name}</h2>
-                                    </button>
-                                </div>
-                            ))} */}
                             { this.dynamicSearch().map((contact, i) => (
                                 <div key={i}>
                                     {" "}
@@ -111,6 +105,18 @@ class Navi extends React.Component {
                                         onClick={() => history.push(`/contacts/details/?id=${contact._id}`)}
                                     >
                                         <h2>{contact.name.first + " " + contact.name.last}</h2>
+                                    </button>
+                                </div>
+                            ))}
+                            { this.dynamicGroupSearch().map((group, i) => (
+                                <div key={i}>
+                                    {" "}
+                                    <button
+                                        className="base-button"
+                                        type="button"
+                                        onClick={() => history.push(`/groups/details/?id=${group._id}`)}
+                                    >
+                                        <h2>{group.name}</h2>
                                     </button>
                                 </div>
                             ))}
