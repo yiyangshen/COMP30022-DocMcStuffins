@@ -8,7 +8,6 @@ import { IGroup } from "../interfaces";
 import { getContactDetails, amendContactDetails } from "../api/contactApi";
 import { getId } from "../api/userApi";
 import { getGroups } from "../api/groupApi";
-import "../css/newContact.css";
 
 /* Component for amending a contact */
 class contactAmend extends React.Component {
@@ -156,7 +155,7 @@ class contactAmend extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <h1>Edit contact</h1>
                     <div className="box">
                         <form onSubmit={this.handleSave}>

@@ -61,7 +61,7 @@ class addContact extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <div className="title">
                         <h2>
                             <b>Adding Contacts to Group</b>

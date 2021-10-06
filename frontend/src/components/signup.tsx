@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import history from "../history";
 
 /* Import components */
-import "../css/signin.css";
 import { registerUser } from "../api/userApi";
 import SignUpLogo from "../img/signUpLogo.svg";
 /* Component for Sign Up */
@@ -56,15 +55,14 @@ class Signup extends React.Component {
         } = this.state;
 
         return (
-            <div className="border">
+            <div className="frame-pages">
                 <div className="SBox2">
                     <div className="SBox">
-                            <h1>Sign Up</h1>
-                            <p>Already have an account? </p>
-                            <Link to="#" onClick={() => history.push(`/signin`)}>
-                                <p>Sign In here.</p>
-                            </Link>
-
+                        <h1>Sign Up</h1>
+                        <p>Already have an account? </p>
+                        <Link to="#" onClick={() => history.push(`/signin`)}>
+                            <p>Sign In here.</p>
+                        </Link>
 
                         <div>
                             <form onSubmit={this.handleSubmit}>
@@ -137,14 +135,8 @@ class Signup extends React.Component {
                             </form>
                         </div>
                     </div>
-                    <img
-                        className="signInLogo"
-                        src={SignUpLogo}
-                        alt="logo"
-                    />
-
+                    <img className="signInLogo" src={SignUpLogo} alt="logo" />
                 </div>
-
             </div>
         );
     }

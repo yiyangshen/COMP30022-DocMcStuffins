@@ -7,7 +7,6 @@ import { IContact } from "../interfaces";
 /* Import components */
 import { amendGroupDetails, getGroupDetails } from "../api/groupApi";
 import { getContactDetails } from "../api/contactApi";
-import "../css/newGroup.css";
 import { getId } from "../api/userApi";
 
 /* Component for new cgroup */
@@ -55,7 +54,7 @@ class groupNew extends React.Component {
                 }
             );
         }
-        
+
         await getGroupDetails(this.groupId).then(
             (response) => {
                 var data = response.data.data;
@@ -110,7 +109,7 @@ class groupNew extends React.Component {
         const { name, contactsList } = this.state;
 
         return (
-            <div className="border">
+            <div className="frame-pages">
                 <h1>Edit Group</h1>
                 <div className="AGbox">
                     <label>Name</label>

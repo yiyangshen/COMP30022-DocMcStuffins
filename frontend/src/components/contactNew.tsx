@@ -1,6 +1,5 @@
 /* Import the required libraries and types */
 import React from "react";
-import "../css/newContact.css";
 import history from "../history";
 import { IGroup } from "../interfaces";
 
@@ -123,7 +122,7 @@ class contactNew extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <h1>Add contact</h1>
                     <div className="box">
                         <form onSubmit={this.handleSubmit}>

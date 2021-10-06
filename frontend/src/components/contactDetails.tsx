@@ -7,7 +7,6 @@ import moment from "moment";
 import { getContactDetails, deleteContact } from "../api/contactApi";
 import { getId } from "../api/userApi";
 import { IContact } from "../interfaces";
-import "../css/newContact.css";
 
 /* Component for contact details */
 class detailsContact extends React.Component {
@@ -59,7 +58,7 @@ class detailsContact extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <div className="title">
                         <h2>
                             <b>Contact Details</b>

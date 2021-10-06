@@ -7,7 +7,7 @@ class home extends React.Component {
     /* Render the component to the screen */
     render() {
         return (
-            <div className="border">
+            <div className="frame-pages">
                 <h1>Welcome to Comp 30023</h1>
                 <br />
                 <span className="landingbtn">

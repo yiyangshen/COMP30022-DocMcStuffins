@@ -6,7 +6,6 @@ import { IMemo } from "../interfaces";
 /* Import components */
 import { getMemoDetails, deleteMemo } from "../api/memoApi";
 import { getId } from "../api/userApi";
-import "../css/newMemo.css";
 
 /* Component for memo detail */
 class memoDetail extends React.Component {
@@ -58,7 +57,7 @@ class memoDetail extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <div className="title">
                         <h2>
                             <b>Memo Details</b>

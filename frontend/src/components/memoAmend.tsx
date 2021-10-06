@@ -1,6 +1,5 @@
 /* Import the required libraries and types */
 import React from "react";
-import "../css/newMemo.css";
 import history from "../history";
 
 /* Import components */
@@ -75,7 +74,7 @@ class memoDetail extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <h1>Edit Memo</h1>
                     <form onSubmit={this.handleSubmit}>
                         <label>Name</label>

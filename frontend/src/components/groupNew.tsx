@@ -7,7 +7,6 @@ import { IContact } from "../interfaces";
 /* Import components */
 import { createGroup } from "../api/groupApi";
 import { getContactDetails } from "../api/contactApi";
-import "../css/newGroup.css";
 
 /* Component for new cgroup */
 class groupNew extends React.Component {
@@ -83,7 +82,7 @@ class groupNew extends React.Component {
         const { name, contactsList, members } = this.state;
 
         return (
-            <div className="border">
+            <div className="frame-pages">
                 <h1>Add Group</h1>
                 <div className="AGbox">
                     <label>Name</label>

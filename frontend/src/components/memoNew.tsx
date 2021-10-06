@@ -1,7 +1,6 @@
 /* Import the required libraries and types */
 import React from "react";
 import history from "../history";
-import "../css/newMemo.css";
 
 /* Import components */
 import { createMemo } from "../api/memoApi";
@@ -33,7 +32,7 @@ class memoNew extends React.Component {
         const { title, notes } = this.state;
 
         return (
-            <div className="border">
+            <div className="frame-pages">
                 <h1>Add Memo</h1>
                 <form onSubmit={this.handleSubmit}>
                     <label>Name</label>
