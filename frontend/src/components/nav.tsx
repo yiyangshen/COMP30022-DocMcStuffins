@@ -1,5 +1,5 @@
 /* Import the required libraries and types */
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import * as FaIcons from "react-icons/fa";

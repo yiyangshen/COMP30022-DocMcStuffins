@@ -279,8 +279,10 @@ members {
 .navbar {
     background-color: #b5d7ff;
     height: 70px;
-    display: flex;
     align-items: center;
+    width: 100%;
+    padding-left: 2vw;
+    padding-right: 2vw;
 }
 
 .form-center {

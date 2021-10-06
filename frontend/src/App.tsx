@@ -11,7 +11,8 @@ import Home from "./components/home";
 import Nav from "./components/nav";
 import SignIn from "./components/signin";
 import SignUp from "./components/signup";
-import Profile from "./components/profile";
+import ProfileDetails from "./components/profileDetails";
+import ProfileAmend from "./components/profileAmend";
 import Dashboard from "./components/dashboard";
 
 import ContactView from "./components/contactView";
@@ -57,7 +58,16 @@ function App() {
                     <div>
                         <Nav />
                         <Route exact path="/dashboard" component={Dashboard} />
-                        <Route exact path="/user/profile" component={Profile} />
+                        <Route
+                            exact
+                            path="/user/profile"
+                            component={ProfileDetails}
+                        />
+                        <Route
+                            exact
+                            path="/user/profile/amend"
+                            component={ProfileAmend}
+                        />
 
                         <Route exact path="/contacts" component={ContactView} />
                         <Route
