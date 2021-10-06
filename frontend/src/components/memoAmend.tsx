@@ -77,7 +77,7 @@ class memoDetail extends React.Component {
                 <div className="frame-pages">
                     <h1>Edit Memo</h1>
                     <form onSubmit={this.handleSubmit}>
-                        <label>Name</label>
+                        <h2>Name</h2>
                         <input
                             type="text"
                             id="memo.title"
@@ -86,7 +86,7 @@ class memoDetail extends React.Component {
                             placeholder={title}
                             onChange={this.handleChange}
                         />
-                        <label>Description</label>
+                        <h2>Description</h2>
                         <textarea
                             id="memo.notes"
                             name="notes"

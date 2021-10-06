@@ -74,13 +74,13 @@ class memoDetail extends React.Component {
                             </button>
                         </h2>
                     </div>
-                    <label>Name</label>
-                    <div className="box, white">
-                        <h2>{memo.title}</h2>
+                    <h2>Name</h2>
+                    <div className="display-content white cut-30">
+                        <p>{memo.title}</p>
                     </div>
-                    <label>Description</label>
-                    <div className="box, white">
-                        <h2>{memo.notes}</h2>
+                    <h2>Description</h2>
+                    <div className="display-content white">
+                        <p>{memo.notes}</p>
                     </div>
 
                     <button

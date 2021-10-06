@@ -55,43 +55,40 @@ class contactView extends React.Component {
                         </h2>
                     </div>
 
-                    <table>
+                    <table className="table-lable">
                         <thead>
-                            <tr className="table-lable">
+                            <tr>
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
                             </tr>
                         </thead>
+
                         {contactsList !== undefined &&
                         contactsList.length > 0 ? (
-                            <div>
+                            <tbody>
                                 {contactsList.map((contact, i) => (
-                                    <div key={i}>
-                                        {" "}
-                                        <tbody>
-                                            <tr
-                                                className="table-contents"
-                                                onClick={() =>
-                                                    history.push(
-                                                        `/contacts/details/?id=${contact._id}`
-                                                    )
-                                                }
-                                            >
-                                                <td>
-                                                    {contact.name.first}{" "}
-                                                    {contact.name.last}
-                                                </td>
-                                                <td>{contact.phoneNumber}</td>
-                                                <td>{contact.email}</td>
-                                            </tr>
-                                        </tbody>
-                                    </div>
-                                ))}{" "}
-                            </div>
+                                    <tr
+                                        className="table-content"
+                                        key={i}
+                                        onClick={() =>
+                                            history.push(
+                                                `/contacts/details/?id=${contact._id}`
+                                            )
+                                        }
+                                    >
+                                        <td>
+                                            {contact.name.first}{" "}
+                                            {contact.name.last}
+                                        </td>
+                                        <td>{contact.phoneNumber}</td>
+                                        <td>{contact.email}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
                         ) : (
                             <tbody>
-                                <tr>
+                                <tr className="table-content">
                                     <td></td>
                                     <td>No data yet</td>
                                     <td></td>

@@ -54,9 +54,9 @@ class groupNew extends React.Component {
     }
 
     /* Remember state for the next mount */
-    componentWillUnmount() {
+    handleEdit = () => {
         localStorage.setItem("name", JSON.stringify(this.state.name));
-    }
+    };
 
     /* Handle when click on submit button */
     handleSubmit = (event: { preventDefault: () => void }) => {
@@ -99,7 +99,11 @@ class groupNew extends React.Component {
                         <div className="box, white">
                             <h2>{members.length}</h2>
                         </div>
-                        <Link to="/groups/new/contact" className="addContact">
+                        <Link
+                            to="/groups/new/contact"
+                            className="addContact"
+                            onClick={this.handleEdit}
+                        >
                             add contact
                         </Link>
                     </div>
