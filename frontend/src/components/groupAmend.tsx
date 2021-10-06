@@ -32,9 +32,9 @@ class groupNew extends React.Component {
         if (value) {
             this.setState({ members: JSON.parse(value) });
         }
-        const label = localStorage.getItem("name");
-        if (label) {
-            this.setState({ name: JSON.parse(label) });
+        const h2 = localStorage.getItem("name");
+        if (h2) {
+            this.setState({ name: JSON.parse(h2) });
         }
 
         const { members } = this.state;
@@ -111,57 +111,51 @@ class groupNew extends React.Component {
         return (
             <div className="frame-pages">
                 <h1>Edit Group</h1>
-                <div className="AGbox">
-                    <label>Name</label>
-                    <input
-                        type="name"
-                        id="groupName"
-                        name="name"
-                        placeholder="Eg. Unimelb"
-                        value={name}
-                        onChange={this.handleChange}
-                    />
-                    <div className="box1">
-                        <label>Members</label>
-                        <div className="box, white">
-                            <h2>{contactsList.length}</h2>
-                        </div>
-                        <Link
-                            to="/groups/new/contact"
-                            onClick={this.handleEdit}
-                            className="addContact"
-                        >
-                            add contact
-                        </Link>
+
+                <h2>Name</h2>
+                <input
+                    type="name"
+                    id="groupName"
+                    name="name"
+                    placeholder="Eg. Unimelb"
+                    value={name}
+                    onChange={this.handleChange}
+                    className="display-content grey"
+                />
+                <div className="box1">
+                    <h2>Members</h2>
+                    <div className="display-content white cut-10">
+                        <h2>{contactsList.length}</h2>
                     </div>
+                    <Link
+                        to="/groups/new/contact"
+                        onClick={this.handleEdit}
+                        className="addContact"
+                    >
+                        add contact
+                    </Link>
                 </div>
 
-                <table>
+                <table className="table-lable">
                     <thead>
-                        <tr className="table-lable">
+                        <tr>
                             <th>Name</th>
                             <th>Phone</th>
                             <th>Email</th>
                         </tr>
                     </thead>
                     {contactsList !== undefined && contactsList.length > 0 ? (
-                        <div>
+                        <tbody>
                             {contactsList.map((contact, i) => (
-                                <div key={i}>
-                                    {" "}
-                                    <tbody>
-                                        <tr className="table-contents">
-                                            <td>
-                                                {contact.name.first}{" "}
-                                                {contact.name.last}
-                                            </td>
-                                            <td>{contact.phoneNumber}</td>
-                                            <td>{contact.email}</td>
-                                        </tr>
-                                    </tbody>
-                                </div>
+                                <tr key={i} className="table-contents">
+                                    <td>
+                                        {contact.name.first} {contact.name.last}
+                                    </td>
+                                    <td>{contact.phoneNumber}</td>
+                                    <td>{contact.email}</td>
+                                </tr>
                             ))}
-                        </div>
+                        </tbody>
                     ) : (
                         <tbody>
                             <tr>

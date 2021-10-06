@@ -43,7 +43,7 @@ class contactView extends React.Component {
             return (
                 <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Contacts</b>
                             <button
                                 className="base-button top-right"
@@ -52,7 +52,7 @@ class contactView extends React.Component {
                             >
                                 <h2>New Contact</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
 
                     <table className="table-lable">

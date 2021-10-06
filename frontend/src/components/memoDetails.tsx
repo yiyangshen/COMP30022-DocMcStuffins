@@ -59,7 +59,7 @@ class memoDetail extends React.Component {
             return (
                 <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Memo Details</b>
                             <button
                                 className="base-button top-right"
@@ -72,7 +72,7 @@ class memoDetail extends React.Component {
                             >
                                 <h2>Edit</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
                     <h2>Name</h2>
                     <div className="display-content white cut-30">

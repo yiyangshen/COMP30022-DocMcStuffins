@@ -63,7 +63,7 @@ class addContact extends React.Component {
             return (
                 <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Adding Contacts to Group</b>
                             <button
                                 className="base-button top-right"
@@ -72,7 +72,7 @@ class addContact extends React.Component {
                             >
                                 <h2>Add to Group</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
 
                     <table className="table-lable">

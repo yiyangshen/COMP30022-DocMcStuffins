@@ -43,7 +43,7 @@ class memoView extends React.Component {
             return (
                 <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Memos</b>
                             <button
                                 className="base-button top-right"
@@ -52,7 +52,7 @@ class memoView extends React.Component {
                             >
                                 <h2>New Memo</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
 
                     {memosList !== undefined && memosList.length > 0 ? (

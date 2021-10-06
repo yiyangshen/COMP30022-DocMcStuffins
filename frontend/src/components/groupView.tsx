@@ -44,7 +44,7 @@ class groupView extends React.Component {
             return (
                 <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Groups</b>
                             <button
                                 className="base-button top-right"
@@ -53,7 +53,7 @@ class groupView extends React.Component {
                             >
                                 <h2>New Group</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
 
                     {groupsList !== undefined && groupsList.length > 0 ? (

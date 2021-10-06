@@ -45,9 +45,9 @@ class profile extends React.Component {
             return (
                 <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Profile</b>
-                        </h2>
+                        </h1>
                     </div>
 
                     <div className="box">

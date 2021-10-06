@@ -85,6 +85,7 @@ class memoDetail extends React.Component {
                             value={title}
                             placeholder={title}
                             onChange={this.handleChange}
+                            className="display-content grey"
                         />
                         <h2>Description</h2>
                         <textarea
@@ -93,6 +94,7 @@ class memoDetail extends React.Component {
                             value={notes}
                             placeholder={notes}
                             onChange={this.handleChange}
+                            className="display-content grey"
                         ></textarea>
                         <button
                             className="base-button"

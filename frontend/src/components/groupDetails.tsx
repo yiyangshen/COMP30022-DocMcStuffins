@@ -62,7 +62,7 @@ class groupDetail extends React.Component {
             return (
                 <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Group Details</b>
                             <button
                                 className="base-button top-right"
@@ -75,7 +75,7 @@ class groupDetail extends React.Component {
                             >
                                 <h2>Edit</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
 
                     <div>

@@ -60,7 +60,7 @@ class detailsContact extends React.Component {
             return (
                 <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Contact Details</b>
                             <button
                                 className="base-button top-right"
@@ -73,7 +73,7 @@ class detailsContact extends React.Component {
                             >
                                 <h2>Edit</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
                     <div className="grid-container-contacts">
                         <div>

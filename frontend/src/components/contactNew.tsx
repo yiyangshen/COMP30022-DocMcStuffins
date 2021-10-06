@@ -124,40 +124,49 @@ class contactNew extends React.Component {
             return (
                 <div className="frame-pages">
                     <h1>Add contact</h1>
-                    <div className="box">
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="boxLeft">
-                                <label>Name*</label>
+
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="grid-container-contacts">
+                            <div>
+                                <h2>Name*</h2>
+
                                 <input
                                     type="text"
                                     id="fullName"
                                     name="firstName"
                                     value={firstName}
-                                    placeholder="Eg. John "
+                                    placeholder="First Name"
                                     onChange={this.handleChange}
+                                    className="display-content grey"
                                 />
+
                                 <input
                                     type="text"
                                     id="fullName"
                                     name="middleName"
                                     value={middleName}
-                                    placeholder="Eg. Mid"
+                                    placeholder="Middle Name"
                                     onChange={this.handleChange}
+                                    className="display-content grey"
                                 />
+
                                 <input
                                     type="text"
                                     id="fullName"
                                     name="lastName"
                                     value={lastName}
-                                    placeholder="Eg. Doe"
+                                    placeholder="Last Name"
                                     onChange={this.handleChange}
+                                    className="display-content grey"
                                 />
-                                <label>Gender</label>
+
+                                <h2>Gender</h2>
                                 <select
                                     id="gender"
                                     name="gender"
                                     onChange={this.handleChange}
                                     value={gender}
+                                    className="display-content grey"
                                 >
                                     <option key="Male" value="Male">
                                         Male
@@ -169,12 +178,18 @@ class contactNew extends React.Component {
                                         Other
                                     </option>
                                 </select>
-                                <label>Country</label>
-                                <select id="country" name="country">
+
+                                <h2>Country</h2>
+                                <select
+                                    id="country"
+                                    name="country"
+                                    className="display-content grey"
+                                >
                                     <option value="australia">Australia</option>
                                     <option value="china">China</option>
                                 </select>
-                                <label>Email</label>
+
+                                <h2>Email</h2>
                                 <input
                                     type="text"
                                     id="email"
@@ -182,8 +197,10 @@ class contactNew extends React.Component {
                                     placeholder="Eg. JohnDoe@gmail.com"
                                     value={email}
                                     onChange={this.handleChange}
+                                    className="display-content grey"
                                 />
-                                <label>Phone Number</label>
+
+                                <h2>Phone Number</h2>
                                 <input
                                     type="text"
                                     id="phoneNumber"
@@ -191,8 +208,11 @@ class contactNew extends React.Component {
                                     placeholder="Eg. 0412563286"
                                     value={phoneNumber}
                                     onChange={this.handleChange}
+                                    className="display-content grey"
                                 />
-                                <label>Relationship</label>
+                            </div>
+                            <div>
+                                <h2>Relationship</h2>
                                 <input
                                     type="text"
                                     id="relationship"
@@ -200,8 +220,10 @@ class contactNew extends React.Component {
                                     value={relationship}
                                     placeholder="Eg. Friends"
                                     onChange={this.handleChange}
+                                    className="display-content grey"
                                 />
-                                <label>Date of Birth</label>
+
+                                <h2>Date of Birth</h2>
                                 <input
                                     type="text"
                                     id="dateOfBirth"
@@ -209,8 +231,9 @@ class contactNew extends React.Component {
                                     placeholder="Eg. 3.15pm, 13 Aug 2001"
                                     value={dateOfBirthData}
                                     onChange={this.handleChange}
+                                    className="display-content grey"
                                 />
-                                <label>First Contact Timestamp</label>
+                                <h2>First Contact Timestamp</h2>
                                 <input
                                     type="text"
                                     id="firstContactTimestamp"
@@ -218,13 +241,15 @@ class contactNew extends React.Component {
                                     placeholder="Eg. 3.15pm, 13 Aug 2091"
                                     value={lastMetData}
                                     onChange={this.handleChange}
+                                    className="display-content grey"
                                 />
-                                <label>Assigned Group</label>
+                                <h2>Assigned Group</h2>
                                 <select
                                     id="assignedGroup"
                                     name="groupId"
                                     value={groupId}
                                     onChange={this.handleChange}
+                                    className="display-content grey"
                                 >
                                     <option value=" ">None</option>
                                     {groupsList.map((group, i) => (
@@ -234,29 +259,32 @@ class contactNew extends React.Component {
                                     ))}
                                 </select>
 
-                                <div className="boxRight">
-                                    <label>Additional Notes</label>
-                                    <textarea
-                                        id="additionalNotes"
-                                        name="contact.additionalNotes"
-                                        placeholder="Write something.."
-                                        value={additionalNotes}
-                                        onChange={this.handleChange}
-                                    ></textarea>
+                                <h2>Additional Notes</h2>
+                                <input
+                                    type="text"
+                                    id="additionalNotes"
+                                    name="contact.additionalNotes"
+                                    placeholder="Write something.."
+                                    value={additionalNotes}
+                                    onChange={this.handleChange}
+                                    className="display-content grey"
+                                />
 
-                                    <p>
-                                        Click on the "Choose File" button to
-                                        choose a picture:
-                                    </p>
-                                    <form action="/action_page.php">
-                                        <input
-                                            type="file"
-                                            id="myFile"
-                                            name="photo"
-                                            value={photo}
-                                            onChange={this.handleChange}
-                                        />
-                                    </form>
+                                <p>
+                                    Click on the "Choose File" button to choose
+                                    a picture:
+                                </p>
+                                <form action="/action_page.php">
+                                    <input
+                                        type="file"
+                                        id="myFile"
+                                        name="photo"
+                                        value={photo}
+                                        onChange={this.handleChange}
+                                        className="display-content grey"
+                                    />
+                                </form>
+                                <div>
                                     <button
                                         className="base-button"
                                         type="button"
@@ -274,8 +302,8 @@ class contactNew extends React.Component {
                                     </button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             );
         }

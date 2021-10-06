@@ -99,7 +99,6 @@ class Navi extends React.Component {
                     </Link>
                     <Form className="form-center">
                         <input
-                            type="text"
                             placeholder="Search"
                             className="Search"
                             onChange={this.handlechange}
