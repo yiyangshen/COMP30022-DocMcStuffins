@@ -2,14 +2,14 @@
 
 | Indices | Implementation | Testing |
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:getContacts()](../../../../../backend/src/controllers/contactController.ts#L381-L400) | [test suite](../../../../../backend/tests/controllers/contacts/getContacts.test.ts)<br>[documentation](../../tests/contacts/getContacts.test.md) |
+| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:getGrouplessContacts()](../../../../../backend/src/controllers/contactController.ts#L381-L400) | [test suite](../../../../../backend/tests/controllers/contacts/getGrouplessContacts.test.ts)<br>[documentation](../../tests/contacts/getGrouplessContacts.test.md) |
 
-# `getContacts()`
+# `getGrouplessContacts()`
 
-| Key                 | Value        |
-| :------------------ | :----------- |
-| REST endpoint       | `/contacts/` |
-| HTTP request method | `GET`        |
+| Key                 | Value                 |
+| :------------------ | :-------------------- |
+| REST endpoint       | `/contacts/groupless` |
+| HTTP request method | `GET`                 |
 
 ## Request Format
 
@@ -37,10 +37,6 @@
             first: string,
             middle?: string,
             last: string
-        },
-        group?: {
-            name: string,
-            members: [ObjectId]
         },
         gender: string,
         dateOfBirth?: Date,
