@@ -6,7 +6,7 @@ import history from "../history";
 /* Import components */
 import "../css/signin.css";
 import { registerUser } from "../api/userApi";
-
+import SignUpLogo from "../img/signUpLogo.svg";
 /* Component for Sign Up */
 class Signup extends React.Component {
     /* Declare states */
@@ -57,89 +57,94 @@ class Signup extends React.Component {
 
         return (
             <div className="border">
-                <div>
-                    <h1>Sign Up</h1>
-                    <p>Already have an account? </p>
-                    <Link to="#" onClick={() => history.push(`/signin`)}>
-                        <p>Sign In here.</p>
-                    </Link>
+                <div className="SBox2">
+                    <div className="SBox">
+                            <h1>Sign Up</h1>
+                            <p>Already have an account? </p>
+                            <Link to="#" onClick={() => history.push(`/signin`)}>
+                                <p>Sign In here.</p>
+                            </Link>
+
+
+                        <div>
+                            <form onSubmit={this.handleSubmit}>
+                                <p>First Name</p>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    name="firstName"
+                                    placeholder="first name"
+                                    value={firstName}
+                                    onChange={this.handleChange}
+                                    required
+                                />
+
+                                <p>Middle Name</p>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    name="middleName"
+                                    placeholder="middle name"
+                                    value={middleName}
+                                    onChange={this.handleChange}
+                                />
+
+                                <p>Last Name</p>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    name="lastName"
+                                    placeholder="last name"
+                                    value={lastName}
+                                    onChange={this.handleChange}
+                                />
+
+                                <p>Email</p>
+                                <input
+                                    id="email"
+                                    type="text"
+                                    name="email"
+                                    placeholder="email"
+                                    value={email}
+                                    onChange={this.handleChange}
+                                    required
+                                />
+
+                                <p>Password</p>
+                                <input
+                                    id="password"
+                                    type="password"
+                                    name="password"
+                                    placeholder="password"
+                                    value={password}
+                                    onChange={this.handleChange}
+                                    required
+                                />
+
+                                <p>Confirm Password</p>
+                                <input
+                                    id="conpassword"
+                                    type="password"
+                                    name="confirmPassword"
+                                    placeholder="confirm password"
+                                    value={confirmPassword}
+                                    onChange={this.handleChange}
+                                    required
+                                />
+                                <button className="signInButton" type="submit">
+                                    <h2>Sign Up</h2>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <img
+                        className="signInLogo"
+                        src={SignUpLogo}
+                        alt="logo"
+                    />
+
                 </div>
-                <br />
 
-                <div>
-                    <form onSubmit={this.handleSubmit}>
-                        <p>First Name</p>
-                        <input
-                            id="name"
-                            type="text"
-                            name="firstName"
-                            placeholder="first name"
-                            value={firstName}
-                            onChange={this.handleChange}
-                            required
-                        />
-
-                        <p>Middle Name</p>
-                        <input
-                            id="name"
-                            type="text"
-                            name="middleName"
-                            placeholder="middle name"
-                            value={middleName}
-                            onChange={this.handleChange}
-                        />
-
-                        <p>Last Name</p>
-                        <input
-                            id="name"
-                            type="text"
-                            name="lastName"
-                            placeholder="last name"
-                            value={lastName}
-                            onChange={this.handleChange}
-                        />
-
-                        <p>Email</p>
-                        <input
-                            id="email"
-                            type="text"
-                            name="email"
-                            placeholder="email"
-                            value={email}
-                            onChange={this.handleChange}
-                            required
-                        />
-
-                        <p>Password</p>
-                        <input
-                            id="password"
-                            type="password"
-                            name="password"
-                            placeholder="password"
-                            value={password}
-                            onChange={this.handleChange}
-                            required
-                        />
-
-                        <p>Confirm Password</p>
-                        <input
-                            id="conpassword"
-                            type="password"
-                            name="confirmPassword"
-                            placeholder="confirm password"
-                            value={confirmPassword}
-                            onChange={this.handleChange}
-                            required
-                        />
-
-                        <br />
-                        <br />
-
-                        <button className="base-button" type="submit">
-                            <h2>Sign Up</h2>
-                        </button>
-                    </form>
-                </div>
             </div>
         );
     }
