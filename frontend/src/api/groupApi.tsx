@@ -6,7 +6,7 @@ import history from "../history";
 var BASE_URL: string = "";
 switch (process.env.NODE_ENV) {
     case "production":
-        BASE_URL = "https://comp30023.herokuapp.com/api";
+        BASE_URL = "https://doc-mcstuffins.herokuapp.com/api";
         break;
     case "development":
     default:
@@ -42,7 +42,7 @@ async function amendGroupDetails(
             alert("Group could not be created");
             console.log(error);
         }
-    );;
+    );
 }
 
 /* Creates a new group with the given details;
