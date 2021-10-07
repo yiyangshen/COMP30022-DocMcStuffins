@@ -5,7 +5,6 @@ import { IGroup } from "../interfaces";
 
 /* Import components */
 import { getGroups } from "../api/groupApi";
-import { Col, Row } from "react-bootstrap";
 
 /* Component for view groups */
 class groupView extends React.Component {
@@ -43,9 +42,9 @@ class groupView extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Groups</b>
                             <button
                                 className="base-button top-right"
@@ -54,40 +53,28 @@ class groupView extends React.Component {
                             >
                                 <h2>New Group</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
 
                     {groupsList !== undefined && groupsList.length > 0 ? (
-                        <div>
-                            <Row>
-                                {groupsList.map((group, i) => (
-                                    <div key={i}>
-                                        <Col
-                                            xs={{ span: 6 }}
-                                            sm={{ span: 4 }}
-                                            md={{ span: 3 }}
-                                            lg={{ span: 2 }}
-                                            xl={{ span: 1 }}
+                        <div className="grid-container">
+                            {groupsList.map((group, i) => (
+                                <div key={i}>
+                                    <div className="RecentGroupText">
+                                        <span
+                                            className="dot"
+                                            onClick={() =>
+                                                history.push(
+                                                    `/groups/details/?id=${group._id}`
+                                                )
+                                            }
                                         >
-                                            <div className="RecentGroupText">
-                                                <span
-                                                    className="dot"
-                                                    onClick={() =>
-                                                        history.push(
-                                                            `/groups/details/?id=${group._id}`
-                                                        )
-                                                    }
-                                                >
-                                                    <h2>{group.name}</h2>
-                                                    <h1>
-                                                        {group.members.length}
-                                                    </h1>
-                                                </span>
-                                            </div>
-                                        </Col>
+                                            <h2>{group.name}</h2>
+                                            <h1>{group.members.length}</h1>
+                                        </span>
                                     </div>
-                                ))}
-                            </Row>
+                                </div>
+                            ))}
                         </div>
                     ) : (
                         <h3>No group available</h3>

@@ -6,7 +6,6 @@ import { IMemo } from "../interfaces";
 /* Import components */
 import { getMemoDetails, deleteMemo } from "../api/memoApi";
 import { getId } from "../api/userApi";
-import "../css/newMemo.css";
 
 /* Component for memo detail */
 class memoDetail extends React.Component {
@@ -58,9 +57,9 @@ class memoDetail extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Memo Details</b>
                             <button
                                 className="base-button top-right"
@@ -73,15 +72,15 @@ class memoDetail extends React.Component {
                             >
                                 <h2>Edit</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
-                    <label>Name</label>
-                    <div className="box, white">
-                        <h2>{memo.title}</h2>
+                    <h2>Name</h2>
+                    <div className="display-content white cut-30">
+                        <p>{memo.title}</p>
                     </div>
-                    <label>Description</label>
-                    <div className="box, white">
-                        <h2>{memo.notes}</h2>
+                    <h2>Description</h2>
+                    <div className="display-content white">
+                        <p>{memo.notes}</p>
                     </div>
 
                     <button

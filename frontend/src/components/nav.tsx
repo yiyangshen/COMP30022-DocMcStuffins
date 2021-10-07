@@ -1,18 +1,17 @@
 /* Import the required libraries and types */
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { SidebarData } from "./sidebarData";
 import history from "../history";
+
 /* Import components */
-import "../css/nav.css";
 import { logoutUser } from "../api/userApi";
 import { getContacts } from "../api/contactApi";
 import { IContact, IGroup } from "../interfaces";
 import { getGroups } from "../api/groupApi";
-
 
 class Navi extends React.Component {
     /* Set state */
@@ -20,9 +19,9 @@ class Navi extends React.Component {
         showSidebar: false,
         contactList: [] as IContact[],
         groupsList: [] as IGroup[],
-        names:[''],
-        filterdNames: '',
-        search:'',
+        names: [""],
+        filterdNames: "",
+        search: "",
     };
 
     async componentDidMount() {
@@ -56,70 +55,90 @@ class Navi extends React.Component {
             });
         }
         console.log("names = " + this.state.names);
-
     }
-    
 
     handleClick = () => {
-        this.setState({showSidebar: !this.state.showSidebar} );
-    }
-    handlechange = (event: { target: { value: any; }; }) => {
-        this.setState({ search : event.target.value});
+        this.setState({ showSidebar: !this.state.showSidebar });
+    };
+    handlechange = (event: { target: { value: any } }) => {
+        this.setState({ search: event.target.value });
         console.log("search = " + this.state.search);
     };
     dynamicSearch = () => {
-        if(this.state.search !== ""){
-            const filtered = this.state.contactList.filter(contact => (contact.name.first+contact.name.last).toLowerCase().includes(this.state.search.toLowerCase()));
+        if (this.state.search !== "") {
+            const filtered = this.state.contactList.filter((contact) =>
+                (contact.name.first + contact.name.last)
+                    .toLowerCase()
+                    .includes(this.state.search.toLowerCase())
+            );
             // const filteredGroups = this.state.groupsList.filter(group => group.name.toLowerCase().includes(this.state.search.toLowerCase()));
-            return  filtered; //string[]
-        }else{
+            return filtered; //string[]
+        } else {
             return [];
         }
-    }
+    };
     dynamicGroupSearch = () => {
-        if(this.state.search !== ""){
-            const filtered= this.state.groupsList.filter(group => group.name.toLowerCase().includes(this.state.search.toLowerCase()));
-            return  filtered; //string[]
-        }else{
+        if (this.state.search !== "") {
+            const filtered = this.state.groupsList.filter((group) =>
+                group.name
+                    .toLowerCase()
+                    .includes(this.state.search.toLowerCase())
+            );
+            return filtered; //string[]
+        } else {
             return [];
         }
-    }
+    };
     render() {
-        const{
-            showSidebar,
-        } = this.state;
-        return( 
+        const { showSidebar } = this.state;
+        return (
             <div>
                 <div className="navbar">
                     <Link to="#" className="menu-bars">
                         <FaIcons.FaBars onClick={this.handleClick} />
                     </Link>
                     <Form className="form-center">
-                            <input type="text" placeholder="Search" className="Search" onChange = {this.handlechange}/>
-                            { this.dynamicSearch().map((contact, i) => (
-                                <div key={i}>
-                                    {" "}
-                                    <button
-                                        className="base-button"
-                                        type="button"
-                                        onClick={() => history.push(`/contacts/details/?id=${contact._id}`)}
-                                    >
-                                        <h2>{contact.name.first + " " + contact.name.last}</h2>
-                                    </button>
-                                </div>
-                            ))}
-                            { this.dynamicGroupSearch().map((group, i) => (
-                                <div key={i}>
-                                    {" "}
-                                    <button
-                                        className="base-button"
-                                        type="button"
-                                        onClick={() => history.push(`/groups/details/?id=${group._id}`)}
-                                    >
-                                        <h2>{group.name}</h2>
-                                    </button>
-                                </div>
-                            ))}
+                        <input
+                            placeholder="Search"
+                            className="Search"
+                            onChange={this.handlechange}
+                        />
+                        {this.dynamicSearch().map((contact, i) => (
+                            <div key={i}>
+                                {" "}
+                                <button
+                                    className="base-button"
+                                    type="button"
+                                    onClick={() =>
+                                        history.push(
+                                            `/contacts/details/?id=${contact._id}`
+                                        )
+                                    }
+                                >
+                                    <h2>
+                                        {contact.name.first +
+                                            " " +
+                                            contact.name.last}
+                                    </h2>
+                                </button>
+                            </div>
+                        ))}
+                        {this.dynamicGroupSearch().map((group, i) => (
+                            <div key={i}>
+                                {" "}
+                                <button
+                                    className="base-button"
+                                    type="button"
+                                    onClick={() =>
+                                        history.push(
+                                            `/groups/details/?id=${group._id}`
+                                        )
+                                    }
+                                >
+                                    <h2>{group.name}</h2>
+                                </button>
+                            </div>
+                        ))}
                     </Form>
                     <Link to="/user/profile" className="profile-bars">
                         <h2>Profile</h2>
@@ -154,7 +173,7 @@ class Navi extends React.Component {
                     </ul>
                 </nav>
             </div>
-        )
+        );
     }
 }
 export default Navi;

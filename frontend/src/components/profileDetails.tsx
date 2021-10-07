@@ -1,5 +1,6 @@
 /* Import the required libraries and types */
 import React from "react";
+import history from "../history";
 
 /* Import the required libraries and types */
 import { getUserProfile } from "../api/userApi";
@@ -43,32 +44,38 @@ class profile extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Profile</b>
-                        </h2>
+                            <button
+                                className="base-button top-right"
+                                type="button"
+                                onClick={() =>
+                                    history.push(`/user/profile/amend`)
+                                }
+                            >
+                                <h2>Edit</h2>
+                            </button>
+                        </h1>
                     </div>
 
-                    <div className="box">
-                        <div className="boxLeft">
-                            <label>Name</label>
-                            <div className="box, white">
-                                <h2>
-                                    {user.name.first} {user.name.middle}{" "}
-                                    {user.name.last}
-                                </h2>
-                            </div>
+                    <h2>Name</h2>
+                    <div className="display-content white cut-40">
+                        <p>
+                            {user.name.first} {user.name.middle}{" "}
+                            {user.name.last}
+                        </p>
+                    </div>
 
-                            <label>Email</label>
-                            <div className="box white">
-                                <h2>{user.email}</h2>
-                            </div>
-                        </div>
-                        <label>Password</label>
-                        <div className="box, white">
-                            <h2>*******</h2>
-                        </div>
+                    <h2>Email</h2>
+                    <div className="display-content white cut-40">
+                        <p>{user.email}</p>
+                    </div>
+
+                    <h2>Password</h2>
+                    <div className="display-content white cut-40">
+                        <p>*******</p>
                     </div>
                 </div>
             );

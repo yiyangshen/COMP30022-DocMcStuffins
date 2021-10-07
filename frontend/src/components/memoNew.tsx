@@ -1,7 +1,6 @@
 /* Import the required libraries and types */
 import React from "react";
 import history from "../history";
-import "../css/newMemo.css";
 
 /* Import components */
 import { createMemo } from "../api/memoApi";
@@ -33,10 +32,10 @@ class memoNew extends React.Component {
         const { title, notes } = this.state;
 
         return (
-            <div className="border">
+            <div className="frame-pages">
                 <h1>Add Memo</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <label>Name</label>
+                    <h2>Name</h2>
                     <input
                         type="text"
                         id="memoName"
@@ -44,14 +43,16 @@ class memoNew extends React.Component {
                         value={title}
                         placeholder="Eg. Groceries"
                         onChange={this.handleChange}
+                        className="display-content grey"
                     />
-                    <label>Description</label>
+                    <h2>Description</h2>
                     <textarea
                         id="description"
                         name="notes"
                         value={notes}
                         placeholder="Write something.."
                         onChange={this.handleChange}
+                        className="display-content grey"
                     ></textarea>
                     <button
                         className="base-button"
