@@ -71,7 +71,6 @@ class Navi extends React.Component {
                     .toLowerCase()
                     .includes(this.state.search.toLowerCase())
             );
-            // const filteredGroups = this.state.groupsList.filter(group => group.name.toLowerCase().includes(this.state.search.toLowerCase()));
             return filtered; //string[]
         } else {
             return [];
@@ -107,7 +106,7 @@ class Navi extends React.Component {
                             <div key={i}>
                                 {" "}
                                 <button
-                                    className="base-button"
+                                    className="contact-button"
                                     type="button"
                                     onClick={() =>
                                         history.push(
@@ -123,11 +122,12 @@ class Navi extends React.Component {
                                 </button>
                             </div>
                         ))}
+                        <hr></hr>
                         {this.dynamicGroupSearch().map((group, i) => (
                             <div key={i}>
                                 {" "}
                                 <button
-                                    className="base-button"
+                                    className="group-button"
                                     type="button"
                                     onClick={() =>
                                         history.push(
