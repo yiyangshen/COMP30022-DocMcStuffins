@@ -2,7 +2,7 @@
 
 | Indices | Implementation | Testing |
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [user index](./index.md)<br>[endpoint index](../index.md) | [userController.ts:amendProfileDetails()](../../../../../backend/src/controllers/userController.ts#L38-L140) | [test suite](../../../../../backend/tests/controllers/user/amendProfileDetails.test.ts)<br>[documentation](../../tests/contacts/amendProfileDetails.test.md) |
+| [user index](./index.md)<br>[endpoint index](../index.md) | [userController.ts:amendProfileDetails()](../../../../../backend/src/controllers/userController.ts#L28-L71) | [test suite](../../../../../backend/tests/controllers/user/amendProfileDetails.test.ts)<br>[documentation](../../tests/user/amendProfileDetails.test.md) |
 
 # `amendProfileDetails()`
 
@@ -17,11 +17,11 @@
 
 ```typescript
 {
-    firstName?: string,
+    firstName: string,
     middleName?: string,
-    lastName?: string,
-    email?: string,
-    password?: string
+    lastName: string,
+    email: string,
+    password: string
 }
 ```
 
