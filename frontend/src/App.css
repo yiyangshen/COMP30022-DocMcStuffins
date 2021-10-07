@@ -433,6 +433,10 @@ span {
 .RecentGroups {
     display: flex;
 }
+.dots{
+    display: flex;
+    float: left;
+}
 .dot {
     text-align: center;
     height: 155px;
@@ -451,6 +455,7 @@ span {
     background-color: #e7e7e7;
     border-radius: 50%;
     display: inline-block;
+    
 }
 .dotText {
     margin-left: 1.5vw;
@@ -514,18 +519,21 @@ span {
 .MemoBox {
     background-color: #f8fbff;
     box-shadow: 0 4px 8px 0 #000000;
+    height: 300px;
     transition: 0.3s;
+    flex-direction: row;
 }
 .Memos {
     text-align: center;
     height: 150px;
-    width: 150px;
+    width: 100%;
     margin-left: 1vw;
     display: inline-block;
     padding-top: 45px;
 }
 
 .MemoPage {
+    float: left;
     text-align: center;
     position: relative;
     width: 160px;

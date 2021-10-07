@@ -189,7 +189,7 @@ class dashboard extends React.Component {
                             <div className="RecentGroups">
                                 {recentGroupList !== undefined &&
                                 recentGroupList.length > 0 ? (
-                                    <div>
+                                    <div className="dots">
                                         {recentGroupList.map((group, i) => (
                                             <div key={i}>
                                                 {" "}
