@@ -13,12 +13,19 @@ const TEST_USER_LAST_NAME = "Holes";
 const TEST_USER_PASSWORD = "phillycheese";
 
 const TEST_GROUP_NAME = "Pork Belly!";
+const TEST_GROUP_NAME_2 = "Katsu";
 
 const TEST_CONTACT_FIRST_NAME_GROUPED = "Adam";
 const TEST_CONTACT_LAST_NAME_GROUPED = "Smithy";
 const TEST_CONTACT_GENDER_GROUPED = "Female";
 const TEST_CONTACT_DATE_CREATED_GROUPED = new Date("1/1/2021");
 const TEST_CONTACT_DATE_VIEWED_GROUPED = new Date();
+
+const TEST_CONTACT_FIRST_NAME_GROUPED_2 = "Bald";
+const TEST_CONTACT_LAST_NAME_GROUPED_2 = "Bankrupt";
+const TEST_CONTACT_GENDER_GROUPED_2 = "Other";
+const TEST_CONTACT_DATE_CREATED_GROUPED_2 = new Date("11/1/2021");
+const TEST_CONTACT_DATE_VIEWED_GROUPED_2 = new Date();
 
 const TEST_CONTACT_FIRST_NAME_UNGROUPED = "Ricardo";
 const TEST_CONTACT_LAST_NAME_UNGROUPED = "Tempesto";
@@ -32,7 +39,7 @@ const BASE_URL = "/api/contacts/groupless";
 describe('Contacts lists (getContacts)', () => {
     beforeAll(async () => {
         // Register new users for testing
-        // user with contact
+        // user with grouped and ungrouped contact
         const newUser1 = new User({
             email: TEST_USER_EMAIL_1,
             password: TEST_USER_PASSWORD,
@@ -41,9 +48,8 @@ describe('Contacts lists (getContacts)', () => {
                 last: TEST_USER_LAST_NAME
             }
         });
-        await newUser1.save(); 
-    
-        // user with no contact
+
+        // user with only grouped contact
         const newUser2 = new User({
             email: TEST_USER_EMAIL_2,
             password: TEST_USER_PASSWORD,
@@ -52,15 +58,22 @@ describe('Contacts lists (getContacts)', () => {
                 last: TEST_USER_LAST_NAME
             }
         });
+
+        await newUser1.save(); 
         await newUser2.save();
         
-        // add new group
+        // add new groups
         const newGroup = new Group({
             userId: newUser1._id,
             name : TEST_GROUP_NAME
         })
+        const newGroup2 = new Group({
+            userId: newUser2._id,
+            name : TEST_GROUP_NAME_2
+        })
 
         await newGroup.save();
+        await newGroup2.save();
 
         // Add new contacts to newUser1 for testing 
         const newContactGrouped = new Contact({
@@ -89,9 +102,25 @@ describe('Contacts lists (getContacts)', () => {
             }
         })
 
-
         await newContactGrouped.save();
         await newContactUngrouped.save();
+
+        // add grouped contact to user2 for testing
+        const newContactGrouped2 = new Contact({
+            userId : newUser1._id,
+            name : {
+                first: TEST_CONTACT_FIRST_NAME_GROUPED_2,
+                last: TEST_CONTACT_LAST_NAME_GROUPED_2
+            },
+            gender: TEST_CONTACT_GENDER_GROUPED_2,
+            timestamps:{
+                created:TEST_CONTACT_DATE_CREATED_GROUPED_2,
+                viewed:TEST_CONTACT_DATE_VIEWED_GROUPED_2
+            },
+            groupId : newGroup2._id
+        })
+
+        await newContactGrouped2.save();
     });
 
     const userAgent = agent(app);
