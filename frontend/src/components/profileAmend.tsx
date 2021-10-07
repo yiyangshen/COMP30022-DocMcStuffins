@@ -45,10 +45,10 @@ class profile extends React.Component {
     /* Handle when click on save button */
     handleSave = (event: { preventDefault: () => void }) => {
         const {
-            firstName,
-            middleName,
-            lastName,
-            email,
+            // firstName,
+            // middleName,
+            // lastName,
+            // email,
             password,
             confirmPassword,
         } = this.state;
