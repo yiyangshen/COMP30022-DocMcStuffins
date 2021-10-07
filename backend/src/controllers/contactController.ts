@@ -413,8 +413,13 @@ async function getGrouplessContacts(req: Request, res: Response, next: NextFunct
     }
     try {
         // find all the contacts of this userId without any groups
-        const contacts = await Contact.find({ userId: (req.user as IUser)._id, groupId: undefined })
-        
+        const contacts = await Contact.find({
+            $and : [
+                { userId: (req.user as IUser)._id},
+                { groupId: {$exists: false} }
+            ]   
+        })
+
         //  if no contacts matches the criterion
         if(contacts.length === 0){
             return res.status(204).json(new NoContentSuccess());
