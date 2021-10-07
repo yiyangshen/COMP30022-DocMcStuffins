@@ -4,7 +4,6 @@ import history from "../history";
 import { IGroup, IMemo } from "../interfaces";
 
 /* Import components */
-import "../css/dashboard.css";
 import Memo from "../img/Group 5.svg";
 import MemoMore from "../img/RecentMemoMore.svg";
 import Contact from "../img/Profile.svg";
@@ -110,43 +109,45 @@ class dashboard extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <h1>Hi {username}!</h1>
 
-                    <div className="Memos">
-                        <h3>Memos</h3>
-                        {memoList !== undefined && memoList.length > 0 ? (
-                            <div>
-                                {memoList.map((memos, i) => (
-                                    <div key={i}>
-                                        {" "}
-                                        <div className="MemoPage">
-                                            <img
-                                                className="MemoPng"
-                                                src={Memo}
-                                                alt="logo"
-                                                onClick={() =>
-                                                    history.push(
-                                                        `/memos/details/?id=${memos._id}`
-                                                    )
-                                                }
-                                            />
-                                            <h2 className="MemoText">
-                                                {memos.title}
-                                            </h2>
+                    <div className="MemoBox">
+                        <h2>Memos</h2>
+                        <div className="Memos">
+                            {memoList !== undefined && memoList.length > 0 ? (
+                                <div>
+                                    {memoList.map((memos, i) => (
+                                        <div key={i}>
+                                            {" "}
+                                            <div className="MemoPage">
+                                                <img
+                                                    className="MemoPng"
+                                                    src={Memo}
+                                                    alt="logo"
+                                                    onClick={() =>
+                                                        history.push(
+                                                            `/memos/details/?id=${memos._id}`
+                                                        )
+                                                    }
+                                                />
+                                                <h2 className="MemoText">
+                                                    {memos.title}
+                                                </h2>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}{" "}
+                                    ))}{" "}
+                                </div>
+                            ) : null}
+                            <div className="MemoPage">
+                                <img
+                                    className="AddMoreMemo"
+                                    src={MemoMore}
+                                    alt="logo"
+                                    onClick={() => history.push(`/memos/new`)}
+                                />
+                                <h2 className="MemoText">Add More...</h2>
                             </div>
-                        ) : null}
-                        <div className="MemoPage">
-                            <img
-                                className="AddMoreMemo"
-                                src={MemoMore}
-                                alt="logo"
-                                onClick={() => history.push(`/memos/new`)}
-                            />
-                            <h2 className="MemoText">Add More...</h2>
                         </div>
                     </div>
 
@@ -183,39 +184,44 @@ class dashboard extends React.Component {
                             </div>
                         </div>
 
-                        <div className="RecentGroups">
-                            <h3>Recent Groups</h3>
-                            {recentGroupList !== undefined &&
-                            recentGroupList.length > 0 ? (
-                                <div>
-                                    {recentGroupList.map((group, i) => (
-                                        <div key={i}>
-                                            {" "}
-                                            <span
-                                                className="dot"
-                                                onClick={() =>
-                                                    history.push(
-                                                        `/groups/details/?id=${group._id}`
-                                                    )
-                                                }
-                                            >
-                                                <div className="RecentGroupText">
-                                                    <h2>{group.name}</h2>
-                                                    <h1>
-                                                        {group.members.length}
-                                                    </h1>
-                                                </div>
-                                            </span>
-                                        </div>
-                                    ))}{" "}
-                                </div>
-                            ) : null}
-                            <span
-                                className="dotMore"
-                                onClick={() => history.push(`/groups/new`)}
-                            >
-                                <h1 className="dotText">Add more...</h1>
-                            </span>
+                        <div className="RecentGroupsBox">
+                            <h2>Recent Groups</h2>
+                            <div className="RecentGroups">
+                                {recentGroupList !== undefined &&
+                                recentGroupList.length > 0 ? (
+                                    <div className="dots">
+                                        {recentGroupList.map((group, i) => (
+                                            <div key={i}>
+                                                {" "}
+                                                <span
+                                                    className="dot"
+                                                    onClick={() =>
+                                                        history.push(
+                                                            `/groups/details/?id=${group._id}`
+                                                        )
+                                                    }
+                                                >
+                                                    <div className="RecentGroupText">
+                                                        <h2>{group.name}</h2>
+                                                        <h1>
+                                                            {
+                                                                group.members
+                                                                    .length
+                                                            }
+                                                        </h1>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        ))}{" "}
+                                    </div>
+                                ) : null}
+                                <span
+                                    className="dotMore"
+                                    onClick={() => history.push(`/groups/new`)}
+                                >
+                                    <h1 className="dotText">Add more...</h1>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,6 @@ import moment from "moment";
 import { getContactDetails, deleteContact } from "../api/contactApi";
 import { getId } from "../api/userApi";
 import { IContact } from "../interfaces";
-import "../css/newContact.css";
 
 /* Component for contact details */
 class detailsContact extends React.Component {
@@ -59,9 +58,9 @@ class detailsContact extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Contact Details</b>
                             <button
                                 className="base-button top-right"
@@ -74,60 +73,116 @@ class detailsContact extends React.Component {
                             >
                                 <h2>Edit</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
-                    <div className="box">
-                        <div className="boxLeft">
-                            <label>Name</label>
-                            <div className="box, white">
-                                <h2>
+                    <div className="grid-container-contacts">
+                        <div>
+                            <h2>Name</h2>
+                            <div className="display-content white">
+                                <p>
                                     {contact.name.first} {contact.name.middle}{" "}
                                     {contact.name.last}
-                                </h2>
+                                </p>
                             </div>
+                        </div>
 
-                            <label>Gender</label>
-                            <div className="box, white">
-                                <h2>{contact.gender}</h2>
+                        {contact.gender !== undefined ? (
+                            <div>
+                                <h2>Gender</h2>
+                                <div className="display-content white">
+                                    <p>{contact.gender}</p>
+                                </div>
                             </div>
-                            <label>Email</label>
-                            <div className="box white">
-                                <h2>{contact.email}</h2>
-                            </div>
-                        </div>
-                        <label>Phone Number</label>
-                        <div className="box, white">
-                            <h2>{contact.phoneNumber}</h2>
-                        </div>
-                        <label>Relationship</label>
-                        <div className="box, white">
-                            <h2>{contact.relationship}</h2>
-                        </div>
-                        <label>Date of Birth</label>
-                        <div className="box, white">
-                            <h2>
-                                {moment(contact.dateOfBirth).format(
-                                    "DD MMM YYYY"
-                                )}
-                            </h2>
-                        </div>
-                        <label>First Contact Timestamp</label>
-                        <div className="box, white">
-                            <h2>
-                                {moment(contact.lastMet).format("DD MMM YYYY")}
-                            </h2>
-                        </div>
-                        <label>Assigned Group</label>
-                        <div className="box, white">
-                            <h2>{contact.groupId?.name}</h2>
-                        </div>
-                    </div>
+                        ) : null}
 
-                    <div className="boxRight">
-                        <label>Additional Notes</label>
-                        <div className="box, white">
-                            <h2>{contact.additionalNotes}</h2>
-                        </div>
+                        {contact.email !== undefined ? (
+                            <div>
+                                <h2>Email</h2>
+                                <div className="display-content white">
+                                    <p>{contact.email}</p>
+                                </div>
+                            </div>
+                        ) : null}
+
+                        {contact.phoneNumber !== undefined ? (
+                            <div>
+                                <h2>Phone Number</h2>
+                                <div className="display-content white">
+                                    <p>{contact.phoneNumber}</p>
+                                </div>
+                            </div>
+                        ) : null}
+
+                        {contact.relationship !== undefined ? (
+                            <div>
+                                <h2>Relationship</h2>
+                                <div className="display-content white">
+                                    <p>{contact.relationship}</p>
+                                </div>
+                            </div>
+                        ) : null}
+
+                        {contact.dateOfBirth !== undefined &&
+                        moment(contact.dateOfBirth).format("DD MMM YYYY") !==
+                            "20 Apr -271821" ? (
+                            <div>
+                                <h2>Date of Birth</h2>
+                                <div className="display-content white">
+                                    <p>
+                                        {moment(contact.dateOfBirth).format(
+                                            "DD MMM YYYY"
+                                        )}
+                                    </p>
+                                </div>
+                            </div>
+                        ) : null}
+
+                        {contact.lastMet !== undefined &&
+                        moment(contact.lastMet).format("DD MMM YYYY") !==
+                            "20 Apr -271821" ? (
+                            <div>
+                                <h2>First Contact Timestamp</h2>
+                                <div className="display-content white">
+                                    <p>
+                                        {moment(contact.lastMet).format(
+                                            "DD MMM YYYY"
+                                        )}
+                                    </p>
+                                </div>
+                            </div>
+                        ) : null}
+
+                        {contact.groupId !== undefined ? (
+                            <div>
+                                <h2>Assigned Group</h2>
+                                <div className="display-content white">
+                                    <p>{contact.groupId?.name}</p>
+                                </div>
+                            </div>
+                        ) : null}
+
+                        {contact.additionalNotes !== undefined ? (
+                            <div>
+                                <div className="boxRight">
+                                    <h2>Additional Notes</h2>
+                                    <div className="display-content white">
+                                        <p>{contact.additionalNotes}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : null}
+
+                        {contact.photo !== undefined ? (
+                            <div>
+                                <h2>Photo</h2>
+                                <div className="display-content white">
+                                    <img
+                                        alt="uploaded"
+                                        src={`data:image/jpeg;base64,${contact.photo}`}
+                                    />
+                                </div>
+                            </div>
+                        ) : null}
                     </div>
 
                     <button

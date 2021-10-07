@@ -6,7 +6,6 @@ import { IMemo } from "../interfaces";
 /* Import components */
 import { getMemos } from "../api/memoApi";
 import Memo from "../img/Group 5.svg";
-import { Col, Row } from "react-bootstrap";
 
 /* Component for view memos */
 class memoView extends React.Component {
@@ -42,9 +41,9 @@ class memoView extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Memos</b>
                             <button
                                 className="base-button top-right"
@@ -53,40 +52,30 @@ class memoView extends React.Component {
                             >
                                 <h2>New Memo</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
 
                     {memosList !== undefined && memosList.length > 0 ? (
-                        <div>
-                            <Row>
-                                {memosList.map((memo, i) => (
-                                    <div key={i}>
-                                        <Col
-                                            xs={{ span: 6 }}
-                                            sm={{ span: 4 }}
-                                            md={{ span: 3 }}
-                                            lg={{ span: 2 }}
-                                            xl={{ span: 1 }}
-                                        >
-                                            <div className="MemoPage">
-                                                <img
-                                                    className="MemoPng"
-                                                    src={Memo}
-                                                    alt="logo"
-                                                    onClick={() =>
-                                                        history.push(
-                                                            `/memos/details/?id=${memo._id}`
-                                                        )
-                                                    }
-                                                />
-                                                <h2 className="MemoText">
-                                                    {memo.title}
-                                                </h2>
-                                            </div>
-                                        </Col>
+                        <div className="grid-container">
+                            {memosList.map((memo, i) => (
+                                <div key={i}>
+                                    <div className="MemoPage">
+                                        <img
+                                            className="MemoPng"
+                                            src={Memo}
+                                            alt="logo"
+                                            onClick={() =>
+                                                history.push(
+                                                    `/memos/details/?id=${memo._id}`
+                                                )
+                                            }
+                                        />
+                                        <h2 className="MemoText">
+                                            {memo.title}
+                                        </h2>
                                     </div>
-                                ))}
-                            </Row>
+                                </div>
+                            ))}
                         </div>
                     ) : (
                         <h3>No memo available</h3>

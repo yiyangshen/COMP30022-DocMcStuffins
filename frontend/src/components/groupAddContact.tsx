@@ -61,9 +61,9 @@ class addContact extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Adding Contacts to Group</b>
                             <button
                                 className="base-button top-right"
@@ -72,12 +72,12 @@ class addContact extends React.Component {
                             >
                                 <h2>Add to Group</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
 
-                    <table>
+                    <table className="table-lable">
                         <thead>
-                            <tr className="table-lable">
+                            <tr>
                                 <th>
                                     <input type="checkbox" />
                                 </th>
@@ -88,35 +88,29 @@ class addContact extends React.Component {
                         </thead>
                         {contactsList !== undefined &&
                         contactsList.length > 0 ? (
-                            <div>
+                            <tbody>
                                 {contactsList.map((contact, i) => (
-                                    <div key={i}>
-                                        {" "}
-                                        <tbody>
-                                            <tr className="table-contents">
-                                                <td>
-                                                    <input
-                                                        type="checkbox"
-                                                        name="id"
-                                                        value={contact._id}
-                                                        onChange={
-                                                            this
-                                                                .handleCheckboxChange
-                                                        }
-                                                    />
-                                                </td>
+                                    <tr key={i} className="table-content">
+                                        <td>
+                                            <input
+                                                type="checkbox"
+                                                name="id"
+                                                value={contact._id}
+                                                onChange={
+                                                    this.handleCheckboxChange
+                                                }
+                                            />
+                                        </td>
 
-                                                <td>
-                                                    {contact.name.first}{" "}
-                                                    {contact.name.last}
-                                                </td>
-                                                <td>{contact.phoneNumber}</td>
-                                                <td>{contact.email}</td>
-                                            </tr>
-                                        </tbody>
-                                    </div>
+                                        <td>
+                                            {contact.name.first}{" "}
+                                            {contact.name.last}
+                                        </td>
+                                        <td>{contact.phoneNumber}</td>
+                                        <td>{contact.email}</td>
+                                    </tr>
                                 ))}{" "}
-                            </div>
+                            </tbody>
                         ) : (
                             <tbody>
                                 <tr>

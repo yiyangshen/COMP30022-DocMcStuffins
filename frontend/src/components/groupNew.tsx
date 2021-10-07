@@ -7,7 +7,6 @@ import { IContact } from "../interfaces";
 /* Import components */
 import { createGroup } from "../api/groupApi";
 import { getContactDetails } from "../api/contactApi";
-import "../css/newGroup.css";
 
 /* Component for new cgroup */
 class groupNew extends React.Component {
@@ -30,9 +29,9 @@ class groupNew extends React.Component {
         if (value) {
             this.setState({ members: JSON.parse(value) });
         }
-        const label = await localStorage.getItem("name");
-        if (label) {
-            this.setState({ name: JSON.parse(label) });
+        const h2 = await localStorage.getItem("name");
+        if (h2) {
+            this.setState({ name: JSON.parse(h2) });
         }
 
         const { members } = this.state;
@@ -55,9 +54,9 @@ class groupNew extends React.Component {
     }
 
     /* Remember state for the next mount */
-    componentWillUnmount() {
+    handleEdit = () => {
         localStorage.setItem("name", JSON.stringify(this.state.name));
-    }
+    };
 
     /* Handle when click on submit button */
     handleSubmit = (event: { preventDefault: () => void }) => {
@@ -83,27 +82,31 @@ class groupNew extends React.Component {
         const { name, contactsList, members } = this.state;
 
         return (
-            <div className="border">
+            <div className="frame-pages">
                 <h1>Add Group</h1>
-                <div className="AGbox">
-                    <label>Name</label>
-                    <input
-                        type="name"
-                        id="groupName"
-                        name="name"
-                        placeholder="Eg. Unimelb"
-                        value={name}
-                        onChange={this.handleChange}
-                    />
-                    <div className="box1">
-                        <label>Members</label>
-                        <div className="box, white">
-                            <h2>{members.length}</h2>
-                        </div>
-                        <Link to="/groups/new/contact" className="addContact">
-                            add contact
-                        </Link>
+
+                <h2>Name</h2>
+                <input
+                    type="name"
+                    id="groupName"
+                    name="name"
+                    placeholder="Eg. Unimelb"
+                    value={name}
+                    onChange={this.handleChange}
+                    className="display-content grey"
+                />
+                <div className="box1">
+                    <h2>Members</h2>
+                    <div className="display-content white cut-10">
+                        <h2>{members.length}</h2>
                     </div>
+                    <Link
+                        to="/groups/new/contact"
+                        className="addContact"
+                        onClick={this.handleEdit}
+                    >
+                        add contact
+                    </Link>
                 </div>
 
                 <table>
@@ -115,23 +118,17 @@ class groupNew extends React.Component {
                         </tr>
                     </thead>
                     {contactsList !== undefined && contactsList.length > 0 ? (
-                        <div>
+                        <tbody>
                             {contactsList.map((contact, i) => (
-                                <div key={i}>
-                                    {" "}
-                                    <tbody>
-                                        <tr className="table-contents">
-                                            <td>
-                                                {contact.name.first}{" "}
-                                                {contact.name.last}
-                                            </td>
-                                            <td>{contact.phoneNumber}</td>
-                                            <td>{contact.email}</td>
-                                        </tr>
-                                    </tbody>
-                                </div>
+                                <tr key={i} className="table-contents">
+                                    <td>
+                                        {contact.name.first} {contact.name.last}
+                                    </td>
+                                    <td>{contact.phoneNumber}</td>
+                                    <td>{contact.email}</td>
+                                </tr>
                             ))}
-                        </div>
+                        </tbody>
                     ) : (
                         <tbody>
                             <tr>

@@ -60,9 +60,9 @@ class groupDetail extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <div className="border">
+                <div className="frame-pages">
                     <div className="title">
-                        <h2>
+                        <h1>
                             <b>Group Details</b>
                             <button
                                 className="base-button top-right"
@@ -75,50 +75,56 @@ class groupDetail extends React.Component {
                             >
                                 <h2>Edit</h2>
                             </button>
-                        </h2>
+                        </h1>
                     </div>
-                    <div className="AGbox">
-                        <label>Name</label>
-                        <div className="box, white">
-                            <h2>{name}</h2>
-                        </div>
-                        <div className="box1">
-                            <label>Members</label>
-                            <div className="box, white">
-                                <h2>{members.length}</h2>
-                            </div>
+
+                    <div>
+                        <h2>Name</h2>
+                        <div className="display-content white cut-30">
+                            <p>{name}</p>
                         </div>
                     </div>
 
-                    <table>
+                    <div>
+                        <h2>Members</h2>
+                        <div className="display-content white cut-10">
+                            <p>{members.length}</p>
+                        </div>
+                    </div>
+
+                    <table className="table-lable">
                         <thead>
-                            <tr className="table-lable">
+                            <tr>
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
                             </tr>
                         </thead>
+
                         {members !== undefined && members.length > 0 ? (
-                            <div>
+                            <tbody>
                                 {members.map((contact, i) => (
-                                    <div key={i}>
-                                        {" "}
-                                        <tbody>
-                                            <tr className="table-contents">
-                                                <td>
-                                                    {contact.name.first}{" "}
-                                                    {contact.name.last}
-                                                </td>
-                                                <td>{contact.phoneNumber}</td>
-                                                <td>{contact.email}</td>
-                                            </tr>
-                                        </tbody>
-                                    </div>
-                                ))}{" "}
-                            </div>
+                                    <tr
+                                        className="table-content"
+                                        key={i}
+                                        onClick={() =>
+                                            history.push(
+                                                `/contacts/details/?id=${contact._id}`
+                                            )
+                                        }
+                                    >
+                                        <td>
+                                            {contact.name.first}{" "}
+                                            {contact.name.last}
+                                        </td>
+                                        <td>{contact.phoneNumber}</td>
+                                        <td>{contact.email}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
                         ) : (
                             <tbody>
-                                <tr>
+                                <tr className="table-content">
                                     <td></td>
                                     <td>No data yet</td>
                                     <td></td>

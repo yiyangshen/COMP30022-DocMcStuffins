@@ -1,31 +1,46 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap");
 
-.border {
+.frame-pages {
     margin-left: 2vw;
-    margin-top: 2vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    padding-left: 1vw;
+    padding-top: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 1vw;
     width: 96vw;
     height: 100%;
-    /* background-color: black; */
+    background-color: #f8fbff;
 }
 
 table {
     width: 100%;
     text-align: left;
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0 10px;
     border-style: hidden;
     overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 2vw;
 }
 
-tr {
-    border-collapse: separate;
-    border-radius: 10px;
+.table-content {
+    background-color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #e7e7e7;
+}
+
+tr:hover {
+    background-color: #b5d7ff;
 }
 
 td {
-    background-color: #f8fbff;
     margin-bottom: 10px;
     padding-left: 40px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 th {
@@ -35,13 +50,9 @@ th {
     height: 40px;
 }
 
-.table-contents {
-    background-color: #f8fbff;
-    margin-bottom: 10px;
-}
-
 .title {
     position: relative;
+    margin-bottom: 2vw;
 }
 
 .top-right {
@@ -64,6 +75,491 @@ h2 {
 
 p {
     font-family: inter;
-    font-size: 14px;
+    font-size: 16px;
     color: #434343;
+}
+
+.grid-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 175px);
+    padding: 5px;
+    margin-left: 1vw;
+    grid-gap: 1vw;
+}
+
+.grid-container > div {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.grid-container-contacts {
+    display: grid;
+    width: 100%;
+    grid-gap: 1vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    grid-template-columns: 48% 48%;
+}
+
+/* registration pages */
+
+.base-button {
+    background-color: #6baffd;
+    padding-top: 6px;
+    border-radius: 24px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.contact-button {
+    background-color: #87b2e4;
+    padding-top: 6px;
+    border-radius: 24px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    z-index: 3;
+}
+.group-button {
+    background-color: #6baffd;
+    padding-top: 6px;
+    border-radius: 24px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    z-index: 3;
+}
+.base-button:hover {
+    opacity: 0.8;
+}
+
+.SBox {
+    align-self: left;
+    background-color: #ffffff;
+    width: 50%;
+}
+
+.SBox2 {
+    background-color: #e0eeff;
+    box-shadow: 0 4px 8px 0 #000000;
+    transition: 0.3s;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+.signInLogo {
+    width: 50%;
+}
+.signInButton {
+    background-color: #0076ff;
+    width: 100%;
+}
+
+/* memo pages */
+
+textarea[id="description"] {
+    height: 170px;
+}
+.save {
+    text-decoration: none;
+    background-color: #3182e0;
+    color: #333333;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #cccccc;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #cccccc;
+    margin-left: 1%;
+}
+.cancel {
+    text-decoration: none;
+    background-color: #3182e0;
+    color: #333333;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #cccccc;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #cccccc;
+    margin-left: 90%;
+}
+
+/* contact pages */
+
+input[type="text"],
+input[type="password"],
+select,
+textarea,
+.box {
+    background-color: #e7e7e7;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+.white {
+    background-color: white;
+}
+
+.grey {
+    background-color: #e7e7e7;
+}
+
+input[type="submit"] {
+    background-color: #3182e0;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #e7e7e7;
+}
+
+textarea[id="additionalNotes"] {
+    height: 170px;
+}
+
+.boxLeft {
+    width: 50%;
+}
+
+.boxRight {
+    flex-direction: column;
+    margin-left: 1vw;
+    width: 50%;
+}
+
+.display-content {
+    border-radius: 9px;
+    padding-top: auto;
+    padding-left: 1vw;
+    padding-bottom: auto;
+    margin-bottom: 1vw;
+}
+
+.cut-40 {
+    width: 40%;
+}
+
+.cut-30 {
+    width: 30%;
+}
+
+.cut-10 {
+    width: 10%;
+}
+
+/* group pages */
+
+input[type="name"],
+groupName {
+    width: 10%;
+    background-color: #e7e7e7;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+    margin-left: 1%;
+}
+
+input[type="number"],
+members {
+    width: 4%;
+    background-color: #e7e7e7;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+    margin-left: 1%;
+}
+
+.AGbox {
+    display: flex;
+    flex-direction: column;
+}
+
+.addContact {
+    margin-left: 1%;
+}
+
+/* navigation bar */
+
+.navbar {
+    background-color: #b5d7ff;
+    height: 70px;
+    align-items: center;
+    width: 100%;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+.form-center {
+    margin-left: 2rem;
+    margin-left: 50%;
+    /* position: relative;  */
+}
+
+.menu-bars {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    font-size: 2rem;
+    background: none;
+    color: #434343;
+    text-decoration: none;
+    border-radius: 4px;
+    position: absolute;
+}
+.profile-bars {
+    margin-left: 95%;
+    font-size: 2rem;
+    background: none;
+    color: #434343;
+    text-decoration: none;
+    border-radius: 4px;
+    position: absolute;
+}
+
+.menu-bars:hover {
+    background-color: #6baffd;
+    color: #ffffff;
+}
+
+.nav-menu {
+    background-color: #fcfcfc;
+    width: 250px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    transition: 850ms;
+    z-index: 1;
+}
+
+.nav-menu.active {
+    left: 0;
+    transition: 350ms;
+}
+
+.nav-text {
+    display: flex;
+    align-items: center;
+    padding: 8px 0px 8px 16px;
+    list-style: none;
+    height: 60px;
+}
+
+.nav-text a {
+    text-decoration: none;
+    color: #434343;
+    font-size: 18px;
+    width: 95%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: 4px;
+}
+
+.nav-text a:hover {
+    background: #6baffd;
+    color: #ffffff;
+}
+
+.logout {
+    position: absolute;
+    bottom: 10px;
+    font-size: 18px;
+    padding: 8px 10px 8px 16px;
+}
+
+.nav-menu-items {
+    width: 100%;
+    color: #434343;
+}
+
+.navbar-toggle {
+    background-color: #fcfcfc;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+span {
+    margin-left: 12px;
+}
+
+/* The sidebar menu */
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 180px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: -180px;
+    background-color: #fcfcfc; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+}
+
+.header {
+    background-color: #b5d7ff;
+}
+
+.Search {
+    border-radius: 50px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    background-color: #fcfcfc;
+    padding: 10px 1px 10px 10px;
+}
+
+/* dashboard pages */
+
+.Dbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+.Dbox2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 20vw;
+}
+.RecentGroupsBox {
+    background-color: #f8fbff;
+    box-shadow: 0 4px 8px 0 #000000;
+    transition: 0.3s;
+    width: 90%;
+    height: 410px;
+}
+.RecentGroups {
+    display: flex;
+}
+.dots{
+    display: flex;
+    float: left;
+}
+.dot {
+    text-align: center;
+    height: 155px;
+    width: 155px;
+    margin-left: 1vw;
+    background-color: #6baffd;
+    border-radius: 50%;
+    display: inline-block;
+    padding-top: 45px;
+}
+
+.dotMore {
+    height: 150px;
+    width: 150px;
+    margin-left: 1vw;
+    background-color: #e7e7e7;
+    border-radius: 50%;
+    display: inline-block;
+    
+}
+.dotText {
+    margin-left: 1.5vw;
+    margin-top: 2vw;
+}
+.RecentGroupText {
+    text-align: center;
+}
+
+.Group {
+    align-self: left;
+    background-color: #6baffd;
+    box-shadow: 0 4px 8px 0 #000000;
+    transition: 0.3s;
+    width: 100%;
+    height: 200px;
+}
+.GroupPng {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: auto;
+}
+.Group:hover {
+    box-shadow: 0 8px 16px 0 #000000;
+}
+.container {
+    text-align: center;
+}
+
+.Contacts {
+    align-self: flex-start;
+    background-color: #6baffd;
+    box-shadow: 0 4px 8px 0 #000000;
+    transition: 0.3s;
+    width: 100%;
+    height: 200px;
+    margin-top: 10px;
+}
+.ContactsPng {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: auto;
+}
+
+.Contacts:hover {
+    box-shadow: 0 8px 16px 0 #000000;
+}
+
+.Contactscontainer {
+    text-align: center;
+}
+
+.MemoBox {
+    background-color: #f8fbff;
+    box-shadow: 0 4px 8px 0 #000000;
+    height: 300px;
+    transition: 0.3s;
+    flex-direction: row;
+}
+.Memos {
+    text-align: center;
+    height: 150px;
+    width: 100%;
+    margin-left: 1vw;
+    display: inline-block;
+    padding-top: 45px;
+}
+
+.MemoPage {
+    float: left;
+    text-align: center;
+    position: relative;
+    width: 160px;
+    height: 160px;
+}
+
+.MemoText {
+    position: absolute;
+    top: 65px;
+    left: 70px;
+    transform: translate(-50%, -50%);
 }
