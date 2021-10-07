@@ -399,6 +399,32 @@ async function getContacts(req: Request, res: Response, next: NextFunction) {
     }
 }
 
+/* Returns a list of contacts with no associated groups
+ * responds with a:
+ *   - 200 OK if query is successful
+ *   - 204 No Content if query returns nothing
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 500 Internal Server Error otherwise
+ */
+async function getGrouplessContacts(req: Request, res: Response, next: NextFunction){
+    // requester is not authenticated
+    if (req.isUnauthenticated()) {
+        return next(new UnauthorizedError("Requester is not authenticated"));
+    }
+    try {
+        // find all the contacts of this userId without any groups
+        const contacts = await Contact.find({ userId: (req.user as IUser)._id, groupId: undefined })
+        
+        //  if no contacts matches the criterion
+        if(contacts.length === 0){
+            return res.status(204).json(new NoContentSuccess());
+        }
+        return res.json(new OKSuccess(contacts));
+    } catch (error) {
+        return next(new InternalServerError("Internal servor error"));
+    }    
+}
+
 /* Returns the currently-authenticated user's contacts that fuzzy-matches the given search string;
  * requires, in the request params:
  *   - name: string
@@ -421,5 +447,6 @@ export {
     getContactCount,
     getContactDetails,
     getContacts,
+    getGrouplessContacts,
     searchContactName
 };

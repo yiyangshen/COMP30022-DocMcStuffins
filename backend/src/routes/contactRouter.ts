@@ -16,6 +16,7 @@ contactRouter.get("/details/:id", controller.getContactDetails);
 contactRouter.patch("/details/amend", controller.amendContactDetails);
 contactRouter.post("/new", controller.createContact);
 contactRouter.get("/search/name/:name", controller.searchContactName);
+contactRouter.get("/groupless", controller.getGrouplessContacts);
 
 /* Export the router */
 export default contactRouter;
