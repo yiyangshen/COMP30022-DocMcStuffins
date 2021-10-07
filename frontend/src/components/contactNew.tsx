@@ -2,6 +2,7 @@
 import React from "react";
 import history from "../history";
 import { IGroup } from "../interfaces";
+import Resizer from "react-image-file-resizer";
 
 /* Import components */
 import { createContact } from "../api/contactApi";
@@ -21,12 +22,13 @@ class contactNew extends React.Component {
         lastMetData: "",
         phoneNumber: "",
         email: "",
-        photo: "",
         relationship: "",
         additionalNotes: "",
         groupsList: [] as IGroup[],
         error: null,
         isLoaded: false,
+        file: "" as any,
+        photo: "" as any,
     };
 
     /* During loading page */
@@ -95,6 +97,43 @@ class contactNew extends React.Component {
         );
     };
 
+    /* Capture change of picture */
+    onChange = (event: { target: any }) => {
+        var fileInput = false;
+        if (event.target.files[0]) {
+            fileInput = true;
+        }
+        if (fileInput) {
+            try {
+                Resizer.imageFileResizer(
+                    event.target.files[0],
+                    300,
+                    300,
+                    "JPEG",
+                    100,
+                    0,
+                    (uri) => {
+                        console.log(uri);
+                        if (typeof uri === "string") {
+                            this.setState({
+                                photo: uri.replace(
+                                    "data:image/jpeg;base64,",
+                                    ""
+                                ),
+                            });
+                            console.log(this.state.photo);
+                        }
+                    },
+                    "base64",
+                    200,
+                    200
+                );
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    };
+
     /* Render the component to the screen */
     render() {
         const {
@@ -109,7 +148,6 @@ class contactNew extends React.Component {
             lastMetData,
             phoneNumber,
             email,
-            photo,
             relationship,
             additionalNotes,
             groupsList,
@@ -263,27 +301,29 @@ class contactNew extends React.Component {
                                 <input
                                     type="text"
                                     id="additionalNotes"
-                                    name="contact.additionalNotes"
+                                    name="additionalNotes"
                                     placeholder="Write something.."
                                     value={additionalNotes}
                                     onChange={this.handleChange}
                                     className="display-content grey"
                                 />
 
+                                <h2>Photo</h2>
                                 <p>
                                     Click on the "Choose File" button to choose
                                     a picture:
                                 </p>
-                                <form action="/action_page.php">
-                                    <input
-                                        type="file"
-                                        id="myFile"
-                                        name="photo"
-                                        value={photo}
-                                        onChange={this.handleChange}
-                                        className="display-content grey"
-                                    />
-                                </form>
+
+                                <input
+                                    type="file"
+                                    name="image"
+                                    id="file"
+                                    accept=".jpeg"
+                                    onChange={(e) => this.onChange(e)}
+                                />
+                                <br />
+                                <br />
+
                                 <div>
                                     <button
                                         className="base-button"

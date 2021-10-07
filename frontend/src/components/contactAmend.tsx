@@ -3,6 +3,7 @@ import React from "react";
 import history from "../history";
 import moment from "moment";
 import { IGroup } from "../interfaces";
+import Resizer from "react-image-file-resizer";
 
 /* Import components */
 import { getContactDetails, amendContactDetails } from "../api/contactApi";
@@ -24,10 +25,11 @@ class contactAmend extends React.Component {
         lastMetData: "",
         phoneNumber: "",
         email: "",
-        photo: "",
         relationship: "",
         additionalNotes: "",
         groupsList: [] as IGroup[],
+        file: "" as any,
+        photo: "" as any,
     };
 
     /* Extract id from the url */
@@ -47,16 +49,33 @@ class contactAmend extends React.Component {
                     lastName: data.name.last,
                     groupId: data.groupId,
                     gender: data.gender,
-                    dateOfBirthData: moment(data.dateOfBirth).format(
-                        "DD MMM YYYY"
-                    ),
-                    lastMetData: moment(data.lastMet).format("DD MMM YYYY"),
                     phoneNumber: data.phoneNumber,
                     email: data.email,
                     photo: data.photo,
                     relationship: data.relationship,
                     additionalNotes: data.additionalNotes,
                 });
+
+                /* Check if there is a content */
+                if (
+                    moment(data.dateOfBirth).format("DD MMM YYYY") !==
+                    "20 Apr -271821"
+                ) {
+                    this.setState({
+                        dateOfBirthData: moment(data.dateOfBirth).format(
+                            "DD MMM YYYY"
+                        ),
+                    });
+                }
+
+                if (
+                    moment(data.lastMet).format("DD MMM YYYY") !==
+                    "20 Apr -271821"
+                ) {
+                    this.setState({
+                        lastMetData: moment(data.lastMet).format("DD MMM YYYY"),
+                    });
+                }
             },
             (error) => {
                 this.setState({ isLoaded: true, error });
@@ -80,6 +99,43 @@ class contactAmend extends React.Component {
     /* Set state accordingly to the target */
     handleChange = (event: { target: { name: any; value: String } }) => {
         this.setState({ [event.target.name]: event.target.value });
+    };
+
+    /* Capture change of picture */
+    onChange = (event: { target: any }) => {
+        var fileInput = false;
+        if (event.target.files[0]) {
+            fileInput = true;
+        }
+        if (fileInput) {
+            try {
+                Resizer.imageFileResizer(
+                    event.target.files[0],
+                    300,
+                    300,
+                    "JPEG",
+                    100,
+                    0,
+                    (uri) => {
+                        console.log(uri);
+                        if (typeof uri === "string") {
+                            this.setState({
+                                photo: uri.replace(
+                                    "data:image/jpeg;base64,",
+                                    ""
+                                ),
+                            });
+                            console.log(this.state.photo);
+                        }
+                    },
+                    "base64",
+                    200,
+                    200
+                );
+            } catch (err) {
+                console.log(err);
+            }
+        }
     };
 
     /* Handle when click on save button */
@@ -161,7 +217,8 @@ class contactAmend extends React.Component {
                     <form onSubmit={this.handleSave}>
                         <div className="grid-container-contacts">
                             <div>
-                                <h2>Name</h2>
+                                <h2>Name*</h2>
+
                                 <input
                                     type="text"
                                     id="fullName"
@@ -299,21 +356,29 @@ class contactAmend extends React.Component {
                                     onChange={this.handleChange}
                                     className="display-content grey"
                                 />
-
+                                <h2>Photo</h2>
                                 <p>
                                     Click on the "Choose File" button to choose
                                     a picture:
+                                    {photo !== undefined ? (
+                                        <p>
+                                            <small>
+                                                (This action will override the
+                                                previous picture)
+                                            </small>
+                                        </p>
+                                    ) : null}
                                 </p>
-                                <form action="/action_page.php">
-                                    <input
-                                        type="file"
-                                        id="myFile"
-                                        name="photo"
-                                        value={photo}
-                                        onChange={this.handleChange}
-                                        className="display-content grey"
-                                    />
-                                </form>
+
+                                <input
+                                    type="file"
+                                    name="image"
+                                    id="file"
+                                    accept=".jpeg"
+                                    onChange={(e) => this.onChange(e)}
+                                />
+                                <br />
+                                <br />
                                 <div>
                                     <button
                                         className="base-button"

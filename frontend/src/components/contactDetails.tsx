@@ -122,7 +122,9 @@ class detailsContact extends React.Component {
                             </div>
                         ) : null}
 
-                        {contact.dateOfBirth !== undefined ? (
+                        {contact.dateOfBirth !== undefined &&
+                        moment(contact.dateOfBirth).format("DD MMM YYYY") !==
+                            "20 Apr -271821" ? (
                             <div>
                                 <h2>Date of Birth</h2>
                                 <div className="display-content white">
@@ -135,7 +137,9 @@ class detailsContact extends React.Component {
                             </div>
                         ) : null}
 
-                        {contact.lastMet !== undefined ? (
+                        {contact.lastMet !== undefined &&
+                        moment(contact.lastMet).format("DD MMM YYYY") !==
+                            "20 Apr -271821" ? (
                             <div>
                                 <h2>First Contact Timestamp</h2>
                                 <div className="display-content white">
@@ -164,6 +168,18 @@ class detailsContact extends React.Component {
                                     <div className="display-content white">
                                         <p>{contact.additionalNotes}</p>
                                     </div>
+                                </div>
+                            </div>
+                        ) : null}
+
+                        {contact.photo !== undefined ? (
+                            <div>
+                                <h2>Photo</h2>
+                                <div className="display-content white">
+                                    <img
+                                        alt="uploaded"
+                                        src={`data:image/jpeg;base64,${contact.photo}`}
+                                    />
                                 </div>
                             </div>
                         ) : null}

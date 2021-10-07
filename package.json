@@ -30,6 +30,7 @@
     "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "npm-run-all": "*",
+    "react-image-file-resizer": "^0.4.7",
     "supertest": "^6.1.6",
     "tslib": "^2.3.1"
   },
