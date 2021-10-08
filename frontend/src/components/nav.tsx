@@ -54,7 +54,6 @@ class Navi extends React.Component {
                 names: [...this.state.names, i.name.first + " " + i.name.last],
             });
         }
-        console.log("names = " + this.state.names);
     }
 
     handleClick = () => {

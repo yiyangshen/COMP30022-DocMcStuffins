@@ -9,7 +9,7 @@ import MemoMore from "../img/RecentMemoMore.svg";
 import Contact from "../img/Profile.svg";
 import Group from "../img/3 User.svg";
 import { getRecentMemos } from "../api/memoApi";
-import { getGroupCount, getGroups } from "../api/groupApi";
+import { getGroupCount, getGroupDetails, getGroups } from "../api/groupApi";
 import { getContactCount } from "../api/contactApi";
 import { getUserProfile } from "../api/userApi";
 
@@ -21,6 +21,7 @@ class dashboard extends React.Component {
         isLoaded: false,
         memoList: [] as IMemo[],
         recentGroupList: [] as IGroup[],
+        recentGroupDetails: [] as IGroup[],
         groupCount: 0,
         contactCount: 0,
         username: "",
@@ -69,7 +70,6 @@ class dashboard extends React.Component {
             (response) => {
                 var data = response.data.data;
                 this.setState({ groupCount: data, isLoaded: true });
-                console.log(response);
             },
             (error) => {
                 this.setState({ isLoaded: true, error });
@@ -97,11 +97,12 @@ class dashboard extends React.Component {
             isLoaded,
             memoList,
             recentGroupList,
+            recentGroupDetails,
             groupCount,
             contactCount,
             username,
         } = this.state;
-
+        const items = this.state.recentGroupList.slice(0, 5);
         /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
             return <h3 className="error">Internal Error</h3>;
@@ -190,7 +191,7 @@ class dashboard extends React.Component {
                                 {recentGroupList !== undefined &&
                                 recentGroupList.length > 0 ? (
                                     <div className="dots">
-                                        {recentGroupList.map((group, i) => (
+                                        {items.map((group, i) => (
                                             <div key={i}>
                                                 {" "}
                                                 <span
