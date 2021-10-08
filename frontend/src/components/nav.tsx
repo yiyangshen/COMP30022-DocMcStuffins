@@ -49,11 +49,14 @@ class Navi extends React.Component {
         );
 
         //make list of group + contact names
-        for (let i of this.state.contactList) {
-            this.setState({
-                names: [...this.state.names, i.name.first + " " + i.name.last],
-            });
+        if(this.state.contactList){
+            for (let i of this.state.contactList) {
+                this.setState({
+                    names: [...this.state.names, i.name.first + " " + i.name.last],
+                });
+            }
         }
+        
     }
 
     handleClick = () => {
