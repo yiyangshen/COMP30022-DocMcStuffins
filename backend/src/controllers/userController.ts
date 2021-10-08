@@ -9,6 +9,66 @@ import {
 } from "../classes";
 import { Request, Response, NextFunction } from "express";
 import passport from "passport";
+import { body, validationResult } from "express-validator";
+import { User, IUser } from "../models"
+
+/* Amends the user profile;
+ * requires, in the request body:
+ *   - firstName: string
+ *   - middleName?: string
+ *   - lastName: string
+ *   - email: string
+ *   - password: string
+ * responds with a:
+ *   - 200 OK if amendment is successful
+ *   - 400 Bad Request if the request body is malformed
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 500 Internal Server Error otherwise
+ */
+async function amendProfileDetails(req: Request, res: Response, next: NextFunction) {
+    try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("User is not authenticated"));
+        }
+
+        /* Validate and sanitise the required inputs */
+        await body("firstName").isAlpha().trim().run(req);
+        await body("lastName").isAlpha().trim().run(req);
+        await body("email").isEmail().trim().escape().run(req);
+        await body("password").isString().isLength({min: 6}).run(req);
+
+        /* Validate and sanitise the optional inputs */
+        if (req.body.middleName)
+            await body("middleName").isAlpha().trim().run(req);
+        
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
+        }
+
+        /* Get the user document object from the database */
+        const user = await User.findById((req.user as IUser)._id);
+        if (!user) {
+            return next(new InternalServerError("User not found (which should never happen normally)"));
+        }
+
+        /* Update the required fields of the user */
+        user.name.first = req.body.firstName;
+        user.name.last = req.body.lastName;
+        user.email = req.body.email.toLowerCase();
+        user.password = req.body.password;
+
+        /* Update the optional fields of the user */
+        user.name.middle = req.body.middleName ? req.body.middleName : undefined;
+        
+        /* Save the amended user to the database */
+        await user.save();
+        res.json(new OKSuccess("User profile successfully amended"));
+    } catch (err) {
+        return next(new InternalServerError("Something has gone wrong"));
+    }
+}
 
 /* Retrieves the currently-authenticated user's profile details;
  * responds with a:
@@ -122,6 +182,7 @@ async function registerUser(req: Request, res: Response, next: NextFunction) {
 
 /* Export controller functions */
 export {
+    amendProfileDetails,
     getUserProfile,
     loginUser,
     logoutUser,

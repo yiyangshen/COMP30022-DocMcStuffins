@@ -13,6 +13,7 @@ userRouter.patch("/login", controller.loginUser);
 userRouter.patch("/logout", controller.logoutUser);
 userRouter.get("/profile", controller.getUserProfile);
 userRouter.post("/register", controller.registerUser);
+userRouter.patch("/profile/amend", controller.amendProfileDetails);
 
 /* Export the router */
 export default userRouter;
