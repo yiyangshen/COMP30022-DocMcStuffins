@@ -4,11 +4,11 @@
 
 > Has the project been handed over to the client? If yes, please specify what was handed over.
 
-[insert answer here]
+Yes, the project has been handed over to the client on 23 October 2021. We handed over a [GitHub repository](https://github.com/techn0mancr/COMP30022-DocMcStuffins) containing the project's documentation and codebase.
 
 > Has the project been deployed? If so, give link.
 
-[insert answer here]
+Yes, the project has been automatically deployed by our pipeline [here](https://doc-mcstuffins.herokuapp.com/).
 
 ## 'Boasting'
 
