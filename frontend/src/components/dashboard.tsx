@@ -121,16 +121,11 @@ class dashboard extends React.Component {
                                     {memoList.map((memos, i) => (
                                         <div key={i}>
                                             {" "}
-                                            <div className="MemoPage">
+                                            <div className="MemoPage" onClick={() => history.push(`/memos/details/?id=${memos._id}`)}>
                                                 <img
                                                     className="MemoPng"
                                                     src={Memo}
                                                     alt="logo"
-                                                    onClick={() =>
-                                                        history.push(
-                                                            `/memos/details/?id=${memos._id}`
-                                                        )
-                                                    }
                                                 />
                                                 <h2 className="MemoText">
                                                     {memos.title}
@@ -140,12 +135,11 @@ class dashboard extends React.Component {
                                     ))}{" "}
                                 </div>
                             ) : null}
-                            <div className="MemoPage">
+                            <div className="MemoPage" onClick={() => history.push(`/memos/new`)}>
                                 <img
                                     className="AddMoreMemo"
                                     src={MemoMore}
                                     alt="logo"
-                                    onClick={() => history.push(`/memos/new`)}
                                 />
                                 <h2 className="MemoText">Add More...</h2>
                             </div>
