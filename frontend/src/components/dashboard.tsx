@@ -114,7 +114,7 @@ class dashboard extends React.Component {
                     <h1>Hi {username}!</h1>
 
                     <div className="MemoBox">
-                        <h2>Memos</h2>
+                        <h2 className = "MemosTitle">Memos</h2>
                         <div className="Memos">
                             {memoList !== undefined && memoList.length > 0 ? (
                                 <div>
@@ -220,7 +220,7 @@ class dashboard extends React.Component {
                                     className="dotMore"
                                     onClick={() => history.push(`/groups/new`)}
                                 >
-                                    <h1 className="dotText">Add more...</h1>
+                                    <h1>Add more...</h1>
                                 </span>
                             </div>
                         </div>

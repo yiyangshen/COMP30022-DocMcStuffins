@@ -141,6 +141,7 @@ p {
 }
 
 .SBox2 {
+    /* border-radius: 20px; */
     background-color: #e0eeff;
     box-shadow: 0 4px 8px 0 #000000;
     transition: 0.3s;
@@ -430,17 +431,22 @@ span {
 /* dashboard pages */
 
 .Dbox {
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: left;
 }
 .Dbox2 {
+    margin-right: 5px;
     display: flex;
     flex-direction: column;
     justify-content: left;
     width: 20vw;
 }
 .RecentGroupsBox {
+    margin-left: 5px;
+    border-radius: 25px;
+    padding: 20px; 
     background-color: #f8fbff;
     box-shadow: 0 4px 8px 0 #000000;
     transition: 0.3s;
@@ -466,23 +472,22 @@ span {
 }
 
 .dotMore {
-    height: 150px;
-    width: 150px;
+    text-align: center;
+    height: 155px;
+    width: 155px;
     margin-left: 1vw;
     background-color: #e7e7e7;
     border-radius: 50%;
     display: inline-block;
-    
+    padding-top: 50px;
 }
-.dotText {
-    margin-left: 1.5vw;
-    margin-top: 2vw;
-}
+
 .RecentGroupText {
     text-align: center;
 }
 
 .Group {
+    border-radius: 25px;
     align-self: left;
     background-color: #6baffd;
     box-shadow: 0 4px 8px 0 #000000;
@@ -507,6 +512,7 @@ span {
 }
 
 .Contacts {
+    border-radius: 25px;
     align-self: flex-start;
     background-color: #6baffd;
     box-shadow: 0 4px 8px 0 #000000;
@@ -534,6 +540,8 @@ span {
 }
 
 .MemoBox {
+    border-radius: 25px;
+    padding: 20px; 
     background-color: #f8fbff;
     box-shadow: 0 4px 8px 0 #000000;
     height: 300px;
