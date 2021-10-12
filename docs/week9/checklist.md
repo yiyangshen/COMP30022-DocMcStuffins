@@ -32,7 +32,7 @@ Specific details of the work undertaken by each person can be found in our [Trel
 
 > Have you done a sprint retrospective?
 
-Yes, we undertook a sprint retrospective before we did our sprint review. The documents that detail both ceremonies can be found in our meeting minutes folder. For convenience, the retrospective is linked [here](../minutes/week9_client-sprint_retrospective.md), while the review is linked [here](../minutes/week9_client-sprint_review.md).
+Yes, we undertook a sprint retrospective before we did our sprint review. The documents that detail both ceremonies can be found in our meeting minutes folder. For convenience, the retrospective is linked [here](../minutes/week9_team-sprint_retrospective.md), while the review is linked [here](../minutes/week9_client-sprint_review.md).
 
 ## Artefacts
 
