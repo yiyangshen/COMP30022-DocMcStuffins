@@ -55,7 +55,7 @@ class Signup extends React.Component {
         } = this.state;
 
         return (
-            <div className="frame-pages">
+            <div className="signFrame-pages">
                 <div className="SBox2">
                     <div className="SBox">
                         <h1>Sign Up</h1>

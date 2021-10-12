@@ -34,10 +34,10 @@ class Signin extends React.Component {
         const { email, password } = this.state;
 
         return (
-            <div className="frame-pages">
+            <div className="signFrame-pages">
                 <div className="SBox2">
                     <div className="SBox">
-                        <div className="signInLogo">
+                        <div className="signIn">
                             <h1>Sign In</h1>
                             <p>Don't have an account? </p>
                             <Link

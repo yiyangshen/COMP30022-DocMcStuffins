@@ -12,7 +12,17 @@
     height: 100%;
     background-color: #f8fbff;
 }
-
+.signFrame-pages{
+    margin-left: 2vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    padding-left: 1vw;
+    padding-top: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 1vw;
+    width: 96vw;
+    height: 100%;
+}
 table {
     width: 100%;
     text-align: left;
@@ -133,16 +143,14 @@ p {
 .base-button:hover {
     opacity: 0.8;
 }
-
 .SBox {
+    margin-left: 15px; 
     align-self: left;
-    background-color: #ffffff;
     width: 50%;
 }
 
 .SBox2 {
-    /* border-radius: 20px; */
-    background-color: #e0eeff;
+    border-radius: 20px;
     box-shadow: 0 4px 8px 0 #000000;
     transition: 0.3s;
     width: 100%;
@@ -152,6 +160,8 @@ p {
     flex-grow: 1;
 }
 .signInLogo {
+    border-radius: 20px;
+    background-color: #E0EEFF;
     width: 50%;
 }
 .signInButton {
