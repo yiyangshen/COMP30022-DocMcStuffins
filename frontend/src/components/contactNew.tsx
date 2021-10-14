@@ -176,6 +176,7 @@ class contactNew extends React.Component {
                                     placeholder="First Name"
                                     onChange={this.handleChange}
                                     className="display-content grey"
+                                    required
                                 />
 
                                 <input
@@ -196,6 +197,7 @@ class contactNew extends React.Component {
                                     placeholder="Last Name"
                                     onChange={this.handleChange}
                                     className="display-content grey"
+                                    required
                                 />
 
                                 <h2>Gender</h2>

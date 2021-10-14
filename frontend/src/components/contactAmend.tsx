@@ -227,6 +227,7 @@ class contactAmend extends React.Component {
                                     placeholder="First Name"
                                     onChange={this.handleChange}
                                     className="display-content grey"
+                                    required
                                 />
                                 <input
                                     type="text"
@@ -245,6 +246,7 @@ class contactAmend extends React.Component {
                                     placeholder="Last Name"
                                     onChange={this.handleChange}
                                     className="display-content grey"
+                                    required
                                 />
 
                                 <h2>Gender</h2>

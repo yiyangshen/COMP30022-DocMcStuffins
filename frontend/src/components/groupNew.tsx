@@ -94,6 +94,7 @@ class groupNew extends React.Component {
                     value={name}
                     onChange={this.handleChange}
                     className="display-content grey"
+                    required
                 />
                 <div className="box1">
                     <h2>Members</h2>

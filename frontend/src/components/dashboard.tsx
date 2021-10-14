@@ -9,7 +9,7 @@ import MemoMore from "../img/RecentMemoMore.svg";
 import Contact from "../img/Profile.svg";
 import Group from "../img/3 User.svg";
 import { getRecentMemos } from "../api/memoApi";
-import { getGroupCount, getGroupDetails, getGroups } from "../api/groupApi";
+import { getGroupCount, getGroups } from "../api/groupApi";
 import { getContactCount } from "../api/contactApi";
 import { getUserProfile } from "../api/userApi";
 
@@ -21,7 +21,6 @@ class dashboard extends React.Component {
         isLoaded: false,
         memoList: [] as IMemo[],
         recentGroupList: [] as IGroup[],
-        recentGroupDetails: [] as IGroup[],
         groupCount: 0,
         contactCount: 0,
         username: "",
@@ -97,7 +96,6 @@ class dashboard extends React.Component {
             isLoaded,
             memoList,
             recentGroupList,
-            recentGroupDetails,
             groupCount,
             contactCount,
             username,
@@ -114,14 +112,21 @@ class dashboard extends React.Component {
                     <h1>Hi {username}!</h1>
 
                     <div className="MemoBox">
-                        <h2 className = "MemosTitle">Memos</h2>
+                        <h2 className="MemosTitle">Memos</h2>
                         <div className="Memos">
                             {memoList !== undefined && memoList.length > 0 ? (
                                 <div>
                                     {memoList.map((memos, i) => (
                                         <div key={i}>
                                             {" "}
-                                            <div className="MemoPage" onClick={() => history.push(`/memos/details/?id=${memos._id}`)}>
+                                            <div
+                                                className="MemoPage"
+                                                onClick={() =>
+                                                    history.push(
+                                                        `/memos/details/?id=${memos._id}`
+                                                    )
+                                                }
+                                            >
                                                 <img
                                                     className="MemoPng"
                                                     src={Memo}
@@ -135,7 +140,10 @@ class dashboard extends React.Component {
                                     ))}{" "}
                                 </div>
                             ) : null}
-                            <div className="MemoPage" onClick={() => history.push(`/memos/new`)}>
+                            <div
+                                className="MemoPage"
+                                onClick={() => history.push(`/memos/new`)}
+                            >
                                 <img
                                     className="AddMoreMemo"
                                     src={MemoMore}
