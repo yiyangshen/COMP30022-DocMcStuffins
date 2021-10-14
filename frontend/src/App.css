@@ -12,7 +12,17 @@
     height: 100%;
     background-color: #f8fbff;
 }
-
+.signFrame-pages{
+    margin-left: 2vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    padding-left: 1vw;
+    padding-top: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 1vw;
+    width: 96vw;
+    height: 100%;
+}
 table {
     width: 100%;
     text-align: left;
@@ -133,15 +143,14 @@ p {
 .base-button:hover {
     opacity: 0.8;
 }
-
 .SBox {
+    margin-left: 15px; 
     align-self: left;
-    background-color: #ffffff;
     width: 50%;
 }
 
 .SBox2 {
-    background-color: #e0eeff;
+    border-radius: 20px;
     box-shadow: 0 4px 8px 0 #000000;
     transition: 0.3s;
     width: 100%;
@@ -151,6 +160,8 @@ p {
     flex-grow: 1;
 }
 .signInLogo {
+    border-radius: 20px;
+    background-color: #E0EEFF;
     width: 50%;
 }
 .signInButton {
@@ -430,17 +441,22 @@ span {
 /* dashboard pages */
 
 .Dbox {
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: left;
 }
 .Dbox2 {
+    margin-right: 5px;
     display: flex;
     flex-direction: column;
     justify-content: left;
     width: 20vw;
 }
 .RecentGroupsBox {
+    margin-left: 5px;
+    border-radius: 25px;
+    padding: 20px; 
     background-color: #f8fbff;
     box-shadow: 0 4px 8px 0 #000000;
     transition: 0.3s;
@@ -466,23 +482,22 @@ span {
 }
 
 .dotMore {
-    height: 150px;
-    width: 150px;
+    text-align: center;
+    height: 155px;
+    width: 155px;
     margin-left: 1vw;
     background-color: #e7e7e7;
     border-radius: 50%;
     display: inline-block;
-    
+    padding-top: 50px;
 }
-.dotText {
-    margin-left: 1.5vw;
-    margin-top: 2vw;
-}
+
 .RecentGroupText {
     text-align: center;
 }
 
 .Group {
+    border-radius: 25px;
     align-self: left;
     background-color: #6baffd;
     box-shadow: 0 4px 8px 0 #000000;
@@ -507,6 +522,7 @@ span {
 }
 
 .Contacts {
+    border-radius: 25px;
     align-self: flex-start;
     background-color: #6baffd;
     box-shadow: 0 4px 8px 0 #000000;
@@ -534,6 +550,8 @@ span {
 }
 
 .MemoBox {
+    border-radius: 25px;
+    padding: 20px; 
     background-color: #f8fbff;
     box-shadow: 0 4px 8px 0 #000000;
     height: 300px;
