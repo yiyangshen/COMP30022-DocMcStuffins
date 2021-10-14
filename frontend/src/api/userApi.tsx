@@ -121,5 +121,52 @@ async function registerUser(
         );
 }
 
+/* Amends the user profile;
+ * requires, in the request body:
+ *   - firstName: string
+ *   - middleName?: string
+ *   - lastName: string
+ *   - email: string
+ *   - password: string
+ * responds with a:
+ *   - 200 OK if amendment is successful
+ *   - 400 Bad Request if the request body is malformed
+ *   - 401 Unauthorized if the requester is not authenticated
+ *   - 500 Internal Server Error otherwise
+ */
+async function amendProfileDetails(
+    firstName: String,
+    middleName: String,
+    lastName: String,
+    email: String,
+    password: String
+) {
+    const endpoint = `${BASE_URL}/user/profile/amend`;
+    return await axios
+        .patch(endpoint, {
+            firstName,
+            middleName,
+            lastName,
+            email,
+            password,
+        })
+        .then(
+            (response) => {
+                history.push("/user/profile");
+                console.log(response);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+}
+
 /* Export api functions */
-export { getId, getUserProfile, loginUser, logoutUser, registerUser };
+export {
+    getId,
+    getUserProfile,
+    loginUser,
+    logoutUser,
+    registerUser,
+    amendProfileDetails,
+};

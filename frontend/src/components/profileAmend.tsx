@@ -3,7 +3,7 @@ import React from "react";
 import history from "../history";
 
 /* Import the required libraries and types */
-import { getUserProfile } from "../api/userApi";
+import { getUserProfile, amendProfileDetails } from "../api/userApi";
 
 /* Component to profile */
 class profile extends React.Component {
@@ -27,7 +27,10 @@ class profile extends React.Component {
                 console.log(data);
                 this.setState({
                     isLoaded: true,
-                    user: data,
+                    firstName: data.name.first,
+                    middleName: data.name.middle,
+                    lastName: data.name.last,
+                    email: data.email,
                 });
             },
             (error) => {
@@ -45,10 +48,10 @@ class profile extends React.Component {
     /* Handle when click on save button */
     handleSave = (event: { preventDefault: () => void }) => {
         const {
-            // firstName,
-            // middleName,
-            // lastName,
-            // email,
+            firstName,
+            middleName,
+            lastName,
+            email,
             password,
             confirmPassword,
         } = this.state;
@@ -56,7 +59,13 @@ class profile extends React.Component {
 
         /* Register user then push new entry to history */
         if (password === confirmPassword) {
-            /* PUT FUNCTION HERE */
+            amendProfileDetails(
+                firstName,
+                middleName,
+                lastName,
+                email,
+                password
+            );
         } else {
             alert("Please enter the same password");
         }
@@ -88,83 +97,84 @@ class profile extends React.Component {
                             <b>Edit Profile</b>
                         </h1>
                     </div>
+                    <form onSubmit={this.handleSave}>
+                        <h2>Name</h2>
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="firstName"
+                            defaultValue={firstName}
+                            placeholder="First Name"
+                            onChange={this.handleChange}
+                            className="display-content grey"
+                            required
+                        />
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="middleName"
+                            defaultValue={middleName}
+                            placeholder="Middle Name"
+                            onChange={this.handleChange}
+                            className="display-content grey"
+                        />
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="lastName"
+                            defaultValue={lastName}
+                            placeholder="Last Name"
+                            onChange={this.handleChange}
+                            className="display-content grey"
+                            required
+                        />
 
-                    <h2>Name</h2>
-                    <input
-                        type="text"
-                        id="fullName"
-                        name="firstName"
-                        defaultValue={firstName}
-                        placeholder="First Name"
-                        onChange={this.handleChange}
-                        className="display-content grey"
-                        required
-                    />
-                    <input
-                        type="text"
-                        id="fullName"
-                        name="middleName"
-                        defaultValue={middleName}
-                        placeholder="Middle Name"
-                        onChange={this.handleChange}
-                        className="display-content grey"
-                    />
-                    <input
-                        type="text"
-                        id="fullName"
-                        name="lastName"
-                        defaultValue={lastName}
-                        placeholder="Last Name"
-                        onChange={this.handleChange}
-                        className="display-content grey"
-                        required
-                    />
+                        <h2>Email</h2>
+                        <input
+                            type="text"
+                            id="email"
+                            name="email"
+                            placeholder="Eg. JohnDoe@gmail.com"
+                            defaultValue={email}
+                            onChange={this.handleChange}
+                            className="display-content grey"
+                            required
+                        />
 
-                    <h2>Email</h2>
-                    <input
-                        type="text"
-                        id="email"
-                        name="email"
-                        placeholder="Eg. JohnDoe@gmail.com"
-                        defaultValue={email}
-                        onChange={this.handleChange}
-                        className="display-content grey"
-                        required
-                    />
+                        <h2>Password</h2>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="*******"
+                            defaultValue={password}
+                            onChange={this.handleChange}
+                            className="display-content grey"
+                            required
+                        />
 
-                    <h2>Password</h2>
-                    <input
-                        type="text"
-                        id="password"
-                        name="password"
-                        placeholder="*******"
-                        defaultValue={password}
-                        onChange={this.handleChange}
-                        className="display-content grey"
-                        required
-                    />
-
-                    <h2>Confirm Password</h2>
-                    <input
-                        id="conpassword"
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="confirm password"
-                        value={confirmPassword}
-                        onChange={this.handleChange}
-                        className="display-content grey"
-                        required
-                    />
-                    <button
-                        className="base-button"
-                        type="button"
-                        onClick={() => history.goBack()}
-                    >
-                        <h2>Cancel</h2>
-                    </button>
-                    <button className="base-button" type="submit">
-                        <h2>Save</h2>
-                    </button>
+                        <h2>Confirm Password</h2>
+                        <input
+                            id="conpassword"
+                            type="password"
+                            name="confirmPassword"
+                            placeholder="confirm password"
+                            value={confirmPassword}
+                            onChange={this.handleChange}
+                            className="display-content grey"
+                            required
+                        />
+                        <button
+                            className="base-button"
+                            type="button"
+                            onClick={() => history.goBack()}
+                        >
+                            <h2>Cancel</h2>
+                        </button>
+                        <button className="base-button" type="submit">
+                            <h2>Save</h2>
+                        </button>
+                    </form>
                 </div>
             );
         }
