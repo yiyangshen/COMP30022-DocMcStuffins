@@ -10,11 +10,11 @@ const TEST_USER_FIRST_NAME = "Futaba";
 const TEST_USER_LAST_NAME = "Rio";
 const TEST_USER_PASSWORD = "MeganeWaKakkoiDesu!";
 
-const TEST_USER_EMAIL_1 = `${TEST_USER_EMAIL}1`;
-const TEST_USER_EMAIL_2 = `${TEST_USER_EMAIL}2`;
-const TEST_USER_EMAIL_3 = `${TEST_USER_EMAIL}3`;
-const TEST_USER_EMAIL_4 = `${TEST_USER_EMAIL}4`;
-const TEST_USER_EMAIL_5 = `${TEST_USER_EMAIL}5`;
+const TEST_USER_EMAIL_1 = `1${TEST_USER_EMAIL}`;
+const TEST_USER_EMAIL_2 = `2${TEST_USER_EMAIL}`;
+const TEST_USER_EMAIL_3 = `3${TEST_USER_EMAIL}`;
+const TEST_USER_EMAIL_4 = `4${TEST_USER_EMAIL}`;
+const TEST_USER_EMAIL_5 = `5${TEST_USER_EMAIL}`;
 
 const TEST_USER_PASSWORD_SHORT = "<3";
 
@@ -68,7 +68,7 @@ describe("Registration Tests", () => {
             .post(`${BASE_URL}/register`)
             .send(req)
             .then((res: any) => {
-                expect(res.body.status).toBe(403);
+                expect(res.body.status).toBe(400);
             });
     });
 
