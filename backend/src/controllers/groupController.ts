@@ -335,7 +335,7 @@ async function getGroups(req: Request, res: Response, next: NextFunction) {
             return next(new UnauthorizedError("Requester is not authenticated"));
         }
 
-        /* Retrieve the groups belonging to the currently authenticated user and populate each members field*/
+        /* Retrieve the groups belonging to the currently authenticated user and populate each members field */
         const groups = await Group.find({ userId: (req.user as IUser)._id })
                                   .populate('members')
 
