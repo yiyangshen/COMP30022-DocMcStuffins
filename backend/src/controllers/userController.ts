@@ -77,10 +77,12 @@ async function amendProfileDetails(req: Request, res: Response, next: NextFuncti
  *   - 500 Internal Server Error otherwise
  */
 async function getUserProfile(req: Request, res: Response, next: NextFunction) {
-    if (req.isUnauthenticated()) {
-        return next(new UnauthorizedError("User is not authenticated"));
-    }
     try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("User is not authenticated"));
+        }
+
         res.json(new OKSuccess(req.user));
     } catch (err) {
         next(new InternalServerError("Failed fetching the user"));
@@ -98,23 +100,34 @@ async function getUserProfile(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function loginUser(req: Request, res: Response, next: NextFunction) {
-    if (!req.body.email || !req.body.password) {
-        return next(new BadRequestError("Request body malformed"));
-    }
-    passport.authenticate("local", (err: any, user: any, info: any) => {
-        if (err) {
-            return next(new InternalServerError("Error finding user"));
+    try {
+        /* Validate and sanitise the required inputs */
+        await body("email").isEmail().trim().escape().run(req);
+        await body("password").isString().isLength({min: 6}).run(req);
+
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
         }
-        if (!user) {
-            return next(new ForbiddenError("Incorrect email or password"));
-        }
-        req.login(user, (err) => {
+        
+        /* Try to authenticate the user */
+        passport.authenticate("local", (err: any, user: any, info: any) => {
             if (err) {
-                next(new InternalServerError("Error logging in user"));
+                return next(new InternalServerError("Error finding user"));
             }
-        });
-        res.json(new OKSuccess("Login Successful"));
-    })(req, res, next);
+            if (!user) {
+                return next(new ForbiddenError("Incorrect email or password"));
+            }
+            req.login(user, (err) => {
+                if (err) {
+                    next(new InternalServerError("Error logging in user"));
+                }
+            });
+            res.json(new OKSuccess("Login Successful"));
+        })(req, res, next);
+    } catch (err) {
+        return next(new InternalServerError("Something has gone wrong"));
+    }
 }
 
 /* Deauthenticates the currently-authenticated user;
@@ -124,15 +137,19 @@ async function loginUser(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function logoutUser(req: Request, res: Response, next: NextFunction) {
-    if (req.isUnauthenticated()) {
-        return next(new UnauthorizedError("User is not authenticated"));
-    }
     try {
+        /* Check if the user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("User is not authenticated"));
+        }
+
+        /* Log the user out of the current session */
         req.logout();
+
+        res.json(new OKSuccess("Logout successful"));
     } catch (err) {
         next(new InternalServerError("Error logging out user"));
     }
-    res.json(new OKSuccess("Logout successful"));
 }
 
 /* Registers and subsequently authenticates a new user;
@@ -151,33 +168,52 @@ async function logoutUser(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function registerUser(req: Request, res: Response, next: NextFunction) {
-    if (!req.body.email || !req.body.password || !req.body.firstName || !req.body.lastName) {
-        return next(new BadRequestError("Request body malformed"));
-    }
-    if (req.isAuthenticated()) {
-        return next(new ForbiddenError("User is already logged in"));
-    }
-    passport.authenticate("local-signup", (err: any, user: any, info: any) => {
-        if (err) {
-            return next(new InternalServerError("Error registering new user"));
+    try {
+        /* Check if the user is authenticated */
+        if (req.isAuthenticated()) {
+            return next(new ForbiddenError("User is already logged in"));
         }
-        if (!user) {
-            switch (info.message) {
-                case "PASSWORD_LEN":
-                    return next(new ForbiddenError("Password should be at least 6 characters"));
-                case "EXIST":
-                    return next(new ForbiddenError("Email already exists"));
+
+        /* Validate and sanitise the required inputs */
+        await body("firstName").isAlpha().trim().run(req);
+        await body("lastName").isAlpha().trim().run(req);
+        await body("email").isEmail().trim().escape().run(req);
+        await body("password").isString().isLength({min: 6}).run(req);
+
+        /* Validate and sanitise the optional inputs */
+        if (req.body.middleName)
+            await body("middleName").isAlpha().trim().run(req);
+        
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body malformed"));
+        }
+
+        /* Try registering the new user */
+        passport.authenticate("local-signup", (err: any, user: any, info: any) => {
+            if (err) {
+                return next(new InternalServerError("Error registering new user"));
             }
-        }
-        // Log in the user after registering successfully
-        if (user) {
-            req.login(user, (err) => {
-                if (err)
-                    return next(new InternalServerError("Error logging in new user"));
-            });
-        }
-        res.json(new CreatedSuccess("New user registered"));
-    })(req, res, next);
+            if (!user) {
+                switch (info.message) {
+                    case "PASSWORD_LEN":
+                        return next(new BadRequestError("Password should be at least 6 characters"));
+                    case "EXIST":
+                        return next(new ForbiddenError("Email already exists"));
+                }
+            }
+            // Log in the user after registering successfully
+            if (user) {
+                req.login(user, (err) => {
+                    if (err)
+                        return next(new InternalServerError("Error logging in new user"));
+                });
+            }
+            res.json(new CreatedSuccess("New user registered"));
+        })(req, res, next);
+    } catch (err) {
+        return next(new InternalServerError("Something has gone wrong"));
+    }
 }
 
 /* Export controller functions */
