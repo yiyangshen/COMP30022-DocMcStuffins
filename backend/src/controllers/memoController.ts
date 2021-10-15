@@ -132,11 +132,7 @@ async function createMemo(req: Request, res: Response, next: NextFunction) {
  *   - 404 Not Found if the given memo ID does not exist in the database
  *   - 500 Internal Server Error otherwise
  */
-async function deleteMemo(req: Request, res: Response, next: NextFunction) {
-    console.log(req.body);
-    console.log(req.body.id);
-    console.log(typeof req.body.id);
-    
+async function deleteMemo(req: Request, res: Response, next: NextFunction) {    
     try {
         /* Check if the user is authenticated */
         if (req.isUnauthenticated()) {
@@ -184,30 +180,34 @@ async function deleteMemo(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getMemoDetails(req: Request, res: Response, next: NextFunction) {
-    // requester is not authenticated
-    if(req.isUnauthenticated()){
-        return next(new UnauthorizedError("Requester is not authenticated"));
-    }
-
     try {
-        // verify that the parameter is valid
-        if (!(isValidObjectId(req.params.id))) {
+        /* Check if user is authenticated */
+        if(req.isUnauthenticated()){
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
+
+        /* Validate and sanitise the required inputs */
+        await param("id").isMongoId().run(req);
+
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
             return next(new BadRequestError("Request body is malformed"));
         }
         
-        const memo = await Memo.findOne({_id:req.params.id})
+        /* Find the associated memo */
+        const memo = await Memo.findById(req.params.id);
 
-        // verify that memo exist 
+        /* Verify that the memo exists */
         if(!memo){
             return next(new NotFoundError("Contact does not exist"));
         }
 
-        // verify that the memo  is under the authenticated user
+        /* Verify that the memo belongs to the currently authenticated user */
         if(memo.userId.toString() !== (req.user as IUser)._id.toString()){
             return next(new ForbiddenError("Contact does not belong to the user"));
         }
 
-        // update recently-viewed timestamp
+        /* Update the viewed timestamp */
         memo.timestamps.viewed = new Date();
         await memo.save();
 
@@ -225,15 +225,16 @@ async function getMemoDetails(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getMemos(req: Request, res: Response, next: NextFunction) {
-    // make sure requester is authenticated
-    if (req.isUnauthenticated()) {
-        return next(new UnauthorizedError("Requester is not authenticated"));
-    }
     try {
-        // find all memos belonging to the user
+        /* Check if user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
+
+        /* Get all memos belonging to the currently authenticated user */
         const memos = await Memo.find({ userId: (req.user as IUser)._id });
         
-        // no memos were found
+        /* If no memos are found */
         if (memos.length === 0) {
             return res.status(204).json(new NoContentSuccess());
         }
@@ -255,21 +256,25 @@ async function getMemos(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getRecentMemos(req: Request, res: Response, next: NextFunction) {
-    // make sure requester is authenticated
-    if (req.isUnauthenticated()) {
-        return next(new UnauthorizedError("Requester is not authenticated"));
-    }
     try {
-        // parses string n to int and verify that it is a valid request
-        const n = parseInt(req.params.n);     
-        if (Object.is(NaN, n) || parseInt(req.params.n) <= 0) {
-            return next(new BadRequestError("Requester parameter is invalid"));
+        /* Check if user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("Requester is not authenticated"));
         }
 
-        // find memos, sort, and limit them to n documents
+        /* Validate and sanitise the required inputs */
+        await param("n").isInt({min: 1}).run(req);
+
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
+            return next(new BadRequestError("Request body is malformed"));
+        }
+
+        /* Find memos, sort, and limit them to n documents */
+        const n = parseInt(req.params.n);
         const memos = await Memo.find({ userId: (req.user as IUser)._id }).sort({ "timestamps.created": -1  }).limit(n);
         
-        // no memos were found
+        /* If no memos are found */
         if (memos.length === 0) {
             return res.status(204).json(new NoContentSuccess());
         }
