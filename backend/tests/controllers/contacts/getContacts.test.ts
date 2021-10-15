@@ -7,7 +7,7 @@ import app from "../../../src/config/serverConfig";
 import { User, Contact } from "../../../src/models/index";
 
 const TEST_USER_EMAIL_1 = "phil@gaming.comt"; 
-const TEST_USER_EMAIL_2 = TEST_USER_EMAIL_1 + "1"; 
+const TEST_USER_EMAIL_2 = "1" + TEST_USER_EMAIL_1; 
 const TEST_USER_FIRST_NAME = "Philip";
 const TEST_USER_LAST_NAME = "Holes";
 const TEST_USER_PASSWORD = "phillycheese";

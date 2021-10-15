@@ -315,11 +315,15 @@ async function deleteContact(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getContactCount(req: Request, res: Response, next: NextFunction) {
-    if (req.isUnauthenticated()) {
-        return next(new UnauthorizedError("Requester is not authenticated"));
-    }
     try {
+        /* Check if user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
+
+        /* Get the contact count */
         const count = await Contact.countDocuments({ userId: (req.user as IUser)._id });
+
         return res.json(new OKSuccess(count));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
@@ -338,34 +342,39 @@ async function getContactCount(req: Request, res: Response, next: NextFunction) 
  *   - 500 Internal Server Error otherwise
  */
 async function getContactDetails(req: Request, res: Response, next: NextFunction) {
-    // requester is not authenticated
-    if(req.isUnauthenticated()){
-        return next(new UnauthorizedError("Requester is not authenticated"));
-    }
-
     try {
-        // verify that the parameter is valid
-        if (!(isValidObjectId(req.params.id))) {
+        /* Check if user is authenticated */
+        if (req.isUnauthenticated()){
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
+    
+        /* Validate and sanitise the required inputs */
+        await param("id").isMongoId().run(req);
+
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
             return next(new BadRequestError("Request body is malformed"));
         }
-        const contact = await Contact.findOne({_id:req.params.id})
+
+        /* Find the contact and populate the groupId field */
+        const contact = await Contact.findById(req.params.id)
                                      .populate('groupId');
 
-        // verify that contact exist 
-        if(!contact){
+        /* Verify that the contact exists */
+        if (!contact){
             return next(new NotFoundError("Contact does not exist"));
         }
-        // verify that the contact id is under the authenticated user
-        if(contact.userId.toString() !== (req.user as IUser)._id.toString()){
+
+        /* Verify that the contact belongs to the currently authenticated user */
+        if (contact.userId.toString() !== (req.user as IUser)._id.toString()){
             return next(new ForbiddenError("Contact does not belong to the user"));
         }
 
-        // update recently-viewed timestamp
+        /* Update the viewed timestamp */
         contact.timestamps.viewed = new Date();
         await contact.save();
 
         return res.json(new OKSuccess(contact));
-            
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
     }
@@ -379,20 +388,21 @@ async function getContactDetails(req: Request, res: Response, next: NextFunction
  *   - 500 Internal Server Error otherwise
  */
 async function getContacts(req: Request, res: Response, next: NextFunction) {
-    // requester is not authenticated
-    if (req.isUnauthenticated()) {
-        return next(new UnauthorizedError("Requester is not authenticated"));
-    }
     try {
-        // find all the contacts of this userId and replace all _id of
-        // contact with its own model
+        /* Check if user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
+ 
+        /* Retrieve the contacts belonging to the currently authenticated user and populate each groupId field */
         const contacts = await Contact.find({ userId: (req.user as IUser)._id })
                                       .populate('groupId')
         
-        //  in case if user doesn't have any contacts
-        if(contacts.length === 0){
+        /* If the user has no contact */
+        if (contacts.length === 0){
             return res.status(204).json(new NoContentSuccess());
         }
+
         return res.json(new OKSuccess(contacts));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
@@ -407,12 +417,13 @@ async function getContacts(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getGrouplessContacts(req: Request, res: Response, next: NextFunction){
-    // requester is not authenticated
-    if (req.isUnauthenticated()) {
-        return next(new UnauthorizedError("Requester is not authenticated"));
-    }
     try {
-        // find all the contacts of this userId without any groups
+        /* Check if user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
+
+        /* Find the contacts belonging to the currently authenticated user that are groupless */
         const contacts = await Contact.find({
             $and : [
                 { userId: (req.user as IUser)._id},
@@ -420,28 +431,15 @@ async function getGrouplessContacts(req: Request, res: Response, next: NextFunct
             ]   
         })
 
-        //  if no contacts matches the criterion
-        if(contacts.length === 0){
+        /* If the user has no groupless contacts */
+        if (contacts.length === 0){
             return res.status(204).json(new NoContentSuccess());
         }
+        
         return res.json(new OKSuccess(contacts));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
     }    
-}
-
-/* Returns the currently-authenticated user's contacts that fuzzy-matches the given search string;
- * requires, in the request params:
- *   - name: string
- * responds with a:
- *   - 200 OK if query returns something
- *   - 204 No Content if the query returns nothing
- *   - 400 Bad Request if the request body is malformed
- *   - 401 Unauthorized if the requester is not authenticated
- *   - 500 Internal Server Error otherwise
- */
-async function searchContactName(req: Request, res: Response, next: NextFunction) {
-
 }
 
 /* Export controller functions */
@@ -452,6 +450,5 @@ export {
     getContactCount,
     getContactDetails,
     getContacts,
-    getGrouplessContacts,
-    searchContactName
+    getGrouplessContacts
 };
