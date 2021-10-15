@@ -261,11 +261,15 @@ async function deleteGroup(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getGroupCount(req: Request, res: Response, next: NextFunction) {
-    if (req.isUnauthenticated()) {
-        return next(new UnauthorizedError("Requester is not authenticated"));
-    }
     try {
+        /* Check if user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
+
+        /* Get the group count */
         const count = await Group.countDocuments({ userId: (req.user as IUser)._id });
+
         return res.json(new OKSuccess(count));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
@@ -284,27 +288,31 @@ async function getGroupCount(req: Request, res: Response, next: NextFunction) {
  *   - 500 Internal Server Error otherwise
  */
 async function getGroupDetails(req: Request, res: Response, next: NextFunction) {
-    // requester is not authenticated
-    if(req.isUnauthenticated()){
-        return next(new UnauthorizedError("Requester is not authenticated"));
-    }
-
     try {
-        // verify that the parameter is valid
-        if (!(isValidObjectId(req.params.id))) {
+        /* Check if user is authenticated */
+        if (req.isUnauthenticated()){
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
+
+        /* Validate and sanitise the required inputs */
+        await param("id").isMongoId().run(req);
+
+        /* Check for any validation errors */
+        if (!validationResult(req).isEmpty()) {
             return next(new BadRequestError("Request body is malformed"));
         }
         
-        const group = await Group.findOne({_id:req.params.id})
+        /* Find the group and populate the members field */
+        const group = await Group.findById(req.params.id)
                                  .populate('members');
 
-        // verify that group exist 
-        if(!group){
+        /* Verify that group exists */
+        if (!group){
             return next(new NotFoundError("Contact does not exist"));
         }
 
-        // verify that the group  is under the authenticated user
-        if(group.userId.toString() !== (req.user as IUser)._id.toString()){
+        /* Verify that the group belongs to the currently authenticated user */
+        if (group.userId.toString() !== (req.user as IUser)._id.toString()){
             return next(new ForbiddenError("Contact does not belong to the user"));
         }
 
@@ -321,15 +329,16 @@ async function getGroupDetails(req: Request, res: Response, next: NextFunction) 
  *   - 500 Internal Server Error otherwise
  */
 async function getGroups(req: Request, res: Response, next: NextFunction) {
-        // requester is not authenticated
-    if (req.isUnauthenticated()) {
-        return next(new UnauthorizedError("Requester is not authenticated"));
-    }
     try {
-        // find all the group of this userId and replace all _id of 
-        // group with its own model
+        /* Check if user is authenticated */
+        if (req.isUnauthenticated()) {
+            return next(new UnauthorizedError("Requester is not authenticated"));
+        }
+
+        /* Retrieve the groups belonging to the currently authenticated user and populate each members field*/
         const groups = await Group.find({ userId: (req.user as IUser)._id })
-                                    .populate('members')
+                                  .populate('members')
+
         return res.json(new OKSuccess(groups));
     } catch (error) {
         return next(new InternalServerError("Internal servor error"));
