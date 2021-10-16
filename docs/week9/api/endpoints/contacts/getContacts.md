@@ -2,7 +2,7 @@
 
 | Indices | Implementation | Testing |
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:getContacts()](../../../../../backend/src/controllers/contactController.ts#L381-L400) | [test suite](../../../../../backend/tests/controllers/contacts/getContacts.test.ts)<br>[documentation](../../tests/contacts/getContacts.test.md) |
+| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:getContacts()](../../../../../backend/src/controllers/contactController.ts#L390-L410) | [test suite](../../../../../backend/tests/controllers/contacts/getContacts.test.ts)<br>[documentation](../../tests/contacts/getContacts.test.md) |
 
 # `getContacts()`
 

@@ -2,7 +2,7 @@
 
 | Indices | Implementation | Testing |
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:getGrouplessContacts()](../../../../../backend/src/controllers/contactController.ts#L381-L400) | [test suite](../../../../../backend/tests/controllers/contacts/getGrouplessContacts.test.ts)<br>[documentation](../../tests/contacts/getGrouplessContacts.test.md) |
+| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:getGrouplessContacts()](../../../../../backend/src/controllers/contactController.ts#L419-L443) | [test suite](../../../../../backend/tests/controllers/contacts/getGrouplessContacts.test.ts)<br>[documentation](../../tests/contacts/getGrouplessContacts.test.md) |
 
 # `getGrouplessContacts()`
 

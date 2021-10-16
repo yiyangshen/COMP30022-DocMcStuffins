@@ -2,7 +2,7 @@
 
 | Indices | Implementation | Testing |
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [memo index](./index.md)<br>[endpoint index](../index.md) | [memoController.ts:getMemos()](../../../../../backend/src/controllers/memoController.ts#L223-L241) | [test suite](../../../../../backend/tests/controllers/memos/getMemos.test.ts)<br>[documentation](../../tests/memos/getMemos.test.md) |
+| [memo index](./index.md)<br>[endpoint index](../index.md) | [memoController.ts:getMemos()](../../../../../backend/src/controllers/memoController.ts#L227-L246) | [test suite](../../../../../backend/tests/controllers/memos/getMemos.test.ts)<br>[documentation](../../tests/memos/getMemos.test.md) |
 
 # `getMemos()`
 

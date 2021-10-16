@@ -2,7 +2,7 @@
 
 | Indices | Implementation | Testing |
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [user index](./index.md)<br>[endpoint index](../index.md) | [userController.ts:logoutUser()](../../../../../backend/src/controllers/userController.ts#L66-L76) |  [test suite](../../../../../backend/tests/controllers/user/userController.test.ts)<br>[documentation](../../tests/user/userControllerTest.md) |
+| [user index](./index.md)<br>[endpoint index](../index.md) | [userController.ts:logoutUser()](../../../../../backend/src/controllers/userController.ts#L139-L153) |  [test suite](../../../../../backend/tests/controllers/user/userController.test.ts)<br>[documentation](../../tests/user/userControllerTest.md) |
 
 # `logoutUser()`
 

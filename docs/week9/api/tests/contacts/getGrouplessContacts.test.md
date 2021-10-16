@@ -2,7 +2,7 @@
 
 | Indices                                                      | Implementation                                                                                                       | Endpoint                                                          |
 | :----------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------- |
-| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:getGrouplessContacts()](../../../../../backend/src/controllers/contactController.ts#L402-L431) | [documentation](../../endpoints/contacts/getGrouplessContacts.md) |
+| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:getGrouplessContacts()](../../../../../backend/src/controllers/contactController.ts#L419-L443) | [documentation](../../endpoints/contacts/getGrouplessContacts.md) |
 # `getGrouplessContacts()`
 ## Relevant Models
 > Attributes ending with '?' are optional

@@ -2,7 +2,7 @@
 
 | Indices | Implementation | Endpoint |
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [memo index](./index.md)<br>[test index](../index.md) | [memoController.ts:getRecentMemos()](../../../../../backend/src/controllers/memoController.ts#L253-L277) | [documentation](../../endpoints/memos/getRecentMemos.md) |
+| [memo index](./index.md)<br>[test index](../index.md) | [memoController.ts:getRecentMemos()](../../../../../backend/src/controllers/memoController.ts#L258-L286) | [documentation](../../endpoints/memos/getRecentMemos.md) |
 # [getRecentMemos()](../../../../../backend/src/controllers/memoController.ts)
 ## Relevant Models
 > Attributes ending with '?' are optional

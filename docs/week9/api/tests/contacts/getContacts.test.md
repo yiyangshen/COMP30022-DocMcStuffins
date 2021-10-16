@@ -2,7 +2,7 @@
 
 | Indices | Implementation | Endpoint |
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:getContacts()](../../../../../backend/src/controllers/contactController.ts#L381-L400) | [documentation](../../endpoints/contacts/getContacts.md) |
+| [contact index](./index.md)<br>[endpoint index](../index.md) | [contactController.ts:getContacts()](../../../../../backend/src/controllers/contactController.ts#L390-L410) | [documentation](../../endpoints/contacts/getContacts.md) |
 # `getContacts()`
 ## Relevant Models
 > Attributes ending with '?' are optional

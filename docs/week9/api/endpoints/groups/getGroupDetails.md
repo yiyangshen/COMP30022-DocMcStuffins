@@ -2,7 +2,7 @@
 
 | Indices | Implementation | Testing |
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [group index](./index.md)<br>[endpoint index](../index.md) | [groupController.ts:getGroupDetails()](../../../../../backend/src/controllers/groupController.ts#L286-L315) | [test suite](../../../../../backend/tests/controllers/groups/getGroupDetails.test.ts)<br>[documentation](../../tests/groups/getGroupDetails.test.md) |
+| [group index](./index.md)<br>[endpoint index](../index.md) | [groupController.ts:getGroupDetails()](../../../../../backend/src/controllers/groupController.ts#L290-L323) | [test suite](../../../../../backend/tests/controllers/groups/getGroupDetails.test.ts)<br>[documentation](../../tests/groups/getGroupDetails.test.md) |
 
 # `getGroupDetails()`
 

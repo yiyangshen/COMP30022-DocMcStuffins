@@ -2,7 +2,7 @@
 
 | Indices | Implementation | Endpoint |
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [group index](./index.md)<br>[test index](../index.md) | [groupController.ts:getGroupDetails()](../../../../../backend/src/controllers/groupController.ts#L286-L315) | [documentation](../../endpoints/groups/getGroupDetails.md) |
+| [group index](./index.md)<br>[test index](../index.md) | [groupController.ts:getGroupDetails()](../../../../../backend/src/controllers/groupController.ts#L290-L323) | [documentation](../../endpoints/groups/getGroupDetails.md) |
 # `getGroupDetails()`
 ## Relevant Models
 > Attributes ending with '?' are optional
