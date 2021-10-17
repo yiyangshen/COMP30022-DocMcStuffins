@@ -5,8 +5,7 @@ import history from "../history";
 import { IContact } from "../interfaces";
 
 /* Import components */
-import { amendGroupDetails, getGroupDetails } from "../api/groupApi";
-import { getContactDetails } from "../api/contactApi";
+import { amendGroupDetails } from "../api/groupApi";
 import { getId } from "../api/userApi";
 
 /* Component for new cgroup */
