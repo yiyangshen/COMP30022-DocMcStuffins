@@ -31,6 +31,7 @@ class contactAmend extends React.Component {
         file: "" as any,
         photo: "" as any,
         groupName: "",
+        removePic: "" as any,
     };
 
     /* Extract id from the url */
@@ -38,6 +39,8 @@ class contactAmend extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
+        this.setState({ photo: undefined });
+
         /* Get contact details and set the states */
         getContactDetails(this.contactId).then(
             (response) => {
@@ -119,7 +122,6 @@ class contactAmend extends React.Component {
                     100,
                     0,
                     (uri) => {
-                        console.log(uri);
                         if (typeof uri === "string") {
                             this.setState({
                                 photo: uri.replace(
@@ -127,7 +129,6 @@ class contactAmend extends React.Component {
                                     ""
                                 ),
                             });
-                            console.log(this.state.photo);
                         }
                     },
                     "base64",
@@ -138,6 +139,12 @@ class contactAmend extends React.Component {
                 console.log(err);
             }
         }
+    };
+
+    removeImage = (event: { preventDefault: () => void }) => {
+        event.preventDefault();
+        let randomString = Math.random().toString(36);
+        this.setState({ photo: undefined, removePic: randomString });
     };
 
     /* Handle when click on save button */
@@ -167,7 +174,9 @@ class contactAmend extends React.Component {
         if (lastMetData !== "") {
             lastMet = new Date(lastMetData);
         }
-
+        if (photo === undefined) {
+            this.setState({ photo: "" });
+        }
         if (groupId === "None") {
             this.setState({ groupId: "" });
         }
@@ -209,6 +218,7 @@ class contactAmend extends React.Component {
             additionalNotes,
             groupsList,
             groupName,
+            removePic,
         } = this.state;
 
         /* Checks if it returns an error, still loading, or has a value accordingly */
@@ -365,19 +375,35 @@ class contactAmend extends React.Component {
                                     onChange={this.handleChange}
                                     className="display-content grey"
                                 />
+
                                 <h2>Photo</h2>
                                 <p>
                                     Click on the "Choose File" button to choose
                                     a picture:
-                                    {photo !== undefined ? (
+                                </p>
+                                {photo !== undefined ? (
+                                    <div>
                                         <p>
                                             <small>
                                                 (This action will override the
                                                 previous picture)
                                             </small>
                                         </p>
-                                    ) : null}
-                                </p>
+                                        <button
+                                            className="base-button"
+                                            type="button"
+                                            onClick={this.removeImage}
+                                        >
+                                            Remove Image
+                                        </button>
+                                        <div className="display-content white">
+                                            <img
+                                                alt="uploaded"
+                                                src={`data:image/jpeg;base64,${photo}`}
+                                            />
+                                        </div>
+                                    </div>
+                                ) : null}
 
                                 <input
                                     type="file"
@@ -385,9 +411,11 @@ class contactAmend extends React.Component {
                                     id="file"
                                     accept=".jpeg"
                                     onChange={(e) => this.onChange(e)}
+                                    key={removePic}
                                 />
                                 <br />
                                 <br />
+
                                 <div>
                                     <button
                                         className="base-button"
