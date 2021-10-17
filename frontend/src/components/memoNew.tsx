@@ -44,6 +44,7 @@ class memoNew extends React.Component {
                         placeholder="Eg. Groceries"
                         onChange={this.handleChange}
                         className="display-content grey"
+                        required
                     />
                     <h2>Description</h2>
                     <textarea

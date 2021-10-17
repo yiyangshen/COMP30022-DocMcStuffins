@@ -6,6 +6,7 @@ import { IContact } from "../interfaces";
 /* Import components */
 import { getGroupDetails, deleteGroup } from "../api/groupApi";
 import { getId } from "../api/userApi";
+import { getGrouplessContacts } from "../api/contactApi";
 
 /* Component for group detail */
 class groupDetail extends React.Component {
@@ -22,12 +23,12 @@ class groupDetail extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
-        localStorage.removeItem("name");
         /* Get group details and set the states */
-        getGroupDetails(this.groupId).then(
+        await getGroupDetails(this.groupId).then(
             (response) => {
                 var data = response.data.data;
                 console.log(data);
+                console.log(data.members);
                 this.setState({
                     isLoaded: true,
                     members: data.members,
@@ -39,6 +40,7 @@ class groupDetail extends React.Component {
                 console.log(error);
             }
         );
+        console.log(this.state);
     }
 
     /* Handle when click on delete button */
@@ -48,6 +50,28 @@ class groupDetail extends React.Component {
         /* Delete group then push new entry to history */
         deleteGroup(this.groupId);
     };
+
+    /* Handle when click on edit button */
+    async handleEdit(event: { preventDefault: () => void }) {
+        const { name, members } = this.state;
+        event.preventDefault();
+
+        await getGrouplessContacts().then(
+            (response) => {
+                var data = response.data.data;
+                var contacts = [...data, ...members];
+                localStorage.setItem("contacts", JSON.stringify(contacts));
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+        localStorage.setItem("name", JSON.stringify(name));
+        localStorage.setItem("members", JSON.stringify(members));
+
+        /* Redirect to amend page */
+        history.push(`/groups/details/amend/?id=${this.groupId}`);
+    }
 
     /* Render the component to the screen */
     render() {
@@ -67,10 +91,9 @@ class groupDetail extends React.Component {
                             <button
                                 className="base-button top-right"
                                 type="button"
-                                onClick={() =>
-                                    history.push(
-                                        `/groups/details/amend/?id=${this.groupId}`
-                                    )
+                                onClick={
+                                    (this.handleEdit =
+                                        this.handleEdit.bind(this))
                                 }
                             >
                                 <h2>Edit</h2>

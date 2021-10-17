@@ -56,6 +56,10 @@ class groupNew extends React.Component {
     /* Remember state for the next mount */
     handleEdit = () => {
         localStorage.setItem("name", JSON.stringify(this.state.name));
+        localStorage.setItem(
+            "prevContacts",
+            JSON.stringify(this.state.contactsList)
+        );
     };
 
     /* Handle when click on submit button */
@@ -94,6 +98,7 @@ class groupNew extends React.Component {
                     value={name}
                     onChange={this.handleChange}
                     className="display-content grey"
+                    required
                 />
                 <div className="box1">
                     <h2>Members</h2>

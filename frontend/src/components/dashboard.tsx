@@ -69,7 +69,6 @@ class dashboard extends React.Component {
             (response) => {
                 var data = response.data.data;
                 this.setState({ groupCount: data, isLoaded: true });
-                console.log(response);
             },
             (error) => {
                 this.setState({ isLoaded: true, error });
@@ -101,7 +100,7 @@ class dashboard extends React.Component {
             contactCount,
             username,
         } = this.state;
-
+        const items = this.state.recentGroupList.slice(0, 5);
         /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
             return <h3 className="error">Internal Error</h3>;
@@ -113,23 +112,25 @@ class dashboard extends React.Component {
                     <h1>Hi {username}!</h1>
 
                     <div className="MemoBox">
-                        <h2>Memos</h2>
+                        <h2 className="MemosTitle">Memos</h2>
                         <div className="Memos">
                             {memoList !== undefined && memoList.length > 0 ? (
                                 <div>
                                     {memoList.map((memos, i) => (
                                         <div key={i}>
                                             {" "}
-                                            <div className="MemoPage">
+                                            <div
+                                                className="MemoPage"
+                                                onClick={() =>
+                                                    history.push(
+                                                        `/memos/details/?id=${memos._id}`
+                                                    )
+                                                }
+                                            >
                                                 <img
                                                     className="MemoPng"
                                                     src={Memo}
                                                     alt="logo"
-                                                    onClick={() =>
-                                                        history.push(
-                                                            `/memos/details/?id=${memos._id}`
-                                                        )
-                                                    }
                                                 />
                                                 <h2 className="MemoText">
                                                     {memos.title}
@@ -139,12 +140,14 @@ class dashboard extends React.Component {
                                     ))}{" "}
                                 </div>
                             ) : null}
-                            <div className="MemoPage">
+                            <div
+                                className="MemoPage"
+                                onClick={() => history.push(`/memos/new`)}
+                            >
                                 <img
                                     className="AddMoreMemo"
                                     src={MemoMore}
                                     alt="logo"
-                                    onClick={() => history.push(`/memos/new`)}
                                 />
                                 <h2 className="MemoText">Add More...</h2>
                             </div>
@@ -190,7 +193,7 @@ class dashboard extends React.Component {
                                 {recentGroupList !== undefined &&
                                 recentGroupList.length > 0 ? (
                                     <div className="dots">
-                                        {recentGroupList.map((group, i) => (
+                                        {items.map((group, i) => (
                                             <div key={i}>
                                                 {" "}
                                                 <span
@@ -219,7 +222,7 @@ class dashboard extends React.Component {
                                     className="dotMore"
                                     onClick={() => history.push(`/groups/new`)}
                                 >
-                                    <h1 className="dotText">Add more...</h1>
+                                    <h1>Add more...</h1>
                                 </span>
                             </div>
                         </div>

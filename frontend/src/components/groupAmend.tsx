@@ -5,8 +5,7 @@ import history from "../history";
 import { IContact } from "../interfaces";
 
 /* Import components */
-import { amendGroupDetails, getGroupDetails } from "../api/groupApi";
-import { getContactDetails } from "../api/contactApi";
+import { amendGroupDetails } from "../api/groupApi";
 import { getId } from "../api/userApi";
 
 /* Component for new cgroup */
@@ -28,60 +27,18 @@ class groupNew extends React.Component {
     /* During loading page */
     async componentDidMount() {
         /* Retrieve item in local storage and parse them */
-        const value = localStorage.getItem("chosen");
+        const value = localStorage.getItem("members");
         if (value) {
-            this.setState({ members: JSON.parse(value) });
+            this.setState({ contactsList: JSON.parse(value) });
         }
-        const h2 = localStorage.getItem("name");
-        if (h2) {
-            this.setState({ name: JSON.parse(h2) });
+        const title = localStorage.getItem("name");
+        if (title) {
+            this.setState({ name: JSON.parse(title) });
         }
-
-        const { members } = this.state;
-
-        /* Loop through all contact ids and get their details, adding it to ContactList*/
-        for (var i = 0; i < members.length; i++) {
-            await getContactDetails(members[i]).then(
-                (response) => {
-                    var data = response.data.data;
-                    this.setState({
-                        contactsList: [...this.state.contactsList, data],
-                    });
-                    console.log(response);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-        }
-
-        await getGroupDetails(this.groupId).then(
-            (response) => {
-                var data = response.data.data;
-                console.log(data);
-                console.log(this.state.name);
-                console.log(this.state.contactsList);
-                this.setState({
-                    isLoaded: true,
-                });
-
-                if (this.state.name.trim() === "") {
-                    this.setState({ name: data.name });
-
-                    if (this.state.contactsList.length === 0) {
-                        this.setState({ contactsList: data.members }); //in terms of Icontacts[]
-                    }
-                }
-            },
-            (error) => {
-                this.setState({ isLoaded: true, error });
-                console.log(error);
-            }
-        );
     }
 
     /* Remember state for the next mount */
-    handleEdit = () => {
+    handleAddContact = () => {
         localStorage.setItem("name", JSON.stringify(this.state.name));
     };
 
@@ -92,7 +49,8 @@ class groupNew extends React.Component {
 
         /* Remove item from local storage and create group */
         localStorage.removeItem("name");
-        localStorage.removeItem("chosen");
+        localStorage.removeItem("contacts");
+        localStorage.removeItem("members");
         amendGroupDetails(this.groupId, name, members);
     };
 
@@ -121,6 +79,7 @@ class groupNew extends React.Component {
                     value={name}
                     onChange={this.handleChange}
                     className="display-content grey"
+                    required
                 />
                 <div className="box1">
                     <h2>Members</h2>
@@ -129,7 +88,7 @@ class groupNew extends React.Component {
                     </div>
                     <Link
                         to="/groups/new/contact"
-                        onClick={this.handleEdit}
+                        onClick={this.handleAddContact}
                         className="addContact"
                     >
                         add contact

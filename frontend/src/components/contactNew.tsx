@@ -29,10 +29,13 @@ class contactNew extends React.Component {
         isLoaded: false,
         file: "" as any,
         photo: "" as any,
+        removePic: "" as any,
     };
 
     /* During loading page */
     async componentDidMount() {
+        this.setState({ photo: undefined });
+
         /* Get all groups and set states */
         await getGroups().then(
             (response) => {
@@ -49,7 +52,12 @@ class contactNew extends React.Component {
     /* Set state accordingly to the target */
     handleChange = (event: { target: { name: any; value: String } }) => {
         this.setState({ [event.target.name]: event.target.value });
-        console.log(this.state.groupId);
+    };
+
+    removeImage = (event: { preventDefault: () => void }) => {
+        event.preventDefault();
+        let randomString = Math.random().toString(36);
+        this.setState({ photo: undefined, removePic: randomString });
     };
 
     /* Handle when click on submit button */
@@ -78,6 +86,12 @@ class contactNew extends React.Component {
         }
         if (lastMetData !== "") {
             lastMet = new Date(lastMetData);
+        }
+        if (photo === undefined) {
+            this.setState({ photo: "" });
+        }
+        if (groupId === "None") {
+            this.setState({ groupId: "" });
         }
 
         /* Create contact then push new entry to history */
@@ -113,7 +127,6 @@ class contactNew extends React.Component {
                     100,
                     0,
                     (uri) => {
-                        console.log(uri);
                         if (typeof uri === "string") {
                             this.setState({
                                 photo: uri.replace(
@@ -121,7 +134,6 @@ class contactNew extends React.Component {
                                     ""
                                 ),
                             });
-                            console.log(this.state.photo);
                         }
                     },
                     "base64",
@@ -148,9 +160,11 @@ class contactNew extends React.Component {
             lastMetData,
             phoneNumber,
             email,
+            photo,
             relationship,
             additionalNotes,
             groupsList,
+            removePic,
         } = this.state;
 
         /* Checks if it returns an error, still loading, or has a value accordingly */
@@ -176,6 +190,7 @@ class contactNew extends React.Component {
                                     placeholder="First Name"
                                     onChange={this.handleChange}
                                     className="display-content grey"
+                                    required
                                 />
 
                                 <input
@@ -196,6 +211,7 @@ class contactNew extends React.Component {
                                     placeholder="Last Name"
                                     onChange={this.handleChange}
                                     className="display-content grey"
+                                    required
                                 />
 
                                 <h2>Gender</h2>
@@ -289,7 +305,7 @@ class contactNew extends React.Component {
                                     onChange={this.handleChange}
                                     className="display-content grey"
                                 >
-                                    <option value=" ">None</option>
+                                    <option value="">None</option>
                                     {groupsList.map((group, i) => (
                                         <option value={group._id}>
                                             {group.name}
@@ -313,6 +329,29 @@ class contactNew extends React.Component {
                                     Click on the "Choose File" button to choose
                                     a picture:
                                 </p>
+                                {photo !== undefined ? (
+                                    <div>
+                                        <p>
+                                            <small>
+                                                (This action will override the
+                                                previous picture)
+                                            </small>
+                                        </p>
+                                        <button
+                                            className="base-button"
+                                            type="button"
+                                            onClick={this.removeImage}
+                                        >
+                                            Remove Image
+                                        </button>
+                                        <div className="display-content white">
+                                            <img
+                                                alt="uploaded"
+                                                src={`data:image/jpeg;base64,${photo}`}
+                                            />
+                                        </div>
+                                    </div>
+                                ) : null}
 
                                 <input
                                     type="file"
@@ -320,6 +359,7 @@ class contactNew extends React.Component {
                                     id="file"
                                     accept=".jpeg"
                                     onChange={(e) => this.onChange(e)}
+                                    key={removePic}
                                 />
                                 <br />
                                 <br />
