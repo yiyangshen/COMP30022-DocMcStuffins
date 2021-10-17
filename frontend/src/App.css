@@ -12,9 +12,27 @@
     height: 100%;
     background-color: #f8fbff;
 }
+.center-pages{
+    border-radius: 20px;
+    margin-left: 25%;
+    margin-top: 10%;
+    text-align: center;
+    padding-left: 1vw;
+    padding-top: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 1vw;
+    width: 50%;
+    height: 700px;
+    background-color: #f8fbff;
+}
+.WelcomeBox{
+    display: flex;
+    flex-direction: column;
+}
+
 .signFrame-pages{
     margin-left: 2vw;
-    margin-top: 1vw;
+    margin-top: 10vw;
     margin-bottom: 1vw;
     padding-left: 1vw;
     padding-top: 1vw;
@@ -330,7 +348,7 @@ members {
     position: absolute;
 }
 .profile-bars {
-    margin-left: 95%;
+    margin-left: 90%;
     font-size: 2rem;
     background: none;
     color: #434343;
