@@ -63,6 +63,11 @@ class groupDetail extends React.Component {
         await getGrouplessContacts().then(
             (response) => {
                 var data = response.data.data;
+
+                /* Set data to an empty array if it is empty */
+                if (!data)
+                    data = [];
+
                 var contacts = [...data, ...members];
                 localStorage.setItem("contacts", JSON.stringify(contacts));
             },
