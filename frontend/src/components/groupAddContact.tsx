@@ -4,7 +4,6 @@ import history from "../history";
 import { IContact } from "../interfaces";
 
 /* Import the required libraries and types */
-import { getContacts } from "../api/contactApi";
 
 /* Component for adding contact to a specified group */
 class addContact extends React.Component {
@@ -18,26 +17,48 @@ class addContact extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
-        /* Get contacts and set the states */
-        getContacts().then(
-            (response) => {
-                var data = response.data.data;
-                this.setState({ contactsList: data, isLoaded: true });
-            },
-            (error) => {
-                this.setState({ isLoaded: true, error });
-                console.log(error);
-            }
-        );
+        const contactsJSON = localStorage.getItem("contacts");
+        const membersJSON = localStorage.getItem("members");
+        let members: IContact[] = [];
+        let contacts: IContact[] = [];
+
+        if (membersJSON) {
+            members = JSON.parse(membersJSON);
+        }
+
+        if (contactsJSON) {
+            contacts = JSON.parse(contactsJSON);
+        }
+
+        this.setState({
+            isLoaded: true,
+            chosen: [...members],
+            contactsList: [...contacts],
+        });
     }
 
     /* Handle change whne checkbock is clicked */
-    handleCheckboxChange = (e: { target: { value: any } }) => {
-        const checkboxes = this.state.chosen; //Array in parent component
-        const value = e.target.value; //Checkbox value
-        checkboxes.includes(value) //If Array contains value
-            ? checkboxes.filter((checkbox) => checkbox._id !== value) // Then remove item from Array
-            : checkboxes.push(value); // Else, push item to Array;
+    handleCheckboxChange = (event: { target: { value: any } }) => {
+        let chosen = this.state.chosen; //Array in parent component
+        const value = event.target.value; //Checkbox value
+        const item = this.state.contactsList.find(
+            (contact) => contact._id.toString() === value.toString()
+        );
+        if (item) {
+            if (
+                chosen.some(
+                    (chosenContact) =>
+                        chosenContact._id.toString() === value.toString()
+                )
+            ) {
+                chosen = chosen.filter(
+                    (contact) => contact._id.toString() !== value.toString()
+                );
+            } else {
+                chosen.push(item);
+            }
+        }
+        this.setState({ chosen: [...chosen] });
     };
 
     /* Handle when click on submit button */
@@ -46,13 +67,13 @@ class addContact extends React.Component {
         event.preventDefault();
 
         /* Store checked item in local storage to access it in different page, then go back to creating new group */
-        localStorage.setItem("chosen", JSON.stringify(chosen));
+        localStorage.setItem("members", JSON.stringify(chosen));
         history.goBack();
     };
 
     /* Render the component to the screen */
     render() {
-        const { error, isLoaded, contactsList } = this.state;
+        const { error, isLoaded, contactsList, chosen } = this.state;
 
         /* Checks if it returns an error, still loading, or has a value accordingly */
         if (error === true) {
@@ -99,6 +120,11 @@ class addContact extends React.Component {
                                                 onChange={
                                                     this.handleCheckboxChange
                                                 }
+                                                checked={[...chosen].some(
+                                                    (chosenContact) =>
+                                                        chosenContact._id.toString() ===
+                                                        contact._id.toString()
+                                                )}
                                             />
                                         </td>
 
@@ -115,7 +141,7 @@ class addContact extends React.Component {
                             <tbody>
                                 <tr>
                                     <td></td>
-                                    <td>No data yet</td>
+                                    <td>No available data</td>
                                     <td></td>
                                 </tr>
                             </tbody>
