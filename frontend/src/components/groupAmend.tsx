@@ -13,7 +13,7 @@ class groupNew extends React.Component {
     /* Declare states */
     state = {
         name: "",
-        members: "" as any,
+        members: [] as any,
         contactsList: [] as IContact[],
     };
 
@@ -44,21 +44,22 @@ class groupNew extends React.Component {
 
     /* Handle when click on submit button */
     handleSubmit = (event: { preventDefault: () => void }) => {
-        const { name, members } = this.state;
+        const { name, contactsList, members } = this.state;
         event.preventDefault();
 
+        /* Loop through all contact ids and get their details, set the state */
+        for (var i = 0; i < contactsList.length; i++) {
+            console.log(contactsList[i]._id);
+            members.push(contactsList[i]._id);
+        }
+
         /* Remove item from local storage and create group */
-        localStorage.removeItem("name");
-        localStorage.removeItem("contacts");
-        localStorage.removeItem("members");
         amendGroupDetails(this.groupId, name, members);
     };
 
     /* Handle when click on cancel button */
     handleCancel = (event: { preventDefault: () => void }) => {
         /* Remove item from local storage and push to group page */
-        localStorage.removeItem("name");
-        localStorage.removeItem("chosen");
         history.push("/groups");
     };
 

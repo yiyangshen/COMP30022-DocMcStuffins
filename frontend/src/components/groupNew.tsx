@@ -6,14 +6,13 @@ import { IContact } from "../interfaces";
 
 /* Import components */
 import { createGroup } from "../api/groupApi";
-import { getContactDetails } from "../api/contactApi";
 
 /* Component for new cgroup */
 class groupNew extends React.Component {
     /* Declare states */
     state = {
         name: "",
-        members: "" as any,
+        members: [] as any,
         contactsList: [] as IContact[],
     };
 
@@ -25,31 +24,13 @@ class groupNew extends React.Component {
     /* During loading page */
     async componentDidMount() {
         /* Retrieve item in local storage and parse them */
-        const value = await localStorage.getItem("chosen");
+        const value = localStorage.getItem("members");
         if (value) {
-            this.setState({ members: JSON.parse(value) });
+            this.setState({ contactsList: JSON.parse(value) });
         }
-        const h2 = await localStorage.getItem("name");
+        const h2 = localStorage.getItem("name");
         if (h2) {
             this.setState({ name: JSON.parse(h2) });
-        }
-
-        const { members } = this.state;
-
-        /* Loop through all contact ids and get their details, set the state */
-        for (var i = 0; i < members.length; i++) {
-            getContactDetails(members[i]).then(
-                (response) => {
-                    var data = response.data.data;
-                    this.setState({
-                        contactsList: [...this.state.contactsList, data],
-                    });
-                    console.log(response);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
         }
     }
 
@@ -64,26 +45,28 @@ class groupNew extends React.Component {
 
     /* Handle when click on submit button */
     handleSubmit = (event: { preventDefault: () => void }) => {
-        const { name, members } = this.state;
+        const { name, members, contactsList } = this.state;
         event.preventDefault();
 
+        /* Loop through all contact ids and get their details, set the state */
+        for (var i = 0; i < contactsList.length; i++) {
+            console.log(contactsList[i]._id);
+            members.push(contactsList[i]._id);
+        }
+
         /* Remove item from local storage and create group */
-        localStorage.removeItem("name");
-        localStorage.removeItem("chosen");
         createGroup(name, members);
     };
 
     /* Handle when click on cancel button */
     handleCancel = (event: { preventDefault: () => void }) => {
         /* Remove item from local storage and push to group page */
-        localStorage.removeItem("name");
-        localStorage.removeItem("chosen");
         history.push("/groups");
     };
 
     /* Render the component to the screen */
     render() {
-        const { name, contactsList, members } = this.state;
+        const { name, contactsList } = this.state;
 
         return (
             <div className="frame-pages">
@@ -103,7 +86,7 @@ class groupNew extends React.Component {
                 <div className="box1">
                     <h2>Members</h2>
                     <div className="display-content white cut-10">
-                        <h2>{members.length}</h2>
+                        <h2>{contactsList.length}</h2>
                     </div>
                     <Link
                         to="/groups/new/contact"

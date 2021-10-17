@@ -23,6 +23,10 @@ class groupDetail extends React.Component {
 
     /* During loading page */
     async componentDidMount() {
+        localStorage.removeItem("name");
+        localStorage.removeItem("contacts");
+        localStorage.removeItem("members");
+
         /* Get group details and set the states */
         await getGroupDetails(this.groupId).then(
             (response) => {
@@ -59,6 +63,11 @@ class groupDetail extends React.Component {
         await getGrouplessContacts().then(
             (response) => {
                 var data = response.data.data;
+
+                /* Set data to an empty array if it is empty */
+                if (!data)
+                    data = [];
+
                 var contacts = [...data, ...members];
                 localStorage.setItem("contacts", JSON.stringify(contacts));
             },
