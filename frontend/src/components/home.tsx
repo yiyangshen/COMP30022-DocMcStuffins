@@ -2,7 +2,7 @@
 import React from "react";
 import history from "../history";
 import WelcomeLogo from "../img/Welcome.svg";
-import Gay from "../img/Gay.svg";
+
 /* Component for home */
 class home extends React.Component {
     /* Render the component to the screen */
@@ -29,7 +29,6 @@ class home extends React.Component {
                         </button>
                     </div>
                 </div>
-                
             </div>
         );
     }

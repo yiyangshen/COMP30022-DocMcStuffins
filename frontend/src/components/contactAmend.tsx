@@ -30,6 +30,7 @@ class contactAmend extends React.Component {
         groupsList: [] as IGroup[],
         file: "" as any,
         photo: "" as any,
+        groupName: "",
     };
 
     /* Extract id from the url */
@@ -47,7 +48,8 @@ class contactAmend extends React.Component {
                     firstName: data.name.first,
                     middleName: data.name.middle,
                     lastName: data.name.last,
-                    groupId: data.groupId,
+                    groupId: data.groupId?._id,
+                    groupName: data.groupId?.name,
                     gender: data.gender,
                     phoneNumber: data.phoneNumber,
                     email: data.email,
@@ -206,6 +208,7 @@ class contactAmend extends React.Component {
             relationship,
             additionalNotes,
             groupsList,
+            groupName,
         } = this.state;
 
         /* Checks if it returns an error, still loading, or has a value accordingly */
@@ -340,11 +343,11 @@ class contactAmend extends React.Component {
                                     id="assignedGroup"
                                     name="groupId"
                                     value={groupId}
-                                    placeholder={groupId}
+                                    placeholder={groupName}
                                     onChange={this.handleChange}
                                     className="display-content grey"
                                 >
-                                    <option value="None">None</option>
+                                    <option value="">None</option>
                                     {groupsList.map((group, i) => (
                                         <option key={i} value={group._id}>
                                             {group.name}

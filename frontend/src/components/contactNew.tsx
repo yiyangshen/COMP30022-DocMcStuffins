@@ -49,7 +49,6 @@ class contactNew extends React.Component {
     /* Set state accordingly to the target */
     handleChange = (event: { target: { name: any; value: String } }) => {
         this.setState({ [event.target.name]: event.target.value });
-        console.log(this.state.groupId);
     };
 
     /* Handle when click on submit button */
@@ -294,7 +293,7 @@ class contactNew extends React.Component {
                                     onChange={this.handleChange}
                                     className="display-content grey"
                                 >
-                                    <option value="None">None</option>
+                                    <option value="">None</option>
                                     {groupsList.map((group, i) => (
                                         <option value={group._id}>
                                             {group.name}

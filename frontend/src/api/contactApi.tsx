@@ -208,19 +208,16 @@ async function createContact(
         );
 }
 
-/* Returns the currently-authenticated user's contacts that fuzzy-matches the given search string;
- * requires, in the request params:
- *   - name: string
+/* Returns a list of contacts with no associated groups
  * responds with a:
- *   - 200 OK if query returns something
- *   - 204 No Content if the query returns nothing
- *   - 400 Bad Request if the request body is malformed
+ *   - 200 OK if query is successful
+ *   - 204 No Content if query returns nothing
  *   - 401 Unauthorized if the requester is not authenticated
  *   - 500 Internal Server Error otherwise
  */
-async function searchContactName(name: String) {
-    const endpoint = `${BASE_URL}/contacts/search/name/${name}`;
-    return await axios.post(endpoint);
+async function getGrouplessContacts() {
+    const endpoint = `${BASE_URL}/contacts/groupless`;
+    return await axios.get(endpoint);
 }
 
 /* Export api functions */
@@ -231,5 +228,5 @@ export {
     getContactDetails,
     amendContactDetails,
     createContact,
-    searchContactName,
+    getGrouplessContacts,
 };
