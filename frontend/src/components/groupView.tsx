@@ -5,6 +5,7 @@ import { IGroup } from "../interfaces";
 
 /* Import components */
 import { getGroups } from "../api/groupApi";
+import { getGrouplessContacts } from "../api/contactApi";
 
 /* Component for view groups */
 class groupView extends React.Component {
@@ -18,6 +19,9 @@ class groupView extends React.Component {
     /* During loading page */
     async componentDidMount() {
         localStorage.removeItem("name");
+        localStorage.removeItem("contacts");
+        localStorage.removeItem("members");
+
         /* Get all groups and set states */
         getGroups().then(
             (response) => {
@@ -29,6 +33,25 @@ class groupView extends React.Component {
                 console.log(error);
             }
         );
+    }
+
+    /* Handle when click on edit button */
+    async handleNew(event: { preventDefault: () => void }) {
+        event.preventDefault();
+
+        await getGrouplessContacts().then(
+            (response) => {
+                var data = response.data.data;
+                var contacts = [...data];
+                localStorage.setItem("contacts", JSON.stringify(contacts));
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+
+        /* Redirect to amend page */
+        history.push(`/groups/new`);
     }
 
     /* Render the component to the screen */
@@ -49,7 +72,9 @@ class groupView extends React.Component {
                             <button
                                 className="base-button top-right"
                                 type="button"
-                                onClick={() => history.push(`/groups/new`)}
+                                onClick={
+                                    (this.handleNew = this.handleNew.bind(this))
+                                }
                             >
                                 <h2>New Group</h2>
                             </button>
