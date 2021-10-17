@@ -166,6 +166,10 @@ class contactAmend extends React.Component {
             lastMet = new Date(lastMetData);
         }
 
+        if (groupId === "None") {
+            this.setState({ groupId: "" });
+        }
+
         /* Amend contact details then push new entry to history */
         amendContactDetails(
             this.contactId,
@@ -340,7 +344,7 @@ class contactAmend extends React.Component {
                                     onChange={this.handleChange}
                                     className="display-content grey"
                                 >
-                                    <option value=" ">None</option>
+                                    <option value="None">None</option>
                                     {groupsList.map((group, i) => (
                                         <option key={i} value={group._id}>
                                             {group.name}

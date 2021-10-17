@@ -79,6 +79,9 @@ class contactNew extends React.Component {
         if (lastMetData !== "") {
             lastMet = new Date(lastMetData);
         }
+        if (groupId === "None") {
+            this.setState({ groupId: "" });
+        }
 
         /* Create contact then push new entry to history */
         createContact(
@@ -291,7 +294,7 @@ class contactNew extends React.Component {
                                     onChange={this.handleChange}
                                     className="display-content grey"
                                 >
-                                    <option value=" ">None</option>
+                                    <option value="None">None</option>
                                     {groupsList.map((group, i) => (
                                         <option value={group._id}>
                                             {group.name}
