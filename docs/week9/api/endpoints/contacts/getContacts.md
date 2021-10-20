@@ -38,7 +38,8 @@
             middle?: string,
             last: string
         },
-        group?: {
+        // Populated
+        groupId?: {
             name: string,
             members: [ObjectId]
         },

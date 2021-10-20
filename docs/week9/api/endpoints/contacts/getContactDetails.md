@@ -43,7 +43,11 @@
         middle?: string,
         last: string
     },
-    groupId?: string,
+    // Populated
+    groupId?: {
+        name: string,
+        members: [ObjectId]
+    },
     gender: string,
     dateOfBirth?: Date,
     lastMet?: Date,

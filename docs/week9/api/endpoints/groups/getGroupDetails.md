@@ -39,6 +39,7 @@
 {
     _id: ObjectId,
     name: string,
+    // Populated
     members: [
         {
             name: {
