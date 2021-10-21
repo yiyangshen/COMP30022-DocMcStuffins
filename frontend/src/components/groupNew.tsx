@@ -5,6 +5,7 @@ import history from "../history";
 import { IContact } from "../interfaces";
 
 /* Import components */
+import Nav from "./nav";
 import { createGroup } from "../api/groupApi";
 
 /* Component for new cgroup */
@@ -69,6 +70,7 @@ class groupNew extends React.Component {
         const { name, contactsList } = this.state;
 
         return (
+            <><Nav />
             <div className="frame-pages">
                 <h1>Add Group</h1>
 
@@ -81,8 +83,7 @@ class groupNew extends React.Component {
                     value={name}
                     onChange={this.handleChange}
                     className="display-content grey"
-                    required
-                />
+                    required />
                 <div className="box1">
                     <h2>Members</h2>
                     <div className="display-content white cut-10">
@@ -141,7 +142,7 @@ class groupNew extends React.Component {
                 >
                     <h2>Submit</h2>
                 </button>
-            </div>
+            </div></>
         );
     }
 }

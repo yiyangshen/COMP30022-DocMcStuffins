@@ -4,6 +4,7 @@ import history from "../history";
 import { IContact } from "../interfaces";
 
 /* Import components */
+import Nav from "./nav";
 import { getContacts } from "../api/contactApi";
 
 /* Component for view contacts */
@@ -41,6 +42,7 @@ class contactView extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
+                <><Nav />
                 <div className="frame-pages">
                     <div className="title">
                         <h1>
@@ -65,17 +67,15 @@ class contactView extends React.Component {
                         </thead>
 
                         {contactsList !== undefined &&
-                        contactsList.length > 0 ? (
+                            contactsList.length > 0 ? (
                             <tbody>
                                 {contactsList.map((contact, i) => (
                                     <tr
                                         className="table-content"
                                         key={i}
-                                        onClick={() =>
-                                            history.push(
-                                                `/contacts/details/?id=${contact._id}`
-                                            )
-                                        }
+                                        onClick={() => history.push(
+                                            `/contacts/details/?id=${contact._id}`
+                                        )}
                                     >
                                         <td>
                                             {contact.name.first}{" "}
@@ -98,7 +98,7 @@ class contactView extends React.Component {
                     </table>
 
                     <div className="table"></div>
-                </div>
+                </div></>
             );
         }
     }

@@ -4,6 +4,7 @@ import history from "../history";
 import moment from "moment";
 
 /* Import components */
+import Nav from "./nav";
 import { getContactDetails, deleteContact } from "../api/contactApi";
 import { getId } from "../api/userApi";
 import { IContact } from "../interfaces";
@@ -58,6 +59,7 @@ class detailsContact extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
+                <><Nav />
                 <div className="frame-pages">
                     <div className="title">
                         <h1>
@@ -65,11 +67,9 @@ class detailsContact extends React.Component {
                             <button
                                 className="base-button top-right"
                                 type="button"
-                                onClick={() =>
-                                    history.push(
-                                        `/contacts/details/amend/?id=${contact._id}`
-                                    )
-                                }
+                                onClick={() => history.push(
+                                    `/contacts/details/amend/?id=${contact._id}`
+                                )}
                             >
                                 <h2>Edit</h2>
                             </button>
@@ -123,7 +123,7 @@ class detailsContact extends React.Component {
                         ) : null}
 
                         {contact.dateOfBirth !== undefined &&
-                        moment(contact.dateOfBirth).format("DD MMM YYYY") !==
+                            moment(contact.dateOfBirth).format("DD MMM YYYY") !==
                             "20 Apr -271821" ? (
                             <div>
                                 <h2>Date of Birth</h2>
@@ -138,7 +138,7 @@ class detailsContact extends React.Component {
                         ) : null}
 
                         {contact.lastMet !== undefined &&
-                        moment(contact.lastMet).format("DD MMM YYYY") !==
+                            moment(contact.lastMet).format("DD MMM YYYY") !==
                             "20 Apr -271821" ? (
                             <div>
                                 <h2>First Contact Timestamp</h2>
@@ -178,8 +178,7 @@ class detailsContact extends React.Component {
                                 <div className="display-content white">
                                     <img
                                         alt="uploaded"
-                                        src={`data:image/jpeg;base64,${contact.photo}`}
-                                    />
+                                        src={`data:image/jpeg;base64,${contact.photo}`} />
                                 </div>
                             </div>
                         ) : null}
@@ -192,7 +191,7 @@ class detailsContact extends React.Component {
                     >
                         <h2>Delete</h2>
                     </button>
-                </div>
+                </div></>
             );
         }
     }

@@ -3,6 +3,7 @@ import React from "react";
 import history from "../history";
 
 /* Import the required libraries and types */
+import Nav from "./nav";
 import { getUserProfile } from "../api/userApi";
 import { IUser } from "../interfaces";
 
@@ -44,6 +45,7 @@ class profile extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
+                <><Nav />
                 <div className="frame-pages">
                     <div className="title">
                         <h1>
@@ -51,9 +53,7 @@ class profile extends React.Component {
                             <button
                                 className="base-button top-right"
                                 type="button"
-                                onClick={() =>
-                                    history.push(`/user/profile/amend`)
-                                }
+                                onClick={() => history.push(`/user/profile/amend`)}
                             >
                                 <h2>Edit</h2>
                             </button>
@@ -77,7 +77,7 @@ class profile extends React.Component {
                     <div className="display-content white cut-40">
                         <p>*******</p>
                     </div>
-                </div>
+                </div></>
             );
         }
     }
