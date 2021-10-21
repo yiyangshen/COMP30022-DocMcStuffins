@@ -1,4 +1,4 @@
-# Sprint 1 restrospective
+# Sprint 2 restrospective
 
 ## Summary
 
