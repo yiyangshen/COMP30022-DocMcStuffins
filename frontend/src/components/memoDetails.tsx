@@ -4,6 +4,7 @@ import history from "../history";
 import { IMemo } from "../interfaces";
 
 /* Import components */
+import Nav from "./nav";
 import { getMemoDetails, deleteMemo } from "../api/memoApi";
 import { getId } from "../api/userApi";
 
@@ -57,6 +58,7 @@ class memoDetail extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
+                <><Nav />
                 <div className="frame-pages">
                     <div className="title">
                         <h1>
@@ -64,11 +66,9 @@ class memoDetail extends React.Component {
                             <button
                                 className="base-button top-right"
                                 type="button"
-                                onClick={() =>
-                                    history.push(
-                                        `/memos/details/amend/?id=${this.memoId}`
-                                    )
-                                }
+                                onClick={() => history.push(
+                                    `/memos/details/amend/?id=${this.memoId}`
+                                )}
                             >
                                 <h2>Edit</h2>
                             </button>
@@ -90,7 +90,7 @@ class memoDetail extends React.Component {
                     >
                         <h2>Delete</h2>
                     </button>
-                </div>
+                </div></>
             );
         }
     }

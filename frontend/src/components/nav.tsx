@@ -25,6 +25,7 @@ class Navi extends React.Component {
     };
 
     async componentDidMount() {
+        console.log("LOADING NAV");
         /* Get all contacts and set states */
         await getContacts().then(
             (response) => {

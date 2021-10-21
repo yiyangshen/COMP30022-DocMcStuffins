@@ -8,7 +8,6 @@ import "./App.css";
 /* Import components */
 import history from "./history";
 import Home from "./components/home";
-import Nav from "./components/nav";
 import SignIn from "./components/signin";
 import SignUp from "./components/signup";
 import ProfileDetails from "./components/profileDetails";
@@ -56,7 +55,6 @@ function App() {
                     <Route exact path="/register" component={SignUp} />
 
                     <div>
-                        <Nav />
                         <Route exact path="/dashboard" component={Dashboard} />
                         <Route
                             exact

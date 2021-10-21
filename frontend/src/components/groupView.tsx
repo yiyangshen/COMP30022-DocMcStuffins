@@ -4,6 +4,7 @@ import history from "../history";
 import { IGroup } from "../interfaces";
 
 /* Import components */
+import Nav from "./nav";
 import { getGroups } from "../api/groupApi";
 import { getGrouplessContacts } from "../api/contactApi";
 
@@ -70,6 +71,7 @@ class groupView extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
+                <><Nav />
                 <div className="frame-pages">
                     <div className="title">
                         <h1>
@@ -77,9 +79,7 @@ class groupView extends React.Component {
                             <button
                                 className="base-button top-right"
                                 type="button"
-                                onClick={
-                                    (this.handleNew = this.handleNew.bind(this))
-                                }
+                                onClick={(this.handleNew = this.handleNew.bind(this))}
                             >
                                 <h2>New Group</h2>
                             </button>
@@ -93,11 +93,9 @@ class groupView extends React.Component {
                                     <div className="RecentGroupText">
                                         <span
                                             className="dot"
-                                            onClick={() =>
-                                                history.push(
-                                                    `/groups/details/?id=${group._id}`
-                                                )
-                                            }
+                                            onClick={() => history.push(
+                                                `/groups/details/?id=${group._id}`
+                                            )}
                                         >
                                             <h2>{group.name}</h2>
                                             <h1>{group.members.length}</h1>
@@ -109,7 +107,7 @@ class groupView extends React.Component {
                     ) : (
                         <h3>No group available</h3>
                     )}
-                </div>
+                </div></>
             );
         }
     }

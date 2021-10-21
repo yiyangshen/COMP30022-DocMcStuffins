@@ -4,6 +4,7 @@ import history from "../history";
 import { IMemo } from "../interfaces";
 
 /* Import components */
+import Nav from "./nav";
 import { getMemos } from "../api/memoApi";
 import Memo from "../img/Group 5.svg";
 
@@ -41,6 +42,7 @@ class memoView extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
+                <><Nav />
                 <div className="frame-pages">
                     <div className="title">
                         <h1>
@@ -64,12 +66,9 @@ class memoView extends React.Component {
                                             className="MemoPng"
                                             src={Memo}
                                             alt="logo"
-                                            onClick={() =>
-                                                history.push(
-                                                    `/memos/details/?id=${memo._id}`
-                                                )
-                                            }
-                                        />
+                                            onClick={() => history.push(
+                                                `/memos/details/?id=${memo._id}`
+                                            )} />
                                         <h2 className="MemoText">
                                             {memo.title}
                                         </h2>
@@ -80,7 +79,7 @@ class memoView extends React.Component {
                     ) : (
                         <h3>No memo available</h3>
                     )}
-                </div>
+                </div></>
             );
         }
     }

@@ -3,6 +3,7 @@ import React from "react";
 import history from "../history";
 
 /* Import components */
+import Nav from "./nav";
 import { getMemoDetails, deleteMemo, amendMemoDetails } from "../api/memoApi";
 import { getId } from "../api/userApi";
 
@@ -74,6 +75,7 @@ class memoDetail extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
+                <><Nav />
                 <div className="frame-pages">
                     <h1>Edit Memo</h1>
                     <form onSubmit={this.handleSubmit}>
@@ -86,8 +88,7 @@ class memoDetail extends React.Component {
                             placeholder={title}
                             onChange={this.handleChange}
                             className="display-content grey"
-                            required
-                        />
+                            required />
                         <h2>Description</h2>
                         <textarea
                             id="memo.notes"
@@ -108,7 +109,7 @@ class memoDetail extends React.Component {
                             <h2>Submit</h2>
                         </button>
                     </form>
-                </div>
+                </div></>
             );
         }
     }
