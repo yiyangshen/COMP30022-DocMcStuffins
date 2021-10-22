@@ -82,8 +82,13 @@ Yes, our coding:
 
 > Do you have test results? If so, give link.
 
-@livyanatasha and @wnats: This is where your acceptance testing docs should be linked.
-@wnats: You might want to include a document detailing our latest CI results.
+There is no change in the testing workflow as detailed in the [test plan](../week9/test_plan.md) from the first sprint. There has been some improvements from the first sprint's [test result](../week9/test_report.pdf), the most noticeable one being we encountered much less problems.
+
+The improvements include:
+- additional [Jest integration test files](../week9/api/tests/index.md), summing up to 132 tests in 24 test suites
+- conducted [acceptance testing](./acceptance-testing.md) where only one acceptance criteria is not passed, which is optional and hence of low priority
+
+Here are our latest [CI output](./ci-output.txt) and our latest (deployment) [build log](./build-log.txt).
 
 > What is the deployment status?
 

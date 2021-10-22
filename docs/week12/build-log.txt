@@ -1,0 +1,171 @@
+-----> Building on the Heroku-20 stack
+-----> Using buildpack: heroku/nodejs
+-----> Node.js app detected
+       
+-----> Creating runtime environment
+       
+       NPM_CONFIG_LOGLEVEL=error
+       NODE_VERBOSE=false
+       NODE_ENV=production
+       NODE_MODULES_CACHE=true
+       
+-----> Installing binaries
+       engines.node (package.json):  unspecified
+       engines.npm (package.json):   *
+       
+       Resolving node version 14.x...
+       Downloading and installing node 14.18.1...
+       Bootstrapping npm * (replacing 6.14.15)...
+       npm * installed
+       
+-----> Restoring cache
+       - node_modules
+       
+-----> Installing dependencies
+       Installing node modules
+       
+       added 214 packages, and audited 215 packages in 12s
+       
+       32 packages are looking for funding
+         run `npm fund` for details
+       
+       found 0 vulnerabilities
+       
+-----> Build
+       Detected both "build" and "heroku-postbuild" scripts
+       Running heroku-postbuild
+       
+       > comp30022@0.0.0 heroku-postbuild
+       > npm run build
+       
+       
+       > comp30022@0.0.0 build
+       > npm-run-all --parallel build-backend build-frontend
+       
+       
+       > comp30022@0.0.0 prebuild-backend
+       > cd backend/ && npm install --production=false
+       
+       
+       > comp30022@0.0.0 prebuild-frontend
+       > cd frontend/ && npm install --production=false --legacy-peer-deps
+       
+       
+       added 608 packages, and audited 609 packages in 29s
+       
+       47 packages are looking for funding
+         run `npm fund` for details
+       
+       7 vulnerabilities (4 moderate, 3 critical)
+       
+       To address all issues, run:
+         npm audit fix
+       
+       Run `npm audit` for details.
+       
+       > comp30022@0.0.0 build-backend
+       > cd backend/ && npm run build
+       
+       
+       > comp30022-backend@0.0.0 build
+       > tsc --project ./
+       
+       
+       > comp30022@0.0.0 postbuild-backend
+       > cd backend/ && npm prune --production
+       
+       
+       up to date, audited 198 packages in 5s
+       
+       16 packages are looking for funding
+         run `npm fund` for details
+       
+       3 critical severity vulnerabilities
+       
+       To address all issues, run:
+         npm audit fix
+       
+       Run `npm audit` for details.
+       
+       added 1942 packages, and audited 1943 packages in 1m
+       
+       57 vulnerabilities (16 moderate, 41 high)
+       
+       To address issues that do not require attention, run:
+         npm audit fix
+       
+       To address all issues (including breaking changes), run:
+         npm audit fix --force
+       
+       Run `npm audit` for details.
+       
+       > comp30022@0.0.0 build-frontend
+       > cd frontend/ && npm run build
+       
+       
+       > comp30022@0.0.0 build
+       > react-scripts build
+       
+       Creating an optimized production build...
+       Compiled successfully.
+       
+       File sizes after gzip:
+       
+         83.79 KB  build/static/js/2.370a9c54.chunk.js
+         23.54 KB  build/static/css/2.818011ed.chunk.css
+         8.42 KB   build/static/js/main.951d931a.chunk.js
+         2.02 KB   build/static/css/main.3e677026.chunk.css
+         1.63 KB   build/static/js/3.f3833fdb.chunk.js
+         1.17 KB   build/static/js/runtime-main.7c5d4d99.js
+       
+       The project was built assuming it is hosted at /.
+       You can control this with the homepage field in your package.json.
+       
+       The build folder is ready to be deployed.
+       You may serve it with a static server:
+       
+         npm install -g serve
+         serve -s build
+       
+       Find out more about deployment here:
+       
+         https://cra.link/deployment
+       
+       
+       > comp30022@0.0.0 postbuild-frontend
+       > cd frontend/ && npm prune --production
+       
+       
+       up to date, audited 1939 packages in 7s
+       
+       55 vulnerabilities (16 moderate, 37 high, 2 critical)
+       
+       To address issues that do not require attention, run:
+         npm audit fix
+       
+       To address all issues (including breaking changes), run:
+         npm audit fix --force
+       
+       Run `npm audit` for details.
+       
+-----> Caching build
+       - node_modules
+       
+-----> Pruning devDependencies
+       
+       up to date, audited 207 packages in 3s
+       
+       32 packages are looking for funding
+         run `npm fund` for details
+       
+       found 0 vulnerabilities
+       
+-----> Build succeeded!
+-----> Discovering process types
+       Procfile declares types     -> (none)
+       Default types for buildpack -> web
+-----> Compressing...
+       Done: 156.2M
+-----> Launching...
+       Released v27
+       https://doc-mcstuffins.herokuapp.com/ deployed to Heroku

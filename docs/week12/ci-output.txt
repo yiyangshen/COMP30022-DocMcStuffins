@@ -1,0 +1,710 @@
+> comp30022-backend@0.0.0 test
+> jest --config jestconfig.json --forceExit --runInBand
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/contacts/amendContactDetails.test.ts:97:29
+
+PASS tests/controllers/contacts/amendContactDetails.test.ts (21.224 s)
+  Integration test for contact amendment
+    ✓ 1. Amend contact without authentication (169 ms)
+    ✓ 2. Amend existing contact without changing groupId (975 ms)
+    ✓ 3. Amend contact with no data (319 ms)
+    ✓ 4. Amend contact with invalid data (319 ms)
+    ✓ 5. Amend non-existing contact (475 ms)
+    ✓ 6. Amend contact belonging to another user (640 ms)
+    ✓ 7. Amend existing contact while changing groupId (4800 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+PASS tests/controllers/user/userController.test.ts (15.346 s)
+  Registration Tests
+    ✓ 1. Register succesfully (4969 ms)
+    ✓ 2. Missing a required field  (164 ms)
+    ✓ 3. Password length < 6 (163 ms)
+    ✓ 4. User is already authenticated (1507 ms)
+    ✓ 5. Email address has already existed (1510 ms)
+  Login Tests
+    ✓ Login successfully (871 ms)
+    ✓ Missing a field (162 ms)
+    ✓ Wrong email (331 ms)
+    ✓ Wrong password (386 ms)
+  Logout Tests
+    ✓ Logout when authenticated (1312 ms)
+    ✓ Logout when unauthenticated (167 ms)
+  Get User Profile Tests
+    ✓ Get profile when authenticated (1193 ms)
+    ✓ Get profile when unauthenticated (162 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/groups/amendGroupDetails.test.ts:94:29
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/groups/amendGroupDetails.test.ts (14.478 s)
+  Integration test for group amendment
+    ✓ 1. Amend group without authentication (166 ms)
+    ✓ 2. Amend existing group without changing memebrs (973 ms)
+    ✓ 3. Amend group with no data (318 ms)
+    ✓ 4. Amend group with invalid data (317 ms)
+    ✓ 5. Amend non-existing group (475 ms)
+    ✓ 6. Amend group belonging to another user (636 ms)
+    ✓ 7. Amend existing group while changing members (4814 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user 1 successfully authenticated!
+
+      at tests/controllers/user/amendProfileDetails.test.ts:114:29
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Test user 2 successfully authenticated!
+
+      at tests/controllers/user/amendProfileDetails.test.ts:127:29
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/user/amendProfileDetails.test.ts (10.614 s)
+  Integration test for profile amendment
+    ✓ 1. Amend profile without authentication (168 ms)
+    ✓ 2. Amend profile with no data (324 ms)
+    ✓ 3. Amend profile with incomplete data (320 ms)
+    ✓ 4. Amend profile with invalid email (321 ms)
+    ✓ 5. Amend profile with invalid password (319 ms)
+    ✓ 6. Amend profile with minimal data (958 ms)
+    ✓ 7. Amend profile with full data (978 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/contacts/deleteContact.test.ts:85:29
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/contacts/deleteContact.test.ts (11.745 s)
+  Integration test for contact deletion
+    ✓ 1. Delete contact without authentication (169 ms)
+    ✓ 2. Delete ungrouped contact (980 ms)
+    ✓ 3. Delete contact with no data (323 ms)
+    ✓ 4. Delete contact with invalid data (318 ms)
+    ✓ 5. Delete non-existing contact (474 ms)
+    ✓ 6. Delete contact belonging to another user (652 ms)
+    ✓ 7. Delete grouped contact (1624 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/groups/deleteGroup.test.ts:84:29
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/groups/deleteGroup.test.ts (11.225 s)
+  Integration test for group deletion
+    ✓ 1. Delete group without authentication (166 ms)
+    ✓ 2. Delete group with no members (970 ms)
+    ✓ 3. Delete group with no data (319 ms)
+    ✓ 4. Delete group with invalid data (318 ms)
+    ✓ 5. Delete non-existing group (475 ms)
+    ✓ 6. Delete group belonging to another user (639 ms)
+    ✓ 7. Delete group with one member (1618 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    [
+      {
+        _id: '6169b096712eb652d4b9fbb2',
+        userId: '6169b092712eb652d4b9fba1',
+        name: {
+          first: 'Ricardo',
+          last: 'Tempesto',
+          _id: '6169b096712eb652d4b9fbb3'
+        },
+        gender: 'Male',
+        timestamps: {
+          created: '2021-03-01T00:00:00.000Z',
+          viewed: '2021-10-15T16:47:14.196Z',
+          _id: '6169b096712eb652d4b9fbb4'
+        },
+        __v: 0
+      }
+    ]
+
+      at tests/controllers/contacts/getGrouplessContacts.test.ts:177:25
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/contacts/getGrouplessContacts.test.ts (9.65 s)
+  Contacts lists (getContacts)
+    ✓ 1. Get contacts list without being authenticated (340 ms)
+    ✓ 2. Get lists of ungrouped contacts of an authenticated user (1378 ms)
+    ✓ 3. Get contact list of user with 0 ungrouped contacts (1513 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/contacts/createContact.test.ts:103:29
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/contacts/createContact.test.ts (10.242 s)
+  Integration test for contact creation
+    ✓ 1. Create new contact without authentication (167 ms)
+    ✓ 2. Create new contact with minimal valid data (494 ms)
+    ✓ 3. Create new contact with full valid data (646 ms)
+    ✓ 4. Create new contact with no data (318 ms)
+    ✓ 5. Create new contact with minimal invalid data (322 ms)
+    ✓ 6. Create new contact with full invalid data (321 ms)
+    ✓ 7. Create new contact with minimal valid data and assign it to an existing group (961 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/groups/createGroup.test.ts:112:29
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/groups/createGroup.test.ts (10.394 s)
+  Integration test for group creation
+    ✓ 1. Create new group without authentication (170 ms)
+    ✓ 2. Create new group with minimal valid data (494 ms)
+    ✓ 3. Create new group with full valid data (1599 ms)
+    ✓ 4. Create new group with no data (317 ms)
+    ✓ 5. Create new group with minimal invalid data (319 ms)
+    ✓ 6. Create new group with full invalid data (318 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+PASS tests/controllers/passport/passport.test.ts (11.311 s)
+  Registration tests
+    ✓ 1. Register with empty data (1886 ms)
+    ✓ 2. Register only with required fields (2631 ms)
+    ✓ 3. Register by sending all fields (872 ms)
+    ✓ 4. Register with less than required password length (319 ms)
+    ✓ 5. Register with pre-existing email address (1346 ms)
+  Login tests
+    ✓ 1. Login with empty data (326 ms)
+    ✓ 2. Login with valid email and password (546 ms)
+    ✓ 3. Login with invalid email (476 ms)
+    ✓ 4. Login with incorrect password (544 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/groups/getGroupDetails.test.ts:143:29
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Requester is not authenticated
+
+      at tests/controllers/groups/getGroupDetails.test.ts:152:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Request body is malformed
+
+      at tests/controllers/groups/getGroupDetails.test.ts:161:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Contact does not belong to the user
+
+      at tests/controllers/groups/getGroupDetails.test.ts:170:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Contact does not exist
+
+      at tests/controllers/groups/getGroupDetails.test.ts:180:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    {
+      _id: '6169b0bb7ad502106772ad07',
+      userId: '6169b0bb7ad502106772acfb',
+      name: 'PorkBelly',
+      members: [
+        {
+          _id: '6169b0bb7ad502106772ad01',
+          userId: '6169b0bb7ad502106772acfb',
+          name: [Object],
+          gender: 'Female',
+          email: 'sinon@megane.jp',
+          relationship: 'Tomodachi',
+          timestamps: [Object],
+          __v: 0
+        },
+        {
+          _id: '6169b0bb7ad502106772ad04',
+          userId: '6169b0bb7ad502106772acfb',
+          name: [Object],
+          gender: 'Male',
+          email: 'munakatareisi@megane.jp',
+          relationship: 'Suko no hito',
+          timestamps: [Object],
+          __v: 0
+        }
+      ],
+      __v: 0
+    }
+
+      at tests/controllers/groups/getGroupDetails.test.ts:189:25
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/groups/getGroupDetails.test.ts (9.296 s)
+  getGroupDetails Tests
+    ✓ 1. Get group details without authentication (172 ms)
+    ✓ 2. Get group details with malformed parameter (322 ms)
+    ✓ 3. Get group details with group ID not belonging to the requester (479 ms)
+    ✓ 4. Get group details with group ID that does not exist (474 ms)
+    ✓ 5. Get group details successfully (638 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/memos/amendMemoDetails.test.ts:85:29
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/memos/amendMemoDetails.test.ts (9.186 s)
+  Integration test for memo amendment
+    ✓ 1. Amend memo without authentication (167 ms)
+    ✓ 2. Amend existing memo (973 ms)
+    ✓ 3. Amend memo with no data (318 ms)
+    ✓ 4. Amend memo with invalid data (317 ms)
+    ✓ 5. Amend non-existing memo (473 ms)
+    ✓ 6. Amend memo belonging to another user (639 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/contacts/getContactDetails.test.ts:121:29
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Requester is not authenticated
+
+      at tests/controllers/contacts/getContactDetails.test.ts:130:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Request body is malformed
+
+      at tests/controllers/contacts/getContactDetails.test.ts:139:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Contact does not belong to the user
+
+      at tests/controllers/contacts/getContactDetails.test.ts:148:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Contact does not exist
+
+      at tests/controllers/contacts/getContactDetails.test.ts:158:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    {
+      _id: '6169b0ceabf1589083894821',
+      userId: '6169b0ceabf1589083894818',
+      name: { first: 'Shino', last: 'Asada', _id: '6169b0ceabf1589083894822' },
+      gender: 'Female',
+      email: 'sinon@megane.jp',
+      relationship: 'Tomodachi',
+      timestamps: {
+        _id: '6169b0ceabf1589083894820',
+        created: '2021-10-15T16:48:14.425Z',
+        viewed: '2021-10-15T16:48:21.334Z'
+      },
+      __v: 0
+    }
+
+      at tests/controllers/contacts/getContactDetails.test.ts:167:25
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/contacts/getContactDetails.test.ts (8.697 s)
+  getContactDetails Tests
+    ✓ 1. Get contact details without authentication (168 ms)
+    ✓ 2. Get contact details with malformed parameter (321 ms)
+    ✓ 3. Get contact details with user ID not belonging to the requester (479 ms)
+    ✓ 4. Get contact details with contact ID that does not exist (473 ms)
+    ✓ 5. Get contact details successfully (641 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/memos/deleteMemo.test.ts:79:29
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/memos/deleteMemo.test.ts (8.902 s)
+  Integration test for memo deletion
+    ✓ 1. Delete memo without authentication (168 ms)
+    ✓ 2. Delete existing memo (809 ms)
+    ✓ 3. Delete memo with no data (318 ms)
+    ✓ 4. Delete memo with invalid data (317 ms)
+    ✓ 5. Delete non-existing memo (473 ms)
+    ✓ 6. Delete memo belonging to another user (635 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    [
+      {
+        _id: '6169b0e412be4b8e693a5efc',
+        userId: '6169b0df12be4b8e693a5ef3',
+        name: { first: 'Adam', last: 'Smithy', _id: '6169b0e412be4b8e693a5efd' },
+        gender: 'Female',
+        timestamps: {
+          created: '2021-01-01T00:00:00.000Z',
+          viewed: '2021-10-15T16:48:31.807Z',
+          _id: '6169b0e412be4b8e693a5efe'
+        },
+        __v: 0
+      },
+      {
+        _id: '6169b0e412be4b8e693a5f00',
+        userId: '6169b0df12be4b8e693a5ef3',
+        name: {
+          first: 'Ricardo',
+          last: 'Tempesto',
+          _id: '6169b0e412be4b8e693a5f01'
+        },
+        gender: 'Male',
+        timestamps: {
+          created: '2021-03-01T00:00:00.000Z',
+          viewed: '2021-10-15T16:48:31.807Z',
+          _id: '6169b0e412be4b8e693a5f02'
+        },
+        __v: 0
+      }
+    ]
+
+      at tests/controllers/contacts/getContacts.test.ts:111:25
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/contacts/getContacts.test.ts (8.852 s)
+  Contacts lists (getContacts)
+    ✓ 1. Get contacts list without being authenticated (339 ms)
+    ✓ 2. Get lists of contacts of an authenticated user (1369 ms)
+    ✓ 3. Get contact list of user with 0 contacts (1495 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/memos/createMemo.test.ts:73:29
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/memos/createMemo.test.ts (8.114 s)
+  Integration test for memo creation
+    ✓ 1. Create new memo without authentication (167 ms)
+    ✓ 2. Create new memo with minimal valid data (489 ms)
+    ✓ 3. Create new memo with full valid data (481 ms)
+    ✓ 4. Create new memo with no data (317 ms)
+    ✓ 5. Create new memo with minimal invalid data (316 ms)
+    ✓ 6. Create new memo with full invalid data (317 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    Test user successfully authenticated!
+
+      at tests/controllers/memos/getMemoDetails.test.ts:93:29
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Requester is not authenticated
+
+      at tests/controllers/memos/getMemoDetails.test.ts:102:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Request body is malformed
+
+      at tests/controllers/memos/getMemoDetails.test.ts:111:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Contact does not belong to the user
+
+      at tests/controllers/memos/getMemoDetails.test.ts:120:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    Contact does not exist
+
+      at tests/controllers/memos/getMemoDetails.test.ts:130:25
+          at runMicrotasks (<anonymous>)
+
+  console.log
+    {
+      _id: '6169b0f1f70c91f5c38c26aa',
+      userId: '6169b0f0f70c91f5c38c26a2',
+      title: 'Lunch',
+      timestamps: {
+        _id: '6169b0f1f70c91f5c38c26a9',
+        created: '2021-10-15T16:48:49.003Z',
+        viewed: '2021-10-15T16:48:55.893Z'
+      },
+      __v: 0
+    }
+
+      at tests/controllers/memos/getMemoDetails.test.ts:139:25
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/memos/getMemoDetails.test.ts (8.673 s)
+  getmemoDetails Tests
+    ✓ 1. Get memo details without authentication (168 ms)
+    ✓ 2. Get memo details with malformed parameter (321 ms)
+    ✓ 3. Get memo details with user ID not belonging to the requester (474 ms)
+    ✓ 4. Get memo details with memo ID that does not exist (474 ms)
+    ✓ 5. Get memo details successfully (638 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    [
+      {
+        _id: '6169b0fdce7293a104f39ec6',
+        userId: '6169b0f9ce7293a104f39eb7',
+        name: 'Doc McStuffins',
+        members: [ [Object] ],
+        __v: 0
+      },
+      {
+        _id: '6169b0fdce7293a104f39ec7',
+        userId: '6169b0f9ce7293a104f39eb7',
+        name: 'Prok Belly',
+        members: [ [Object] ],
+        __v: 0
+      }
+    ]
+
+      at tests/controllers/groups/getGroups.test.ts:115:25
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/groups/getGroups.test.ts (8.269 s)
+  Group lists (getGroups)
+    ✓ 1. Get group list without being logged-in (345 ms)
+    ✓ 2. Get group list of an authenticated user (1514 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    HTTPError {
+      status: undefined,
+      statusText: "I'm a teapot",
+      body: 'Would you like to have tea?'
+    }
+
+      at HTTPErrorHandler (src/middlewares/HTTPErrorHandler.ts:10:17)
+
+  console.log
+    HTTPError {
+      status: 418,
+      statusText: undefined,
+      body: 'Would you like to have tea?'
+    }
+
+      at HTTPErrorHandler (src/middlewares/HTTPErrorHandler.ts:10:17)
+
+  console.log
+    HTTPError { status: 418, statusText: "I'm a teapot", body: undefined }
+
+      at HTTPErrorHandler (src/middlewares/HTTPErrorHandler.ts:10:17)
+
+PASS tests/classes/errorHandling.test.ts
+  Error handling tests
+    ✓ Trigger a well formed 418 error (1959 ms)
+    ✓ Trigger a 418 error with missing status field (173 ms)
+    ✓ Trigger a 418 error with missing statusText field (163 ms)
+    ✓ Trigger a 418 error with missing body field (162 ms)
+  JSON response test
+    ✓ Receive a well formed JSON response successfully (168 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    {
+      status: 200,
+      statusText: 'OK',
+      mimetype: 'list/application/json',
+      data: [
+        {
+          _id: '6169b10ccff916769bf537f8',
+          userId: '6169b105cff916769bf537da',
+          title: 'Presentation',
+          timestamps: [Object],
+          __v: 0
+        },
+        {
+          _id: '6169b10ccff916769bf537f5',
+          userId: '6169b105cff916769bf537da',
+          title: 'Test',
+          timestamps: [Object],
+          __v: 0
+        }
+      ]
+    }
+
+      at tests/controllers/memos/getRecentMemos.test.ts:128:25
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/memos/getRecentMemos.test.ts (9.894 s)
+  Recent memos
+    ✓ 1. Call recent-memos without being authenticated (176 ms)
+    ✓ 2. Malformed request parameter (1204 ms)
+    ✓ 3. No content found (1328 ms)
+    ✓ 4. Successful query with contents added (1982 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+PASS tests/controllers/groups/getGroupCount.test.ts (7.609 s)
+  Group count
+    ✓ 1. Get a group count without being authorised (175 ms)
+    ✓ 2. Get group count of an authenticated user (1363 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+PASS tests/controllers/contacts/getContactCount.test.ts (7.902 s)
+  Contact count
+    ✓ 1. Get a contact count without being authorised (338 ms)
+    ✓ 2. Get contact count of an authenticated user (1361 ms)
+
+  console.log
+    Successfully connected to MongoDB testing database.
+
+      at NativeConnection.<anonymous> (src/config/databaseConfig.ts:22:13)
+
+  console.log
+    {
+      status: 200,
+      statusText: 'OK',
+      mimetype: 'list/application/json',
+      data: [
+        {
+          _id: '6169b1241cf607b2ab0ecd65',
+          userId: '6169b11e1cf607b2ab0ecd52',
+          title: 'Test',
+          timestamps: [Object],
+          __v: 0
+        },
+        {
+          _id: '6169b1241cf607b2ab0ecd68',
+          userId: '6169b11e1cf607b2ab0ecd52',
+          title: 'Presentation',
+          timestamps: [Object],
+          __v: 0
+        }
+      ]
+    }
+
+      at tests/controllers/memos/getMemos.test.ts:107:25
+          at runMicrotasks (<anonymous>)
+
+PASS tests/controllers/memos/getMemos.test.ts (8.592 s)
+  List memos
+    ✓ 1. Call getMemos without being authenticated (176 ms)
+    ✓ 2. No content found (1362 ms)
+    ✓ 3. Successful query with contents added (2001 ms)
+
+PASS tests/classes/HTTPErrorClass.test.ts
+  Unit tests for HTTP Error classes' instantiations
+    ✓ Create a Bad Request error with the specified message (2 ms)
+    ✓ Create a Forbidden error with the specified message
+    ✓ Create an Internal Server Error with the specified message
+    ✓ Create a Not Found error with the specified message (1 ms)
+    ✓ Create an Unauthorized with the specified message
+
+Test Suites: 24 passed, 24 total
+Tests:       132 passed, 132 total
+Snapshots:   0 total
+Time:        233.786 s
+Ran all test suites.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
