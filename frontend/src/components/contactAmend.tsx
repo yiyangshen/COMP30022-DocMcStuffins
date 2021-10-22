@@ -6,7 +6,6 @@ import { IGroup } from "../interfaces";
 import Resizer from "react-image-file-resizer";
 
 /* Import components */
-import Nav from "./nav";
 import { getContactDetails, amendContactDetails } from "../api/contactApi";
 import { getId } from "../api/userApi";
 import { getGroups } from "../api/groupApi";
@@ -229,7 +228,6 @@ class contactAmend extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <><Nav />
                 <div className="frame-pages">
                     <h1>Edit contact</h1>
 
@@ -246,7 +244,8 @@ class contactAmend extends React.Component {
                                     placeholder="First Name"
                                     onChange={this.handleChange}
                                     className="display-content grey"
-                                    required />
+                                    required
+                                />
                                 <input
                                     type="text"
                                     id="fullName"
@@ -254,7 +253,8 @@ class contactAmend extends React.Component {
                                     defaultValue={middleName}
                                     placeholder="Middle Name"
                                     onChange={this.handleChange}
-                                    className="display-content grey" />
+                                    className="display-content grey"
+                                />
                                 <input
                                     type="text"
                                     id="fullName"
@@ -263,7 +263,8 @@ class contactAmend extends React.Component {
                                     placeholder="Last Name"
                                     onChange={this.handleChange}
                                     className="display-content grey"
-                                    required />
+                                    required
+                                />
 
                                 <h2>Gender</h2>
                                 <select
@@ -302,7 +303,8 @@ class contactAmend extends React.Component {
                                     placeholder="Eg. JohnDoe@gmail.com"
                                     defaultValue={email}
                                     onChange={this.handleChange}
-                                    className="display-content grey" />
+                                    className="display-content grey"
+                                />
 
                                 <h2>Phone Number</h2>
                                 <input
@@ -312,7 +314,8 @@ class contactAmend extends React.Component {
                                     placeholder="Eg. 0412563286"
                                     defaultValue={phoneNumber}
                                     onChange={this.handleChange}
-                                    className="display-content grey" />
+                                    className="display-content grey"
+                                />
                             </div>
                             <div>
                                 <h2>Relationship</h2>
@@ -323,7 +326,8 @@ class contactAmend extends React.Component {
                                     defaultValue={relationship}
                                     placeholder="Eg. Friends"
                                     onChange={this.handleChange}
-                                    className="display-content grey" />
+                                    className="display-content grey"
+                                />
                                 <h2>Date of Birth</h2>
                                 <input
                                     type="text"
@@ -332,7 +336,8 @@ class contactAmend extends React.Component {
                                     placeholder="Eg. 3.15pm, 13 Aug 2001"
                                     defaultValue={dateOfBirthData}
                                     onChange={this.handleChange}
-                                    className="display-content grey" />
+                                    className="display-content grey"
+                                />
                                 <h2>First Contact Timestamp</h2>
                                 <input
                                     type="text"
@@ -341,7 +346,8 @@ class contactAmend extends React.Component {
                                     placeholder="Eg. 3.15pm, 13 Aug 2091"
                                     defaultValue={lastMetData}
                                     onChange={this.handleChange}
-                                    className="display-content grey" />
+                                    className="display-content grey"
+                                />
                                 <h2>Assigned Group</h2>
                                 <select
                                     id="assignedGroup"
@@ -367,7 +373,8 @@ class contactAmend extends React.Component {
                                     placeholder="Write something.."
                                     defaultValue={additionalNotes}
                                     onChange={this.handleChange}
-                                    className="display-content grey" />
+                                    className="display-content grey"
+                                />
 
                                 <h2>Photo</h2>
                                 <p>
@@ -392,7 +399,8 @@ class contactAmend extends React.Component {
                                         <div className="display-content white">
                                             <img
                                                 alt="uploaded"
-                                                src={`data:image/jpeg;base64,${photo}`} />
+                                                src={`data:image/jpeg;base64,${photo}`}
+                                            />
                                         </div>
                                     </div>
                                 ) : null}
@@ -403,7 +411,8 @@ class contactAmend extends React.Component {
                                     id="file"
                                     accept=".jpeg"
                                     onChange={(e) => this.onChange(e)}
-                                    key={removePic} />
+                                    key={removePic}
+                                />
                                 <br />
                                 <br />
 
@@ -411,7 +420,9 @@ class contactAmend extends React.Component {
                                     <button
                                         className="base-button"
                                         type="button"
-                                        onClick={() => history.push(`/contacts`)}
+                                        onClick={() =>
+                                            history.push(`/contacts`)
+                                        }
                                     >
                                         <h2>Cancel</h2>
                                     </button>
@@ -425,7 +436,7 @@ class contactAmend extends React.Component {
                             </div>
                         </div>
                     </form>
-                </div></>
+                </div>
             );
         }
     }

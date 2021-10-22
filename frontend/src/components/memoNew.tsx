@@ -3,7 +3,6 @@ import React from "react";
 import history from "../history";
 
 /* Import components */
-import Nav from "./nav";
 import { createMemo } from "../api/memoApi";
 
 /* Component for new memo */
@@ -33,7 +32,6 @@ class memoNew extends React.Component {
         const { title, notes } = this.state;
 
         return (
-            <><Nav />
             <div className="frame-pages">
                 <h1>Add Memo</h1>
                 <form onSubmit={this.handleSubmit}>
@@ -46,7 +44,8 @@ class memoNew extends React.Component {
                         placeholder="Eg. Groceries"
                         onChange={this.handleChange}
                         className="display-content grey"
-                        required />
+                        required
+                    />
                     <h2>Description</h2>
                     <textarea
                         id="description"
@@ -67,7 +66,7 @@ class memoNew extends React.Component {
                         <h2>Submit</h2>
                     </button>
                 </form>
-            </div></>
+            </div>
         );
     }
 }

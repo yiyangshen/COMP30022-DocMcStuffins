@@ -4,7 +4,6 @@ import history from "../history";
 import { IGroup, IMemo } from "../interfaces";
 
 /* Import components */
-import Nav from "./nav";
 import Memo from "../img/Group 5.svg";
 import MemoMore from "../img/RecentMemoMore.svg";
 import Contact from "../img/Profile.svg";
@@ -109,7 +108,6 @@ class dashboard extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <><Nav />
                 <div className="frame-pages">
                     <h1>Hi {username}!</h1>
 
@@ -123,14 +121,17 @@ class dashboard extends React.Component {
                                             {" "}
                                             <div
                                                 className="MemoPage"
-                                                onClick={() => history.push(
-                                                    `/memos/details/?id=${memos._id}`
-                                                )}
+                                                onClick={() =>
+                                                    history.push(
+                                                        `/memos/details/?id=${memos._id}`
+                                                    )
+                                                }
                                             >
                                                 <img
                                                     className="MemoPng"
                                                     src={Memo}
-                                                    alt="logo" />
+                                                    alt="logo"
+                                                />
                                                 <h2 className="MemoText">
                                                     {memos.title}
                                                 </h2>
@@ -146,7 +147,8 @@ class dashboard extends React.Component {
                                 <img
                                     className="AddMoreMemo"
                                     src={MemoMore}
-                                    alt="logo" />
+                                    alt="logo"
+                                />
                                 <h2 className="MemoText">Add More...</h2>
                             </div>
                         </div>
@@ -161,7 +163,8 @@ class dashboard extends React.Component {
                                 <img
                                     className="GroupPng"
                                     src={Group}
-                                    alt="logo" />
+                                    alt="logo"
+                                />
                                 <div className="container">
                                     <h3>Group</h3>
                                     <h2>{groupCount}</h2>
@@ -175,7 +178,8 @@ class dashboard extends React.Component {
                                 <img
                                     className="ContactsPng"
                                     src={Contact}
-                                    alt="logo" />
+                                    alt="logo"
+                                />
                                 <div className="Contactscontainer">
                                     <h3>Contacts</h3>
                                     <h2>{contactCount.valueOf()}</h2>
@@ -187,22 +191,26 @@ class dashboard extends React.Component {
                             <h2>Recent Groups</h2>
                             <div className="RecentGroups">
                                 {recentGroupList !== undefined &&
-                                    recentGroupList.length > 0 ? (
+                                recentGroupList.length > 0 ? (
                                     <div className="dots">
                                         {items.map((group, i) => (
                                             <div key={i}>
                                                 {" "}
                                                 <span
                                                     className="dot"
-                                                    onClick={() => history.push(
-                                                        `/groups/details/?id=${group._id}`
-                                                    )}
+                                                    onClick={() =>
+                                                        history.push(
+                                                            `/groups/details/?id=${group._id}`
+                                                        )
+                                                    }
                                                 >
                                                     <div className="RecentGroupText">
                                                         <h2>{group.name}</h2>
                                                         <h1>
-                                                            {group.members
-                                                                .length}
+                                                            {
+                                                                group.members
+                                                                    .length
+                                                            }
                                                         </h1>
                                                     </div>
                                                 </span>
@@ -219,7 +227,7 @@ class dashboard extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div></>
+                </div>
             );
         }
     }

@@ -3,8 +3,7 @@ import React from "react";
 import history from "../history";
 import { IContact } from "../interfaces";
 
-/* Import components */
-import Nav from "./nav";
+/* Import the required libraries and types */
 
 /* Component for adding contact to a specified group */
 class addContact extends React.Component {
@@ -83,7 +82,6 @@ class addContact extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <><Nav />
                 <div className="frame-pages">
                     <div className="title">
                         <h1>
@@ -110,7 +108,7 @@ class addContact extends React.Component {
                             </tr>
                         </thead>
                         {contactsList !== undefined &&
-                            contactsList.length > 0 ? (
+                        contactsList.length > 0 ? (
                             <tbody>
                                 {contactsList.map((contact, i) => (
                                     <tr key={i} className="table-content">
@@ -119,11 +117,15 @@ class addContact extends React.Component {
                                                 type="checkbox"
                                                 name="id"
                                                 value={contact._id}
-                                                onChange={this.handleCheckboxChange}
+                                                onChange={
+                                                    this.handleCheckboxChange
+                                                }
                                                 checked={[...chosen].some(
-                                                    (chosenContact) => chosenContact._id.toString() ===
+                                                    (chosenContact) =>
+                                                        chosenContact._id.toString() ===
                                                         contact._id.toString()
-                                                )} />
+                                                )}
+                                            />
                                         </td>
 
                                         <td>
@@ -147,7 +149,7 @@ class addContact extends React.Component {
                     </table>
 
                     <div className="table"></div>
-                </div></>
+                </div>
             );
         }
     }

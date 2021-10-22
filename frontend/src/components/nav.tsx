@@ -25,11 +25,10 @@ class Navi extends React.Component {
     };
 
     async componentDidMount() {
-        console.log("LOADING NAV");
         /* Get all contacts and set states */
         await getContacts().then(
             (response) => {
-                var data = (response.status === 204) ? [] : response.data.data;
+                var data = response.data.data;
                 this.setState({ contactList: data, isLoaded: true });
             },
             (error) => {

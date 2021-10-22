@@ -4,7 +4,6 @@ import history from "../history";
 import { IContact } from "../interfaces";
 
 /* Import components */
-import Nav from "./nav";
 import { getGroupDetails, deleteGroup } from "../api/groupApi";
 import { getId } from "../api/userApi";
 import { getGrouplessContacts } from "../api/contactApi";
@@ -94,7 +93,6 @@ class groupDetail extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <><Nav />
                 <div className="frame-pages">
                     <div className="title">
                         <h1>
@@ -102,8 +100,10 @@ class groupDetail extends React.Component {
                             <button
                                 className="base-button top-right"
                                 type="button"
-                                onClick={(this.handleEdit =
-                                    this.handleEdit.bind(this))}
+                                onClick={
+                                    (this.handleEdit =
+                                        this.handleEdit.bind(this))
+                                }
                             >
                                 <h2>Edit</h2>
                             </button>
@@ -139,9 +139,11 @@ class groupDetail extends React.Component {
                                     <tr
                                         className="table-content"
                                         key={i}
-                                        onClick={() => history.push(
-                                            `/contacts/details/?id=${contact._id}`
-                                        )}
+                                        onClick={() =>
+                                            history.push(
+                                                `/contacts/details/?id=${contact._id}`
+                                            )
+                                        }
                                     >
                                         <td>
                                             {contact.name.first}{" "}
@@ -169,7 +171,7 @@ class groupDetail extends React.Component {
                     >
                         <h2>Delete</h2>
                     </button>
-                </div></>
+                </div>
             );
         }
     }

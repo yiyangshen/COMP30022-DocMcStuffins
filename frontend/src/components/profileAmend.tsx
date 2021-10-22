@@ -3,7 +3,6 @@ import React from "react";
 import history from "../history";
 
 /* Import the required libraries and types */
-import Nav from "./nav";
 import { getUserProfile, amendProfileDetails } from "../api/userApi";
 
 /* Component to profile */
@@ -92,7 +91,6 @@ class profile extends React.Component {
             return <h3 className="error">Loading...</h3>;
         } else {
             return (
-                <><Nav />
                 <div className="frame-pages">
                     <div className="title">
                         <h1>
@@ -109,7 +107,8 @@ class profile extends React.Component {
                             placeholder="First Name"
                             onChange={this.handleChange}
                             className="display-content grey"
-                            required />
+                            required
+                        />
                         <input
                             type="text"
                             id="fullName"
@@ -117,7 +116,8 @@ class profile extends React.Component {
                             defaultValue={middleName}
                             placeholder="Middle Name"
                             onChange={this.handleChange}
-                            className="display-content grey" />
+                            className="display-content grey"
+                        />
                         <input
                             type="text"
                             id="fullName"
@@ -126,7 +126,8 @@ class profile extends React.Component {
                             placeholder="Last Name"
                             onChange={this.handleChange}
                             className="display-content grey"
-                            required />
+                            required
+                        />
 
                         <h2>Email</h2>
                         <input
@@ -137,7 +138,8 @@ class profile extends React.Component {
                             defaultValue={email}
                             onChange={this.handleChange}
                             className="display-content grey"
-                            required />
+                            required
+                        />
 
                         <h2>Password</h2>
                         <input
@@ -148,7 +150,8 @@ class profile extends React.Component {
                             defaultValue={password}
                             onChange={this.handleChange}
                             className="display-content grey"
-                            required />
+                            required
+                        />
 
                         <h2>Confirm Password</h2>
                         <input
@@ -159,7 +162,8 @@ class profile extends React.Component {
                             value={confirmPassword}
                             onChange={this.handleChange}
                             className="display-content grey"
-                            required />
+                            required
+                        />
                         <button
                             className="base-button"
                             type="button"
@@ -171,7 +175,7 @@ class profile extends React.Component {
                             <h2>Save</h2>
                         </button>
                     </form>
-                </div></>
+                </div>
             );
         }
     }
