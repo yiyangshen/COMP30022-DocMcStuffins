@@ -14,7 +14,7 @@ In the frontend team, we have helped each other out to learn deeper into React T
 
 More communication between the frontend and the backend team regarding the progress of each other. In the past we have been working in seperate silos, moving forward we plan to communicate better. This would be achieved by having more communication in Slack; updating each other when they start, plan to finish, and finish some specific task. We also plan to arrange another weekly meeting with the team internally to show the progress of each member (not only talking in stand ups).
 
-> How do you feel the entire sprint process\
+> How do you feel the entire sprint process
 
 The members mostly enjoy the workload that was given. Some just picked up react and had some learning curve, however the members help each other out and guide each other to create the product we know today. On the other hand, some members feel the anxiety that the work might not be done as there were lacking of updates in communication.
 
@@ -24,7 +24,7 @@ Everyone agrees that they feel the most joy when their code finally works.
 
 ## Dyno Wibowo
 
-> What went well in the Sprint\
+> What went well in the Sprint
 
 -   The backend team had a great workflow. Every controller function was already well defined from the start of the project; giving a clear description of the inputs and outputs).
 -   Having a weekly stand-up meeting which helps update the team members on what each other do.
