@@ -29,39 +29,37 @@
 -   Commented on all the code   
 -   Standardising code and documentations
 -   Bug Fixing
-
-
--   incomplete quality of life features
+-   Cut features
     - Password Policy
 
 ### Sprint Performance
 
 #### General
 
--   what went well
+-   What went well
     -   Everything was smoother than previous sprint
         -   Lesser confusion
         -   No to little last minute work
         -   Pace is more manageable 
         -   Documentation style neater
-    -   Learnt from sprint1 mistakes
+    -   Learnt from sprint 1's mistakes
         -   Frontend workflow is improved
             -   More commits, less last minute work
         -   Github workflow is improved as problems are fixed
         -   Intrateam communication improved
-            -   Everyone is updated on each others progress
-    -   Very happy with how presentation went
+            -   Everyone is updated on each other's progress
+    -   Very happy with how the presentation went
         -   Practice paid off as timing was perfect
 
 
--   obstacles
+-   Obstacles
     -   There was a last minute crunch to fix profile / edit contact.
         -   Mainly due to lack of communication between teams
     -   Trello assignments ignored but cards are still active
     -   Failed to implement password policy
     -   Intrateam communications can be further improved
     -   Did not allocate appropriate amount of time for unforeseen bugs
-    -   Unstandardised node.js versions
+    -   Unstandardised `node.js` versions
 
 -   Final product critics / sprint sentiments
     -   Feels good and proud of the final product.
@@ -71,11 +69,11 @@
     -   Glad to see the product works in the end.
 #### Backend API
 
--   what went well
+-   What went well
     -   Backend was same as last sprint
         -   No major problems this sprint
     -   Standardised and prettier documentations
--   obstacles
+-   Obstacles
     -   Lacked communication with the frontend
     -   Could have added more tests and better documentation
 -   Final product critics / sprint sentiments
@@ -86,11 +84,11 @@
 
 #### Frontend UX
 
--   what went well
+-   What went well
     -   Addition of pages were smoother and faster
         -   Lower learning curve and adaptation to the language barrier (JS to TSX).
         -   Less confused as all the fundamentals are already learnt
--   obstacles
+-   Obstacles
     -   Not leaving an appropriate amount of time to debug any bugs.
         -   Overestimating the implementation of profile / picture uploads.
     -   Still have room for improvement for frontend workflow
@@ -98,20 +96,14 @@
 -   Final product critics / sprint sentiments
     -   Team is happy with UI
         -   UI similar to prototype and is pretty
-    -   Seeing all the pages you worked on works feels good
-        -   Product reflects a “”nothing to something” for some.
+    -   Seeing all the pages you worked on functioned properly feels good
+        -   Product reflects a *nothing to something* for some.
 
 ### Demonstration
--   frontend team
-    -   Website demo showing new and complete features
-        -   architecture overview:
-            -   search
-            -   uploading pictures
-    - Prettification:
-        -   before vs after
--   Backend exhibition :
-    -   architecture overview
-        -   Groupless contacts API 
-            -   what, why, how
-        -   Edit user profile
--   Github runthrough
+-   Website demo showing new and complete features
+    -   Architecture overview:
+        -   search
+        -   uploading pictures
+    - Showed the changes between sprint 1 and sprint 2
+-   Github walkthrough
+    - Showed the general structure of the GitHub repository  
