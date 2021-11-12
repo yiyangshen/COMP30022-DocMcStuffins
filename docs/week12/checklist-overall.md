@@ -18,22 +18,26 @@ Yes, the project has been automatically deployed by our pipeline [here](https://
 
 ### Backend
 
-- Easy to navigate breadcrumbs (beyond what's required + initiative) 
-- Functional CI/CD
-- 100+ Jest tests
-- Comprehensive API endpoints + testing docs (which is beyond what's required and is an initiative) 
-- Comprehensive API  endpoints+ testing code standards 
-- We created Jest tests for every single function in the controller
-- Every pull requests were reviewed by other team members
-- Managed to implement optional requirements
-- Created our own custom response and error classes
+- easy-to-navigate documentation with breadcrumbs (beyond what's required + initiative) 
+- functional CI/CD pipeline
+- 100+ Jest functional tests
+- comprehensive API endpoints + testing docs (beyond what's required + initiative) 
+- comprehensive API endpoints + testing code standards
+- created Jest tests for every single function in controllers/
+- every GitHub PR reviewed by other team members
+- managed to implement optional requirements
+- created our own custom response and error classes
 
 ### Frontend
+
 - 10+ individual pages 
-- Final design very similar to initial Figma and up to client's standard
-- Hamburger menu (?)
-- Built in hamburger, search and upload
-- heckboxes was painfully rewarding
-- very good presentation?
+- final design closely reflects initial Figma design and meets client's standards
+- built in hamburger menu, search and upload on every page
+- checkbox-based contact selection for group creation and amendment
+- good presentation
 
 ### Project Management
+
+- established Gitflow
+- constantly updated Trello boards
+- good GitHub repository structure
